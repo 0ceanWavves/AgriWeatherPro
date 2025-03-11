@@ -1,8 +1,10 @@
 import { createClient } from '@supabase/supabase-js';
 
-// Use environment variables or fallback to hardcoded values for development
-const supabaseUrl = process.env.REACT_APP_SUPABASE_URL || 'https://gexynwadeancyvnthsbu.supabase.co';
-const supabaseAnonKey = process.env.REACT_APP_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdleHlud2FkZWFuY3l2bnRoc2J1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA5MzQ2NTMsImV4cCI6MjA1NjUxMDY1M30.TLgj23LVCqfM5lMBYBMTK3PBU78Ge78ezvwhjrALbHE';
+// Use hardcoded values for troubleshooting
+const supabaseUrl = 'https://gexynwadeancyvnthsbu.supabase.co';
+const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdleHlud2FkZWFuY3l2bnRoc2J1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE3MTQyMTcsImV4cCI6MjA1NzI5MDIxN30.hWr5DqCEHAWjgejgYmZw2ARvO_UoiydGILI25-7NivM';
 
 console.log('Connecting to Supabase at:', supabaseUrl);
+console.log('Using API key (first 10 chars):', supabaseAnonKey.substring(0, 10) + '...');
+
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
