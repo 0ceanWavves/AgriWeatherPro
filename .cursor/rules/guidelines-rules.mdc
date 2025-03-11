@@ -1,0 +1,75 @@
+---
+description: UI Guidelines for AgriWeather Pro
+globs: 
+alwaysApply: true
+---
+
+globs: **/*.{js,jsx,ts,tsx,css,scss}
+---
+# User Interface Guidelines
+
+<rule>
+name: ui_guidelines
+description: UI standards for AgriWeather Pro application
+filters:
+  - type: file_extension
+    pattern: "\\.(js|jsx|ts|tsx|css|scss)$"
+  - type: file_path
+    pattern: ".*components/.*|.*pages/.*|.*views/.*"
+
+actions:
+  - type: suggest
+    message: |
+      # User Interface Guidelines for AgriWeather Pro
+      
+      ## Design System
+      
+      1. **Color Palette**:
+         - Primary: #2D7D46 (Forest Green)
+         - Secondary: #EAB308 (Harvest Gold)
+         - Accent: #2563EB (Weather Blue)
+         - Alert: #DC2626 (Warning Red)
+         - Use CSS variables for consistent theming
+      
+      2. **Weather Data Visualization**:
+         - Use appropriate chart types:
+           * Line charts for temperature trends
+           * Bar charts for precipitation
+           * Radar charts for comparing multiple weather variables
+           * Heatmaps for spatial distribution
+      
+      3. **Dashboard Layout**:
+         ```jsx
+         function FarmDashboard() {
+           return (
+             <div className="dashboard-container">
+               <section className="weather-summary">
+                 {/* Current conditions widget */}
+               </section>
+               
+               <section className="field-status-grid">
+                 {/* Field-by-field status cards */}
+               </section>
+               
+               <section className="forecast-panel">
+                 {/* 7-day forecast with agricultural impact annotations */}
+               </section>
+               
+               <section className="alerts-notifications">
+                 {/* Critical weather alerts */}
+               </section>
+             </div>
+           );
+         }
+         ```
+      
+      4. **Responsive Design**:
+         - Desktop: Full dashboard with expanded visualizations
+         - Tablet: Condensed dashboard with essential information
+         - Mobile: Action-oriented interface with quick access to alerts
+         - Field mode: High-contrast, simplified view for outdoor use
+
+metadata:
+  priority: medium
+  version: 1.0
+</rule>

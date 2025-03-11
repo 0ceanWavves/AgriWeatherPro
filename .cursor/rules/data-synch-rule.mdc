@@ -1,0 +1,88 @@
+---
+description: Data Synchronization for AgriWeather Pro
+globs: 
+alwaysApply: true
+---
+---
+globs: **/*.{js,jsx,ts,tsx,py}
+---
+# Data Synchronization
+
+<rule>
+name: data_synchronization
+description: Standards for data synchronization in AgriWeather Pro
+filters:
+  - type: file_extension
+    pattern: "\\.(js|jsx|ts|tsx|py)$"
+  - type: content
+    pattern: "sync|offline|cache|storage|update|fetch"
+
+actions:
+  - type: suggest
+    message: |
+      # Data Synchronization Guidelines for AgriWeather Pro
+      
+      ## Offline-First Architecture
+      
+      1. **Caching Strategy**:
+         - Implement progressive data loading
+         - Cache weather forecasts for 3-hour intervals
+         - Store field boundaries and crop data locally
+         - Prioritize synchronization of critical alerts
+      
+      2. **Sync Implementation**:
+         ```javascript
+         async function synchronizeData(dataTypes = ['weather', 'fields', 'tasks']) {
+           // Track sync status
+           setSyncStatus('in_progress');
+           
+           try {
+             // Get timestamp of last successful sync
+             const lastSync = await getLastSyncTimestamp();
+             
+             // Sync each data type as needed
+             const results = await Promise.allSettled(
+               dataTypes.map(type => syncDataType(type, lastSync))
+             );
+             
+             // Handle any failed syncs
+             const failures = results
+               .filter(r => r.status === 'rejected')
+               .map(r => r.reason);
+             
+             if (failures.length > 0) {
+               console.error('Some data failed to sync:', failures);
+               setSyncStatus('partial');
+               scheduleRetry(dataTypes.filter((_, i) => results[i].status === 'rejected'));
+             } else {
+               // Update last sync timestamp
+               await updateLastSyncTimestamp();
+               setSyncStatus('complete');
+             }
+             
+             return {
+               success: failures.length === 0,
+               timestamp: new Date().toISOString(),
+               details: results
+             };
+           } catch (error) {
+             setSyncStatus('failed');
+             throw error;
+           }
+         }
+         ```
+      
+      3. **Conflict Resolution**:
+         - Use timestamp-based Last Write Wins for simple data
+         - Implement Three-way merging for complex field data
+         - Provide user resolution UI for critical conflicts
+      
+      4. **Bandwidth Optimization**:
+         - Compress data before transmission
+         - Use delta updates where possible
+         - Implement background sync during off-peak hours
+
+metadata:
+  priority: high
+  version: 1.0
+</rule>

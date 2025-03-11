@@ -1,0 +1,622 @@
+# Cursor Rules Template: Portable AI-Assisted Development System
+
+This template provides everything you need to set up a comprehensive cursor rules system for any project, following Geoffrey Huntley's "stdlib" approach. Simply follow the instructions below to customize the rules for your specific project.
+
+## Quick Start Guide
+
+1. **Create Directory Structure:**
+   ```bash
+   mkdir -p .cursor/rules
+   ```
+
+2. **Copy Rule Files:**
+   Copy all template files from the `rule_templates` section below into your `.cursor/rules/` directory.
+
+3. **Find & Replace:**
+   Replace all instances of:
+   - `[PROJECT_NAME]` with your project name (e.g., "FinTech Portal", "E-Commerce App")
+   - `[PROJECT_REPO_URL]` with your repository URL
+   - `[PROJECT_TECH_STACK]` with your tech stack (e.g., "React/Docusaurus", "Next.js")
+   - `[PRIMARY_COLOR]` with your primary color (e.g., "#0D2E5C")
+   - `[SECONDARY_COLOR]` with your secondary color (e.g., "#4786C6")
+
+4. **Customize Rules:**
+   Modify each rule file as needed to match your project's specific requirements.
+
+5. **Activate Rules:**
+   Restart Cursor to activate the rules.
+
+## Rule Templates
+
+### 01-cursorrules-location.mdc
+
+```markdown
+---
+description: Cursor Rules Location
+globs: *.mdc
+---
+# Cursor Rules Location
+
+Rules for placing and organizing Cursor rule files in the repository.
+
+<rule>
+name: cursor_rules_location
+description: Standards for placing Cursor rule files in the correct directory
+filters:
+  # Match any .mdc files
+  - type: file_extension
+    pattern: "\\.mdc$"
+  # Match files that look like Cursor rules
+  - type: content
+    pattern: "(?s)<rule>.*?</rule>"
+  # Match file creation events
+  - type: event
+    pattern: "file_create"
+
+actions:
+  - type: reject
+    conditions:
+      - pattern: "^(?!\\.\\/\\.cursor\\/rules\\/.*\\.mdc$)"
+        message: "Cursor rule files (.mdc) must be placed in the .cursor/rules directory"
+
+  - type: suggest
+    message: |
+      When creating Cursor rules for [PROJECT_NAME]:
+
+      1. Always place rule files in PROJECT_ROOT/.cursor/rules/:
+         ```
+         .cursor/rules/
+         ├── 01-cursorrules-location.mdc
+         ├── 02-cursor-tools-integration.mdc
+         ├── 03-development-standards.mdc
+         └── ... (other specialized rules)
+         ```
+
+      2. Follow the naming convention:
+         - Use numbered prefixes (01-, 02-, etc.) for load order
+         - Use kebab-case for filenames
+         - Always use .mdc extension
+         - Make names descriptive of the rule's purpose
+
+      3. Directory structure:
+         ```
+         PROJECT_ROOT/
+         ├── .cursor/
+         │   └── rules/
+         │       ├── 01-cursorrules-location.mdc
+         │       ├── 02-cursor-tools-integration.mdc
+         │       └── ...
+         └── ...
+         ```
+
+      4. Never place rule files:
+         - In the project root
+         - In subdirectories outside .cursor/rules
+         - In any other location
+
+metadata:
+  priority: high
+  version: 1.0
+</rule>
+```
+
+### 02-cursor-tools-integration.mdc
+
+```markdown
+---
+description: Cursor Tools Integration for [PROJECT_NAME]
+globs: *,**/*
+---
+# Cursor Tools Integration for [PROJECT_NAME]
+
+<rule>
+name: cursor_tools_integration
+description: Integration of cursor-tools for [PROJECT_NAME] development
+filters:
+  - type: event
+    pattern: "workspace_open"
+  - type: event
+    pattern: "cursor_startup"
+
+actions:
+  - type: suggest
+    message: |
+      # Cursor Tools Integration for [PROJECT_NAME]
+
+      Use the following commands to get AI assistance while working on [PROJECT_NAME]:
+
+      **Web Search for Information:**
+      ```bash
+      cursor-tools web "<your question>"
+      ```
+      Uses Perplexity AI (model: sonar-pro) to get answers from the web.
+      
+      Examples:
+      - `cursor-tools web "latest trends in [PROJECT_NAME]"`
+      - `cursor-tools web "[PROJECT_TECH_STACK] best practices"`
+      
+      Save research to a file:
+      ```bash
+      cursor-tools web "your question" --save-to="research/results.md"
+      ```
+
+      **Repository Context:**
+      ```bash
+      cursor-tools repo "<your question>"
+      ```
+      Uses Google Gemini (model: gemini-2.0-flash-thinking-exp) for context-aware answers about this repository.
+      
+      Examples:
+      - `cursor-tools repo "explain the project structure"`
+      - `cursor-tools repo "how should I implement feature X?"`
+
+      **Documentation Generation:**
+      ```bash
+      cursor-tools doc [options]
+      ```
+      Generate comprehensive documentation for both local and remote repositories.
+
+      **GitHub Integration:**
+      ```bash
+      cursor-tools github pr [number]
+      cursor-tools github issue [number]
+      ```
+      Access GitHub PRs and issues directly.
+      
+      Examples:
+      - `cursor-tools github pr` (list last 10 PRs)
+      - `cursor-tools github issue 123` (get specific issue)
+
+      **Browser Testing:**
+      ```bash
+      cursor-tools browser open|act|observe|extract [options]
+      ```
+      Test and interact with the application in a browser.
+      
+      Examples:
+      - `cursor-tools browser open "http://localhost:3000" --html`
+      - `cursor-tools browser act "Click on X button" --url=http://localhost:3000`
+
+      **Command Options:**
+      - `--model=<model name>`: Specify an alternative AI model
+      - `--max-tokens=<number>`: Control response length
+      - `--save-to=<file path>`: Save command output to a file
+
+metadata:
+  priority: high
+  version: 1.0
+</rule>
+
+<rule>
+name: cursor_tools_workflow
+description: Best practices workflow for using cursor-tools in [PROJECT_NAME] development
+filters:
+  - type: event
+    pattern: "file_open"
+
+actions:
+  - type: suggest
+    message: |
+      # Development Workflow Best Practices with cursor-tools
+      
+      1. **Research Phase**:
+         - Use `cursor-tools web` to research topics and best practices
+         - Save research to research/ directory for future reference
+      
+      2. **Development Phase**:
+         - Use `cursor-tools repo` for code-related questions and implementation help
+         - Create components following project best practices
+      
+      3. **Testing Phase**:
+         - Test UI changes with `cursor-tools browser` commands
+         - Record sessions with --video flag to document interactions
+      
+      4. **Documentation Phase**:
+         - Document your work with `cursor-tools doc`
+         - Keep documentation in sync with code changes
+
+metadata:
+  priority: medium
+  version: 1.0
+</rule>
+```
+
+### 03-development-standards.mdc
+
+```markdown
+---
+description: Development Standards for [PROJECT_NAME]
+globs: **/*.{js,jsx,ts,tsx,css,html}
+---
+# Development Standards for [PROJECT_NAME]
+
+<rule>
+name: development_standards
+description: Coding standards and best practices for [PROJECT_NAME]
+filters:
+  - type: file_extension
+    pattern: "\\.(js|jsx|ts|tsx|css|html)$"
+
+actions:
+  - type: suggest
+    message: |
+      # Development Standards for [PROJECT_NAME]
+      
+      ## Component Structure
+      
+      1. **Component Best Practices**:
+         - Use functional components with hooks instead of class components
+         - Keep components focused and small (< 250 lines)
+         - Follow naming conventions: PascalCase for components, camelCase for functions
+         
+      2. **Component Template**:
+         ```jsx
+         import React, { useState, useEffect } from 'react';
+         import styles from './styles.module.css';
+         
+         /**
+          * @component
+          * @description Component description
+          * @param {Object} props - Component props
+          */
+         function ComponentName(props) {
+           const [state, setState] = useState(null);
+           
+           useEffect(() => {
+             // Effect logic here
+           }, []);
+           
+           return (
+             <div className={styles.componentName}>
+               {/* Component JSX */}
+             </div>
+           );
+         }
+         
+         export default ComponentName;
+         ```
+      
+      ## UI/UX Design Standards
+      
+      1. **Color Scheme**:
+         - Primary: [PRIMARY_COLOR]
+         - Secondary: [SECONDARY_COLOR]
+         - Use CSS variables for theming
+      
+      2. **CSS Best Practices**:
+         - Use CSS modules or styled-components
+         - Follow BEM naming convention when applicable
+         - Implement responsive design for all screen sizes
+      
+      ## API Integration
+      
+      1. **Data Fetching**:
+         - Use async/await for cleaner code
+         - Implement proper error handling
+         - Consider caching strategies
+      
+      2. **State Management**:
+         - Keep state as local as possible
+         - Use context for global state when needed
+         - Consider performance implications
+
+metadata:
+  priority: high
+  version: 1.0
+</rule>
+
+<rule>
+name: auto_component_template
+description: Auto-suggest template for new components
+filters:
+  - type: file_extension
+    pattern: "\\.(js|jsx|ts|tsx)$"
+  - type: file_path
+    pattern: ".*components/.*"
+  - type: event
+    pattern: "file_create"
+
+actions:
+  - type: insert
+    position: "start"
+    content: |
+      import React, { useState, useEffect } from 'react';
+      import styles from './styles.module.css';
+      
+      /**
+       * @component
+       * @description 
+       * @param {Object} props - Component props
+       * @returns {JSX.Element}
+       */
+      function ComponentName(props) {
+        const [state, setState] = useState(null);
+        
+        useEffect(() => {
+          // Effect logic here
+        }, []);
+        
+        return (
+          <div className={styles.componentName}>
+            {/* Component JSX */}
+          </div>
+        );
+      }
+      
+      export default ComponentName;
+
+metadata:
+  priority: medium
+  version: 1.0
+</rule>
+```
+
+### 04-automated-workflows.mdc
+
+```markdown
+---
+description: Automated Workflows for [PROJECT_NAME]
+globs: *,**/*
+---
+# Automated Workflows for [PROJECT_NAME]
+
+<rule>
+name: automated_git_commits
+description: Automatically commit changes with conventional commit messages
+filters:
+  - type: event
+    pattern: "file_save"
+  - type: file_change
+    pattern: "*"
+
+actions:
+  - type: execute
+    command: |
+      # Extract the change type and scope from the changes
+      FILE_PATH="$FILE"
+      
+      # Determine the change type based on content and path
+      if [[ "$FILE_PATH" == *"/components/"* ]]; then
+        CHANGE_TYPE="feat"
+        SCOPE="components"
+        MESSAGE="update component"
+      elif [[ "$FILE_PATH" == *"/pages/"* ]]; then
+        CHANGE_TYPE="feat"
+        SCOPE="pages"
+        MESSAGE="update page"
+      elif [[ "$FILE_PATH" == *"/styles/"* || "$FILE_PATH" == *"/css/"* ]]; then
+        CHANGE_TYPE="style"
+        SCOPE="styles"
+        MESSAGE="update styles"
+      elif [[ "$FILE_PATH" == *"/utils/"* || "$FILE_PATH" == *"/helpers/"* ]]; then
+        CHANGE_TYPE="feat"
+        SCOPE="utils"
+        MESSAGE="update utilities"
+      elif [[ "$FILE_PATH" == *"/tests/"* || "$FILE_PATH" == *".test."* ]]; then
+        CHANGE_TYPE="test"
+        SCOPE="tests"
+        MESSAGE="update tests"
+      elif [[ "$FILE_PATH" == *"/docs/"* || "$FILE_PATH" == *"README"* ]]; then
+        CHANGE_TYPE="docs"
+        SCOPE="docs"
+        MESSAGE="update documentation"
+      elif [[ "$FILE_PATH" == *"/.cursor/rules/"* ]]; then
+        CHANGE_TYPE="chore"
+        SCOPE="cursor-rules"
+        MESSAGE="update cursor rules"
+      else
+        CHANGE_TYPE="chore"
+        SCOPE="misc"
+        MESSAGE="update files"
+      fi
+      
+      # Get filename for more specific message
+      FILENAME=$(basename "$FILE_PATH")
+      
+      # Commit the changes
+      git add "$FILE_PATH"
+      git commit -m "$CHANGE_TYPE($SCOPE): $MESSAGE for $FILENAME"
+
+metadata:
+  priority: high
+  version: 1.0
+</rule>
+
+<rule>
+name: auto_code_format
+description: Automatically format code files on save
+filters:
+  - type: file_extension
+    pattern: "\\.(js|jsx|ts|tsx|css|json)$"
+  - type: event
+    pattern: "file_save"
+
+actions:
+  - type: execute
+    command: |
+      FILE_PATH="$FILE"
+      
+      # Format the file using prettier if installed
+      if command -v npx &> /dev/null; then
+        npx prettier --write "$FILE_PATH"
+      fi
+
+metadata:
+  priority: medium
+  version: 1.0
+</rule>
+
+<rule>
+name: auto_create_component_files
+description: Automatically create complementary files for components
+filters:
+  - type: file_extension
+    pattern: "\\.(js|jsx|ts|tsx)$"
+  - type: file_path
+    pattern: ".*components/.*"
+  - type: event
+    pattern: "file_create"
+
+actions:
+  - type: execute
+    command: |
+      FILE_PATH="$FILE"
+      FILE_NAME=$(basename "$FILE_PATH" | cut -f 1 -d '.')
+      DIR_PATH=$(dirname "$FILE_PATH")
+      
+      # Create CSS module file if it doesn't exist
+      CSS_FILE="${DIR_PATH}/${FILE_NAME}.module.css"
+      if [ ! -f "$CSS_FILE" ]; then
+        echo "/* Styles for ${FILE_NAME} component */\n\n.container {\n  /* Base styles */\n}" > "$CSS_FILE"
+      fi
+      
+      # Create test file if it doesn't exist
+      TEST_FILE="${DIR_PATH}/${FILE_NAME}.test.js"
+      if [ ! -f "$TEST_FILE" ]; then
+        echo "import React from 'react';\nimport { render } from '@testing-library/react';\nimport ${FILE_NAME} from './${FILE_NAME}';\n\ndescribe('${FILE_NAME}', () => {\n  it('renders correctly', () => {\n    const { container } = render(<${FILE_NAME} />);\n    expect(container).toBeInTheDocument();\n  });\n});" > "$TEST_FILE"
+      fi
+
+metadata:
+  priority: medium
+  version: 1.0
+</rule>
+
+<rule>
+name: update_rules_with_learnings
+description: Prompt to update cursor rules with new learnings, following Huntley's approach
+filters:
+  - type: event
+    pattern: "error"
+
+actions:
+  - type: suggest
+    message: |
+      # Learning Opportunity Detected
+      
+      An error occurred, which could be an opportunity to update our cursor rules with new knowledge.
+      
+      Following Geoffrey Huntley's approach of continuously improving the "stdlib" of rules:
+      
+      1. Identify what went wrong
+      2. Determine what knowledge is missing from our rules
+      3. Ask Cursor to update the appropriate rule file
+      
+      For example:
+      
+      ```
+      Cursor, please update the rule file .cursor/rules/03-development-standards.mdc 
+      to include the lesson we just learned about [specific lesson].
+      ```
+      
+      Rules should always be updated to prevent the same error from happening again.
+
+metadata:
+  priority: high
+  version: 1.0
+</rule>
+```
+
+## How to Use the Template
+
+### Step 1: Initial Setup
+
+1. Clone or create your project repository:
+   ```bash
+   git clone [PROJECT_REPO_URL]
+   cd your-project
+   ```
+
+2. Create the cursor rules directory structure:
+   ```bash
+   mkdir -p .cursor/rules
+   ```
+
+3. Copy each rule template into the `.cursor/rules/` directory, ensuring you maintain the numbering convention.
+
+### Step 2: Customization
+
+1. In each file, replace placeholders with your project-specific values:
+   - `[PROJECT_NAME]` → Your project name
+   - `[PROJECT_REPO_URL]` → Your repository URL
+   - `[PROJECT_TECH_STACK]` → Your technology stack
+   - `[PRIMARY_COLOR]` → Your brand's primary color
+   - `[SECONDARY_COLOR]` → Your brand's secondary color
+
+2. Customize each rule based on your project's specific requirements:
+   - Modify file patterns to match your project structure
+   - Update component templates to match your coding style
+   - Adjust automated workflows to fit your development process
+
+### Step 3: Cursor Tools Setup
+
+1. Ensure you have cursor-tools installed:
+   ```bash
+   npm install -g cursor-tools
+   # or
+   yarn global add cursor-tools
+   ```
+
+2. Configure your browser integration for cursor-tools:
+   ```bash
+   cursor-tools browser setup
+   ```
+
+3. Test your setup with a simple repo query:
+   ```bash
+   cursor-tools repo "Explain the project structure"
+   ```
+
+### Step 4: Daily Development Workflow
+
+1. **Research Phase**:
+   - Use web search to research required topics
+   ```bash
+   cursor-tools web "best practices for [specific topic]"
+   ```
+
+2. **Development Phase**:
+   - Get context-aware assistance from Gemini
+   ```bash
+   cursor-tools repo "How should I implement [feature]?"
+   ```
+
+3. **Testing Phase**:
+   - Test with browser commands
+   ```bash
+   cursor-tools browser open "http://localhost:3000"
+   ```
+
+4. **Documentation Phase**:
+   - Generate documentation
+   ```bash
+   cursor-tools doc --output docs/api.md
+   ```
+
+## Continuous Improvement Process
+
+Following Geoffrey Huntley's "stdlib" approach, your cursor rules should continuously improve:
+
+1. **Learning from Errors**:
+   When errors occur, update rules with new knowledge.
+   ```
+   Cursor, update the rule file .cursor/rules/03-development-standards.mdc to include [lesson learned]
+   ```
+
+2. **Regular Reviews**:
+   Schedule regular reviews of your cursor rules to identify improvement opportunities.
+
+3. **Team Contributions**:
+   Encourage team members to contribute to rule improvements based on their experiences.
+
+4. **Build Your "stdlib"**:
+   As Geoffrey Huntley says, "Go forward and build your stdlib - brick by brick!"
+
+## Additional Resources
+
+- [Geoffrey Huntley's Stdlib Approach](https://ghuntley.com/stdlib/)
+- [Cursor Documentation](https://cursor.sh/docs)
+- [Cursor Tools Documentation](https://github.com/cursor-tools/cursor-tools)
+
+---
+
+**Note**: This template can be customized for any project type. The rules provided are a starting point - add, remove, or modify them based on your specific needs. 

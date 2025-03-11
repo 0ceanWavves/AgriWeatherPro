@@ -1,0 +1,72 @@
+---
+description: Geospatial Data Handling for AgriWeather Pro
+globs: 
+alwaysApply: true
+---
+--- 
+globs: **/*.{js,jsx,ts,tsx,py}
+---
+# Geospatial Data Handling
+
+<rule>
+name: geospatial_data_handling
+description: Standards for handling geospatial data in AgriWeather Pro
+filters:
+  - type: file_extension
+    pattern: "\\.(js|jsx|ts|tsx|py)$"
+  - type: content
+    pattern: "map|geojson|coordinates|latitude|longitude|spatial|gis"
+
+actions:
+  - type: suggest
+    message: |
+      # Geospatial Data Handling Guidelines for AgriWeather Pro
+      
+      ## Field Mapping Standards
+      
+      1. **Coordinate Systems**:
+         - Use WGS84 (EPSG:4326) for data storage
+         - Use Web Mercator (EPSG:3857) for web display
+         - Include projection transformations for analysis
+      
+      2. **Field Boundary Management**:
+         ```javascript
+         function defineFieldBoundary(coordinates) {
+           // Validate coordinates
+           if (!validateCoordinates(coordinates)) {
+             throw new Error("Invalid field boundary coordinates");
+           }
+           
+           // Create GeoJSON polygon
+           const fieldBoundary = {
+             type: "Feature",
+             properties: {
+               fieldId: generateUUID(),
+               name: "",
+               area: calculateAreaHectares(coordinates),
+               createdAt: new Date().toISOString()
+             },
+             geometry: {
+               type: "Polygon",
+               coordinates: [coordinates]
+             }
+           };
+           
+           return fieldBoundary;
+         }
+         ```
+      
+      3. **Weather Data Interpolation**:
+         - Use Inverse Distance Weighting for point data
+         - Generate heatmaps for visualization of weather patterns
+         - Implement spatial averaging for field-level estimates
+      
+      4. **Map Integration with OpenWeatherMap**:
+         - Use OpenWeatherMap Tile Layers for visualization
+         - Implement custom color scales for agricultural metrics
+         - Cache map tiles for offline operation
+
+metadata:
+  priority: medium
+  version: 1.0
+</rule>

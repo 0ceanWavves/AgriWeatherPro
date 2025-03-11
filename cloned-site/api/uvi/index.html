@@ -1,0 +1,936 @@
+<!DOCTYPE html><html lang="en"><head>
+  <title> UV Index - OpenWeatherMap</title>
+  <meta name="apple-itunes-app" content="app-id=1535923697">
+  <!-- Google tag (gtag.js) -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-31TSX35RJT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+
+  gtag('config', 'G-31TSX35RJT');
+</script>
+  <script type="text/javascript">
+  (function (c, l, a, r, i, t, y) {
+    c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
+    t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+    y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+  })(window, document, "clarity", "script", "niyw44l6sh");
+</script>  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="keywords" content="weather, world, Openstreetmap, forecast, Openweather, current">
+<meta name="description" content="Discover historical and archived UV index data with OpenWeather's Deprecated Ultraviolet Index API.
+Although retired on April 1st, 2021, this resource still offers valuable insights into past UV data for over 200,000
+cities globally. For current and forecast UV data, explore the comprehensive One Call API 3.0, which includes current,
+7-day hourly forecasts, and 5-day historical UV data. All data is conveniently available in JSON format.">
+<meta name="author" content="OpenWeatherMap.org">
+<meta name="domain" content="OpenWeatherMap.org">
+<meta name="p:domain_verify" content="34fe229eab8562dca90f4a5962ff80a9">
+<meta property="title" content="UV Index">  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">  <link rel="shortcut icon" href="/themes/openweathermap/assets/vendor/owm/img/icons/favicon.ico">
+<link rel="icon" href="/themes/openweathermap/assets/vendor/owm/img/icons/logo_16x16.png" sizes="16x16" type="image/png">
+<link rel="icon" href="/themes/openweathermap/assets/vendor/owm/img/icons/logo_32x32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="/themes/openweathermap/assets/vendor/owm/img/icons/logo_60x60.png" sizes="60x60" type="image/png">  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald:400,700,300">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700,500,400italic,500italic">  <link rel="stylesheet" href="..\..\assets\plugins\offline\gdpr\assets\cookieBanner\banner.css">
+  <link href="..\..\assets\combine\f715fd89ab078cb9d62b06cf2ebe66e0-1741279879" rel="stylesheet">
+<!-- <link href="https://openweathermap.org/combine/9e05934b20b1168fe3f391e409e227a4-1741279879" rel="stylesheet"> -->
+<!-- <link href="/themes/openweathermap/assets/css/new_design.css" rel="stylesheet"> -->  <script src="..\..\assets\combine\d8fb6d080cb70d894318fcae14526239-1741279879"></script>
+<!-- <script src="https://openweathermap.org/combine/9dc69b9a99b742c8cd4a003c67dfede2-1741279879"></script> -->  </head>
+
+<body class="body-orange" onclick="closePopUps()">
+  <link href="..\..\assets\themes\openweathermap\assets\css\smart_banner_android.css" rel="stylesheet">
+
+<div id="banner_android" class="banner_stripe">
+    <div class="banner_container">
+        <a class="smartbanner__exit" onclick="bannerClose()"></a>
+        <img src="..\..\assets\themes\openweathermap\assets\img\mobile_app\android-app-top-banner.png" class="banner_icon" alt="banner android">
+        <div>
+            <p class="smartbanner-text">OpenWeather</p>
+            <p class="smartbanner-text">OpenWeather Ltd.</p>
+            <p class="smartbanner-text">GET - on Google Play</p>
+        </div>
+    </div>
+    <a class="google_button" href="https://play.google.com/store/apps/details?id=uk.co.openweather">VIEW</a>
+</div>
+
+<script src="..\..\assets\themes\openweathermap\assets\js\smart_banner_android.js"></script>  <nav id="nav-website" onclick="toggleMenu(event)">
+  <ul id="first-level-nav">
+    <li class="logo">
+      <a href="/">
+        <img src="..\..\assets\themes\openweathermap\assets\img\logo_white_cropped.png" alt="logo">
+      </a>
+    </li>
+    <li id="hamburger">
+      <img src="..\..\assets\themes\openweathermap\assets\img\owm_icons\icon_hamburger.svg" alt="icon hamburger">
+    </li>
+    <li id="desktop-menu">
+      <form role="search" action="/find" method="get">
+        <input type="text" name="q" placeholder="Weather in your city">
+        <input type="submit" class="submit">
+      </form>
+      <ul>
+        <li>
+          <a href="/guide">Guide</a>
+        </li>
+        <li>
+          <a href="/api">API</a>
+        </li>
+        <li>
+          <a href="https://dashboard.openweather.co.uk/" target="_blank">Dashboard</a>
+        </li>
+        <li>
+          <a href="https://home.openweathermap.org/marketplace" target="_blank">Marketplace</a>
+        </li>
+        <li>
+          <a href="/price">Pricing</a>
+        </li>
+        <li>
+          <a href="/weathermap">Maps</a>
+        </li>
+        <li>
+          <a href="/our-initiatives">Our Initiatives</a>
+        </li>
+        <li>
+          <a href="/examples">Partners</a>
+        </li>
+        <li>
+          <a href="https://openweather.co.uk/blog/category/weather" target="_blank">Blog</a>
+        </li>
+        <li>
+          <a href="https://openweather.co.uk" class="marketplace" target="_blank">For Business</a>
+        </li>
+                <li class="user-li"><a href="https://openweathermap.org/home/sign_in">Sign in</a></li>
+                <li><a href="/support-centre">Support centre</a></li>
+    
+  </ul>
+  </li>
+  </ul>
+  <ul id="mobile-menu">
+    <li>
+      <form role="search" action="/find" method="get">
+        <input type="text" name="q" placeholder="Weather in your city">
+        <input type="submit" class="submit">
+      </form>
+    </li>
+    <li>
+      <a href="/guide">Guide</a>
+    </li>
+    <li>
+      <a href="/api">API</a>
+    </li>
+    <li>
+      <a href="https://dashboard.openweather.co.uk/" target="_blank">Dashboard</a>
+    </li>
+    <li>
+      <a href="https://home.openweathermap.org/marketplace" target="_blank">Marketplace</a>
+    </li>
+    <li>
+      <a href="/price">Pricing</a>
+    </li>
+    <li>
+      <a href="/weathermap">Maps</a>
+    </li>
+    <li>
+      <a href="/our-initiatives">Our Initiatives</a>
+    </li>
+    <li>
+      <a href="/examples">Partners</a>
+    </li>
+    <li>
+      <a href="https://openweather.co.uk/blog/category/weather" target="_blank">Blog</a>
+    </li>
+    <li>
+      <a href="https://openweather.co.uk" class="marketplace" target="_blank">For Business</a>
+    </li>
+    <li><a href="/support-centre">Support centre</a></li>
+        <li><a href="https://openweathermap.org/home/sign_in">Sign in</a></li>
+      </ul>
+</nav>
+<div class="nav-styles"></div>  <main class="wrapper">
+        <div class="topic">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-7">
+                                    <h1 class="breadcrumb-title">Ultraviolet Index (Deprecated)</h1>
+                            </div>
+            <div class="col-sm-5">
+                <ol class="breadcrumb pull-right hidden-xs">
+                    <li><a href="/">Home</a></li>
+                                                            
+                                                                        <li class="breadcrumb__leaf">Ultraviolet Index (Deprecated)</li>
+                                                            </ol>
+            </div>
+        </div>
+    </div>   
+</div>        <div class="container documentation">
+   <div class="doc-container">
+      <div>
+         <nav>
+            <ul>
+               <li>
+                  <a href="#current">Call current UV data</a>
+                  <ul>
+                     <!--<li><a href="#name">By city name</a></li>
+                     <li><a href="#cityid">By city ID</a></li> -->
+                     <li><a href="#geo">By geographic coordinates</a></li>
+                     <!-- <li><a href="#zip">By ZIP code</a></li> -->
+                  </ul>
+               </li>
+               <!-- <li><a href="#cities">Call current UV data for several cities</a>
+               <ul>
+                   <li><a href="#rectangle">Cities within a rectangle zone</a></li>
+                   <li><a href="#tile">Cities for tile (Z/X/Y)</a></li>
+               </ul>
+               </li> -->
+               <li><a href="#forecast">Forecast UV data</a>
+                  <ul>
+                     <!-- <li><a href="#fname">By city name</a></li>
+                  <li><a href="#fcityid">By city ID</a></li> -->
+                     <li><a href="#fgeo">By geographic coordinates</a></li>
+                     <!-- <li><a href="#fzip">By ZIP code</a></li> -->
+                  </ul>
+               </li>
+               <li>
+                  <a href="#history">Historical UV data for</a>
+                  <ul>
+                     <!-- <li><a href="#hname">By city name</a></li>
+                     <li><a href="#hcityid">By city ID</a></li> -->
+                     <li><a href="#hgeo">By geographic coordinates</a></li>
+                  </ul>
+               </li>
+               <li>
+                  <a href="#responseformat">Server response format</a>
+                  <ul>
+                     <li><a href="#codes">Codes of requests</a></li>
+                  </ul>
+               </li>
+            </ul>
+         </nav>
+      </div>
+      <div>
+         <div class="info-board info-board-orange">
+            <p> The product retired on <b>1st April 2021</b>, please find UV data in <a href="/api/one-call-3">One Call
+                  API 3.0</a>.<br>
+               One Call API includs current, hourly forecast for 7 days and 5 days historical UV data.</p>
+         </div>
+         <p class="lead">
+            Access current, forecast and historical UV data for any location on Earth including over 200,000 cities!
+            Data is available in the JSON format.
+         </p>
+         <section id="current">
+            <h2>Call current UV data</h2>
+            <!--<section id="name"></section>-->
+            <!--                     <h3>By city name </h3>
+               <h5>Description:</h5>
+               You can call by city name or city name and country code. API responds with a list of results that match a searching word.
+               <h5>API call:</h5>
+               <p>http://api.openweathermap.org/data/2.5/uvi?appid={appid}&q={city name}</p>
+               <p>http://api.openweathermap.org/data/2.5/uvi?appid={appid}&q={city name},{country code}</p>
+               <h5>Parameters:</h5>
+               <p><b>q</b> - city name and country code divided by comma, use ISO 3166 country codes</p>
+               <p><b>appid</b> - personal API key</p>
+               <h5>Examples of API calls:</h5>
+               <p><a href="http://samples.openweathermap.org/data/2.5/weather?q=London,uk&appid=439d4b804bc8187953eb36d2a8c26a02" target="_blank">api.openweathermap.org/data/2.5/weather?q=London</a>
+
+               <p><a href="http://samples.openweathermap.org/data/2.5/weather?q=London,uk&appid=439d4b804bc8187953eb36d2a8c26a02" target="_blank">api.openweathermap.org/data/2.5/weather?q=London,uk</a> </p>
+                -->
+            <!--                     <section id="cityid"></section>
+               <h3>By city ID </h3>
+
+               <h5>Description:</h5>
+               <p>You can call by city ID. API responds with exact result. </p>
+               <p>List of city ID can be downloaded<a href="http://bulk.openweathermap.org/sample/city.list.json.gz" target="_blank"> here.</a></p>
+
+               <div class="info-board info-board-blue">
+                   <p>We recommend to call API by city ID to get unambiguous result for your city.</p>
+               </div>
+
+               <h5>API call:</h5>
+                   http://api.openweathermap.org/data/2.5/uvi?appid={appid}&id={city_id}
+
+               <h5>Parameters:</h5>
+               <p><b>appid</b> - api personal API key</p>
+               <p><b>id</b> - city ID</p>
+
+               <h5>Examples of API calls:</h5>
+               <p><a href="http://samples.openweathermap.org/data/2.5/weather?id=2172797&appid=439d4b804bc8187953eb36d2a8c26a02" target="_blank">
+                   api.openweathermap.org/data/2.5/weather?id=2172797</a></p>
+                -->
+            <section id="geo">
+               <!--  <h3>By geographic coordinates </h3> -->
+               <!-- <p class="sub-header">API call</p>
+               <div class="api">
+                  <code>
+                  http://api.openweathermap.org/data/2.5/uvi?lat={lat}&lon={lon}&appid=<a href="https://home.openweathermap.org/api_keys" target="_blank">{API key}</a>
+                  </code>
+               </div> -->
+               <table class="material-table">
+                  <tbody><tr>
+                     <th colspan="3">Parameters of API call</th>
+                  </tr>
+                  <tr>
+                     <td><code class="nowrap">lat, lon</code></td>
+                     <td><span class="sub">required</span></td>
+                     <td>Geographical coordinates (latitude, longitude)</td>
+                  </tr>
+                  <tr>
+                     <td><code>appid</code></td>
+                     <td><span class="sub">required</span></td>
+                     <td>Your unique API key (you can always find it on your account page under the <a href="https://home.openweathermap.org/api_keys" target="_blank">"API key" tab</a>)</td>
+                  </tr>
+               </tbody></table>
+               <p class="sub-header">Example of API response</p>
+               <div class="response open">
+                  <div class="api">
+                     <code>Example of API response</code>
+                  </div>
+                  <div class="content">
+                     <pre>                      <code class="json">
+{
+"lat":37.75,
+"lon":-122.37,
+"date_iso":"2017-06-26T12:00:00Z",
+"date":1498478400,
+"value":10.06
+}
+                      </code>
+                    </pre>
+                  </div>
+               </div>
+            </section>
+            <!--                     <section id="zip">
+               <h3 id="zip">By ZIP code </h3>
+               </section>
+
+               <h5>Description:</h5>
+               <p>Please note if country is not specified then the search works for USA as a default.</p>
+
+               <h5>API call:</h5>
+               http://api.openweathermap.org/data/2.5/uvi?appid={appid}&zip={zip_code},{country_code}
+
+               <h5>Parameters:</h5>
+               <p><b>appid</b> - personal API key</p>
+               <p><b>zip_code</b> - zip code and country code divided by comma, use ISO 3166 country codes</p>
+
+               <h5>Examples of API calls:</h5>
+
+               <p><a href="http://samples.openweathermap.org/data/2.5/weather?zip=94040,us&appid=439d4b804bc8187953eb36d2a8c26a02" target="_blank">api.openweathermap.org/data/2.5/weather?zip=94040,us</a></p>
+               <h5>Parameters:</h5>
+               <p><b>zip</b> zip code</p>
+               -->
+            <!--<section id="cities">
+               <h2>Call current UV data for several cities</h2></section>
+
+
+               <section id="rectangle"></section>
+               <h3>Cities within a rectangle zone</h3>
+
+               <h5>Description:</h5>
+               <p>JSON returns the data from cities within the defined rectangle specified by the geographic coordinates.</p>
+
+               <h5>API call:</h5>
+
+               http://api.openweathermap.org/data/2.5/uvi/box?appid={appid}&bbox={lon-left,lat-bottom,lon-right,lat-top,zoom}
+
+               <h5>Parameters:</h5>
+               <p><b>appid</b> - personal API key</p>
+               <p><b>bbox</b> - bounding box  [lon-left,lat-bottom,lon-right,lat-top,zoom]</p>
+               <p><b>lat</b> - latitude</p>
+               <p><b>lon</b> - longitude</p>
+               <p><b>zoom</b> - zoom which is needed for polygon</p>
+
+               <h5>Examples of API calls:</h5>
+               <a href="http://samples.openweathermap.org/data/2.5/box/city?bbox=12,32,15,37,10&appid=439d4b804bc8187953eb36d2a8c26a02" target="_blank">http://api.openweathermap.org/data/2.5/box/city?bbox=12,32,15,37,10</a></p>
+
+
+
+               <section id="tile"></section>
+               <h3>Cities for tile (X/Y/Z)</h3>
+
+               <h5>Description:</h5>
+               <p>JSON returns data from cities laid within definite
+               circle that is specified by center point ('lat', 'lon') and expected number of cities ('cnt') around this point. The default number of cities is 10, the maximum is 50. </p>
+
+               <h5>API call:</h5>
+
+               http://api.openweathermap.org/data/2.5/uvi/{z}/{x}/{y}?appid={appid}
+
+               <h5>Parameters:</h5>
+               <p><b>appid</b> - personal API key</p>
+               <p><b>{z}/{x}/{y}</b> Z – Zoom needed for tile; X – coordinate of tile longitude; Y – coordinate of tile latitude</p>
+
+
+               <h5>Examples of API calls:</h5>
+               <p><a href=//samples.openweathermap.org/data/2.5/find?lat=55.5&lon=37.5&cnt=10&appid=439d4b804bc8187953eb36d2a8c26a02  target="_blank">http://api.openweathermap.org/data/2.5/find?lat=55.5&lon=37.5&cnt=10</a></p>-->
+            <section id="forecast">
+               <h2>Call forecast UV data</h2>
+               <!--                     <section id="fname"></section>
+                  <h3>By city name </h3>
+
+                  <h5>Description:</h5>
+                  You can call by city name or city name and country code. API responds with a list of results that match a searching word.
+
+                  <h5>API call:</h5>
+                  <p>http://api.openweathermap.org/data/2.5/uvi/forecast?appid={appid}&cnt={cnt}&q={city_name}</p>
+                  <p>http://api.openweathermap.org/data/2.5/uvi/forecast?appid={appid}&cnt={cnt}&q={city_name},{country_code}</p>
+
+
+
+                  <h5>Parameters:</h5>
+                  <p><b>appid</b> - personal API key</p>
+                  <p><b>cnt</b> - number of returned days</p>
+                  <p><b>q</b> - city name and country code divided by comma, use ISO 3166 country codes</p>
+
+                  <h5>Examples of API calls:</h5>
+                  <p><a href="http://samples.openweathermap.org/data/2.5/weather?q=London,uk&appid=439d4b804bc8187953eb36d2a8c26a02" target="_blank">api.openweathermap.org/data/2.5/weather?q=London</a>
+
+                  <p><a href="http://samples.openweathermap.org/data/2.5/weather?q=London,uk&appid=439d4b804bc8187953eb36d2a8c26a02" target="_blank">api.openweathermap.org/data/2.5/weather?q=London,uk</a> </p>
+                   -->
+               <!--                     <section id="fcityid"></section>
+                  <h3>By city ID </h3>
+
+                  <h5>Description:</h5>
+                  <p>You can call by city ID. API responds with exact result. </p>
+                  <p>List of city ID can be downloaded <a href="http://bulk.openweathermap.org/sample/city.list.json.gz" target="_blank"> here.</a></p>
+
+                  <div class="info-board info-board-blue">
+                      <p>We recommend to call API by city ID to get unambiguous result for your city.</p>
+                  </div>
+
+                  <h5>API call:</h5>
+
+                   http://api.openweathermap.org/data/2.5/uvi/forecast?appid={appid}&id={city_id}&cnt={cnt}
+
+                  <h5>Parameters:</h5>
+                  <p><b>appid</b> - personal API key</p>
+                  <p><b>id</b> - city ID</p>
+                  <p><b>cnt</b> - number of returned days</p>
+
+                  <h5>Examples of API calls:</h5>
+                  <p><a href="http://samples.openweathermap.org/data/2.5/weather?id=2172797&appid=439d4b804bc8187953eb36d2a8c26a02" target="_blank">
+                      api.openweathermap.org/data/2.5/weather?id=2172797</a></p>
+                   -->
+               <p>The data is available for 8 days ahead.</p>
+               <section id="fgeo">
+                  <!-- <h3>By geographic coordinates </h3>
+                 <p class="sub-header">API call</p>
+                 <div class="api">
+                    <code>
+                    http://api.openweathermap.org/data/2.5/uvi/forecast?lat={lat}&lon={lon}&cnt={cnt}&appid=<a href="https://home.openweathermap.org/api_keys" target="_blank">{API key}</a>
+                    </code>
+                 </div> -->
+                  <table class="material-table">
+                     <tbody><tr>
+                        <th colspan="3">Parameters of API call</th>
+                     </tr>
+                     <tr>
+                        <td><code class="nowrap">lat, lon</code></td>
+                        <td><span class="sub">required</span></td>
+                        <td>Geographical coordinates (latitude, longitude)</td>
+                     </tr>
+
+                     <tr>
+                        <td><code>appid</code></td>
+                        <td><span class="sub">required</span></td>
+                        <td>Your unique API key (you can always find it on your account page under the <a href="https://home.openweathermap.org/api_keys" target="_blank">"API key" tab</a>)</td>
+                     </tr>
+                     <tr>
+                        <td><code>cnt</code></td>
+                        <td><span class="sub">optional</span></td>
+                        <td>A number of timestamps in response.</td>
+                     </tr>
+                  </tbody></table>
+                  <p class="sub-header">Example of API call</p>
+                  <div class="response open">
+                     <div class="api">
+                        <code>
+                       Example of API response
+                       </code>
+                     </div>
+                     <div class="content">
+                        <pre>                      <code class="json">
+  [
+      {
+          "lat":37.75,
+          "lon":-122.37,
+          "date_iso":"2017-06-27T12:00:00Z",
+          "date":1498564800,
+          "value":10.1
+      },
+      {
+          "lat":37.75,
+          "lon":-122.37,
+          "date_iso":"2017-06-28T12:00:00Z",
+          "date":1498651200,
+          "value":10.19
+      },
+      ...
+      {
+          "lat":37.75,
+          "lon":-122.37,
+          "date_iso":"2017-07-04T12:00:00Z",
+          "date":1499169600,
+          "value":10.05
+      }
+  ]
+                      </code>
+                    </pre>
+                     </div>
+                  </div>
+                  <!--                    <section id="fzip">
+                    <h3 id="zip">By ZIP code </h3>
+                    </section>
+
+                    <h5>Description:</h5>
+                    <p>Please note if country is not specified then the search works for USA as a default.</p>
+
+                    <h5>API call:</h5>
+
+                    http://api.openweathermap.org/data/2.5/uvi/forecast?appid={appid}&zip={zip_code},{country_code}
+
+                    <h5>Parameters:</h5>
+                    <p><b>appid</b> - personal API key</p>
+                    <p><b>zip_code</b> - zip code and country code divided by comma, use ISO 3166 country codes</p>
+
+                    <h5>Examples of API calls:</h5>
+
+                    <p><a href="http://samples.openweathermap.org/data/2.5/weather?zip=94040,us&appid=439d4b804bc8187953eb36d2a8c26a02" target="_blank">api.openweathermap.org/data/2.5/weather?zip=94040,us</a></p>
+                    <h5>Parameters:</h5>
+                    <p><b>zip</b> zip code</p>
+
+                    -->
+               </section>
+            </section>
+            <section id="history">
+               <h2>Call historical UV data</h2>
+               <!--                     <section id="hname"></section>
+                  <h3>By city name </h3>
+
+                  <h5>Description:</h5>
+                  You can call by city name or city name and country code. API responds with a list of results that match a searching word.
+
+                  <h5>API call:</h5>
+                  <p>http://api.openweathermap.org/data/2.5/uvi/forecast?appid={appid}&q={city_name}&cnt={cnt}&start={start}&end={end}</p>
+                  <p>http://api.openweathermap.org/data/2.5/uvi/forecast?appid={appid}&q={city_name},{country_code}&cnt={cnt}&start={start}&end={end}</p>
+
+
+
+                  <h5>Parameters:</h5>
+
+                  <p><b>appid</b> - personal API key</p>
+                  <p><b>q</b> - city name and country code divided by comma, use ISO 3166 country codes</p>
+                  <p><b>cnt</b> - number of returned days</p>
+                  <p><b>start</b> - starting point of time period in UNIX time</p>
+                  <p><b>end</b> - final point of time period in UNIX time</p>
+
+                  <div class="info-board info-board-blue">
+                      <p>If cnt/start/end parameters are not specified - 168 records are returned (weekly data).</p>
+                  </div>
+
+                  <h5>Examples of API calls:</h5>
+                  <p><a href="http://samples.openweathermap.org/data/2.5/weather?q=London,uk&appid=439d4b804bc8187953eb36d2a8c26a02" target="_blank">api.openweathermap.org/data/2.5/weather?q=London</a>
+
+                  <p><a href="http://samples.openweathermap.org/data/2.5/weather?q=London,uk&appid=439d4b804bc8187953eb36d2a8c26a02" target="_blank">api.openweathermap.org/data/2.5/weather?q=London,uk</a> </p>
+
+                   -->
+               <!--                     <section id="hcityid"></section>
+                  <h3>By city ID </h3>
+
+                  <h5>Description:</h5>
+                  <p>You can call by city ID. API responds with exact result. </p>
+                  <p>List of city ID can be downloaded<a href="http://bulk.openweathermap.org/sample/city.list.json.gz" target="_blank"> here.</a></p>
+
+                  <div class="info-board info-board-blue">
+                      <p>We recommend to call API by city ID to get unambiguous result for your city.</p>
+                  </div>
+                      <h5>API call:</h5>
+
+                      http://api.openweathermap.org/data/2.5/uvi/forecast?appid={appid}&id={city_id}&cnt={cnt}&start={start}&end={end}
+
+                  <h5>Parameters:</h5>
+                  <p><b>appid</b> - personal API key</p>
+                  <p><b>id</b> - city ID</p>
+                  <p><b>cnt</b> - number of returned days</p>
+                  <p><b>start</b> - starting point of time period in UNIX time</p>
+                  <p><b>end</b> - final point of time period in UNIX time</p>
+
+                  <h5>Examples of API calls:</h5>
+                  <p><a href="http://samples.openweathermap.org/data/2.5/weather?id=2172797&appid=439d4b804bc8187953eb36d2a8c26a02" target="_blank">
+                      api.openweathermap.org/data/2.5/weather?id=2172797</a></p>
+
+                   -->
+               <section id="hgeo">
+                  <!-- <h3>By geographic coordinates </h3>
+                  <p class="sub-header">API call</p>
+                  <div class="api">
+                     <code>
+                     http://api.openweathermap.org/data/2.5/uvi/history?lat={lat}&lon={lon}&cnt={cnt}&start={start}&end={end}&appid=<a href="https://home.openweathermap.org/api_keys" target="_blank">{API key}</a>
+                     </code>
+                  </div> -->
+                  <table class="material-table">
+                     <tbody><tr>
+                        <th colspan="3">Parameters</th>
+                     </tr>
+                     <tr>
+                        <td><code class="nowrap">lat, lon</code></td>
+                        <td><span class="sub">required</span></td>
+                        <td>Geographical coordinates (latitude, longitude)</td>
+                     </tr>
+
+                     <tr>
+                        <td><code>appid</code></td>
+                        <td><span class="sub">required</span></td>
+                        <td>Your unique API key (you can always find it on your account page under the <a href="https://home.openweathermap.org/api_keys" target="_blank">"API key" tab</a>)</td>
+                     </tr>
+                     <tr>
+                        <td><code>cnt</code></td>
+                        <td><span class="sub">optional</span></td>
+                        <td>A number of timestamps in response.</td>
+                     </tr>
+                     <tr>
+                        <td><code>start</code></td>
+                        <td><span class="sub">optional</span></td>
+                        <td>Starting point of time period in UNIX time</td>
+                     </tr>
+                     <tr>
+                        <td><code>end</code></td>
+                        <td><span class="sub">optional</span></td>
+                        <td>Final point of time period in UNIX time</td>
+                     </tr>
+                  </tbody></table>
+                  <p class="sub-header">Example of API call</p>
+                  <div class="response open">
+                     <div class="api">
+                        <code>
+                        Example of API response
+                        </code>
+                     </div>
+                     <div class="content">
+                        <pre>                       <code class="json">
+[
+    {
+        "lat":37.75,
+        "lon":-122.37,
+        "date_iso":"2017-06-22T12:00:00Z",
+        "date":1498132800,
+        "value":9.92
+    },
+    {
+        "lat":37.75,
+        "lon":-122.37,
+        "date_iso":"2017-06-23T12:00:00Z",
+        "date":1498219200,
+        "value":10.09
+    },
+    {
+        "lat":37.75,
+        "lon":-122.37,
+        "date_iso":"2017-06-24T12:00:00Z",
+        "date":1498305600,
+        "value":10.95
+    },
+    {
+        "lat":37.75,
+        "lon":-122.37,
+        "date_iso":"2017-06-25T12:00:00Z",
+        "date":1498392000,
+        "value":11.03
+    },
+    {
+        "lat":37.75,
+        "lon":-122.37,
+        "date_iso":"2017-06-26T12:00:00Z",
+        "date":1498478400,
+        "value":10.06
+    }
+]
+                       </code>
+                     </pre>
+                     </div>
+                  </div>
+                  <div class="info-board info-board-orange">
+                     The data is available starting from the 2017-06-22.
+                  </div>
+               </section>
+            </section>
+            <section id="responseformat">
+               <h2>Server response format</h2>
+               <div class="info-board info-board-orange">
+                  Please remember that data is provided only for 12:00 p.m.
+               </div>
+               <div class="response open">
+                  <div class="api">
+                     Example
+                  </div>
+                  <div class="content">
+                     <pre>                    <code class="json">
+{
+  "lat": 38.75,
+  "lon": 40.25,
+  "date_iso": "2017-06-23T12:00:00Z",
+  "date": 1498219200,
+  "value": 10.16
+}
+                    </code>
+                  </pre>
+                  </div>
+               </div>
+               <ul class="docs-list">
+                  <li><code>lat</code> <span class="sub" style="margin-right: 4pt;">float</span> latitude for returned
+                     data</li>
+                  <li><code>lon</code> <span class="sub" style="margin-right: 4pt;">float</span> longitude for returned
+                     data</li>
+                  <li><code>date_iso</code> <span class="sub" style="margin-right: 4pt;">string</span> date and time
+                     corresponding to returned date</li>
+                  <li><code>date</code> <span class="sub" style="margin-right: 4pt;">integer</span> ISO 8601 timestamp
+                  </li>
+                  <li><code>value</code> <span class="sub" style="margin-right: 4pt;">float</span> longitude for
+                     returned data</li>
+               </ul>
+
+            </section>
+            <section id="codes">
+               <h3>Codes of requests</h3>
+               <div class="info-board info-board-blue">
+                  If API call is successful - 200 HTTP-code is returned. If location is not found or wrong APPID is
+                  specified then HTTP-code 404 or HTTP-code 400 are returned accordingly.
+               </div>
+            </section>
+         </section>
+      </div>
+
+   </div>
+</div>  </main>
+  <div id="footer-website" onclick="toggleFooterSection(event)">
+   <div class="inner-footer-container">
+      <div class="horizontal-section">
+         <div class="footer-section">
+            <p class="section-heading">Product Collections</p>
+            <div class="section-content">
+               <ul>
+                  <li><a href="/api#current">Current and Forecast APIs</a></li>
+                  <li><a href="/api#history">Historical Weather Data</a></li>
+                  <li><a href="/api#maps">Weather Maps</a></li>
+                  <li><a href="https://dashboard.openweather.co.uk/" target="_blank">Weather Dashboard</a></li>
+                  <li><a href="/widgets-constructor">Widgets</a></li>
+               </ul>
+            </div>
+         </div>
+         <div class="footer-section">
+            <p class="section-heading">Subscription</p>
+            <div class="section-content">
+               <ul>
+                  <li><a href="/appid">How to start</a></li>
+                  <li><a href="/price">Pricing</a></li>
+                  <li><a href="https://home.openweathermap.org/users/sign_up">Subscribe for free</a></li>
+                  <li><a href="/faq">FAQ</a></li>
+               </ul>
+            </div>
+         </div>
+         <div class="footer-section">
+            <p class="section-heading">Company</p>
+            <div class="section-content">
+               <p>OpenWeather is a team of IT experts and data scientists that has been practising deep weather data
+                  science. For each point on the globe, OpenWeather provides historical, current and forecasted weather
+                  data via light-speed APIs. Headquarters in London, UK.</p>
+            </div>
+         </div>
+      </div>
+      <div class="horizontal-section">
+         <div class="footer-section">
+            <p class="section-heading">Technologies</p>
+            <div class="section-content">
+               <ul>
+                  <li><a href="/technology">Our technology</a></li>
+                  <li><a href="/accuracy-and-quality">Accuracy and quality of weather data</a></li>
+                  <li><a href="/stations">Connect your weather station</a></li>
+               </ul>
+            </div>
+         </div>
+         <div class="footer-section">
+            <p class="section-heading">Terms &amp; Conditions</p>
+            <div class="section-content">
+               <ul>
+                  <li><a href="https://openweather.co.uk/storage/app/media/Terms/Openweather_terms_and_conditions_of_sale.pdf" target="_blank">Terms and conditions of sale</a></li>
+                  <li><a href="https://openweather.co.uk/privacy-policy" target="_blank">Privacy Policy</a></li>
+                  <li><a href="https://openweather.co.uk/storage/app/media/Terms/Openweather_website_terms_and_conditions_of_use.pdf" target="_blank">Website terms and conditions</a></li>
+               </ul>
+            </div>
+         </div>
+         <div class="footer-section not-foldable">
+            <!-- <p class="section-heading">Contact us</p> -->
+            <div class="section-content">
+               <ul>
+                  <li><a href="/about-us" target="_blank">About us</a></li>
+                  <li><a href="https://openweather.co.uk/about/our-offices" target="_blank">Our offices</a></li>
+                  <li><a href="https://openweather.co.uk/blog/category/weather" target="_blank">Blog</a></li>
+                  <li><a href="https://openweather.co.uk/" target="_blank">OpenWeather for Business</a></li>
+                  <li><a href="/chat">Ulla, OpenWeather AI assistant</a></li>
+                  <li><a href="https://home.openweathermap.org/questions" target="_blank">Ask a question</a></li>
+                  <!--  <li><a href="mailto:info@openweathermap.org">info@openweathermap.org</a>  -->
+               </ul>
+            </div>
+         </div>
+      </div>
+      <div class="horizontal-section">
+         <div class="footer-section">
+            <div class="my-5">
+               <p>Download OpenWeather app</p>
+               <div>
+                  <a href="https://apps.apple.com/gb/app/openweather/id1535923697" target="_blank">
+                     <img src="..\..\assets\themes\openweathermap\assets\img\mobile_app\app-store-badge.svg" alt="Get it on AppStore">
+                  </a>
+                  <a href="https://play.google.com/store/apps/details?id=uk.co.openweather" target="_blank">
+                     <img src="..\..\assets\themes\openweathermap\assets\img\mobile_app\google-play-badge.png" class="google-play-img" alt="Get it on Google Play">
+                  </a>
+               </div>
+            </div>
+         </div>
+         <div class="footer-section">
+            <div class="my-5 logo-blocks">
+               <img src="..\..\assets\themes\openweathermap\assets\img\RMets_Logo_corp.png" width="200" height="70" alt="RMets logo">
+               <img src="..\..\assets\themes\openweathermap\assets\img\CNB_Business_Logo_2024.png" alt="CNB Business logo" width="170" height="170">
+            </div>
+         </div>
+
+      </div>
+      <div class="horizontal-section my-5">
+         <div>
+            <span>Supplier of Achilles UVDB community</span><br>
+            <span id="years-copyright"></span><br><br>
+         </div>
+         <div class="social">
+            <a href="https://www.facebook.com/groups/270748973021342" target="_blank"><img src="..\..\assets\themes\openweathermap\assets\img\owm_icons\icon_facebook.png" alt="facebook icon"></a>
+            <a href="https://twitter.com/OpenWeatherMap" target="_blank"><img src="..\..\assets\themes\openweathermap\assets\img\owm_icons\icon_x_black.png" alt="x icon"></a>
+            <a href="https://www.linkedin.com/company/9816754" target="_blank"><img src="..\..\assets\themes\openweathermap\assets\img\owm_icons\icon_linkedin.png" alt="linkedin icon "></a>
+            <a href="https://medium.com/@openweathermap" target="_blank"><img src="..\..\assets\themes\openweathermap\assets\img\owm_icons\new_medium.svg" alt="meduim icon"></a>
+            <a href="https://t.me/openweathermap" target="_blank"><img src="..\..\assets\themes\openweathermap\assets\img\owm_icons\icon_telegram.png" alt="telegram icon"></a>
+            <a href="https://github.com/openweathermap" target="_blank"><img src="..\..\assets\themes\openweathermap\assets\img\owm_icons\icon_github.png" alt="github icon"></a>
+         </div>
+      </div>
+      <div class="horizontal-section"></div>
+   </div>
+</div>  <script src="https://cdn.ravenjs.com/3.6.1/raven.min.js"></script>
+<script>Raven.config('http://66df88eb63e94f27964b84031e49b358@sentry.owm.io/16').install()</script>  <script src="..\..\assets\themes\openweathermap\assets\js\bundle_owm_postload.c31872127471c475ade1.js"></script>
+<script src="..\..\assets\themes\openweathermap\assets\js\advertising.js"></script>      <div class="gdpr-banner">
+        <div class="gdpr-banner__wrapper">
+            <div class="gdpr-banner__column gdpr-banner__column--1">
+    <div class="gdpr-banner__row">
+        <div class="gdpr-banner__message">
+    We use cookies to personalize content and to analyze our traffic. Please decide if you are willing to accept cookies from our website.
+</div>    </div>
+</div>
+<div class="gdpr-banner__column gdpr-banner__column--2">
+        <div class="gdpr-banner__settings">
+        <a role="link" rel="privacy" href="https://openweathermap.org/cookies" data-request="onDecline" data-request-success="document.location.href = 'https://openweathermap.org/cookies'">
+            Advanced Settings
+        </a>
+    </div>
+    <div class="gdpr-banner__opt-out">
+    <button role="button" tabindex="0" aria-pressed="false" class="gdpr-banner__button gdpr-banner__button--opt-out" data-request="onDecline" data-request-success="document.querySelector('.gdpr-banner').remove()">
+        Decline
+    </button>
+</div>    <div class="gdpr-banner__opt-in">
+    <button role="button" tabindex="0" aria-pressed="false" class="gdpr-banner__button gdpr-banner__button--opt-in" data-request="onAccept" data-request-success="document.querySelector('.gdpr-banner').remove()" data-request-update="'gtag' : '#gdpr-reload'">
+        Accept
+    </button>
+</div>
+    <div class="gdpr-banner__dismiss">
+    <button role="button" tabindex="0" aria-pressed="false" class="gdpr-banner__button--dismiss" onclick="document.querySelector('.gdpr-banner').remove()">×</button>
+</div></div>        </div>
+    </div>
+  <link href="..\..\assets\themes\openweathermap\assets\css\chat-banner.css" rel="stylesheet">
+<link href="..\..\assets\themes\openweathermap\assets\vendor\owm\css\assistant-index.DVVhxENO.css" rel="stylesheet">
+
+<style>
+  #owm-chat-bot p {
+    font-weight: normal;
+  }
+
+  #owm-chat-bot>div {
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  .pop-up-content h2 {
+    margin-top: 19.2px;
+  }
+
+  .owm-chat-bot-description ul {
+    margin: 0;
+    padding: 16px;
+    background-color: #4f4f4f;
+    color: white;
+    border-radius: 4.8px;
+  }
+
+  .owm-chat-bot-description ul.dashed {
+    list-style-type: none;
+  }
+
+  /* .owm-chat-bot-description ul.dashed>li {
+    text-indent: -1rem;
+  } */
+
+  .owm-chat-bot-description ul.dashed>li:before {
+    content: "- ";
+    text-indent: -16px;
+  }
+</style>
+
+<div id="owm-chat-bot" data-key="5796abbde9106b7da4febfae8c44c232" data-popup="" style="display: none; position: fixed; z-index: 50000; bottom: 16px; right: 16px; height: 640px; max-height: calc(100% - 32px); width: 480px; max-width: calc(100% - 32px);">
+</div>
+
+<script>
+  `ASSISTANT_URL=https://api.openweathermap.org`.split("\n").map(env => env.split('=')).map(env => window[env[0]] = env[1]);
+</script>
+<script src="..\..\assets\themes\openweathermap\assets\vendor\owm\js\assistant-index.ClVGaiQn.js"></script>
+
+<div id="chat-banner" class="banner-pop-up">
+  <div class="banner-pop-up-content">
+    <img src="..\..\assets\themes\openweathermap\assets\img\Ulla_bot.png" alt="Ulla the Bot" width="16" height="16">
+    <h3>Ulla Weather Assistant</h3>
+  </div>
+</div>
+
+
+<script>
+  const chatBanner = document.getElementById('chat-banner');
+  const chatBot = document.getElementById('owm-chat-bot');
+
+  chatBanner.addEventListener('click', () => {
+    chatBanner.style.display = 'none';
+    chatBot.style.display = chatBot.style.display === 'none' ? 'block' : 'none';
+    gtag('event', 'maxullaweather', {
+      'event_category': 'Chat',
+      'event_label': 'maxullaweather'
+    });
+  });
+
+  window.addEventListener('minimize', () => {
+    chatBot.style.display = 'none';
+    chatBanner.style.display = 'block';
+    gtag('event', 'minullaweather', {
+      'event_category': 'Chat',
+      'event_label': 'minullaweather'
+    });
+  });
+
+  const gdprBanner = document.querySelector('.gdpr-banner');
+
+  if (gdprBanner) {
+    chatBanner.style.bottom = '80px';
+
+    const observer = new MutationObserver(() => {
+      if (!document.body.contains(gdprBanner)) {
+        chatBanner.style.bottom = '50px';
+      } else {
+        chatBanner.style.bottom = (gdprBanner.clientHeight + 8) + 'px';
+      }
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
+</script>
+
+</body></html>

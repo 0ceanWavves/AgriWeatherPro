@@ -1,0 +1,71 @@
+---
+description: Notification and Alert System for AgriWeather Pro
+globs: 
+alwaysApply: true
+---
+---
+globs: **/*.{js,jsx,ts,tsx,py}
+---
+# Notification and Alert System
+
+<rule>
+name: notification_alert_system
+description: Standards for the notification and alert system in AgriWeather Pro
+filters:
+  - type: file_extension
+    pattern: "\\.(js|jsx|ts|tsx|py)$"
+  - type: content
+    pattern: "alert|notification|warning|message|inform"
+
+actions:
+  - type: suggest
+    message: |
+      # Notification and Alert System Guidelines for AgriWeather Pro
+      
+      ## Alert Classification
+      
+      1. **Alert Priority Levels**:
+         - Critical: Immediate action required (freeze warnings, severe storms)
+         - Warning: Action needed soon (disease onset conditions, drought stress)
+         - Advisory: Informational (optimal planting conditions, harvest windows)
+         - Update: General information (forecast changes, system updates)
+      
+      2. **Alert Implementation**:
+         ```javascript
+         function createWeatherAlert(type, conditions, fields) {
+           const alert = {
+             id: generateUUID(),
+             timestamp: new Date().toISOString(),
+             type,
+             priority: determineAlertPriority(type, conditions),
+             title: generateAlertTitle(type, conditions),
+             message: generateAlertMessage(type, conditions),
+             fields: fields || [], // Affected fields
+             actions: determineRecommendedActions(type, conditions),
+             read: false,
+             expires: calculateExpirationTime(type)
+           };
+           
+           // Route alert to appropriate channels
+           routeAlert(alert);
+           
+           return alert;
+         }
+         ```
+      
+      3. **Delivery Channels**:
+         - In-app notifications
+         - Email digests (daily/weekly options)
+         - SMS for critical alerts
+         - Push notifications for mobile app
+      
+      4. **User Preferences**:
+         - Allow granular control over notification types
+         - Time-based quiet periods
+         - Channel preferences by alert priority
+         - Field-specific alert subscriptions
+
+metadata:
+  priority: medium
+  version: 1.0
+</rule>

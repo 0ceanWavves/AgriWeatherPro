@@ -1,0 +1,1804 @@
+<!DOCTYPE html><html lang="en"><head>
+  <title> Global Weather Alerts - OpenWeatherMap</title>
+  <meta name="apple-itunes-app" content="app-id=1535923697">
+  <!-- Google tag (gtag.js) -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-31TSX35RJT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+
+  gtag('config', 'G-31TSX35RJT');
+</script>
+  <script type="text/javascript">
+  (function (c, l, a, r, i, t, y) {
+    c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
+    t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+    y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+  })(window, document, "clarity", "script", "niyw44l6sh");
+</script>  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="keywords" content="weather, world, Openstreetmap, forecast, Openweather, current">
+<meta name="description" content="Stay informed with OpenWeather's Global Weather Alerts. Set up push notifications to receive timely
+weather warnings from national systems worldwide. Alerts include key details like urgency, severity, and agency. Sign up
+for our service, check our pricing for monthly subscriptions, and email us to activate alerts and specify your
+endpoint.">
+<meta name="author" content="OpenWeatherMap.org">
+<meta name="domain" content="OpenWeatherMap.org">
+<meta name="p:domain_verify" content="34fe229eab8562dca90f4a5962ff80a9">
+<meta property="title" content="Global Weather Alerts">  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">  <link rel="shortcut icon" href="/themes/openweathermap/assets/vendor/owm/img/icons/favicon.ico">
+<link rel="icon" href="/themes/openweathermap/assets/vendor/owm/img/icons/logo_16x16.png" sizes="16x16" type="image/png">
+<link rel="icon" href="/themes/openweathermap/assets/vendor/owm/img/icons/logo_32x32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="/themes/openweathermap/assets/vendor/owm/img/icons/logo_60x60.png" sizes="60x60" type="image/png">  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald:400,700,300">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700,500,400italic,500italic">  <link rel="stylesheet" href="..\..\assets\plugins\offline\gdpr\assets\cookieBanner\banner.css">
+  <link href="..\..\assets\combine\f715fd89ab078cb9d62b06cf2ebe66e0-1741279879" rel="stylesheet">
+<!-- <link href="https://openweathermap.org/combine/9e05934b20b1168fe3f391e409e227a4-1741279879" rel="stylesheet"> -->
+<!-- <link href="/themes/openweathermap/assets/css/new_design.css" rel="stylesheet"> -->  <script src="..\..\assets\combine\d8fb6d080cb70d894318fcae14526239-1741279879"></script>
+<!-- <script src="https://openweathermap.org/combine/9dc69b9a99b742c8cd4a003c67dfede2-1741279879"></script> -->  </head>
+
+<body class="body-orange" onclick="closePopUps()">
+  <link href="..\..\assets\themes\openweathermap\assets\css\smart_banner_android.css" rel="stylesheet">
+
+<div id="banner_android" class="banner_stripe">
+    <div class="banner_container">
+        <a class="smartbanner__exit" onclick="bannerClose()"></a>
+        <img src="..\..\assets\themes\openweathermap\assets\img\mobile_app\android-app-top-banner.png" class="banner_icon" alt="banner android">
+        <div>
+            <p class="smartbanner-text">OpenWeather</p>
+            <p class="smartbanner-text">OpenWeather Ltd.</p>
+            <p class="smartbanner-text">GET - on Google Play</p>
+        </div>
+    </div>
+    <a class="google_button" href="https://play.google.com/store/apps/details?id=uk.co.openweather">VIEW</a>
+</div>
+
+<script src="..\..\assets\themes\openweathermap\assets\js\smart_banner_android.js"></script>  <nav id="nav-website" onclick="toggleMenu(event)">
+  <ul id="first-level-nav">
+    <li class="logo">
+      <a href="/">
+        <img src="..\..\assets\themes\openweathermap\assets\img\logo_white_cropped.png" alt="logo">
+      </a>
+    </li>
+    <li id="hamburger">
+      <img src="..\..\assets\themes\openweathermap\assets\img\owm_icons\icon_hamburger.svg" alt="icon hamburger">
+    </li>
+    <li id="desktop-menu">
+      <form role="search" action="/find" method="get">
+        <input type="text" name="q" placeholder="Weather in your city">
+        <input type="submit" class="submit">
+      </form>
+      <ul>
+        <li>
+          <a href="/guide">Guide</a>
+        </li>
+        <li>
+          <a href="/api">API</a>
+        </li>
+        <li>
+          <a href="https://dashboard.openweather.co.uk/" target="_blank">Dashboard</a>
+        </li>
+        <li>
+          <a href="https://home.openweathermap.org/marketplace" target="_blank">Marketplace</a>
+        </li>
+        <li>
+          <a href="/price">Pricing</a>
+        </li>
+        <li>
+          <a href="/weathermap">Maps</a>
+        </li>
+        <li>
+          <a href="/our-initiatives">Our Initiatives</a>
+        </li>
+        <li>
+          <a href="/examples">Partners</a>
+        </li>
+        <li>
+          <a href="https://openweather.co.uk/blog/category/weather" target="_blank">Blog</a>
+        </li>
+        <li>
+          <a href="https://openweather.co.uk" class="marketplace" target="_blank">For Business</a>
+        </li>
+                <li class="user-li"><a href="https://openweathermap.org/home/sign_in">Sign in</a></li>
+                <li><a href="/support-centre">Support centre</a></li>
+    
+  </ul>
+  </li>
+  </ul>
+  <ul id="mobile-menu">
+    <li>
+      <form role="search" action="/find" method="get">
+        <input type="text" name="q" placeholder="Weather in your city">
+        <input type="submit" class="submit">
+      </form>
+    </li>
+    <li>
+      <a href="/guide">Guide</a>
+    </li>
+    <li>
+      <a href="/api">API</a>
+    </li>
+    <li>
+      <a href="https://dashboard.openweather.co.uk/" target="_blank">Dashboard</a>
+    </li>
+    <li>
+      <a href="https://home.openweathermap.org/marketplace" target="_blank">Marketplace</a>
+    </li>
+    <li>
+      <a href="/price">Pricing</a>
+    </li>
+    <li>
+      <a href="/weathermap">Maps</a>
+    </li>
+    <li>
+      <a href="/our-initiatives">Our Initiatives</a>
+    </li>
+    <li>
+      <a href="/examples">Partners</a>
+    </li>
+    <li>
+      <a href="https://openweather.co.uk/blog/category/weather" target="_blank">Blog</a>
+    </li>
+    <li>
+      <a href="https://openweather.co.uk" class="marketplace" target="_blank">For Business</a>
+    </li>
+    <li><a href="/support-centre">Support centre</a></li>
+        <li><a href="https://openweathermap.org/home/sign_in">Sign in</a></li>
+      </ul>
+</nav>
+<div class="nav-styles"></div>  <main class="wrapper">
+        <div class="topic">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-7">
+                                    <h1 class="breadcrumb-title">Global Weather Alerts</h1>
+                            </div>
+            <div class="col-sm-5">
+                <ol class="breadcrumb pull-right hidden-xs">
+                    <li><a href="/">Home</a></li>
+                                            <li class="active"><a href="/api">API</a></li>
+                                                            
+                                                                        <li class="breadcrumb__leaf">Global Weather Alerts</li>
+                                                            </ol>
+            </div>
+        </div>
+    </div>   
+</div>        <!-- proofreading 29 June 2020 -->
+<div class="container documentation">
+   <div class="doc-container">
+      <div>
+         <nav>
+            <ul>
+               <li><a href="#about">Features of Global Weather Alerts</a></li>
+               <li><a href="#how">How to get access</a></li>
+               <li><a href="#descr">Description of alert notifications</a>
+                  <ul>
+                     <li><a href="#examples">Examples of alert notifications</a></li>
+                     <li><a href="#fields">Fields in alert notifications</a></li>
+                     <!--<li><a href="#notifications">Types of alert notifications</a></li>-->
+                  </ul>
+               </li>
+               <li><a href="#listsource">List of alerts sources</a></li>
+            </ul>
+         </nav>
+      </div>
+      <div>
+         <p class="lead">Get timely push notifications about severe weather. Our Global Weather Alerts product allows you
+            to set up weather alert push notifications in your projects and apps.</p>
+         <p class="lead">
+            We collect weather warnings from majority of national weather warning systems and present them in a uniform
+            and useful view. </p>
+         <section id="about">
+            <h2>Features of Global Weather Alerts</h2>
+            <ol>
+               <li>
+                  <p>We provide all weather alerts from the entire world.</p>
+                  <p> We collect weather alert notifications from majority of national weather warning systems
+                     worldwide. As soon as we get a new weather alert, we process it and send to our users via push
+                     notifications. Users get all weather alert notifications sent to their <a href="#how">specified
+                        endpoint</a>. <!--We send notifications about new weather alerts and 15 minutes before they start, alert updates and alert cancellations.</p>
+             </li>-->
+               </p></li><li>
+                  <p>All necessary data in the push notification.</p>
+                  <p>Each push notification contains the necessary fields, such as the headline of the alert, its start
+                     and end dates, and a description. Additionally, each alert has data about urgency, severity,
+                     certainty and sender agency, to help users classify alerts according to various criteria. Here is a
+                     <a href="#fields">full list of the fields in the alert push notification</a>.
+                  </p>
+               </li>
+               <li>
+                  <p>Monthly subscription.
+                  </p><p>
+                  </p><p>Please refere to the <a href="/price#alerts">pricing page</a>.</p>
+               </li>
+            </ol>
+         </section>
+         <section id="how">
+            <h2>How to get access to Global Weather Alerts</h2>
+            <ol>
+               <li><a href="https://home.openweathermap.org/users/sign_up">Sign up</a> to OpenWeather service in case
+                  you haven't got your API key yet.</li>
+               <li>Follow the <a href="/price#alerts">pricing page</a> to learn details about the API monthly price of
+                  Global Weather Alerts subscription.</li>
+               <li>
+                  <p><a href="mailto:info@openweathermap.org">Contact us</a> via email to process your payment and set
+                     up access to our Global Weather Alerts.</p>
+                  <p>Please also provide us with the endpoint that all weather alerts should be sent to.</p>
+                  <p class="sub-header">Example of the endpoint</p>
+                  <div class="api example">
+                     <code>http://test_url.test</code>
+                  </div>
+               </li>
+            </ol>
+            <p>Then get all weather alerts to the specified endpoint via POST requests.</p>
+            <div class="text-center"><a class="btn_like btn-orange" href="mailto:info@openweathermap.org" target="_blank">Get access</a>
+            </div>
+         </section>
+         <section id="descr">
+            <h2>Description of alert notifications</h2>
+
+            <section id="examples">
+               <div class="response open">
+                  <div class="api">Example of an alert notification</div>
+                  <div class="content">
+                     <pre>                   <code class="json">
+{
+   "alert": {
+         "id": "2.49.0.0.428.0.LV.201201000201.46453_0",
+         "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+               [
+                     [
+                        -79.322,
+                        43.1293
+                     ],
+                     [
+                        -79.7776,
+                        43.1723
+                     ],
+                     [
+                        -79.322,
+                        43.1293
+                     ]
+               ]
+            ]
+         }
+   },
+   "msg_type": "warning",
+   "categories": [
+         "Met"
+   ],
+   "urgency": "Future",
+   "severity": "Moderate",
+   "certainty": "Likely",
+   "start": 1606896000,
+   "end": 1606982400,
+   "sender": "AIRNow Program, US Environmental Protection Agency",
+   "description": [
+         {
+            "language": "En",
+            "event": "Particle Pollution (2.5 microns) is forecast 
+            to reach 105 AQI - Unhealthy for Sensitive Groups on 
+            Wed 12/02/2020. Particle Pollution (2.5 microns) is 
+            forecast to reach 102 AQI - Unhealthy for 
+            Sensitive Groups on Thu 12/03/2020. ",
+            "headline": "Air Quality Alert for Natomas",
+            "description": "Particle Pollution (2.5 microns) 
+            is forecast to reach 105 AQI  - Unhealthy for Sensitive 
+            Groups on Wed 12/02/2020. Particle Pollution 
+            (2.5 microns) is forecast to reach 102 AQI - 
+            Unhealthy for Sensitive Groups on Thu 12/03/2020. ",
+            "instruction": "Active children and adults, and people 
+            with lung disease, such as asthma, should
+            reduce prolonged or heavy exertion outdoors"
+         }
+   ]
+}
+                   </code>
+                </pre>
+                  </div>
+               </div>
+
+               <div class="response">
+                  <div class="api">Example of an alert notification with a multipolygon</div>
+                  <div class="content">
+                     <pre>                   <code class="json">
+{
+   "alert": {
+         "id": "NOAA-NWS-ALERTS-MZGM1263E8498780.SmallCraftAdvisory.1263E856B9A0MZGM.BROMWWBRO.dc675d997f5213a477544834b8be8722_0",
+         "geometry": {
+            "type": "MultiPolygon",
+            "coordinates": [
+               [
+                  [
+                     [
+                        -96.087464179,
+                        26.578050484
+                     ],
+                     [
+                        -96.085647583,
+                        26.57072258
+                     ],
+                     [
+                        -96.083621979,
+                        26.562177658
+                     ],
+                     [
+                        -96.082635879,
+                        26.55844307
+                     ],
+                     [
+                        -96.080791474,
+                        26.551294327
+                     ],
+                     [
+                        -96.080055237,
+                        26.548616409
+                     ],
+                     [
+                        -96.0768013,
+                        26.536355972
+                     ],
+                     [
+                        -96.073354721,
+                        26.522771835
+                     ],
+                     [
+                        -96.070070267,
+                        26.50915718
+                     ],
+                     [
+                        -96.068614959,
+                        26.502691269
+                     ],
+                     [
+                        -96.066539764,
+                        26.493055343
+                     ],
+                     [
+                        -96.064674378,
+                        26.484033585
+                     ],
+                     [
+                        -96.062578201,
+                        26.473417282
+                     ],
+                     [
+                        -96.060411453,
+                        26.463632584
+                     ],
+                     [
+                        -96.058538436,
+                        26.454820633
+                     ],
+                     [
+                        -96.056734085,
+                        26.445997239
+                     ],
+                     [
+                        -96.056186676,
+                        26.443220139
+                     ],
+                     [
+                        -96.053762436,
+                        26.430116654
+                     ],
+                     [
+                        -96.051677703,
+                        26.418085098
+                     ],
+                     [
+                        -96.049282074,
+                        26.404554367
+                     ],
+                     [
+                        -96.046878815,
+                        26.389909744
+                     ],
+                     [
+                        -96.046155929,
+                        26.38498497
+                     ],
+                     [
+                        -96.042396545,
+                        26.374479293
+                     ],
+                     [
+                        -96.035120011,
+                        26.353532792
+                     ],
+                     [
+                        -96.028238297,
+                        26.332483292
+                     ],
+                     [
+                        -96.022151947,
+                        26.311246872
+                     ],
+                     [
+                        -96.016468048,
+                        26.289926529
+                     ],
+                     [
+                        -96.011184692,
+                        26.268526078
+                     ],
+                     [
+                        -96.006706238,
+                        26.246984481
+                     ],
+                     [
+                        -96.002634048,
+                        26.225385666
+                     ],
+                     [
+                        -95.998968125,
+                        26.203725815
+                     ],
+                     [
+                        -95.997766494,
+                        26.195436478
+                     ],
+                     [
+                        -95.995140076,
+                        26.174379349
+                     ],
+                     [
+                        -95.993175507,
+                        26.155935288
+                     ],
+                     [
+                        -95.991504669,
+                        26.137464524
+                     ],
+                     [
+                        -95.990282058,
+                        26.115594864
+                     ],
+                     [
+                        -95.989467621,
+                        26.09371376
+                     ],
+                     [
+                        -95.989063263,
+                        26.071821213
+                     ],
+                     [
+                        -95.989473343,
+                        26.049928665
+                     ],
+                     [
+                        -95.990291595,
+                        26.028047562
+                     ],
+                     [
+                        -95.991518021,
+                        26.006177903
+                     ],
+                     [
+                        -95.991877955,
+                        26.002326031
+                     ],
+                     [
+                        -95.993556976,
+                        25.984357834
+                     ],
+                     [
+                        -95.99600029,
+                        25.962568283
+                     ],
+                     [
+                        -95.99642671,
+                        25.959309737
+                     ],
+                     [
+                        -96.501509865,
+                        25.963276797
+                     ],
+                     [
+                        -96.590477128,
+                        25.963720082
+                     ],
+                     [
+                        -96.765168663,
+                        25.964367861
+                     ],
+                     [
+                        -96.764932632,
+                        25.97464943
+                     ],
+                     [
+                        -96.764972687,
+                        25.977422715
+                     ],
+                     [
+                        -96.763456344,
+                        25.982416153
+                     ],
+                     [
+                        -96.758001328,
+                        26.003778457
+                     ],
+                     [
+                        -96.754146576,
+                        26.025407791
+                     ],
+                     [
+                        -96.751909256,
+                        26.047212601
+                     ],
+                     [
+                        -96.751298905,
+                        26.069097519
+                     ],
+                     [
+                        -96.752321243,
+                        26.090970993
+                     ],
+                     [
+                        -96.754459382,
+                        26.10940361
+                     ],
+                     [
+                        -96.755105972,
+                        26.113637924
+                     ],
+                     [
+                        -96.759376526,
+                        26.135210037
+                     ],
+                     [
+                        -96.765247345,
+                        26.156488418
+                     ],
+                     [
+                        -96.772697448,
+                        26.177381516
+                     ],
+                     [
+                        -96.781696319,
+                        26.197805405
+                     ],
+                     [
+                        -96.792201996,
+                        26.217668533
+                     ],
+                     [
+                        -96.79268837,
+                        26.218446732
+                     ],
+                     [
+                        -96.795276642,
+                        26.239568711
+                     ],
+                     [
+                        -96.795593262,
+                        26.241510391
+                     ],
+                     [
+                        -96.796360016,
+                        26.246564865
+                     ],
+                     [
+                        -96.797924042,
+                        26.255437851
+                     ],
+                     [
+                        -96.799200057,
+                        26.264230729
+                     ],
+                     [
+                        -96.800275803,
+                        26.270502091
+                     ],
+                     [
+                        -96.800796509,
+                        26.273347854
+                     ],
+                     [
+                        -96.801525116,
+                        26.277193069
+                     ],
+                     [
+                        -96.801797867,
+                        26.279306412
+                     ],
+                     [
+                        -96.803100585,
+                        26.288293838
+                     ],
+                     [
+                        -96.803316117,
+                        26.289621353
+                     ],
+                     [
+                        -96.804729462,
+                        26.299470901
+                     ],
+                     [
+                        -96.807479859,
+                        26.314237595
+                     ],
+                     [
+                        -96.809848785,
+                        26.327173233
+                     ],
+                     [
+                        -96.81042099,
+                        26.329950333
+                     ],
+                     [
+                        -96.812376023,
+                        26.338747025
+                     ],
+                     [
+                        -96.813634872,
+                        26.343839645
+                     ],
+                     [
+                        -96.815059662,
+                        26.350320816
+                     ],
+                     [
+                        -96.816280365,
+                        26.356077194
+                     ],
+                     [
+                        -96.817558288,
+                        26.362470627
+                     ],
+                     [
+                        -96.819505692,
+                        26.371477127
+                     ],
+                     [
+                        -96.820425033,
+                        26.375413894
+                     ],
+                     [
+                        -96.823993682,
+                        26.388971329
+                     ],
+                     [
+                        -96.82544899,
+                        26.394060135
+                     ],
+                     [
+                        -96.826885223,
+                        26.399263382
+                     ],
+                     [
+                        -96.82774353,
+                        26.402441025
+                     ],
+                     [
+                        -96.828577042,
+                        26.405622482
+                     ],
+                     [
+                        -96.832330704,
+                        26.419351577
+                     ],
+                     [
+                        -96.832519532,
+                        26.420087814
+                     ],
+                     [
+                        -96.833189011,
+                        26.42291069
+                     ],
+                     [
+                        -96.834316253,
+                        26.427755356
+                     ],
+                     [
+                        -96.835884094,
+                        26.434026718
+                     ],
+                     [
+                        -96.836265564,
+                        26.435651779
+                     ],
+                     [
+                        -96.843618393,
+                        26.46247673
+                     ],
+                     [
+                        -96.84446907,
+                        26.465421677
+                     ],
+                     [
+                        -96.845005035,
+                        26.467565537
+                     ],
+                     [
+                        -96.849678039,
+                        26.484209061
+                     ],
+                     [
+                        -96.850107193,
+                        26.485601425
+                     ],
+                     [
+                        -96.851036072,
+                        26.489034653
+                     ],
+                     [
+                        -96.851259232,
+                        26.489938736
+                     ],
+                     [
+                        -96.856472015,
+                        26.508611679
+                     ],
+                     [
+                        -96.857965469,
+                        26.513872146
+                     ],
+                     [
+                        -96.858968735,
+                        26.51729393
+                     ],
+                     [
+                        -96.860980988,
+                        26.523862839
+                     ],
+                     [
+                        -96.861829757,
+                        26.526514053
+                     ],
+                     [
+                        -96.862491607,
+                        26.528749466
+                     ],
+                     [
+                        -96.864326477,
+                        26.534719467
+                     ],
+                     [
+                        -96.866165161,
+                        26.540365219
+                     ],
+                     [
+                        -96.868074417,
+                        26.546583176
+                     ],
+                     [
+                        -96.86967659,
+                        26.551523208
+                     ],
+                     [
+                        -96.871948242,
+                        26.558977127
+                     ],
+                     [
+                        -96.87336731,
+                        26.563314438
+                     ],
+                     [
+                        -96.874540329,
+                        26.567075729
+                     ],
+                     [
+                        -96.875873566,
+                        26.57123375
+                     ],
+                     [
+                        -96.877746582,
+                        26.57695198
+                     ],
+                     [
+                        -96.879312516,
+                        26.581567764
+                     ],
+                     [
+                        -96.881389618,
+                        26.587533951
+                     ],
+                     [
+                        -96.087464179,
+                        26.578050484
+                     ]
+                  ]
+               ]
+            ]
+         }
+   },
+   "msg_type": "warning",
+   "categories": [
+         "Met"
+   ],
+   "urgency": "Expected",
+   "severity": "Minor",
+   "certainty": "Likely",
+   "start": 1646769600,
+   "end": 1646805600,
+   "sender": "NWS Brownsville (Southern Texas)",
+   "description": [
+         {
+            "language": "",
+            "event": "Small Craft Advisory",
+            "headline": "Small Craft Advisory issued March 08 
+            at 1:52PM CST until March 09 at 12:00AM CST 
+            by NWS Brownsville",
+            "description": "...SMALL CRAFT ADVISORY IN EFFECT UNTIL 
+            MIDNIGHT CST TONIGHT...\n* WHAT...North winds around 
+            20 kt with gusts up to 30 kt.\n* 
+            WHERE...Offshore Gulf waters between
+            the mouth of the Rio\nGrande and Baffin Bay 
+            from 20 to 60 nm.\n* 
+            WHEN...Until midnight CST tonight.\n* 
+            IMPACTS...Conditions will be hazardous to small craft.",
+            "instruction": "Inexperienced mariners, especially 
+            those operating smaller\nvessels, should avoid 
+            navigating in hazardous conditions."
+         }
+   ]
+}
+                   </code>
+                </pre>
+                  </div>
+               </div>
+
+               <div class="response">
+                  <div class="api">Example of an alert notification about flood</div>
+                  <div class="content">
+                     <pre>                   <code class="json">
+{
+   "alert": {
+         "id": "NOAA-NWS-ALERTS-OH1263E8498910.FloodWarning.1263E8578010OH.RLXFLWRLX.df2a761a484d17f037d8cdb8bb5c2698_0",
+         "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+               [
+                  [
+                     -81.81,
+                     39.1
+                  ],
+                  [
+                     -81.82,
+                     39.06
+                  ],
+                  [
+                     -81.92,
+                     39.06
+                  ],
+                  [
+                     -81.94,
+                     39.1
+                  ],
+                  [
+                     -81.93,
+                     39.12
+                  ],
+                  [
+                     -81.87,
+                     39.13
+                  ],
+                  [
+                     -81.84,
+                     39.09
+                  ],
+                  [
+                     -81.82,
+                     39.09
+                  ],
+                  [
+                     -81.81,
+                     39.1
+                  ]
+               ]
+            ]
+         }
+   },
+   "msg_type": "warning",
+   "categories": [
+         "Met"
+   ],
+   "urgency": "Expected",
+   "severity": "Moderate",
+   "certainty": "Likely",
+   "start": 1646739000,
+   "end": 1646824080,
+   "sender": "NWS Charleston (West Virginia)",
+   "description": [
+         {
+            "language": "",
+            "event": "Flood Warning",
+            "headline": "Flood Warning issued March 08 at 2:56PM
+            EST until March 09 at 6:08AM EST by NWS Charleston",
+            "description": "...FLOOD WARNING NOW IN EFFECT UNTIL
+            545 PM EST THIS AFTERNOON... WHAT...Flooding caused
+            by runoff from yesterday`s rain continues. 
+            WHERE...A portion of southeast Ohio, including 
+            the following county, Meigs. WHEN...Until 545 PM EST. 
+            IMPACTS...Flooding of the Shade River is occurring.  
+            ADDITIONAL DETAILS... At 255 PM EST, The automated 
+            gauge on the Shade River near Chester 
+            reported a reading of 18.32 feet and falling. 
+            At 17 feet, the Sugar Run Creek Bridge is flooded 
+            200 feet downstream from Oak Hill Road and the 
+            Shade River Bridge. 
+            Some locations that will experience flooding 
+            include...Chester.
+            http://www.weather.gov/safety/flood",
+            "instruction": "Turn around, don`t drown when 
+            encountering flooded roads. Most flood deaths
+            occur in vehicles. Report Severe Weather
+            to the National Weather Service by calling 
+            toll free, 800 401 9535, when you can do so safely."
+         }
+   ]
+}
+                   </code>
+                </pre>
+                  </div>
+               </div>
+
+
+            </section>
+            <section id="fields">
+               <p class="sub-header">Fields in alert notifications</p>
+               <ul class="docs-list">
+                  <li><code>alert</code>
+                     <ul>
+                        <li><code>id</code> Alert ID</li>
+                        <li><code>geometry</code> GeoJSON representation of the area, where the alert is forecasted
+                           <ul>
+                              <li><code>type</code> The type of geometry. May be one of <code>Polygon</code> or
+                                 <code>MultiPolygon</code>
+                              </li>
+                              <li><code>coordinates</code> List of the coordinates of the polygons vertices</li>
+                           </ul>
+                        </li>
+                     </ul>
+                  </li>
+                  <li><code>msg_type</code> Notification type, default value is <code>warning</code></li>
+                  <li><code>categories</code> Category of the alert. Available category is Met</li>
+                  <li><code>urgency</code> Urgency of the alert. May be one of Immediate, Expected, Future, Past,
+                     Unknown</li>
+                  <li><code>severity</code> Severity of the alert. May be one of Extreme, Severe, Moderate, Minor,
+                     Unknown</li>
+                  <li><code>certainty</code> Certainty of the alert. May be one of Observed, Likely, Possible, Unlikely,
+                     Unknown</li>
+                  <li><code>start</code> Date and time of the start of the forecasted event, Unix, UTC</li>
+                  <li><code>end</code> Date and time of the end of the forecasted event, Unix, UTC</li>
+                  <li><code>sender</code> Name of the alert source. Please read here the <a href="#listsource">full list
+                        of alert sources</a></li>
+                  <li><code>description</code>
+                     <ul>
+                        <li><code>language</code> Language of the alert's event name, headline, description
+                           and
+                           instruction. Please note that this field can be empty</li>
+                        <li><code>event</code> Alert event name</li>
+                        <li><code>headline</code> Headline of the alert</li>
+                        <li><code>description</code> Description of the alert</li>
+                        <li><code>instruction</code> Instructions from agency about the alert</li>
+                     </ul>
+                  </li>
+               </ul>
+               <div class="info-board info-board-orange">
+                  Weather alerts are provided in English by default.<br>
+                  Please note:
+                  <ul>
+                     <li>Some agencies provide the alert’s event name, headline, description and instruction only in a
+                        local language.</li>
+                     <li>Some agencies provide the alert’s event name, headline, description and instruction in several
+                        languages. In this case, all available languages will be listed in the "description" section.
+                     </li>
+                  </ul>
+               </div>
+
+            </section>
+
+            <!--<section id="notifications" >
+            <h3>Types of alert notifications</h3>
+            <p>We provide the following types on the alerts notifications:</p>
+            <p>
+                <ul>
+                    <li>Notification of an alert that has just been created</li>
+                    <li>Notification 15 minutes before the start of an alert event</li>
+                    <li>Notification of updating alert information</li>
+                </u>
+            </p>-->
+            <!-- <table class="material-table">
+               <tr>
+                  <th> Message type </th>
+                  <th> Message description </th>
+               </tr>
+               <tr>
+                  <td> <code>warning</code> </td>
+                  <td>Notification of an alert that has just been created
+                     <p>Notification 15 minutes before the start of an alert event</p>
+                  </td>
+               </tr>
+               <tr>
+                  <td> <code>update</code> </td>
+                  <td> Notification of updating alert information</td>
+               </tr>
+               <tr>
+                  <td> <code>cancel</code> </td>
+                  <td> Notification of alert cancellation</td>
+               </tr>
+            </table> -->
+         </section>
+         <section id="listsource">
+            <h2>List of alerts sources</h2>
+            <table class="material-table">
+               <tbody><tr>
+                  <th> Country </th>
+                  <th> Agency </th>
+               </tr>
+               <tr>
+                  <td> Albania</td>
+                  <td> Institute of GeoSciences, Energy, Water and Environment of Albania</td>
+               </tr>
+               <tr>
+                  <td> Algeria</td>
+                  <td> National Meteorological Office</td>
+               </tr>
+               <!-- <tr>
+                  <td> Antigua and Barbuda</td>
+                  <td> Meteorological Services</td>
+               </tr> -->
+               <tr>
+                  <td> Argentina</td>
+                  <td> National Weather Service of Argentina</td>
+               </tr>
+               <!-- <tr>
+                  <td> Aruba</td>
+                  <td> Meteorological Department of Aruba</td>
+               </tr> -->
+               <tr>
+                  <td> Australia</td>
+                  <td> Australian Bureau of Meteorology</td>
+               </tr>
+               <tr>
+                  <td> Austria</td>
+                  <td>
+                     <ul class="national-alerts-list">
+                        <li>Central Institute for Meteorology and Geodynamics</li>
+                        <li>Water Balance Department</li>
+                     </ul>
+                  </td>
+               </tr>
+               <tr>
+                  <td> Bahrain</td>
+                  <td> Bahrain Meteorological Directorate</td>
+               </tr>
+               <tr>
+                  <td> Barbados</td>
+                  <td> Barbados Meteorological Service</td>
+               </tr>
+               <tr>
+                  <td> Belarus</td>
+                  <td> State institution "Republican center for hydrometeorology, control of radioactive
+                     contamination and environmental monitoring" (Belhydromet)</td>
+               </tr>
+               <tr>
+                  <td> Belgium</td>
+                  <td> Royal Meteorological Institute</td>
+               </tr>
+               <tr>
+                  <td> Belize</td>
+                  <td> National Meteorological Service of Belize</td>
+               </tr>
+               <tr>
+                  <td> Benin</td>
+                  <td> National Meteorological Agency (METEO-BENIN)</td>
+               </tr>
+               <tr>
+                  <td> Bosnia and Herzegovina</td>
+                  <td>
+                     <ul class="national-alerts-list">
+                        <li>Federal Hydrometeorological Institute of BiH</li>
+                        <li>Republic Hydrometeorological Institute</li>
+                     </ul>
+                  </td>
+               </tr>
+               <tr>
+                  <td> Botswana</td>
+                  <td> Botswana Meteorological Services</td>
+               </tr>
+               <tr>
+                  <td> Brazil</td>
+                  <td> National Meteorological Institute - INMET</td>
+               </tr>
+               <tr>
+                  <td> Bulgaria</td>
+                  <td> National Institute of Meteorology and Hydrology - Plovdiv branch</td>
+               </tr>
+               <tr>
+                  <td> Cameroon</td>
+                  <td> Cameroon National Meteorological Service</td>
+               </tr>
+               <tr>
+                  <td> Canada</td>
+                  <td>
+                     <ul class="national-alerts-list">
+                        <li>Alberta Emergency Management Agency (Government of Alberta, Ministry of
+                           Municipal
+                           Affairs)</li>
+                        <li>Meteorological Service of Canada</li>
+                        <li>Quebec Ministry of Public Safety</li>
+                        <li>Yukon Emergency Measures Organization</li>
+                        <li>Manitoba Emergency Management Organization</li>
+                     </ul>
+                  </td>
+               </tr>
+               <!-- <tr>
+             <td> China</td>
+             <td> China Meteorological Administration</td>
+          </tr> -->
+               <!-- <tr>
+                  <td> Colombia</td>
+                  <td> UNGRD (National Unit for Disaster Risk Management)</td>
+               </tr> -->
+               <tr>
+                  <td> Chile </td>
+                  <td> Meteorological Directorate of Chile</td>
+               </tr>
+               <tr>
+                  <td> Congo</td>
+                  <td> National Civil Aviation Agency (ANAC Congo)</td>
+               </tr>
+               <tr>
+                  <td> Costa Rica</td>
+                  <td> National Meteorological Institute of Costa Rica</td>
+               </tr>
+               <tr>
+                  <td> Croatia</td>
+                  <td> State Hydrometeorological Institute (DHMZ)</td>
+               </tr>
+               <tr>
+                  <td> Curacao and Sint Maarten</td>
+                  <td> Meteorological Department Curacao</td>
+               </tr>
+               <tr>
+                  <td> Cyprus</td>
+                  <td> Republic of Cyprus - Department of Meteorology</td>
+               </tr>
+               <tr>
+                  <td> Czech Republic</td>
+                  <td> Czech Hydrometeorological Institute</td>
+               </tr>
+               <tr>
+                  <td> Denmark</td>
+                  <td> Danish Meteorological Institute</td>
+               </tr>
+               <tr>
+                  <td> Ecuador</td>
+                  <td> Ecuadoran Institute for Meteorology and Hydrology (INAMHI)</td>
+               </tr>
+               <tr>
+                  <td> Egypt</td>
+                  <td> Egyptian Meteorological Authority</td>
+               </tr>
+               <tr>
+                  <td> Estonia</td>
+                  <td> Estonian Environment Agency</td>
+               </tr>
+               <tr>
+                  <td> Eswatini</td>
+                  <td> Eswatini Meteorological Service</td>
+               </tr>
+               <!-- <tr>
+                  <td> Federated States of Micronesia</td>
+                  <td>
+                     <ul class="national-alerts-list">
+                        <li>Weather Service Office Chuuk</li>
+                        <li>Weather Service Office Pohnpei</li>
+                        <li>Weather Service Office Yap</li>
+                     </ul>
+                  </td>
+               </tr> -->
+               <tr>
+                  <td> Finland</td>
+                  <td> Finnish Meteorological Institute</td>
+               </tr>
+               <tr>
+                  <td> France</td>
+                  <td> Meteo-France</td>
+               </tr>
+               <tr>
+                  <td> Gabon</td>
+                  <td> General Directorate of Meteorology of Gabon</td>
+               </tr>
+               <tr>
+                  <td> Germany</td>
+                  <td> German Meteorological Office</td>
+               </tr>
+               <tr>
+                  <td>Ghana</td>
+                  <td>Ghana Meteorological Agency </td>
+               </tr>
+               <tr>
+                  <td> Greece</td>
+                  <td> Hellenic National Meteorological Service</td>
+               </tr>
+               <tr>
+                  <td>Guinea</td>
+                  <td>National Meteorological Agency of Guinea</td>
+               </tr>
+               <tr>
+                  <td> Guyana</td>
+                  <td> Hydrometeorological Service of Guyana</td>
+               </tr>
+               <tr>
+                  <td> Hong Kong China</td>
+                  <td> Hong Kong Observatory</td>
+               </tr>
+               <tr>
+                  <td> Hungary</td>
+                  <td> Hungarian Meteorological Service</td>
+               </tr>
+               <tr>
+                  <td> Iceland</td>
+                  <td> Icelandic Meteorological Office</td>
+               </tr>
+               <tr>
+                  <td> India</td>
+                  <td> India Meteorological Department</td>
+               </tr>
+               <tr>
+                  <td> Indonesia</td>
+                  <td>
+                     <ul class="national-alerts-list">
+                        <li>Agency for Meteorology Climatology and Geophysics of Republic Indonesia (BMKG)</li>
+                        <li>InaTEWS BMKG</li>
+                     </ul>
+                  </td>
+               </tr>
+               <tr>
+                  <td> Ireland</td>
+                  <td> Met Eireann - Irish Meteorological Service</td>
+               </tr>
+               <tr>
+                  <td> Israel</td>
+                  <td> Israel Meteorological Service</td>
+               </tr>
+               <tr>
+                  <td> Italy</td>
+                  <td> Italian Air Force National Meteorological Service</td>
+               </tr>
+               <tr>
+                  <td>Ivory Coast</td>
+                  <td>Airport, aeronautical and meteorological operating and development company (SODEXAM)</td>
+               </tr>
+               <tr>
+                  <td> Jamaica</td>
+                  <td> Meteorological Service of Jamaica</td>
+               </tr>
+               <tr>
+                  <td> Japan</td>
+                  <td> Japan Meteorological Business Support Center</td>
+               </tr>
+               <tr>
+                  <td> Jordan</td>
+                  <td> Jordanian Meteorological Department</td>
+               </tr>
+               <tr>
+                  <td> Kazakhstan</td>
+                  <td> National Hydrometeorological Service of the Republic of Kazakhstan (Kazhydromet)</td>
+               </tr>
+               <tr>
+                  <td> Kenya</td>
+                  <td> Kenya Meteorological Department</td>
+               </tr>
+               <tr>
+                  <td> Kuwait</td>
+                  <td> Kuwait Meteorological Department</td>
+               </tr>
+               <tr>
+                  <td> Latvia</td>
+                  <td> Latvian Environment, Geology and Meteorology Center</td>
+               </tr>
+               <tr>
+                  <td>Lesotho</td>
+                  <td>Lesotho Meteorological Services</td>
+               </tr>
+               <tr>
+                  <td> Libya</td>
+                  <td> Libyan National Meteorological Center</td>
+               </tr>
+               <tr>
+                  <td> Lithuania</td>
+                  <td> Lithuanian Hydrometeorological Service under the Ministry of Environment of the Republic of
+                     Lithuania (LHMS)</td>
+               </tr>
+               <tr>
+                  <td> Luxembourg</td>
+                  <td> Luxembourg Airport Administration</td>
+               </tr>
+               <tr>
+                  <td> Macao China </td>
+                  <td> Macao Meteorological and Geophysical Bureau</td>
+               </tr>
+               <tr>
+                  <td> Madagascar</td>
+                  <td> METEO Madagascar</td>
+               </tr>
+               <tr>
+                  <td> Malawi</td>
+                  <td> Malawi Department of Climate Change and Meteorological Services</td>
+               </tr>
+               <tr>
+                  <td> Maldives</td>
+                  <td> Maldives Meteorological Service</td>
+               </tr>
+               <tr>
+                  <td> Mauritania </td>
+                  <td> National Meteorological Office of Mauritania</td>
+               </tr>
+               <tr>
+                  <td> Mauritius</td>
+                  <td> Mauritius Meteorological Services</td>
+               </tr>
+               <!-- <tr>
+                  <td> Marshall Islands</td>
+                  <td> Majuro Weather Service Office</td>
+               </tr> -->
+               <tr>
+                  <td> Mexico</td>
+                  <td> CONAGUA - National Meteorological Service of Mexico</td>
+               </tr>
+               <tr>
+                  <td> Moldova</td>
+                  <td> State Hydrometeorological Service of Moldova</td>
+               </tr>
+               <tr>
+                  <td> Mongolia</td>
+                  <td> National Agency Meteorology and the Environmental Monitoring of Mongolia</td>
+               </tr>
+               <tr>
+                  <td> Mozambique</td>
+                  <td> National Institute of Meteorology of Mozambique</td>
+               </tr>
+               <tr>
+                  <td> Myanmar</td>
+                  <td> Myanmar Department of Meteorology and Hydrology</td>
+               </tr>
+               <tr>
+                  <td> Netherlands</td>
+                  <td> Royal Netherlands Meteorological Institute (KNMI)</td>
+               </tr>
+               <tr>
+                  <td> New Zealand</td>
+                  <td>
+                     <ul class="national-alerts-list">
+                        <li>Meteorological Service of New Zealand Limited</li>
+                        <li>National Emergency Management Agency</li>
+                        <li>Fire and Emergency New Zealand</li>
+                        <li>Civil Defence Emergency Management (CDEM) Groups</li>
+                     </ul>
+                  </td>
+               </tr>
+               <tr>
+                  <td> New Zealand</td>
+                  <td> New Zealand Emergency Mobile Alert</td>
+               </tr>
+               <tr>
+                  <td> Niger</td>
+                  <td> National Meteorological Directorate of Niger</td>
+               </tr>
+               <tr>
+                  <td> Nigeria</td>
+                  <td> Nigerian Meteorological Agency (NiMet)</td>
+               </tr>
+               <tr>
+                  <td> North Macedonia</td>
+                  <td> National Hydrometeorological Service - Republic of Macedonia</td>
+               </tr>
+               <tr>
+                  <td> Norway</td>
+                  <td>
+                     <ul class="national-alerts-list">
+                        <li>Norwegian Meteorological Institute</li>
+                        <li>Norwegian Water Resources and Energy Directorate</li>
+                     </ul>
+                  </td>
+               </tr>
+               <!-- <tr>
+                  <td> Palau</td>
+                  <td> Weather Service Office</td>
+               </tr> -->
+               <tr>
+                  <td> Paraguay</td>
+                  <td> Directorate of Meteorology and Hydrology</td>
+               </tr>
+               <tr>
+                  <td> Philippines</td>
+                  <td> Philippine Atmospheric Geophysical and Astronomical Services Administration</td>
+               </tr>
+               <tr>
+                  <td> Poland</td>
+                  <td> Institute of Meteorology and Water Management (IMGW-PIB)</td>
+               </tr>
+               <tr>
+                  <td> Portugal</td>
+                  <td> Portuguese Institute of Sea and Atmosphere, I.P.</td>
+               </tr>
+               <tr>
+                  <td> Qatar</td>
+                  <td> Qatar Meteorology Department</td>
+               </tr>
+               <tr>
+                  <td> Republic of Korea</td>
+                  <td> Korea Meteorological Administration, Weather Information</td>
+               </tr>
+               <tr>
+                  <td> Romania</td>
+                  <td> National Meteorological Administration</td>
+               </tr>
+               <tr>
+                  <td> Russia-EN</td>
+                  <td> Hydrometcenter of Russia</td>
+               </tr>
+               <tr>
+                  <td> Russia-RU</td>
+                  <td> Russian Federal Service for Hydrometeorology and Environmental Monitoring</td>
+               </tr>
+               <!-- <tr>
+                  <td> Saint Lucia</td>
+                  <td> Meteorological Services</td>
+               </tr>
+               <tr>
+                  <td> Saint Vincent and the Grenadines</td>
+                  <td> Meteorological Services</td>
+               </tr> -->
+               <tr>
+                  <td> Saudi Arabia</td>
+                  <td> National Center for Meteorology - Kingdom of Saudi Arabia</td>
+               </tr>
+               <tr>
+                  <td> Serbia</td>
+                  <td> Republic Hydrometeorological Service of Serbia</td>
+               </tr>
+               <tr>
+                  <td> Seychelles</td>
+                  <td> Seychelles Meteorological Authority</td>
+               </tr>
+               <tr>
+                  <td> Singapore</td>
+                  <td> Meteorological Service Singapore</td>
+               </tr>
+               <tr>
+                  <td> Slovakia</td>
+                  <td> Slovak Hydrometeorological Institute</td>
+               </tr>
+               <tr>
+                  <td> Slovenia</td>
+                  <td> National Meteorological Service of Slovenia</td>
+               </tr>
+               <tr>
+                  <td> Solomon Islands</td>
+                  <td> Solomon Islands Meteorological Services</td>
+               </tr>
+               <tr>
+                  <td> South Africa</td>
+                  <td> South African Weather Service (SAWS)</td>
+               </tr>
+               <tr>
+                  <td> Spain</td>
+                  <td> State Meteorological Agency (AEMET)</td>
+               </tr>
+               <tr>
+                  <td> Sudan</td>
+                  <td> Sudan Meteorological Authority</td>
+               </tr>
+               <tr>
+                  <td> Sweden</td>
+                  <td> Swedish Meteorological and Hydrological Institute</td>
+               </tr>
+               <tr>
+                  <td> Switzerland</td>
+                  <td> MeteoSwiss</td>
+               </tr>
+               <tr>
+                  <td> Tanzania</td>
+                  <td> Tanzania Meteorological Authority</td>
+               </tr>
+               <tr>
+                  <td> Thailand</td>
+                  <td> Thai Meteorological Department</td>
+               </tr>
+               <tr>
+                  <td>Timor-Leste </td>
+                  <td> National Directorate of Meteorology and Geophysics of Timor-Leste</td>
+               </tr>
+               <tr>
+                  <td> Trinidad and Tobago</td>
+                  <td> Trinidad and Tobago Meteorological Service</td>
+               </tr>
+               <tr>
+                  <td> Ukraine</td>
+                  <td> Ukrainian Hydrometeorological Center</td>
+               </tr>
+               <tr>
+                  <td> United Kingdom of Great Britain and Northern Ireland</td>
+                  <td> UK Met Office</td>
+               </tr>
+               <tr>
+                  <td> Uruguay</td>
+                  <td> Uruguayan Institute of Meteorology</td>
+               </tr>
+               <tr>
+                  <td> United States</td>
+                  <td>
+                     <ul class="national-alerts-list">
+                        <li>Environmental Protection Agency (EPA), Air Quality Alerts</li>
+                        <li>Integrated Public Alerrt and Warning System (IPAWS)</li>
+                        <li>National Oceanic and Atmospheric Administration (NOAA), National Tsunami Warning
+                           Center
+                        </li>
+                        <li>National Oceanic and Atmospheric Administration (NOAA), National Weather Service
+                        </li>
+                        <li>National Oceanic and Atmospheric Administration (NOAA), National Weather Service
+                           -
+                           Marine
+                           Zones</li>
+                        <li>U.S. Geological Survey (USGS), Volcano Hazard Program</li>
+                     </ul>
+                  </td>
+               </tr>
+               <tr>
+                  <td> USA</td>
+                  <td> National Oceanic and Atmospheric Administration</td>
+               </tr>
+               <tr>
+                  <td> Yemen</td>
+                  <td> Yemeni Civil Aviation and Meteorology Authority (CAMA)</td>
+               </tr>
+               <tr>
+                  <td> Zambia</td>
+                  <td> Meteorological Department Zambia</td>
+               </tr>
+               <tr>
+                  <td> Zimbabwe</td>
+                  <td> Meteorological Services Department</td>
+               </tr>
+            </tbody></table>
+            <p>Please note that some agencies from the list may cease to provide us the weather alert information.
+               <br>
+               In case you don’t receive alerts from any agency, please <a href="mailto:info@openweathermap.org">contact
+                  us</a>.<br>
+               We constantly work on our product’s improvement and keep expanding the list of partner agencies.
+            </p>
+         </section>
+      </div>
+   </div>
+</div>  </main>
+  <div id="footer-website" onclick="toggleFooterSection(event)">
+   <div class="inner-footer-container">
+      <div class="horizontal-section">
+         <div class="footer-section">
+            <p class="section-heading">Product Collections</p>
+            <div class="section-content">
+               <ul>
+                  <li><a href="/api#current">Current and Forecast APIs</a></li>
+                  <li><a href="/api#history">Historical Weather Data</a></li>
+                  <li><a href="/api#maps">Weather Maps</a></li>
+                  <li><a href="https://dashboard.openweather.co.uk/" target="_blank">Weather Dashboard</a></li>
+                  <li><a href="/widgets-constructor">Widgets</a></li>
+               </ul>
+            </div>
+         </div>
+         <div class="footer-section">
+            <p class="section-heading">Subscription</p>
+            <div class="section-content">
+               <ul>
+                  <li><a href="/appid">How to start</a></li>
+                  <li><a href="/price">Pricing</a></li>
+                  <li><a href="https://home.openweathermap.org/users/sign_up">Subscribe for free</a></li>
+                  <li><a href="/faq">FAQ</a></li>
+               </ul>
+            </div>
+         </div>
+         <div class="footer-section">
+            <p class="section-heading">Company</p>
+            <div class="section-content">
+               <p>OpenWeather is a team of IT experts and data scientists that has been practising deep weather data
+                  science. For each point on the globe, OpenWeather provides historical, current and forecasted weather
+                  data via light-speed APIs. Headquarters in London, UK.</p>
+            </div>
+         </div>
+      </div>
+      <div class="horizontal-section">
+         <div class="footer-section">
+            <p class="section-heading">Technologies</p>
+            <div class="section-content">
+               <ul>
+                  <li><a href="/technology">Our technology</a></li>
+                  <li><a href="/accuracy-and-quality">Accuracy and quality of weather data</a></li>
+                  <li><a href="/stations">Connect your weather station</a></li>
+               </ul>
+            </div>
+         </div>
+         <div class="footer-section">
+            <p class="section-heading">Terms &amp; Conditions</p>
+            <div class="section-content">
+               <ul>
+                  <li><a href="https://openweather.co.uk/storage/app/media/Terms/Openweather_terms_and_conditions_of_sale.pdf" target="_blank">Terms and conditions of sale</a></li>
+                  <li><a href="https://openweather.co.uk/privacy-policy" target="_blank">Privacy Policy</a></li>
+                  <li><a href="https://openweather.co.uk/storage/app/media/Terms/Openweather_website_terms_and_conditions_of_use.pdf" target="_blank">Website terms and conditions</a></li>
+               </ul>
+            </div>
+         </div>
+         <div class="footer-section not-foldable">
+            <!-- <p class="section-heading">Contact us</p> -->
+            <div class="section-content">
+               <ul>
+                  <li><a href="/about-us" target="_blank">About us</a></li>
+                  <li><a href="https://openweather.co.uk/about/our-offices" target="_blank">Our offices</a></li>
+                  <li><a href="https://openweather.co.uk/blog/category/weather" target="_blank">Blog</a></li>
+                  <li><a href="https://openweather.co.uk/" target="_blank">OpenWeather for Business</a></li>
+                  <li><a href="/chat">Ulla, OpenWeather AI assistant</a></li>
+                  <li><a href="https://home.openweathermap.org/questions" target="_blank">Ask a question</a></li>
+                  <!--  <li><a href="mailto:info@openweathermap.org">info@openweathermap.org</a>  -->
+               </ul>
+            </div>
+         </div>
+      </div>
+      <div class="horizontal-section">
+         <div class="footer-section">
+            <div class="my-5">
+               <p>Download OpenWeather app</p>
+               <div>
+                  <a href="https://apps.apple.com/gb/app/openweather/id1535923697" target="_blank">
+                     <img src="..\..\assets\themes\openweathermap\assets\img\mobile_app\app-store-badge.svg" alt="Get it on AppStore">
+                  </a>
+                  <a href="https://play.google.com/store/apps/details?id=uk.co.openweather" target="_blank">
+                     <img src="..\..\assets\themes\openweathermap\assets\img\mobile_app\google-play-badge.png" class="google-play-img" alt="Get it on Google Play">
+                  </a>
+               </div>
+            </div>
+         </div>
+         <div class="footer-section">
+            <div class="my-5 logo-blocks">
+               <img src="..\..\assets\themes\openweathermap\assets\img\RMets_Logo_corp.png" width="200" height="70" alt="RMets logo">
+               <img src="..\..\assets\themes\openweathermap\assets\img\CNB_Business_Logo_2024.png" alt="CNB Business logo" width="170" height="170">
+            </div>
+         </div>
+
+      </div>
+      <div class="horizontal-section my-5">
+         <div>
+            <span>Supplier of Achilles UVDB community</span><br>
+            <span id="years-copyright"></span><br><br>
+         </div>
+         <div class="social">
+            <a href="https://www.facebook.com/groups/270748973021342" target="_blank"><img src="..\..\assets\themes\openweathermap\assets\img\owm_icons\icon_facebook.png" alt="facebook icon"></a>
+            <a href="https://twitter.com/OpenWeatherMap" target="_blank"><img src="..\..\assets\themes\openweathermap\assets\img\owm_icons\icon_x_black.png" alt="x icon"></a>
+            <a href="https://www.linkedin.com/company/9816754" target="_blank"><img src="..\..\assets\themes\openweathermap\assets\img\owm_icons\icon_linkedin.png" alt="linkedin icon "></a>
+            <a href="https://medium.com/@openweathermap" target="_blank"><img src="..\..\assets\themes\openweathermap\assets\img\owm_icons\new_medium.svg" alt="meduim icon"></a>
+            <a href="https://t.me/openweathermap" target="_blank"><img src="..\..\assets\themes\openweathermap\assets\img\owm_icons\icon_telegram.png" alt="telegram icon"></a>
+            <a href="https://github.com/openweathermap" target="_blank"><img src="..\..\assets\themes\openweathermap\assets\img\owm_icons\icon_github.png" alt="github icon"></a>
+         </div>
+      </div>
+      <div class="horizontal-section"></div>
+   </div>
+</div>  <script src="https://cdn.ravenjs.com/3.6.1/raven.min.js"></script>
+<script>Raven.config('http://66df88eb63e94f27964b84031e49b358@sentry.owm.io/16').install()</script>  <script src="..\..\assets\themes\openweathermap\assets\js\bundle_owm_postload.c31872127471c475ade1.js"></script>
+<script src="..\..\assets\themes\openweathermap\assets\js\advertising.js"></script>      <div class="gdpr-banner">
+        <div class="gdpr-banner__wrapper">
+            <div class="gdpr-banner__column gdpr-banner__column--1">
+    <div class="gdpr-banner__row">
+        <div class="gdpr-banner__message">
+    We use cookies to personalize content and to analyze our traffic. Please decide if you are willing to accept cookies from our website.
+</div>    </div>
+</div>
+<div class="gdpr-banner__column gdpr-banner__column--2">
+        <div class="gdpr-banner__settings">
+        <a role="link" rel="privacy" href="https://openweathermap.org/cookies" data-request="onDecline" data-request-success="document.location.href = 'https://openweathermap.org/cookies'">
+            Advanced Settings
+        </a>
+    </div>
+    <div class="gdpr-banner__opt-out">
+    <button role="button" tabindex="0" aria-pressed="false" class="gdpr-banner__button gdpr-banner__button--opt-out" data-request="onDecline" data-request-success="document.querySelector('.gdpr-banner').remove()">
+        Decline
+    </button>
+</div>    <div class="gdpr-banner__opt-in">
+    <button role="button" tabindex="0" aria-pressed="false" class="gdpr-banner__button gdpr-banner__button--opt-in" data-request="onAccept" data-request-success="document.querySelector('.gdpr-banner').remove()" data-request-update="'gtag' : '#gdpr-reload'">
+        Accept
+    </button>
+</div>
+    <div class="gdpr-banner__dismiss">
+    <button role="button" tabindex="0" aria-pressed="false" class="gdpr-banner__button--dismiss" onclick="document.querySelector('.gdpr-banner').remove()">×</button>
+</div></div>        </div>
+    </div>
+  <link href="..\..\assets\themes\openweathermap\assets\css\chat-banner.css" rel="stylesheet">
+<link href="..\..\assets\themes\openweathermap\assets\vendor\owm\css\assistant-index.DVVhxENO.css" rel="stylesheet">
+
+<style>
+  #owm-chat-bot p {
+    font-weight: normal;
+  }
+
+  #owm-chat-bot>div {
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  .pop-up-content h2 {
+    margin-top: 19.2px;
+  }
+
+  .owm-chat-bot-description ul {
+    margin: 0;
+    padding: 16px;
+    background-color: #4f4f4f;
+    color: white;
+    border-radius: 4.8px;
+  }
+
+  .owm-chat-bot-description ul.dashed {
+    list-style-type: none;
+  }
+
+  /* .owm-chat-bot-description ul.dashed>li {
+    text-indent: -1rem;
+  } */
+
+  .owm-chat-bot-description ul.dashed>li:before {
+    content: "- ";
+    text-indent: -16px;
+  }
+</style>
+
+<div id="owm-chat-bot" data-key="5796abbde9106b7da4febfae8c44c232" data-popup="" style="display: none; position: fixed; z-index: 50000; bottom: 16px; right: 16px; height: 640px; max-height: calc(100% - 32px); width: 480px; max-width: calc(100% - 32px);">
+</div>
+
+<script>
+  `ASSISTANT_URL=https://api.openweathermap.org`.split("\n").map(env => env.split('=')).map(env => window[env[0]] = env[1]);
+</script>
+<script src="..\..\assets\themes\openweathermap\assets\vendor\owm\js\assistant-index.ClVGaiQn.js"></script>
+
+<div id="chat-banner" class="banner-pop-up">
+  <div class="banner-pop-up-content">
+    <img src="..\..\assets\themes\openweathermap\assets\img\Ulla_bot.png" alt="Ulla the Bot" width="16" height="16">
+    <h3>Ulla Weather Assistant</h3>
+  </div>
+</div>
+
+
+<script>
+  const chatBanner = document.getElementById('chat-banner');
+  const chatBot = document.getElementById('owm-chat-bot');
+
+  chatBanner.addEventListener('click', () => {
+    chatBanner.style.display = 'none';
+    chatBot.style.display = chatBot.style.display === 'none' ? 'block' : 'none';
+    gtag('event', 'maxullaweather', {
+      'event_category': 'Chat',
+      'event_label': 'maxullaweather'
+    });
+  });
+
+  window.addEventListener('minimize', () => {
+    chatBot.style.display = 'none';
+    chatBanner.style.display = 'block';
+    gtag('event', 'minullaweather', {
+      'event_category': 'Chat',
+      'event_label': 'minullaweather'
+    });
+  });
+
+  const gdprBanner = document.querySelector('.gdpr-banner');
+
+  if (gdprBanner) {
+    chatBanner.style.bottom = '80px';
+
+    const observer = new MutationObserver(() => {
+      if (!document.body.contains(gdprBanner)) {
+        chatBanner.style.bottom = '50px';
+      } else {
+        chatBanner.style.bottom = (gdprBanner.clientHeight + 8) + 'px';
+      }
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
+</script>
+
+</body></html>

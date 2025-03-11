@@ -1,0 +1,637 @@
+<!DOCTYPE html><html lang="en"><head>
+  <title> OpenWeatherMap API guide - OpenWeatherMap</title>
+  <meta name="apple-itunes-app" content="app-id=1535923697">
+  <!-- Google tag (gtag.js) -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-31TSX35RJT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+
+  gtag('config', 'G-31TSX35RJT');
+</script>
+  <script type="text/javascript">
+  (function (c, l, a, r, i, t, y) {
+    c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
+    t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+    y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+  })(window, document, "clarity", "script", "niyw44l6sh");
+</script>  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="keywords" content="weather, world, Openstreetmap, forecast, Openweather, current">
+<meta name="description" content="Explore OpenWeather's user-friendly weather data products and APIs, offering short and long-term
+forecasts, historical observations, and specialized solutions like Road Risk and Solar Energy Prediction. Ideal for
+range of applications, from simple ones to complex enterise level systems.">
+<meta name="author" content="OpenWeatherMap.org">
+<meta name="domain" content="OpenWeatherMap.org">
+<meta name="p:domain_verify" content="34fe229eab8562dca90f4a5962ff80a9">
+<meta property="title" content="OpenWeatherMap API guide">  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">  <link rel="shortcut icon" href="/themes/openweathermap/assets/vendor/owm/img/icons/favicon.ico">
+<link rel="icon" href="/themes/openweathermap/assets/vendor/owm/img/icons/logo_16x16.png" sizes="16x16" type="image/png">
+<link rel="icon" href="/themes/openweathermap/assets/vendor/owm/img/icons/logo_32x32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="/themes/openweathermap/assets/vendor/owm/img/icons/logo_60x60.png" sizes="60x60" type="image/png">  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald:400,700,300">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700,500,400italic,500italic">  <link rel="stylesheet" href="..\assets\plugins\offline\gdpr\assets\cookieBanner\banner.css">
+  <link href="..\assets\combine\f715fd89ab078cb9d62b06cf2ebe66e0-1741279879" rel="stylesheet">
+<!-- <link href="https://openweathermap.org/combine/9e05934b20b1168fe3f391e409e227a4-1741279879" rel="stylesheet"> -->
+<!-- <link href="/themes/openweathermap/assets/css/new_design.css" rel="stylesheet"> -->  <script src="..\assets\combine\d8fb6d080cb70d894318fcae14526239-1741279879"></script>
+<!-- <script src="https://openweathermap.org/combine/9dc69b9a99b742c8cd4a003c67dfede2-1741279879"></script> -->  </head>
+
+<body class="body-orange" onclick="closePopUps()">
+  <link href="..\assets\themes\openweathermap\assets\css\smart_banner_android.css" rel="stylesheet">
+
+<div id="banner_android" class="banner_stripe">
+    <div class="banner_container">
+        <a class="smartbanner__exit" onclick="bannerClose()"></a>
+        <img src="..\assets\themes\openweathermap\assets\img\mobile_app\android-app-top-banner.png" class="banner_icon" alt="banner android">
+        <div>
+            <p class="smartbanner-text">OpenWeather</p>
+            <p class="smartbanner-text">OpenWeather Ltd.</p>
+            <p class="smartbanner-text">GET - on Google Play</p>
+        </div>
+    </div>
+    <a class="google_button" href="https://play.google.com/store/apps/details?id=uk.co.openweather">VIEW</a>
+</div>
+
+<script src="..\assets\themes\openweathermap\assets\js\smart_banner_android.js"></script>  <nav id="nav-website" onclick="toggleMenu(event)">
+  <ul id="first-level-nav">
+    <li class="logo">
+      <a href="/">
+        <img src="..\assets\themes\openweathermap\assets\img\logo_white_cropped.png" alt="logo">
+      </a>
+    </li>
+    <li id="hamburger">
+      <img src="..\assets\themes\openweathermap\assets\img\owm_icons\icon_hamburger.svg" alt="icon hamburger">
+    </li>
+    <li id="desktop-menu">
+      <form role="search" action="/find" method="get">
+        <input type="text" name="q" placeholder="Weather in your city">
+        <input type="submit" class="submit">
+      </form>
+      <ul>
+        <li>
+          <a href="/guide">Guide</a>
+        </li>
+        <li>
+          <a href="/api">API</a>
+        </li>
+        <li>
+          <a href="https://dashboard.openweather.co.uk/" target="_blank">Dashboard</a>
+        </li>
+        <li>
+          <a href="https://home.openweathermap.org/marketplace" target="_blank">Marketplace</a>
+        </li>
+        <li>
+          <a href="/price">Pricing</a>
+        </li>
+        <li>
+          <a href="/weathermap">Maps</a>
+        </li>
+        <li>
+          <a href="/our-initiatives">Our Initiatives</a>
+        </li>
+        <li>
+          <a href="/examples">Partners</a>
+        </li>
+        <li>
+          <a href="https://openweather.co.uk/blog/category/weather" target="_blank">Blog</a>
+        </li>
+        <li>
+          <a href="https://openweather.co.uk" class="marketplace" target="_blank">For Business</a>
+        </li>
+                <li class="user-li"><a href="https://openweathermap.org/home/sign_in">Sign in</a></li>
+                <li><a href="/support-centre">Support centre</a></li>
+    
+  </ul>
+  </li>
+  </ul>
+  <ul id="mobile-menu">
+    <li>
+      <form role="search" action="/find" method="get">
+        <input type="text" name="q" placeholder="Weather in your city">
+        <input type="submit" class="submit">
+      </form>
+    </li>
+    <li>
+      <a href="/guide">Guide</a>
+    </li>
+    <li>
+      <a href="/api">API</a>
+    </li>
+    <li>
+      <a href="https://dashboard.openweather.co.uk/" target="_blank">Dashboard</a>
+    </li>
+    <li>
+      <a href="https://home.openweathermap.org/marketplace" target="_blank">Marketplace</a>
+    </li>
+    <li>
+      <a href="/price">Pricing</a>
+    </li>
+    <li>
+      <a href="/weathermap">Maps</a>
+    </li>
+    <li>
+      <a href="/our-initiatives">Our Initiatives</a>
+    </li>
+    <li>
+      <a href="/examples">Partners</a>
+    </li>
+    <li>
+      <a href="https://openweather.co.uk/blog/category/weather" target="_blank">Blog</a>
+    </li>
+    <li>
+      <a href="https://openweather.co.uk" class="marketplace" target="_blank">For Business</a>
+    </li>
+    <li><a href="/support-centre">Support centre</a></li>
+        <li><a href="https://openweathermap.org/home/sign_in">Sign in</a></li>
+      </ul>
+</nav>
+<div class="nav-styles"></div>  <main class="wrapper">
+        <div class="topic">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-7">
+                                    <h1 class="breadcrumb-title">Guide</h1>
+                            </div>
+            <div class="col-sm-5">
+                <ol class="breadcrumb pull-right hidden-xs">
+                    <li><a href="/">Home</a></li>
+                                                            
+                                                                        <li class="breadcrumb__leaf">Guide</li>
+                                                            </ol>
+            </div>
+        </div>
+    </div>   
+</div>        <div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>Weather data in a fast and easy-to-use way</h1>
+            <p class="lead">We are providing <b>highly recognisable weather products</b> that make working with the
+                weather data a way easier. We work with millions of developers around a clock and believe that these
+                benefits might be suitable for most of applications, up to the <a href="https://openweather.co.uk/" target="_blank">complex enterprise systems</a>.</p>
+            <ul>
+                <li>
+                    <p class="lead">A spectrum of ready-to-use weather products</p>
+                </li>
+                <li>
+                    <p class="lead">Short-term and long-term forecasts, history and observation</p>
+                </li>
+                <li>
+                    <p class="lead">Any location on the globe</p>
+                </li>
+                <li>
+                    <p class="lead">Transparent pricing and licensing</p>
+                </li>
+            </ul>
+            <p>Our weather products are accessible via fast, reliable <a href="/api">APIs</a> that follow industry
+                standards and compatible with different kind of enterprise systems. All our products content essential
+                climate variables for any location. Besides that, we have some special products that helpful for
+                industries that are affected by weather condition, for instance <a href="/api/road-risk">Road Risk
+                    API</a>, <a href="/api/solar-energy-prediction">Solar Irradiance API</a>,<a href="/api/solar-panels-and-energy-prediction">Solar Panel Energy Prediction</a>,etc. </p>
+            <br>
+
+            <h2>OpenWeather products</h2>
+            <p>For each point on the globe, OpenWeather provides hyperlocal minute forecast, historical data, current
+                state, and from short-term to annual and forecasted weather data. All data is available via <a href="/api">industry standard APIs</a>.</p>
+
+            <h4><a href="/api/one-call-3"><b>One Call API by call</b></a>:</h4>
+            <p>One Call 3.0 allows users to receive access to the various data for a specific location and includes:</p>
+            <ul>
+                <li>Current weather</li>
+                <li>Minute forecast for 1 hour</li>
+                <li>Hourly forecast for 48 hours</li>
+                <li>Daily forecast for 8 days</li>
+                <li>Government weather alerts </li>
+                <li>Weather data for any timestamp from 1st January 1979 till 4 days ahead forecast</li>
+                <li>Daily aggregation of weather data for 46+ years archive and 1.5 years ahead
+                    forecast</li>
+                <li>Weather overview with a human-readable weather summary for today and tomorrow's forecast</li>
+            </ul>
+            <p class="text-center"><a href="/price" class="ow-btn round btn-orange">Subscribe to One Call by Call</a>
+            </p>
+
+            <p>For more functionality, please consider our generous professional product collections.</p>
+            <h4><b>Professional collections:</b></h4>
+            <ol>
+                <li>
+                    <p>Current Weather and Forecasts collection</p>
+                    <ul>
+                        <li>
+                            <p><a href="/current">Current state</a> with every 10 min update</p>
+                        </li>
+                        <li>
+                            <p><a href="/api/hourly-forecast">Forecast for 4 days</a> with hour granularity</p>
+                        </li>
+                        <li>
+                            <p><a href="/forecast16">Forecast for 16 days</a> that give you data four times a day at
+                                night,
+                                day, evening, and morning</p>
+                        </li>
+                        <li>
+                            <p><a href="/api/forecast30">Forecast for 30 days</a></p>
+                        </li>
+                    </ul>
+                    <p class="text-center"><a href="/api#current" class="ow-btn round btn-orange">Learn more</a>
+                    </p>
+                </li>
+                <li>
+                    <p>Historical Weather collection</p>
+                    <ul>
+                        <li>
+                            <p><a href="/history-bulk">History archive for 46+ years back</a> with
+                                hour granularity</p>
+                        </li>
+                        <li>
+                            <p><a href="/api/history-forecast-bulk">History Forecasts archive</a> of previous forecasts
+                                made
+                                for 16 days ahead for any location on the globe</p>
+                        </li>
+                        <li>
+                            <p><a href="/history">History API</a> with weather data for one month or year back depending
+                                of
+                                your subscription</p>
+                        </li>
+                        <li>
+                            <p><a href="/api/statistics-api">Statistical Weather API</a> with statistical data by main
+                                weather parameters for a chosen date or month of the year, or for the entire year</p>
+                        </li>
+                    </ul>
+                    <p class="text-center"><a href="/api#history" class="ow-btn round btn-orange">Learn more</a>
+                    </p>
+                </li>
+
+                <li>
+                    <p>Weather Maps collection</p>
+                    <ul>
+                        <li>
+                            <p><a href="/api/weather-map-2">Weather Maps 2.0</a> with 15 weather layers,
+                                which
+                                display historical, current and forecast weather data</p>
+                        </li>
+                        <li>
+                            <p><a href="/api/global-precipitation-map">Global Precipitation Maps</a> based on radar
+                                data,
+                                satellite images and powered by ML</p>
+                        </li>
+                        <li>
+                            <p><a href="/api/relief">Relief map</a> as a base layer for the OpenWeather maps</p>
+                        </li>
+                    </ul>
+                    <p class="text-center"><a href="/api#maps" class="ow-btn round btn-orange">Learn more</a>
+                    </p>
+                </li>
+
+
+                <li>
+                    <p>Other weather APIs</p>
+                    <ul>
+                        <li>
+                            <p><a href="/api/air-pollution">Air Quality</a> hourly data with Aerosols properties PM2.5,
+                                PM10; Carbon CO2; Precursors SO2, NO2; Ozone O3; AQ Index</p>
+                        </li>
+                        <li>
+                            <p><a href="/api/geocoding-api">Geocoding API</a> is a simple tool that eases the search for
+                                locations while working with geographic names and coordinates</p>
+                        </li>
+                    </ul>
+                    <p class="text-center"><a href="/api#other" class="ow-btn round btn-orange">Learn more</a>
+                    </p>
+                </li>
+            </ol>
+            <!-- <p>Openweather products cover majority of requirements for different businesses and projects. In all our
+                    products, we provide <b>essential weather parameters</b> such as temperature, precipitation,
+                    probability of precipitation, humidity, feels like, pressure, cloudiness, wind, etc with <b>global
+                        coverage</b>. </p>
+                <ul>
+                    <li>
+                        <p><a href="/api/one-call-api"><b>Forecast with minute granularity</b></a> for the next one hour
+                        </p>
+                    </li>
+                    <li>
+                        <p><a href="/history-bulk"><b>History for 40 years</b></a> with hour granularity</p>
+                    </li>
+                    <li>
+                        <p><a href="/current"><b>Current state</b></a> with every 10 min update</p>
+                    </li>
+
+                    <li>
+                        <p><a href="/api/hourly-forecast"><b>Forecast for 4 days</b></a> with hour granularity</p>
+                    </li>
+                    <li>
+                        <p><a href="/forecast16"><b>Forecast for 16 days</b></a> that give you data four times a day at
+                            night, day, evening, and morning</p>
+                    </li>
+                    <li>
+                        <p><a href="/api/forecast30"><b>Forecast for 30 days</b></a></p>
+                    </li>
+                    <li>
+                        <p><a href="/api/global-precipitation-map"><b>Global Precipitation Maps</b></a> based on radar
+                            data, satellite images and powered by ML</p>
+                    </li>
+                    <li>
+                        <p><a href="/api/weather-map-2"><b>Global map layers</b></a> such as current, forecasted and
+                            historical Temperature, Pressure, Wind speed, Clouds, and others; 15 layers in total</p>
+                    </li>
+                </ul> -->
+            <br>
+            <h2>Dedicated weather products </h2>
+
+            <p>Besides out-of-the box products, we provide dedicated weather products that also might be helpful for
+                specific applications and industries: </p>
+            <ul>
+                <li><a href="/api/solar-energy-prediction">Solar Irradiance API</a></li>
+                <li><a href="/api/solar-panels-and-energy-prediction">Solar Panel Energy Prediction</a></li>
+                <li><a href="/api/push-weather-alerts">Global Weather Alerts</a></li>
+                <li><a href="/api/road-risk">Road Risk API</a></li>
+                <li><a href="/api/global-precipitation-map-forecast">Global Precipitation Maps - Forecast and
+                        historical data</a></li>
+                <li><a href="/api/weather-map-1h">Weather Maps 2.0 with 1-hour step</a></li>
+            </ul>
+
+            <p>Detailed information about all our dedicated products can be found on our OpenWeather for business
+                web-site.</p>
+
+            <div class="text-center"><a href="https://openweather.co.uk/" target="_blank" class="ow-btn round btn-orange">Learn
+                    more</a></div>
+            <br>
+            <!-- <ul>
+                    <li>
+                        <p><a href="/api/road-risk"><b>Road Risk</b></a> provides weather data and alerts along a route
+                            and at the point of destination, with minute accuracy for the first two hours</p>
+                    </li>
+                    <li>
+                        <p><b>Weather alerts</b> from majority of national weather warning systems worldwide; available
+                            in <a href="/api/one-call-api">One Call API</a> with a short list of parameters and as a <a
+                                href="/api/push-weather-alerts">National Alerts API</a> with a full list of parameters
+                        </p>
+                    </li>
+                    <li>
+                        <p><a href=""><b>Air Quality</b></a> hourly data with Aerosols properties PM2.5, PM10; Carbon
+                            CO2; Precursors SO2, NO2; Ozone O3; AQ Index</p>
+                    </li> 
+                </ul> -->
+
+
+            <h2>OpenWeather Weather model</h2>
+            <p class="text-justify"><b>OpenWeather model</b> allows to calculate weather data for any location.
+                OpenWeather’s advanced ML-based numerical weather model performs at up to 500 m resolution and
+                allows its users to consider highly local nuances of climate and build accurate, efficient products.
+                <br>The model uses a number of data sources - radars, models from global meteorological agencies
+                (e.g., Met Office, NOAA, ECMWF), weather satellites, and a vast network of weather stations. You can
+                find out more about OpenWeather model <a href="https://openweather.co.uk/technology">here</a>.
+            </p>
+            <br>
+            <h2>How to start using Weather API</h2>
+            <p class="text-justify">If you want to start using Free or paid weather API, please read <a href="/appid">‘How to start and operate with API more efficiently’</a>.</p>
+            <p class="text-justify">If you are ready to subscribe to our <a href="/price">paid plans</a>, please
+                read <a href="/full-price#commonquestions">‘No-fuss subscription to our weather services’</a> first.
+            </p>
+            <p class="text-justify">Please read <a href="http://openweather.co.uk/storage/app/media/Terms/Openweather_terms_and_conditions_of_sale.pdf">Terms
+                    and conditions of sale</a>, <a href="http://openweather.co.uk/privacy-policy">Privacy
+                    policy</a>, and <a href="http://openweather.co.uk/storage/app/media/Terms/Openweather_website_terms_and_conditions_of_use.pdf">Websites
+                    terms and conditions of use</a> of use before you buy. </p>
+            <p class="text-justify"><a href="/full-price#licenses">Licenses</a> we use for data and services.</p>
+            <p class="text-justify">If you are an Enterprise license holder you can request for expanded features,
+                customisation, configuration of APIs, and more exclusive support. For more details, please <a href="mailto:info@openweathermap.org">contact us</a>.</p>
+            <p class="text-justify">More than ever, our <a href="https://home.openweathermap.org/questions">customer
+                    support team</a> is at your side to answer all your questions and respond to your needs in the
+                best possible way. </p>
+            <p class="text-justify">If you do not find answers to your questions about purchasing process,
+                subscriptions,
+                products, please look at our comprehensive <a href="/faq">FAQ</a> or contact our <a href="https://home.openweathermap.org/questions">customer support team</a>.
+            </p>
+        </div>
+    </div>
+</div>  </main>
+  <div id="footer-website" onclick="toggleFooterSection(event)">
+   <div class="inner-footer-container">
+      <div class="horizontal-section">
+         <div class="footer-section">
+            <p class="section-heading">Product Collections</p>
+            <div class="section-content">
+               <ul>
+                  <li><a href="/api#current">Current and Forecast APIs</a></li>
+                  <li><a href="/api#history">Historical Weather Data</a></li>
+                  <li><a href="/api#maps">Weather Maps</a></li>
+                  <li><a href="https://dashboard.openweather.co.uk/" target="_blank">Weather Dashboard</a></li>
+                  <li><a href="/widgets-constructor">Widgets</a></li>
+               </ul>
+            </div>
+         </div>
+         <div class="footer-section">
+            <p class="section-heading">Subscription</p>
+            <div class="section-content">
+               <ul>
+                  <li><a href="/appid">How to start</a></li>
+                  <li><a href="/price">Pricing</a></li>
+                  <li><a href="https://home.openweathermap.org/users/sign_up">Subscribe for free</a></li>
+                  <li><a href="/faq">FAQ</a></li>
+               </ul>
+            </div>
+         </div>
+         <div class="footer-section">
+            <p class="section-heading">Company</p>
+            <div class="section-content">
+               <p>OpenWeather is a team of IT experts and data scientists that has been practising deep weather data
+                  science. For each point on the globe, OpenWeather provides historical, current and forecasted weather
+                  data via light-speed APIs. Headquarters in London, UK.</p>
+            </div>
+         </div>
+      </div>
+      <div class="horizontal-section">
+         <div class="footer-section">
+            <p class="section-heading">Technologies</p>
+            <div class="section-content">
+               <ul>
+                  <li><a href="/technology">Our technology</a></li>
+                  <li><a href="/accuracy-and-quality">Accuracy and quality of weather data</a></li>
+                  <li><a href="/stations">Connect your weather station</a></li>
+               </ul>
+            </div>
+         </div>
+         <div class="footer-section">
+            <p class="section-heading">Terms &amp; Conditions</p>
+            <div class="section-content">
+               <ul>
+                  <li><a href="https://openweather.co.uk/storage/app/media/Terms/Openweather_terms_and_conditions_of_sale.pdf" target="_blank">Terms and conditions of sale</a></li>
+                  <li><a href="https://openweather.co.uk/privacy-policy" target="_blank">Privacy Policy</a></li>
+                  <li><a href="https://openweather.co.uk/storage/app/media/Terms/Openweather_website_terms_and_conditions_of_use.pdf" target="_blank">Website terms and conditions</a></li>
+               </ul>
+            </div>
+         </div>
+         <div class="footer-section not-foldable">
+            <!-- <p class="section-heading">Contact us</p> -->
+            <div class="section-content">
+               <ul>
+                  <li><a href="/about-us" target="_blank">About us</a></li>
+                  <li><a href="https://openweather.co.uk/about/our-offices" target="_blank">Our offices</a></li>
+                  <li><a href="https://openweather.co.uk/blog/category/weather" target="_blank">Blog</a></li>
+                  <li><a href="https://openweather.co.uk/" target="_blank">OpenWeather for Business</a></li>
+                  <li><a href="/chat">Ulla, OpenWeather AI assistant</a></li>
+                  <li><a href="https://home.openweathermap.org/questions" target="_blank">Ask a question</a></li>
+                  <!--  <li><a href="mailto:info@openweathermap.org">info@openweathermap.org</a>  -->
+               </ul>
+            </div>
+         </div>
+      </div>
+      <div class="horizontal-section">
+         <div class="footer-section">
+            <div class="my-5">
+               <p>Download OpenWeather app</p>
+               <div>
+                  <a href="https://apps.apple.com/gb/app/openweather/id1535923697" target="_blank">
+                     <img src="..\assets\themes\openweathermap\assets\img\mobile_app\app-store-badge.svg" alt="Get it on AppStore">
+                  </a>
+                  <a href="https://play.google.com/store/apps/details?id=uk.co.openweather" target="_blank">
+                     <img src="..\assets\themes\openweathermap\assets\img\mobile_app\google-play-badge.png" class="google-play-img" alt="Get it on Google Play">
+                  </a>
+               </div>
+            </div>
+         </div>
+         <div class="footer-section">
+            <div class="my-5 logo-blocks">
+               <img src="..\assets\themes\openweathermap\assets\img\RMets_Logo_corp.png" width="200" height="70" alt="RMets logo">
+               <img src="..\assets\themes\openweathermap\assets\img\CNB_Business_Logo_2024.png" alt="CNB Business logo" width="170" height="170">
+            </div>
+         </div>
+
+      </div>
+      <div class="horizontal-section my-5">
+         <div>
+            <span>Supplier of Achilles UVDB community</span><br>
+            <span id="years-copyright"></span><br><br>
+         </div>
+         <div class="social">
+            <a href="https://www.facebook.com/groups/270748973021342" target="_blank"><img src="..\assets\themes\openweathermap\assets\img\owm_icons\icon_facebook.png" alt="facebook icon"></a>
+            <a href="https://twitter.com/OpenWeatherMap" target="_blank"><img src="..\assets\themes\openweathermap\assets\img\owm_icons\icon_x_black.png" alt="x icon"></a>
+            <a href="https://www.linkedin.com/company/9816754" target="_blank"><img src="..\assets\themes\openweathermap\assets\img\owm_icons\icon_linkedin.png" alt="linkedin icon "></a>
+            <a href="https://medium.com/@openweathermap" target="_blank"><img src="..\assets\themes\openweathermap\assets\img\owm_icons\new_medium.svg" alt="meduim icon"></a>
+            <a href="https://t.me/openweathermap" target="_blank"><img src="..\assets\themes\openweathermap\assets\img\owm_icons\icon_telegram.png" alt="telegram icon"></a>
+            <a href="https://github.com/openweathermap" target="_blank"><img src="..\assets\themes\openweathermap\assets\img\owm_icons\icon_github.png" alt="github icon"></a>
+         </div>
+      </div>
+      <div class="horizontal-section"></div>
+   </div>
+</div>  <script src="https://cdn.ravenjs.com/3.6.1/raven.min.js"></script>
+<script>Raven.config('http://66df88eb63e94f27964b84031e49b358@sentry.owm.io/16').install()</script>  <script src="..\assets\themes\openweathermap\assets\js\bundle_owm_postload.c31872127471c475ade1.js"></script>
+<script src="..\assets\themes\openweathermap\assets\js\advertising.js"></script>      <div class="gdpr-banner">
+        <div class="gdpr-banner__wrapper">
+            <div class="gdpr-banner__column gdpr-banner__column--1">
+    <div class="gdpr-banner__row">
+        <div class="gdpr-banner__message">
+    We use cookies to personalize content and to analyze our traffic. Please decide if you are willing to accept cookies from our website.
+</div>    </div>
+</div>
+<div class="gdpr-banner__column gdpr-banner__column--2">
+        <div class="gdpr-banner__settings">
+        <a role="link" rel="privacy" href="https://openweathermap.org/cookies" data-request="onDecline" data-request-success="document.location.href = 'https://openweathermap.org/cookies'">
+            Advanced Settings
+        </a>
+    </div>
+    <div class="gdpr-banner__opt-out">
+    <button role="button" tabindex="0" aria-pressed="false" class="gdpr-banner__button gdpr-banner__button--opt-out" data-request="onDecline" data-request-success="document.querySelector('.gdpr-banner').remove()">
+        Decline
+    </button>
+</div>    <div class="gdpr-banner__opt-in">
+    <button role="button" tabindex="0" aria-pressed="false" class="gdpr-banner__button gdpr-banner__button--opt-in" data-request="onAccept" data-request-success="document.querySelector('.gdpr-banner').remove()" data-request-update="'gtag' : '#gdpr-reload'">
+        Accept
+    </button>
+</div>
+    <div class="gdpr-banner__dismiss">
+    <button role="button" tabindex="0" aria-pressed="false" class="gdpr-banner__button--dismiss" onclick="document.querySelector('.gdpr-banner').remove()">×</button>
+</div></div>        </div>
+    </div>
+  <link href="..\assets\themes\openweathermap\assets\css\chat-banner.css" rel="stylesheet">
+<link href="..\assets\themes\openweathermap\assets\vendor\owm\css\assistant-index.DVVhxENO.css" rel="stylesheet">
+
+<style>
+  #owm-chat-bot p {
+    font-weight: normal;
+  }
+
+  #owm-chat-bot>div {
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  .pop-up-content h2 {
+    margin-top: 19.2px;
+  }
+
+  .owm-chat-bot-description ul {
+    margin: 0;
+    padding: 16px;
+    background-color: #4f4f4f;
+    color: white;
+    border-radius: 4.8px;
+  }
+
+  .owm-chat-bot-description ul.dashed {
+    list-style-type: none;
+  }
+
+  /* .owm-chat-bot-description ul.dashed>li {
+    text-indent: -1rem;
+  } */
+
+  .owm-chat-bot-description ul.dashed>li:before {
+    content: "- ";
+    text-indent: -16px;
+  }
+</style>
+
+<div id="owm-chat-bot" data-key="5796abbde9106b7da4febfae8c44c232" data-popup="" style="display: none; position: fixed; z-index: 50000; bottom: 16px; right: 16px; height: 640px; max-height: calc(100% - 32px); width: 480px; max-width: calc(100% - 32px);">
+</div>
+
+<script>
+  `ASSISTANT_URL=https://api.openweathermap.org`.split("\n").map(env => env.split('=')).map(env => window[env[0]] = env[1]);
+</script>
+<script src="..\assets\themes\openweathermap\assets\vendor\owm\js\assistant-index.ClVGaiQn.js"></script>
+
+<div id="chat-banner" class="banner-pop-up">
+  <div class="banner-pop-up-content">
+    <img src="..\assets\themes\openweathermap\assets\img\Ulla_bot.png" alt="Ulla the Bot" width="16" height="16">
+    <h3>Ulla Weather Assistant</h3>
+  </div>
+</div>
+
+
+<script>
+  const chatBanner = document.getElementById('chat-banner');
+  const chatBot = document.getElementById('owm-chat-bot');
+
+  chatBanner.addEventListener('click', () => {
+    chatBanner.style.display = 'none';
+    chatBot.style.display = chatBot.style.display === 'none' ? 'block' : 'none';
+    gtag('event', 'maxullaweather', {
+      'event_category': 'Chat',
+      'event_label': 'maxullaweather'
+    });
+  });
+
+  window.addEventListener('minimize', () => {
+    chatBot.style.display = 'none';
+    chatBanner.style.display = 'block';
+    gtag('event', 'minullaweather', {
+      'event_category': 'Chat',
+      'event_label': 'minullaweather'
+    });
+  });
+
+  const gdprBanner = document.querySelector('.gdpr-banner');
+
+  if (gdprBanner) {
+    chatBanner.style.bottom = '80px';
+
+    const observer = new MutationObserver(() => {
+      if (!document.body.contains(gdprBanner)) {
+        chatBanner.style.bottom = '50px';
+      } else {
+        chatBanner.style.bottom = (gdprBanner.clientHeight + 8) + 'px';
+      }
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
+</script>
+
+</body></html>

@@ -1,0 +1,76 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  height: 100vh;
+  background-color: #222;
+  color: white;
+  transition: width 0.3s;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 100;
+}
+
+.weather-data-panel {
+  background-color: #333;
+  border-radius: 12px;
+  padding: 16px;
+  margin: 0 8px;
+}
+
+.weather-icon {
+  font-size: 2rem;
+  margin: 8px 0;
+}
+
+.weather-metrics {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 12px;
+}
+
+/* Tailwind-like utilities for dark mode */
+.dark-mode {
+  --bg-color: #1a1a1a;
+  --text-color: #ffffff;
+  --card-bg: #292929;
+  --border-color: #333;
+  --accent-color: #f97316;
+}
+
+.bg-black-2 {
+  background-color: #1e1e1e;
+}
+
+.text-orange-1 {
+  color: #f97316;
+}
+
+.text-orange-2 {
+  color: #fb923c;
+}
+
+.bg-orange-1 {
+  background-color: #f97316;
+}
+
+.hover\:text-orange-1:hover {
+  color: #f97316;
+}
+
+.bg-orange-1\/30 {
+  background-color: rgba(249, 115, 22, 0.3);
+}
+
+.hover\:bg-orange-1\/30:hover {
+  background-color: rgba(249, 115, 22, 0.3);
+}
+
+.border-black-3 {
+  border-color: #333;
+}
+
+.rounded-full {
+  border-radius: 9999px;
+}

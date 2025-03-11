@@ -1,0 +1,64 @@
+---
+description: OpenWeatherMap API Integration Standards
+globs: 
+alwaysApply: true
+---
+
+
+globs: **/*.{js,jsx,ts,tsx,py}
+---
+# OpenWeatherMap API Integration
+
+<rule>
+name: openweathermap_api_integration
+description: Standards for integrating OpenWeatherMap APIs in AgriWeather Pro
+filters:
+  - type: file_extension
+    pattern: "\\.(js|jsx|ts|tsx|py)$"
+  - type: content
+    pattern: "openweathermap|weather.api|forecast|climate"
+
+actions:
+  - type: suggest
+    message: |
+      # OpenWeatherMap API Integration Guidelines for AgriWeather Pro
+      
+      ## API Endpoints
+      
+      1. **Primary Weather Endpoints**:
+         - One Call API 3.0 (recommended): `https://api.openweathermap.org/data/3.0/onecall`
+         - Current Weather: `https://api.openweathermap.org/data/2.5/weather`
+         - Forecast: `https://api.openweathermap.org/data/2.5/forecast`
+         - Historical: `https://api.openweathermap.org/data/3.0/history`
+      
+      2. **API Key Management**:
+         - Store API keys in environment variables
+         - Use different keys for development and production
+         - Set up rate limiting protection
+      
+      3. **Error Handling Template**:
+         ```javascript
+         try {
+           const response = await fetch(`${API_ENDPOINT}?lat=${lat}&lon=${lon}&appid=${API_KEY}`);
+           if (!response.ok) {
+             throw new Error(`Weather API error: ${response.status}`);
+           }
+           const data = await response.json();
+           return processWeatherData(data);
+         } catch (error) {
+           console.error("Weather data fetch failed:", error);
+           reportToMonitoring(error);
+           return fallbackWeatherData();
+         }
+         ```
+      
+      4. **Data Refresh Strategy**:
+         - Current conditions: Every 10-30 minutes
+         - Forecasts: Every 1-3 hours
+         - Historical data: Cache indefinitely with versioned updates
+         - Use server-side caching to reduce API calls
+
+metadata:
+  priority: high
+  version: 1.0
+</rule>

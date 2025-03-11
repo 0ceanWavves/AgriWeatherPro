@@ -1,0 +1,236 @@
+<!DOCTYPE html><html><head><title>Design Elements - OpenWeatherMap Clone</title><style>
+      body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.5; padding: 2rem; max-width: 1200px; margin: 0 auto; }
+      .container { display: flex; flex-wrap: wrap; gap: 2rem; }
+      .color-palette { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem; }
+      .color-swatch { width: 100px; height: 100px; border-radius: 8px; display: flex; flex-direction: column; justify-content: flex-end; padding: 8px; color: white; font-size: 12px; font-weight: bold; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
+      .element-container { border: 1px solid #eaeaea; border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; background: white; }
+      .element-title { font-size: 1.2rem; font-weight: bold; margin: 0 0 1rem 0; }
+      .element-preview { border: 1px dashed #eaeaea; padding: 1rem; margin-bottom: 1rem; }
+      h1 { font-size: 2.5rem; margin-bottom: 1.5rem; }
+      h2 { font-size: 1.8rem; margin: 2rem 0 1rem; }
+      code { background: #f5f5f5; padding: 0.2rem 0.4rem; border-radius: 4px; font-size: 0.9rem; }
+    </style></head><body><header>
+      <h1>Design Analysis: OpenWeatherMap</h1>
+      <p>This report extracts the key design elements from the OpenWeatherMap website to help you understand its visual language and components.</p>
+    </header><section>
+      <h2>Color Palette</h2>
+      <div class="color-palette">
+        <div class="color-swatch" style="background-color: #E96E50">#E96E50 - Primary Orange</div>
+        <div class="color-swatch" style="background-color: #48484A">#48484A - Dark Gray</div>
+        <div class="color-swatch" style="background-color: #1B4DE4">#1B4DE4 - Accent Blue</div>
+        <div class="color-swatch" style="background-color: #62B8F6">#62B8F6 - Light Blue</div>
+        <div class="color-swatch" style="background-color: #FFFFFF; color: #48484A">#FFFFFF - White</div>
+        <div class="color-swatch" style="background-color: #F9F9F9; color: #48484A">#F9F9F9 - Light Gray</div>
+        <div class="color-swatch" style="background-color: #37BBED">#37BBED - Info Blue</div>
+        <div class="color-swatch" style="background-color: #4A9F38">#4A9F38 - Success Green</div>
+      </div>
+      <p>Note: These colors are approximated from the site's visual appearance. For exact values, refer to the extracted CSS files.</p>
+    </section><section>
+      <h2>Typography</h2>
+      <div class="element-container">
+        <p>The site uses a clean sans-serif font stack, likely based on <code>Roboto</code> or similar.</p>
+        <div class="element-preview">
+          <h1 style="font-size: 2.25rem; font-weight: 700; margin-bottom: 1rem;">Heading 1</h1>
+          <h2 style="font-size: 1.75rem; font-weight: 700; margin-bottom: 1rem;">Heading 2</h2>
+          <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem;">Heading 3</h3>
+          <p style="font-size: 1rem; margin-bottom: 1rem;">Regular paragraph text. The site uses a clean, legible font with appropriate line height and letter spacing for weather information.</p>
+          <p style="font-size: 0.875rem;">Smaller text used for additional details and metadata.</p>
+        </div>
+      </div>
+    </section><section>
+      <h2>UI Components</h2>
+      
+      <div class="element-container">
+        <div class="element-title">Buttons</div>
+        <div class="element-preview">
+          <button style="background-color: #E96E50; color: white; font-weight: 500; padding: 0.5rem 1rem; border-radius: 4px; border: none; margin-right: 1rem;">Orange Button</button>
+          <button style="background-color: #1B4DE4; color: white; font-weight: 500; padding: 0.5rem 1rem; border-radius: 4px; border: none; margin-right: 1rem;">Blue Button</button>
+          <button style="background-color: white; color: #48484A; font-weight: 500; padding: 0.5rem 1rem; border-radius: 4px; border: 1px solid #D1D5DB; margin-right: 1rem;">Secondary Button</button>
+          <button style="color: #1B4DE4; font-weight: 500; padding: 0.5rem 0; border: none; background: transparent;">Text Link</button>
+        </div>
+      </div>
+      
+      <div class="element-container">
+        <div class="element-title">Weather Cards</div>
+        <div class="element-preview">
+          <div style="background: white; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); padding: 1rem; max-width: 300px; margin-bottom: 1rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+              <div style="font-weight: 600; font-size: 1.125rem;">London, GB</div>
+              <div style="color: #888; font-size: 0.875rem;">Mon, 15:00</div>
+            </div>
+            <div style="display: flex; align-items: center; margin-bottom: 0.5rem;">
+              <div style="width: 50px; height: 50px; background-color: #F9F9F9; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                <div style="color: #E96E50; font-size: 1.5rem;">☀️</div>
+              </div>
+              <div style="font-size: 2rem; font-weight: 700;">17°C</div>
+            </div>
+            <div style="color: #48484A;">Sunny</div>
+            <div style="display: flex; justify-content: space-between; color: #888; font-size: 0.875rem; margin-top: 0.5rem;">
+              <div>Humidity: 65%</div>
+              <div>Wind: 5 m/s</div>
+            </div>
+          </div>
+          
+          <div style="background: white; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); padding: 1rem; max-width: 300px;">
+            <div style="font-weight: 600; margin-bottom: 0.5rem;">5-Day Forecast</div>
+            <div style="display: flex; justify-content: space-between;">
+              <div style="text-align: center; padding: 0.5rem;">
+                <div style="font-size: 0.75rem; color: #888;">Mon</div>
+                <div style="font-size: 1rem; margin: 0.25rem 0;">☀️</div>
+                <div style="font-size: 0.875rem;">17°</div>
+              </div>
+              <div style="text-align: center; padding: 0.5rem;">
+                <div style="font-size: 0.75rem; color: #888;">Tue</div>
+                <div style="font-size: 1rem; margin: 0.25rem 0;">🌤️</div>
+                <div style="font-size: 0.875rem;">16°</div>
+              </div>
+              <div style="text-align: center; padding: 0.5rem;">
+                <div style="font-size: 0.75rem; color: #888;">Wed</div>
+                <div style="font-size: 1rem; margin: 0.25rem 0;">🌧️</div>
+                <div style="font-size: 0.875rem;">12°</div>
+              </div>
+              <div style="text-align: center; padding: 0.5rem;">
+                <div style="font-size: 0.75rem; color: #888;">Thu</div>
+                <div style="font-size: 1rem; margin: 0.25rem 0;">⛅</div>
+                <div style="font-size: 0.875rem;">14°</div>
+              </div>
+              <div style="text-align: center; padding: 0.5rem;">
+                <div style="font-size: 0.75rem; color: #888;">Fri</div>
+                <div style="font-size: 1rem; margin: 0.25rem 0;">☀️</div>
+                <div style="font-size: 0.875rem;">18°</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="element-container">
+        <div class="element-title">Search Component</div>
+        <div class="element-preview">
+          <div style="display: flex; max-width: 500px;">
+            <input type="text" placeholder="Search city..." style="flex: 1; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px 0 0 4px; font-size: 1rem;">
+            <button style="background-color: #E96E50; color: white; border: none; border-radius: 0 4px 4px 0; padding: 0.5rem 1rem; font-weight: 500;">Search</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="element-container">
+        <div class="element-title">Weather Map Component</div>
+        <div class="element-preview">
+          <div style="background-color: #f5f5f5; border-radius: 4px; height: 200px; width: 100%; position: relative; overflow: hidden;">
+            <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, #62B8F6 0%, #1B4DE4 100%); opacity: 0.7;"></div>
+            <div style="position: absolute; top: 10px; left: 10px; background: white; padding: 0.5rem; border-radius: 4px; font-size: 0.875rem; box-shadow: 0 1px 3px rgba(0,0,0,0.2);">
+              <div style="font-weight: 600;">Layer Controls</div>
+              <div style="margin-top: 0.25rem;">
+                <label style="display: block; margin-bottom: 0.25rem;">
+                  <input type="checkbox" checked=""> Temperature
+                </label>
+                <label style="display: block; margin-bottom: 0.25rem;">
+                  <input type="checkbox"> Precipitation
+                </label>
+                <label style="display: block;">
+                  <input type="checkbox"> Wind
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section><section>
+      <h2>Page Layout</h2>
+      <div class="element-container">
+        <p>The OpenWeatherMap site uses a practical, data-focused layout with these characteristics:</p>
+        <ul>
+          <li>Fixed navigation bar with prominent search functionality</li>
+          <li>Content divided into clear sections with appropriate spacing</li>
+          <li>Responsive grid-based layouts for weather data presentation</li>
+          <li>Card-based UI components for distinct data groups</li>
+          <li>Clean separation between different types of weather information</li>
+          <li>Interactive maps with layer controls</li>
+        </ul>
+      </div>
+    </section><section>
+      <h2>Weather Icons</h2>
+      <div class="element-container">
+        <p>OpenWeatherMap uses a distinctive set of weather icons to represent different conditions:</p>
+        <div class="element-preview" style="display: flex; flex-wrap: wrap; gap: 1rem;">
+          <div style="text-align: center; width: 80px;">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">☀️</div>
+            <div style="font-size: 0.75rem;">Clear Sky</div>
+          </div>
+          <div style="text-align: center; width: 80px;">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">🌤️</div>
+            <div style="font-size: 0.75rem;">Few Clouds</div>
+          </div>
+          <div style="text-align: center; width: 80px;">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">⛅</div>
+            <div style="font-size: 0.75rem;">Scattered Clouds</div>
+          </div>
+          <div style="text-align: center; width: 80px;">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">☁️</div>
+            <div style="font-size: 0.75rem;">Broken Clouds</div>
+          </div>
+          <div style="text-align: center; width: 80px;">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">🌧️</div>
+            <div style="font-size: 0.75rem;">Rain</div>
+          </div>
+          <div style="text-align: center; width: 80px;">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">⛈️</div>
+            <div style="font-size: 0.75rem;">Thunderstorm</div>
+          </div>
+          <div style="text-align: center; width: 80px;">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">❄️</div>
+            <div style="font-size: 0.75rem;">Snow</div>
+          </div>
+          <div style="text-align: center; width: 80px;">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">🌫️</div>
+            <div style="font-size: 0.75rem;">Mist</div>
+          </div>
+        </div>
+      </div>
+    </section><section>
+      <h2>API Integration Components</h2>
+      <div class="element-container">
+        <p>OpenWeatherMap provides API access with these key components:</p>
+        <div class="element-preview">
+          <div style="background: #f9f9f9; padding: 1rem; border-radius: 4px; margin-bottom: 1rem;">
+            <div style="font-weight: 600; margin-bottom: 0.5rem;">API Key Generation</div>
+            <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+              <input type="text" value="Your API Key" style="flex: 1; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px; font-family: monospace; font-size: 0.875rem;">
+              <button style="background-color: #1B4DE4; color: white; border: none; border-radius: 4px; padding: 0.5rem 1rem; font-weight: 500;">Copy</button>
+            </div>
+          </div>
+          
+          <div style="background: #f9f9f9; padding: 1rem; border-radius: 4px;">
+            <div style="font-weight: 600; margin-bottom: 0.5rem;">API Code Sample</div>
+            <pre style="background: #48484A; color: white; padding: 1rem; border-radius: 4px; overflow-x: auto; font-size: 0.875rem; line-height: 1.5;"><code>fetch('https://api.openweathermap.org/data/2.5/weather?q=London&amp;appid=YOUR_API_KEY')
+  .then(response =&gt; response.json())
+  .then(data =&gt; {
+    console.log(data);
+    // Process weather data
+  })
+  .catch(error =&gt; console.error('Error:', error));</code></pre>
+          </div>
+        </div>
+      </div>
+    </section><section>
+      <h2>Implementation Recommendations</h2>
+      <div class="element-container">
+        <p>Based on the analysis, the OpenWeatherMap site appears to be built with:</p>
+        <ul>
+          <li><strong>Framework:</strong> Likely a modern JavaScript framework (React, Vue, or Angular)</li>
+          <li><strong>Styling:</strong> Custom CSS with possible use of CSS preprocessor</li>
+          <li><strong>Maps:</strong> Integration with mapping libraries (likely Leaflet or similar)</li>
+          <li><strong>Data Visualization:</strong> Chart libraries for weather data representation</li>
+        </ul>
+        <p>To recreate a similar design:</p>
+        <ol>
+          <li>Set up a React/Next.js project with a clean component structure</li>
+          <li>Configure the color palette to match OpenWeatherMap's branding</li>
+          <li>Create reusable components for weather cards, search, and forecasts</li>
+          <li>Integrate with OpenWeatherMap's API for real weather data</li>
+          <li>Use responsive design principles for mobile compatibility</li>
+          <li>Implement map visualization with appropriate weather layers</li>
+        </ol>
+      </div>
+    </section></body></html>

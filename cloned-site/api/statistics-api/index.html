@@ -1,0 +1,1319 @@
+<!DOCTYPE html><html lang="en"><head>
+  <title> Statistical Weather Data API - OpenWeatherMap</title>
+  <meta name="apple-itunes-app" content="app-id=1535923697">
+  <!-- Google tag (gtag.js) -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-31TSX35RJT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+
+  gtag('config', 'G-31TSX35RJT');
+</script>
+  <script type="text/javascript">
+  (function (c, l, a, r, i, t, y) {
+    c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
+    t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+    y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+  })(window, document, "clarity", "script", "niyw44l6sh");
+</script>  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="keywords" content="weather, world, Openstreetmap, forecast, Openweather, current">
+<meta name="description" content="Explore OpenWeather's Statistical Weather Data API offering statistical data on key weather parameters
+for specific dates, months, or the entire year. It is an essential tool for climate research and forecasting. The API
+provides accurate information on temperature, pressure, humidity, and wind in JSON format. Register today to access
+historical weather statistics and enhance your data-driven decision-making.">
+<meta name="author" content="OpenWeatherMap.org">
+<meta name="domain" content="OpenWeatherMap.org">
+<meta name="p:domain_verify" content="34fe229eab8562dca90f4a5962ff80a9">
+<meta property="title" content="Statistical Weather Data API">  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">  <link rel="shortcut icon" href="/themes/openweathermap/assets/vendor/owm/img/icons/favicon.ico">
+<link rel="icon" href="/themes/openweathermap/assets/vendor/owm/img/icons/logo_16x16.png" sizes="16x16" type="image/png">
+<link rel="icon" href="/themes/openweathermap/assets/vendor/owm/img/icons/logo_32x32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="/themes/openweathermap/assets/vendor/owm/img/icons/logo_60x60.png" sizes="60x60" type="image/png">  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald:400,700,300">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700,500,400italic,500italic">  <link rel="stylesheet" href="..\..\assets\plugins\offline\gdpr\assets\cookieBanner\banner.css">
+  <link href="..\..\assets\combine\f715fd89ab078cb9d62b06cf2ebe66e0-1741279879" rel="stylesheet">
+<!-- <link href="https://openweathermap.org/combine/9e05934b20b1168fe3f391e409e227a4-1741279879" rel="stylesheet"> -->
+<!-- <link href="/themes/openweathermap/assets/css/new_design.css" rel="stylesheet"> -->  <script src="..\..\assets\combine\d8fb6d080cb70d894318fcae14526239-1741279879"></script>
+<!-- <script src="https://openweathermap.org/combine/9dc69b9a99b742c8cd4a003c67dfede2-1741279879"></script> -->  </head>
+
+<body class="body-orange" onclick="closePopUps()">
+  <link href="..\..\assets\themes\openweathermap\assets\css\smart_banner_android.css" rel="stylesheet">
+
+<div id="banner_android" class="banner_stripe">
+    <div class="banner_container">
+        <a class="smartbanner__exit" onclick="bannerClose()"></a>
+        <img src="..\..\assets\themes\openweathermap\assets\img\mobile_app\android-app-top-banner.png" class="banner_icon" alt="banner android">
+        <div>
+            <p class="smartbanner-text">OpenWeather</p>
+            <p class="smartbanner-text">OpenWeather Ltd.</p>
+            <p class="smartbanner-text">GET - on Google Play</p>
+        </div>
+    </div>
+    <a class="google_button" href="https://play.google.com/store/apps/details?id=uk.co.openweather">VIEW</a>
+</div>
+
+<script src="..\..\assets\themes\openweathermap\assets\js\smart_banner_android.js"></script>  <nav id="nav-website" onclick="toggleMenu(event)">
+  <ul id="first-level-nav">
+    <li class="logo">
+      <a href="/">
+        <img src="..\..\assets\themes\openweathermap\assets\img\logo_white_cropped.png" alt="logo">
+      </a>
+    </li>
+    <li id="hamburger">
+      <img src="..\..\assets\themes\openweathermap\assets\img\owm_icons\icon_hamburger.svg" alt="icon hamburger">
+    </li>
+    <li id="desktop-menu">
+      <form role="search" action="/find" method="get">
+        <input type="text" name="q" placeholder="Weather in your city">
+        <input type="submit" class="submit">
+      </form>
+      <ul>
+        <li>
+          <a href="/guide">Guide</a>
+        </li>
+        <li>
+          <a href="/api">API</a>
+        </li>
+        <li>
+          <a href="https://dashboard.openweather.co.uk/" target="_blank">Dashboard</a>
+        </li>
+        <li>
+          <a href="https://home.openweathermap.org/marketplace" target="_blank">Marketplace</a>
+        </li>
+        <li>
+          <a href="/price">Pricing</a>
+        </li>
+        <li>
+          <a href="/weathermap">Maps</a>
+        </li>
+        <li>
+          <a href="/our-initiatives">Our Initiatives</a>
+        </li>
+        <li>
+          <a href="/examples">Partners</a>
+        </li>
+        <li>
+          <a href="https://openweather.co.uk/blog/category/weather" target="_blank">Blog</a>
+        </li>
+        <li>
+          <a href="https://openweather.co.uk" class="marketplace" target="_blank">For Business</a>
+        </li>
+                <li class="user-li"><a href="https://openweathermap.org/home/sign_in">Sign in</a></li>
+                <li><a href="/support-centre">Support centre</a></li>
+    
+  </ul>
+  </li>
+  </ul>
+  <ul id="mobile-menu">
+    <li>
+      <form role="search" action="/find" method="get">
+        <input type="text" name="q" placeholder="Weather in your city">
+        <input type="submit" class="submit">
+      </form>
+    </li>
+    <li>
+      <a href="/guide">Guide</a>
+    </li>
+    <li>
+      <a href="/api">API</a>
+    </li>
+    <li>
+      <a href="https://dashboard.openweather.co.uk/" target="_blank">Dashboard</a>
+    </li>
+    <li>
+      <a href="https://home.openweathermap.org/marketplace" target="_blank">Marketplace</a>
+    </li>
+    <li>
+      <a href="/price">Pricing</a>
+    </li>
+    <li>
+      <a href="/weathermap">Maps</a>
+    </li>
+    <li>
+      <a href="/our-initiatives">Our Initiatives</a>
+    </li>
+    <li>
+      <a href="/examples">Partners</a>
+    </li>
+    <li>
+      <a href="https://openweather.co.uk/blog/category/weather" target="_blank">Blog</a>
+    </li>
+    <li>
+      <a href="https://openweather.co.uk" class="marketplace" target="_blank">For Business</a>
+    </li>
+    <li><a href="/support-centre">Support centre</a></li>
+        <li><a href="https://openweathermap.org/home/sign_in">Sign in</a></li>
+      </ul>
+</nav>
+<div class="nav-styles"></div>  <main class="wrapper">
+        <div class="topic">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-7">
+                                    <h1 class="breadcrumb-title">Statistical Weather Data API</h1>
+                            </div>
+            <div class="col-sm-5">
+                <ol class="breadcrumb pull-right hidden-xs">
+                    <li><a href="/">Home</a></li>
+                                            <li class="active"><a href="/api">API</a></li>
+                                                            
+                                                                        <li class="breadcrumb__leaf">Statistical Weather Data API</li>
+                                                            </ol>
+            </div>
+        </div>
+    </div>   
+</div>        <div class="container documentation">
+   <div class="doc-container">
+      <div>
+         <nav>
+            <ul>
+               <li>
+                  <a href="#year">Yearly aggregation</a>
+                  <ul>
+                     <li><a href="#geo-year">How to make an API call</a></li>
+                     <li><a href="#resp-year">Response of Yearly aggregation</a></li>
+                  </ul>
+               </li>
+               <li><a href="#month">Monthly aggregation</a>
+                  <ul>
+                     <li><a href="#geo-month">How to make an API call</a></li>
+                     <li><a href="#resp-month">Response of Monthly aggregation</a></li>
+                  </ul>
+               </li>
+               <li><a href="#day">Daily aggregation</a>
+                  <ul>
+                     <li><a href="#geo-day">How to make an API call</a></li>
+                     <li><a href="#resp-day">Response of Daily aggregation</a></li>
+                  </ul>
+               </li>
+               <li>
+                  <a href="#other">Other features</a>
+                  <ul>
+                     <li><a href="#geocoding">Geocoding API</a></li>
+                     <li><a href="#builtin">Built-in geocoding</a>
+                        <ul>
+                           <li><a href="#name">Built-in API request by city name</a></li>
+                           <li><a href="#cityid">Built-in API request by city ID</a></li>
+                        </ul>
+                     </li>
+                  </ul>
+               </li>
+            </ul>
+         </nav>
+      </div>
+      <div>
+         <p class="lead">
+            Statistical Weather Data API allows you to get statistical data by main weather parameters for a chosen date
+            or month of the year, or for the entire year.
+         </p>
+         <p>This product is useful for analysis of climate indicators and statistical approach to weather forecasting.
+            Statistical Weather Data API is calculated based on our <a href="/history">Historical weather data</a>.</p>
+         <p>In this product, you will be able to request basic statistical data for the following weather
+            characteristics:</p>
+         <ul>
+            <li>Temperature</li>
+            <li>Pressure</li>
+            <li>Humidity</li>
+            <li>Wind</li>
+            <li>Precipitation</li>
+            <li>Clouds</li>
+         </ul>
+         <p>All weather data can be obtained only in JSON format. The frequency of data update is 1 hour.</p>
+         <div class="info-board info-board-blue">
+            Please note that Statistical API <b>doesn't return real historical data</b>, but statistically calculated
+            data based on real historical data for a specific period of time.
+         </div>
+
+         <section id="year">
+            <h2>Yearly aggregation</h2>
+            <p>By using this API, you will be able to receive statistical data for all 365 days of the entire year in
+               one single API response. To get aggregated data only for a specific month or for a specific day, use the
+               methods of <a href="#month">Monthly</a> or <a href="#day">Daily Aggregation</a>.</p>
+            <section id="name-year">
+               <section id="geo-year">
+                  <h3>How to make an API call </h3>
+                  <p class="sub-header">API call</p>
+                  <div class="api">
+                     <code>history.openweathermap.org/data/2.5/aggregated/year?lat={lat}&amp;lon={lon}&amp;appid=<a href="https://home.openweathermap.org/api_keys" target="_blank">{API key}</a></code>
+                  </div>
+                  <table class="material-table">
+                     <tbody><tr>
+                        <th colspan="3">Parameters</th>
+                     </tr>
+                     <tr>
+                        <td><code class="nowrap">lat, lon</code></td>
+                        <td><span class="sub">required</span></td>
+                        <td>Geographical coordinates (latitude, longitude). If you need the geocoder to automatic
+                           convert city names and zip-codes to geo coordinates and the other way around, please use our
+                           <a href="/api/geocoding-api">Geocoding API</a>.
+                        </td>
+                     </tr>
+                     <tr>
+                        <td><code>appid</code></td>
+                        <td><span class="sub">required</span></td>
+                        <td>Your unique API key (you can always find it on your account page under the <a href="https://home.openweathermap.org/api_keys" target="_blank">"API key" tab</a>)</td>
+                     </tr>
+                  </tbody></table>
+                  <div class="info-board info-board-blue">
+                     <p>Please use <a href="/api/geocoding-api"><b><u>Geocoder API</u></b></a> if you need automatic
+                        convert city names and zip-codes to geo coordinates and the other way around. </p>
+                     <p>Please note that <a href="#geocoding"><u>built-in geocoder</u></a> has been deprecated. Although
+                        it is still available for use, bug fixing and updates are no longer available for this
+                        functionality. </p>
+                  </div>
+                  <p class="sub-header">Example of API call</p>
+
+                  <div class="api example">
+                     <code>https://history.openweathermap.org/data/2.5/aggregated/year?lat=35&amp;lon=139&amp;appid=<a href="https://home.openweathermap.org/api_keys" target="_blank">{API key}</a></code>
+                  </div>
+
+               </section>
+               <section id="resp-year">
+                  <h3>Response of Yearly aggregation</h3>
+                  <p>The response of API contains 365 groups of statistical data for each day of the entire calendar
+                     year.</p>
+                  <div class="response open">
+                     <div class="api">
+                        Example of API response
+                     </div>
+                     <div class="content">
+                        <pre>                     <code class="json">
+{
+"cod":200,
+"city_id":5400075,
+"calctime":3.105838634,
+"result":[
+   {
+      "month": 1,
+      "day": 1,
+      "temp":{
+         "record_min":274.44,
+         "record_max":290.45,
+         "average_min":276.79,
+         "average_max":286.5,
+         "median":281.26,
+         "mean":281.29,
+         "p25":278.57,
+         "p75":283.83,
+         "st_dev":3.69,
+         "num":136
+      },
+      "pressure":{
+         "min":1014,
+         "max":1026,
+         "median":1021,
+         "mean":1020.5,
+         "p25":1019,
+         "p75":1023,
+         "st_dev":3.25,
+         "num":135
+      },
+      "humidity":{
+         "min":23,
+         "max":100,
+         "median":70,
+         "mean":65.88,
+         "p25":47,
+         "p75":82,
+         "st_dev":20.63,
+         "num":133
+      },
+      "wind":{
+         "min":0,
+         "max":10,
+         "median":1,
+         "mean":2.36,
+         "p25":1,
+         "p75":3,
+         "st_dev":2.3,
+         "num":136
+      },
+      "precipitation":{
+         "min":0,
+         "max":0.3,
+         "median":0,
+         "mean":0.01,
+         "p25":0,
+         "p75":0,
+         "st_dev":0.04,
+         "num":136
+      },
+      "clouds":{
+         "min":0,
+         "max":90,
+         "median":1,
+         "mean":20.18,
+         "p25":1,
+         "p75":40,
+         "st_dev":31.91,
+         "num":136
+      }
+   },
+   .....
+]
+}
+                     </code>
+                  </pre>
+                     </div>
+                  </div>
+                  <p class="sub-header">Parameters</p>
+                  <ul class="docs-list">
+                     <li><code>code</code>Internal parameter</li>
+                     <li><code>city_id</code><span style="color:#8C8C8D">City ID. Please note that built-in geocoder
+                           functionality has been deprecated. Learn more <a href="#builtin">here</a>.</span></li>
+                     <li><code>calctime</code>Internal parameter</li>
+                     <li>
+                        <code>result</code>
+                        <ul>
+                           <li><code>month</code> Month of the year</li>
+                           <li><code>day</code>Day of the month</li>
+                           <li>
+                              <code>temp</code>
+                              <ul>
+                                 <li><code>record_min</code>Absolute temperature minimum based on all historical
+                                    measurements for this day, Kelvin.</li>
+                                 <li><code>record_max</code>Absolute temperature maximum based on all historical
+                                    measurements for this day, Kelvin.</li>
+                                 <li><code>average_min</code>Average of all minimum temperature values for this day,
+                                    Kelvin.</li>
+                                 <li><code>average_max</code>Average of all maximum temperature values for this day,
+                                    Kelvin.</li>
+                                 <li><code>median</code>The <a href="https://en.wikipedia.org/wiki/Median">median
+                                       value</a> of the temperature, Kelvin.</li>
+                                 <li><code>mean</code>Average of all temperature measurements for this day, Kelvin.</li>
+                                 <li><code>p25</code>The <a href="https://en.wikipedia.org/wiki/Quartile">first
+                                       quartile</a> value of the temperature, Kelvin.</li>
+                                 <li><code>p75</code> The <a href="https://en.wikipedia.org/wiki/Quartile">third
+                                       quartile</a> value of the temperature, Kelvin.</li>
+                                 <li><code>st_dev</code>The <a href="https://en.wikipedia.org/wiki/Standard_deviation">standard deviation</a> of
+                                    the temperature, Kelvin.</li>
+                                 <li><code>num</code>Number of measurements.</li>
+                              </ul>
+                           </li>
+                           <li>
+                              <code>pressure</code>
+                              <ul>
+                                 <li><code>min</code>Absolute pressure minimum based on all historical measurements for
+                                    this day, hPa.</li>
+                                 <li><code>max</code>Absolute pressure maximum based on all historical measurements for
+                                    this day, hPa.</li>
+                                 <li><code>median</code>The <a href="https://en.wikipedia.org/wiki/Median">median
+                                       value</a> of the pressure, hPa.</li>
+                                 <li><code>mean</code>Average of all pressure measurements for this day, hPa.</li>
+                                 <li><code>p25</code>The <a href="https://en.wikipedia.org/wiki/Quartile">first
+                                       quartile</a> value of the pressure, hPa.</li>
+                                 <li><code>p75</code> The <a href="https://en.wikipedia.org/wiki/Quartile">third
+                                       quartile</a> value of the pressure, hPa.</li>
+                                 <li><code>st_dev</code>The <a href="https://en.wikipedia.org/wiki/Standard_deviation">standard deviation</a> of
+                                    the pressure, hPa.</li>
+                                 <li><code>num</code>Number of measurements.</li>
+                              </ul>
+                           </li>
+                           <li>
+                              <code>humidity</code>
+                              <ul>
+                                 <li><code>min</code>Absolute humidity minimum based on all historical measurements for
+                                    this day, %.</li>
+                                 <li><code>max</code>Absolute humidity maximum based on all historical measurements for
+                                    this day, %.</li>
+                                 <li><code>median</code>The <a href="https://en.wikipedia.org/wiki/Median">median
+                                       value</a> of the humidity, %.</li>
+                                 <li><code>mean</code>Average of all humidity measurements for this day, %.</li>
+                                 <li><code>p25</code>The <a href="https://en.wikipedia.org/wiki/Quartile">first
+                                       quartile</a> value of the humidity, %.</li>
+                                 <li><code>p75</code> The <a href="https://en.wikipedia.org/wiki/Quartile">third
+                                       quartile</a> value of the humidity, %.</li>
+                                 <li><code>st_dev</code>The <a href="https://en.wikipedia.org/wiki/Standard_deviation">standard deviation</a> of
+                                    the humidity, %.</li>
+                                 <li><code>num</code>Number of measurements.</li>
+                              </ul>
+                           </li>
+                           <li>
+                              <code>wind</code>
+                              <ul>
+                                 <li><code>min</code>Absolute wind speed minimum based on all historical measurements
+                                    for this day, meter/sec.</li>
+                                 <li><code>max</code>Absolute wind speed maximum based on all historical measurements
+                                    for this day, meter/sec.</li>
+                                 <li><code>median</code>The <a href="https://en.wikipedia.org/wiki/Median">median
+                                       value</a> of the wind speed, meter/sec.</li>
+                                 <li><code>mean</code>Average of all wind speed measurements for this day, meter/sec.
+                                 </li>
+                                 <li><code>p25</code>The <a href="https://en.wikipedia.org/wiki/Quartile">first
+                                       quartile</a> value of the wind speed, meter/sec.</li>
+                                 <li><code>p75</code> The <a href="https://en.wikipedia.org/wiki/Quartile">third
+                                       quartile</a> value of the wind speed, meter/sec.</li>
+                                 <li><code>st_dev</code>The <a href="https://en.wikipedia.org/wiki/Standard_deviation">standard deviation</a> of
+                                    the wind speed, meter/sec.</li>
+                                 <li><code>num</code>Number of measurements.</li>
+                              </ul>
+                           </li>
+                           <li>
+                              <code>precipitation</code>
+                              <ul>
+                                 <li><code>min</code>Absolute precipitation volume minimum based on all historical
+                                    measurements for this day, mm.</li>
+                                 <li><code>max</code>Absolute precipitation volume maximum based on all historical
+                                    measurements for this day, mm.</li>
+                                 <li><code>median</code>The <a href="https://en.wikipedia.org/wiki/Median">median
+                                       value</a> of the precipitation volume, mm.</li>
+                                 <li><code>mean</code>Average of all precipitation volume measurements for this day, mm.
+                                 </li>
+                                 <li><code>p25</code>The <a href="https://en.wikipedia.org/wiki/Quartile">first
+                                       quartile</a> value of the precipitation volume, mm.</li>
+                                 <li><code>p75</code> The <a href="https://en.wikipedia.org/wiki/Quartile">third
+                                       quartile</a> value of the precipitation volume, mm.</li>
+                                 <li><code>st_dev</code>The <a href="https://en.wikipedia.org/wiki/Standard_deviation">standard deviation</a> of
+                                    the precipitation volume, mm.</li>
+                                 <li><code>num</code>Number of measurements.</li>
+                              </ul>
+                           </li>
+                        </ul>
+                     </li>
+                  </ul>
+               </section>
+            </section>
+            <section id="month">
+               <h2>Monthly aggregation</h2>
+               <p>By using this API, you will be able to request statistical monthly weather data for any month of the
+                  entire year in a single API response. If you like to receive aggregated data only for one specific
+                  day, please use the <a href="#day">Daily Aggregation</a> approach described below.</p>
+               <section id="geo-month">
+                  <h3>How to make an API call </h3>
+                  <p class="sub-header">API call</p>
+                  <div class="api">
+                     <code>history.openweathermap.org/data/2.5/aggregated/month?lat={lat}&amp;lon={lon}&amp;month={number of the month}</code>
+                  </div>
+                  <table class="material-table">
+                     <tbody><tr>
+                        <th colspan="3">Parameters</th>
+                     </tr>
+                     <tr>
+                        <td><code class="nowrap">lat, lon</code></td>
+                        <td><span class="sub">required</span></td>
+                        <td>Geographical coordinates (latitude, longitude). If you need the geocoder to automatic
+                           convert city names and zip-codes to geo coordinates and the other way around, please use our
+                           <a href="/api/geocoding-api">Geocoding API</a>.
+                        </td>
+                     </tr>
+                     <tr>
+                        <td><code>month</code></td>
+                        <td><span class="sub">required</span></td>
+                        <td>A number of the month in the year. Available values: <code>1</code>, <code>2</code>,
+                           <code>3</code>, <code>4</code>, <code>5</code>, <code>6</code>, <code>7</code>,
+                           <code>8</code>, <code>9</code>, <code>10</code>, <code>11</code>, <code>12</code>.
+                        </td>
+                     </tr>
+                     <tr>
+                        <td><code>appid</code></td>
+                        <td><span class="sub">required</span></td>
+                        <td>Your unique API key (you can always find it on your account page under the <a href="https://home.openweathermap.org/api_keys" target="_blank">"API key" tab</a>)</td>
+                     </tr>
+                  </tbody></table>
+                  <div class="info-board info-board-blue">
+                     <p>Please use <a href="/api/geocoding-api"><b><u>Geocoder API</u></b></a> if you need automatic
+                        convert city names and zip-codes to geo coordinates and the other way around. </p>
+                     <p>Please note that <a href="#geocoding"><u>built-in geocoder</u></a> has been deprecated. Although
+                        it is still available for use, bug fixing and updates are no longer available for this
+                        functionality. </p>
+                  </div>
+                  <p class="sub-header">Example of API call</p>
+                  <div class="api">
+                     <code>https://history.openweathermap.org/data/2.5/aggregated/month?month=2&amp;lat=35&amp;lon=139&amp;appid=<a href="https://home.openweathermap.org/api_keys" target="_blank">{API key}</a></code>
+                  </div>
+               </section>
+               <section id="resp-month">
+                  <h3>Response of Monthly aggregation</h3>
+                  <p>The Response of API contains 1 group of statistical data for selected month.</p>
+                  <p class="sub-header">Example of API response</p>
+                  <div class="response open">
+                     <div class="api">
+                        Example of API response
+                     </div>
+                     <div class="content">
+                        <pre>                     <code class="json">
+{
+"cod":200,
+"city_id":5400075,
+"calctime":0.417010027,
+"result":{
+   "month": 2,
+   "temp":{
+      "record_min":269.85,
+      "record_max":296.05,
+      "average_min":274.17,
+      "average_max":291.97,
+      "median":283.71,
+      "mean":283.69,
+      "p25":281.05,
+      "p75":286.18,
+      "st_dev":3.98,
+      "num":3953
+   },
+   "pressure":{
+      "min":988,
+      "max":1036,
+      "median":1020,
+      "mean":1019.34,
+      "p25":1016,
+      "p75":1024,
+      "st_dev":6.94,
+      "num":3942
+   },
+   "humidity":{
+      "min":17,
+      "max":100,
+      "median":81,
+      "mean":77.38,
+      "p25":67,
+      "p75":89,
+      "st_dev":16.33,
+      "num":3669
+   },
+   "wind":{
+      "min":0,
+      "max":17,
+      "median":1,
+      "mean":2.06,
+      "p25":1,
+      "p75":3,
+      "st_dev":1.96,
+      "num":3953
+   },
+   "precipitation":{
+      "min":0,
+      "max":3,
+      "median":0,
+      "mean":0.16,
+      "p25":0,
+      "p75":0,
+      "st_dev":0.46,
+      "num":3953
+   },
+   "clouds":{
+      "min":0,
+      "max":90,
+      "median":12,
+      "mean":37.4,
+      "p25":1,
+      "p75":90,
+      "st_dev":39.94,
+      "num":3953
+   },
+   "sunshine_hours":102.17
+}
+}
+                     </code>
+                  </pre>
+                     </div>
+                  </div>
+                  <p class="sub-header">Parameters</p>
+                  <ul class="docs-list">
+                     <li><code>code</code>Internal parameter</li>
+                     <li><code>city_id</code><span style="color:#8C8C8D">City ID. Please note that built-in geocoder
+                           functionality has been deprecated. Learn more <a href="#builtin">here</a>.</span></li>
+                     <li><code>calctime</code>Internal parameter</li>
+                     <li>
+                        <code>result</code>
+                        <ul>
+                           <li><code>month</code>Month of the year</li>
+                           <li>
+                              <code>temp</code>
+                              <ul>
+                                 <li><code>record_min</code>Absolute temperature minimum based on all historical
+                                    measurements for this month, Kelvin.</li>
+                                 <li><code>record_max</code>Absolute temperature maximum based on all historical
+                                    measurements for this month, Kelvin.</li>
+                                 <li><code>average_min</code>Average of all minimum temperature values for this month,
+                                    Kelvin.</li>
+                                 <li><code>average_max</code>Average of all maximum temperature values for this month,
+                                    Kelvin.</li>
+                                 <li><code>median</code>The <a href="https://en.wikipedia.org/wiki/Median">median
+                                       value</a> of the tempreture, Kelvin.</li>
+                                 <li><code>mean</code>Average of all temperature measurements for this month, Kelvin.
+                                 </li>
+                                 <li><code>p25</code>The <a href="https://en.wikipedia.org/wiki/Quartile">first
+                                       quartile</a> value of the temperature, Kelvin.</li>
+                                 <li><code>p75</code> The <a href="https://en.wikipedia.org/wiki/Quartile">third
+                                       quartile</a> value of the temperature, Kelvin.</li>
+                                 <li><code>st_dev</code>The <a href="https://en.wikipedia.org/wiki/Standard_deviation">standard deviation</a> of
+                                    the temperature, Kelvin.</li>
+                                 <li><code>num</code>Number of measurements.</li>
+                              </ul>
+                           </li>
+                           <li>
+                              <code>pressure</code>
+                              <ul>
+                                 <li><code>min</code>Absolute pressure minimum based on all historical measurements for
+                                    this month, hPa.</li>
+                                 <li><code>max</code>Absolute pressure maximum based on all historical measurements for
+                                    this month, hPa.</li>
+                                 <li><code>median</code>The <a href="https://en.wikipedia.org/wiki/Median">median
+                                       value</a> of the pressure, hPa.</li>
+                                 <li><code>mean</code>Average of all pressure measurements for this month, hPa.</li>
+                                 <li><code>p25</code>The <a href="https://en.wikipedia.org/wiki/Quartile">first
+                                       quartile</a> value of the pressure, hPa.</li>
+                                 <li><code>p75</code> The <a href="https://en.wikipedia.org/wiki/Quartile">third
+                                       quartile</a> value of the pressure, hPa.</li>
+                                 <li><code>st_dev</code>The <a href="https://en.wikipedia.org/wiki/Standard_deviation">standard deviation</a> of
+                                    the pressure, hPa.</li>
+                                 <li><code>num</code>Number of measurements.</li>
+                              </ul>
+                           </li>
+                           <li>
+                              <code>humidity</code>
+                              <ul>
+                                 <li><code>min</code>Absolute humidity minimum based on all historical measurements for
+                                    this month, %.</li>
+                                 <li><code>max</code>Absolute humidity maximum based on all historical measurements for
+                                    this month, %.</li>
+                                 <li><code>median</code>The <a href="https://en.wikipedia.org/wiki/Median">median
+                                       value</a> of the humidity, %.</li>
+                                 <li><code>mean</code>Average of all humidity measurements for this month, %.</li>
+                                 <li><code>p25</code>The <a href="https://en.wikipedia.org/wiki/Quartile">first
+                                       quartile</a> value of the humidity, %.</li>
+                                 <li><code>p75</code> The <a href="https://en.wikipedia.org/wiki/Quartile">third
+                                       quartile</a> value of the humidity, %.</li>
+                                 <li><code>st_dev</code>The <a href="https://en.wikipedia.org/wiki/Standard_deviation">standard deviation</a> of
+                                    the humidity, %.</li>
+                                 <li><code>num</code>Number of measurements.</li>
+                              </ul>
+                           </li>
+                           <li>
+                              <code>wind</code>
+                              <ul>
+                                 <li><code>min</code>Absolute wind speed minimum based on all historical measurements
+                                    for this month, meter/sec.</li>
+                                 <li><code>max</code>Absolute wind speed maximum based on all historical measurements
+                                    for this month, meter/sec.</li>
+                                 <li><code>median</code>The <a href="https://en.wikipedia.org/wiki/Median">median
+                                       value</a> of the wind speed, meter/sec.</li>
+                                 <li><code>mean</code>Average of all wind speed measurements for this month, meter/sec.
+                                 </li>
+                                 <li><code>p25</code>The <a href="https://en.wikipedia.org/wiki/Quartile">first
+                                       quartile</a> value of the wind speed, meter/sec.</li>
+                                 <li><code>p75</code> The <a href="https://en.wikipedia.org/wiki/Quartile">third
+                                       quartile</a> value of the wind speed, meter/sec.</li>
+                                 <li><code>st_dev</code>The <a href="https://en.wikipedia.org/wiki/Standard_deviation">standard deviation</a> of
+                                    the wind speed, meter/sec.</li>
+                                 <li><code>num</code>Number of measurements.</li>
+                              </ul>
+                           </li>
+                           <li>
+                              <code>precipitation</code>
+                              <ul>
+                                 <li><code>min</code>Absolute precipitation volume minimum based on all historical
+                                    measurements for this month, mm.</li>
+                                 <li><code>max</code>Absolute precipitation volume maximum based on all historical
+                                    measurements for this month, mm.</li>
+                                 <li><code>median</code>The <a href="https://en.wikipedia.org/wiki/Median">median
+                                       value</a> of the precipitation volume, mm.</li>
+                                 <li><code>mean</code>Average of all precipitation volume measurements for this month,
+                                    mm.</li>
+                                 <li><code>p25</code>The <a href="https://en.wikipedia.org/wiki/Quartile">first
+                                       quartile</a> value of the precipitation volume, mm.</li>
+                                 <li><code>p75</code> The <a href="https://en.wikipedia.org/wiki/Quartile">third
+                                       quartile</a> value of the precipitation volume, mm.</li>
+                                 <li><code>st_dev</code>The <a href="https://en.wikipedia.org/wiki/Standard_deviation">standard deviation</a> of
+                                    the precipitation volume, mm.</li>
+                                 <li><code>num</code>Number of measurements.</li>
+                              </ul>
+                           </li>
+                           <li><code>sunshine_hours</code>The number of sunny hours in the selected month.</li>
+                        </ul>
+                     </li>
+                  </ul>
+               </section>
+            </section>
+            <section id="day">
+               <h2>Daily aggregation</h2>
+               <p>Using this API method, you will receive in one API response statistical data for any day during the
+                  entire calendar year. To get aggregated data only for a specific month, use methods of <a href="#month">Month Aggregation</a>.</p>
+               <section id="geo-day">
+                  <h3>How to make an API call </h3>
+                  <p class="sub-header">API call</p>
+                  <div class="api">
+                     <code>
+                  history.openweathermap.org/data/2.5/aggregated/day?lat={lat}&amp;lon={lon}&amp;month={number of the month}&amp;day={number of the day}
+                  </code>
+                  </div>
+                  <table class="material-table">
+                     <tbody><tr>
+                        <th colspan="3">Parameters</th>
+                     </tr>
+                     <tr>
+                        <td><code class="nowrap">lat, lon</code></td>
+                        <td><span class="sub">required</span></td>
+                        <td>Geographical coordinates (latitude, longitude). If you need the geocoder to automatic
+                           convert city names and zip-codes to geo coordinates and the other way around, please use our
+                           <a href="/api/geocoding-api">Geocoding API</a>.
+                        </td>
+                     </tr>
+                     <tr>
+                        <td><code>month</code></td>
+                        <td><span class="sub">required</span></td>
+                        <td>A number of the month in the year. Available values: <code>1</code>, <code>2</code>,
+                           <code>3</code>, <code>4</code>, <code>5</code>, <code>6</code>, <code>7</code>,
+                           <code>8</code>, <code>9</code>, <code>10</code>, <code>11</code>, <code>12</code>.
+                        </td>
+                     </tr>
+                     <tr>
+                        <td><code>day</code></td>
+                        <td><span class="sub">required</span></td>
+                        <td>A number of the day in month. Available values: <code>1</code> - <code>31</code></td>
+                     </tr>
+                     <tr>
+                        <td><code>appid</code></td>
+                        <td><span class="sub">required</span></td>
+                        <td>Your unique API key (you can always find it on your account page under the <a href="https://home.openweathermap.org/api_keys" target="_blank">"API key" tab</a>)</td>
+                     </tr>
+                  </tbody></table>
+                  <div class="info-board info-board-blue">
+                     <p>Please use <a href="/api/geocoding-api"><b><u>Geocoder API</u></b></a> if you need automatic
+                        convert city names and zip-codes to geo coordinates and the other way around. </p>
+                     <p>Please note that <a href="#geocoding"><u>built-in geocoder</u></a> has been deprecated. Although
+                        it is still available for use, bug fixing and updates are no longer available for this
+                        functionality. </p>
+                  </div>
+                  <p class="sub-header">Example of API call</p>
+                  <div class="api example">
+                     <code>https://history.openweathermap.org/data/2.5/aggregated/day?lat=35&amp;lon=139&amp;month=2&amp;day=2&amp;appid=<a href="https://home.openweathermap.org/api_keys" target="_blank">{API key}</a></code>
+                  </div>
+               </section>
+               <section id="resp-day">
+                  <h3>Response of Daily aggregation</h3>
+                  <p>The response of API contains 1 group of statistical data for selected day.</p>
+                  <p class="sub-header">Example of API response</p>
+                  <div class="response open">
+                     <div class="api">
+                        Example of API response
+                     </div>
+                     <div class="content">
+                        <pre>                       <code class="json">
+{
+"cod":200,
+"city_id":5400075,
+"calctime":0.022604633,
+"result":{
+   "month":1,
+   "day":1,
+   "temp":{
+      "record_min":275.9,
+      "record_max":291.14,
+      "average_min":283.27,
+      "average_max":289.06,
+      "median":285.41,
+      "mean":285.17,
+      "p25":283.52,
+      "p75":287.59,
+      "st_dev":3.32,
+      "num":124
+   },
+   "pressure":{
+      "min":1014,
+      "max":1027,
+      "median":1019,
+      "mean":1019.02,
+      "p25":1017,
+      "p75":1020,
+      "st_dev":2.65,
+      "num":124
+   },
+   "humidity":{
+      "min":32,
+      "max":100,
+      "median":81,
+      "mean":80.51,
+      "p25":76,
+      "p75":87,
+      "st_dev":11.05,
+      "num":111
+   },
+   "wind":{
+      "min":0,
+      "max":8,
+      "median":2,
+      "mean":2.14,
+      "p25":1,
+      "p75":3,
+      "st_dev":1.69,
+      "num":124
+   },
+   "precipitation":{
+      "min":0,
+      "max":0.9,
+      "median":0,
+      "mean":0.09,
+      "p25":0,
+      "p75":0,
+      "st_dev":0.2,
+      "num":124
+   },
+   "clouds":{
+      "min":1,
+      "max":90,
+      "median":90,
+      "mean":68.52,
+      "p25":75,
+      "p75":90,
+      "st_dev":31.45,
+      "num":124
+   }
+}
+}
+                       </code>
+                    </pre>
+                     </div>
+                  </div>
+                  <p class="sub-header">Fields in API response</p>
+                  <ul class="docs-list">
+                     <li><code>code</code>Internal parameter</li>
+                     <li><code>city_id</code><span style="color:#8C8C8D">City ID. Please note that built-in geocoder
+                           functionality has been deprecated. Learn more <a href="#builtin">here</a>.</span></li>
+                     <li><code>calctime</code>Internal parameter</li>
+                     <li>
+                        <code>result</code>
+                        <ul>
+                           <li><code>month</code> Month of the year</li>
+                           <li><code>day</code> Day of the month</li>
+                           <li>
+                              <code>temp</code>
+                              <ul>
+                                 <li><code>record_min</code>Absolute temperature minimum based on all historical
+                                    measurements for this day, Kelvin.</li>
+                                 <li><code>record_max</code>Absolute temperature maximum based on all historical
+                                    measurements for this day, Kelvin.</li>
+                                 <li><code>average_min</code>Average of all minimum temperature values for this day,
+                                    Kelvin.</li>
+                                 <li><code>average_max</code>Average of all maximum temperature values for this day,
+                                    Kelvin.</li>
+                                 <li><code>median</code>The <a href="https://en.wikipedia.org/wiki/Median">median
+                                       value</a> of the tempreture, Kelvin.</li>
+                                 <li><code>mean</code>Average of all temperature measurements for this day, Kelvin.</li>
+                                 <li><code>p25</code>The <a href="https://en.wikipedia.org/wiki/Quartile">first
+                                       quartile</a> value of the tempreture, Kelvin.</li>
+                                 <li><code>p75</code> The <a href="https://en.wikipedia.org/wiki/Quartile">third
+                                       quartile</a> value of the tempreture, Kelvin.</li>
+                                 <li><code>st_dev</code>The <a href="https://en.wikipedia.org/wiki/Standard_deviation">standard deviation</a> of
+                                    the tempreture, Kelvin.</li>
+                                 <li><code>num</code>Number of measurements.</li>
+                              </ul>
+                           </li>
+                           <li>
+                              <code>pressure</code>
+                              <ul>
+                                 <li><code>min</code>Absolute pressure minimum based on all historical measurements for
+                                    this day, hPa.</li>
+                                 <li><code>max</code>Absolute pressure maximum based on all historical measurements for
+                                    this day, hPa.</li>
+                                 <li><code>median</code>The <a href="https://en.wikipedia.org/wiki/Median">median
+                                       value</a> of the pressure, hPa.</li>
+                                 <li><code>mean</code>Average of all pressure measurements for this day, hPa.</li>
+                                 <li><code>p25</code>The <a href="https://en.wikipedia.org/wiki/Quartile">first
+                                       quartile</a> value of the pressure, hPa.</li>
+                                 <li><code>p75</code> The <a href="https://en.wikipedia.org/wiki/Quartile">third
+                                       quartile</a> value of the pressure, hPa.</li>
+                                 <li><code>st_dev</code>The <a href="https://en.wikipedia.org/wiki/Standard_deviation">standard deviation</a> of
+                                    the pressure, hPa.</li>
+                                 <li><code>num</code>Number of measurements.</li>
+                              </ul>
+                           </li>
+                           <li>
+                              <code>humidity</code>
+                              <ul>
+                                 <li><code>min</code>Absolute humidity minimum based on all historical measurements for
+                                    this day, %.</li>
+                                 <li><code>max</code>Absolute humidity maximum based on all historical measurements for
+                                    this day, %.</li>
+                                 <li><code>median</code>The <a href="https://en.wikipedia.org/wiki/Median">median
+                                       value</a> of the humidity, %.</li>
+                                 <li><code>mean</code>Average of all humidity measurements for this day, %.</li>
+                                 <li><code>p25</code>The <a href="https://en.wikipedia.org/wiki/Quartile">first
+                                       quartile</a> value of the humidity, %.</li>
+                                 <li><code>p75</code> The <a href="https://en.wikipedia.org/wiki/Quartile">third
+                                       quartile</a> value of the humidity, %.</li>
+                                 <li><code>st_dev</code>The <a href="https://en.wikipedia.org/wiki/Standard_deviation">standard deviation</a> of
+                                    the humidity, %.</li>
+                                 <li><code>num</code>Number of measurements.</li>
+                              </ul>
+                           </li>
+                           <li>
+                              <code>wind</code>
+                              <ul>
+                                 <li><code>min</code>Absolute wind speed minimum based on all historical measurements
+                                    for this day, meter/sec.</li>
+                                 <li><code>max</code>Absolute wind speed maximum based on all historical measurements
+                                    for this day, meter/sec.</li>
+                                 <li><code>median</code>The <a href="https://en.wikipedia.org/wiki/Median">median
+                                       value</a> of the wind speed, meter/sec.</li>
+                                 <li><code>mean</code>Average of all wind speed measurements for this day, meter/sec.
+                                 </li>
+                                 <li><code>p25</code>The <a href="https://en.wikipedia.org/wiki/Quartile">first
+                                       quartile</a> value of the wind speed, meter/sec.</li>
+                                 <li><code>p75</code> The <a href="https://en.wikipedia.org/wiki/Quartile">third
+                                       quartile</a> value of the wind speed, meter/sec.</li>
+                                 <li><code>st_dev</code>The <a href="https://en.wikipedia.org/wiki/Standard_deviation">standard deviation</a> of
+                                    the wind speed, meter/sec.</li>
+                                 <li><code>num</code>Number of measurements.</li>
+                              </ul>
+                           </li>
+                           <li>
+                              <code>precipitation</code>
+                              <ul>
+                                 <li><code>min</code>Absolute precipitation volume minimum based on all historical
+                                    measurements for this day, mm.</li>
+                                 <li><code>max</code>Absolute precipitation volume maximum based on all historical
+                                    measurements for this day, mm.</li>
+                                 <li><code>median</code>The <a href="https://en.wikipedia.org/wiki/Median">median
+                                       value</a> of the precipitation volume, mm.</li>
+                                 <li><code>mean</code>Average of all precipitation volume measurements for this day, mm.
+                                 </li>
+                                 <li><code>p25</code>The <a href="https://en.wikipedia.org/wiki/Quartile">first
+                                       quartile</a> value of the precipitation volume, mm.</li>
+                                 <li><code>p75</code> The <a href="https://en.wikipedia.org/wiki/Quartile">third
+                                       quartile</a> value of the precipitation volume, mm.</li>
+                                 <li><code>st_dev</code>The <a href="https://en.wikipedia.org/wiki/Standard_deviation">standard deviation</a> of
+                                    the precipitation volume, mm.</li>
+                                 <li><code>num</code>Number of measurements.</li>
+                              </ul>
+                           </li>
+                        </ul>
+                     </li>
+                  </ul>
+               </section>
+            </section>
+            <section id="other">
+               <h2>Other features</h2>
+
+               <section id="geocoding">
+                  <h3>Geocoding API</h3>
+                  <p>Requesting API calls by geographical coordinates is the most accurate way to specify any location.
+                     If you need to convert city names to geo coordinates and the other way around automatically, please
+                     use our <a href="/api/geocoding-api"><b>Geocoding API</b></a>.</p>
+               </section>
+               <section id="builtin">
+                  <h3>Built-in geocoding</h3>
+                  <div class="info-board info-board-orange">
+                     <p>Please use <a href="/api/geocoding-api"><b>Geocoder API</b></a> if you need automatic convert
+                        city names and zip-codes to geo coordinates and the other way around. </p>
+                     <p><b>Please note that <a href="#name">API requests by city name</a>
+                           and <a href="#cityid">city id</a> have been deprecated. Although they are still available for
+                           use, bug fixing and updates are no longer available for this functionality.</b></p>
+                  </div>
+                  <section id="name">
+                     <h4>Built-in API request by city name </h4>
+                     <p>Please use the parameter <code>q</code> instead of the parameters <code>lat,lon</code> to
+                        specify the city name in the API requests.</p>
+                     <table class="material-table">
+                        <tbody><tr>
+                           <th colspan="3">Parameters</th>
+                        </tr>
+                        <tr>
+                           <td><code>q</code></td>
+                           <td><span class="sub">required</span></td>
+                           <td>
+                              <p>City name, state code and country code divided by comma, please refer to <a href="https://www.iso.org/obp/ui/" target="_blank">ISO 3166</a> for
+                                 the
+                                 state codes or country codes.</p>
+                              <p> You can specify the parameter not only in English. In this case, the API
+                                 response
+                                 should
+                                 be returned in the same language as the language of requested location name if
+                                 the
+                                 location is in our predefined list of more than 200,000 locations.</p>
+                           </td>
+                        </tr>
+                     </tbody></table>
+
+                     <p class="sub-header">Example of API calls</p>
+                     <p>Yearly aggregation</p>
+                     <div class="api example">
+                        <code>
+                  https://history.openweathermap.org/data/2.5/aggregated/year?q=London,GB&amp;appid=<a href="https://home.openweathermap.org/api_keys" target="_blank">{API key}</a>
+                  </code>
+                     </div>
+                     <p>Monthly aggregation</p>
+                     <div class="example api">
+                        <code>https://history.openweathermap.org/data/2.5/aggregated/month?q=London,GB&amp;month=2&amp;appid=<a href="https://home.openweathermap.org/api_keys" target="_blank">{API key}</a></code>
+                     </div>
+                     <p>Daily aggregation</p>
+                     <div class="api example">
+                        <code>
+                  https://history.openweathermap.org/data/2.5/aggregated/day?q=London,GB&amp;month=2&amp;day=1&amp;appid=<a href="https://home.openweathermap.org/api_keys" target="_blank">{API key}</a>
+                  </code>
+                     </div>
+                  </section>
+
+                  <section id="cityid">
+                     <h4>Built-in API request by city id </h4>
+                     <p>
+                     </p><p>Please use the parameter <code>id</code> instead of the parameters <code>lat,lon</code> to
+                        specify the city id in the API requests.</p>
+                     <table class="material-table">
+                        <tbody><tr>
+                           <th colspan="3">Parameters</th>
+                        </tr>
+                        <tr>
+                           <td><code>id</code></td>
+                           <td><span class="sub">required</span></td>
+                           <td>City ID. The list of city IDs 'city.list.json.gz' can be downloaded <a href="http://bulk.openweathermap.org/sample/" target="_blank">here</a>.</td>
+                        </tr>
+                     </tbody></table>
+                     <p class="sub-header">Example of API calls</p>
+                     <p>Yearly aggregation</p>
+                     <div class="api">
+                        <code>https://history.openweathermap.org/data/2.5/aggregated/year?id=2643743&amp;appid=<a href="https://home.openweathermap.org/api_keys" target="_blank">{API key}</a></code>
+                     </div>
+
+                     <p>Monthly aggregation</p>
+                     <div class="api">
+                        <code>
+                  https://history.openweathermap.org/data/2.5/aggregated/month?id=2643743&amp;month=2&amp;appid=<a href="https://home.openweathermap.org/api_keys" target="_blank">{API key}</a>
+                  </code>
+                     </div>
+
+                     <p>Daily aggregation</p>
+                     <div class="api example">
+                        <code>https://history.openweathermap.org/data/2.5/aggregated/day?id=2643743&amp;month=2&amp;day=2&amp;appid=<a href="https://home.openweathermap.org/api_keys" target="_blank">{API key}</a></code>
+                     </div>
+                  </section>
+               </section>
+            </section>
+         </section>
+      </div>
+   </div>
+</div>  </main>
+  <div id="footer-website" onclick="toggleFooterSection(event)">
+   <div class="inner-footer-container">
+      <div class="horizontal-section">
+         <div class="footer-section">
+            <p class="section-heading">Product Collections</p>
+            <div class="section-content">
+               <ul>
+                  <li><a href="/api#current">Current and Forecast APIs</a></li>
+                  <li><a href="/api#history">Historical Weather Data</a></li>
+                  <li><a href="/api#maps">Weather Maps</a></li>
+                  <li><a href="https://dashboard.openweather.co.uk/" target="_blank">Weather Dashboard</a></li>
+                  <li><a href="/widgets-constructor">Widgets</a></li>
+               </ul>
+            </div>
+         </div>
+         <div class="footer-section">
+            <p class="section-heading">Subscription</p>
+            <div class="section-content">
+               <ul>
+                  <li><a href="/appid">How to start</a></li>
+                  <li><a href="/price">Pricing</a></li>
+                  <li><a href="https://home.openweathermap.org/users/sign_up">Subscribe for free</a></li>
+                  <li><a href="/faq">FAQ</a></li>
+               </ul>
+            </div>
+         </div>
+         <div class="footer-section">
+            <p class="section-heading">Company</p>
+            <div class="section-content">
+               <p>OpenWeather is a team of IT experts and data scientists that has been practising deep weather data
+                  science. For each point on the globe, OpenWeather provides historical, current and forecasted weather
+                  data via light-speed APIs. Headquarters in London, UK.</p>
+            </div>
+         </div>
+      </div>
+      <div class="horizontal-section">
+         <div class="footer-section">
+            <p class="section-heading">Technologies</p>
+            <div class="section-content">
+               <ul>
+                  <li><a href="/technology">Our technology</a></li>
+                  <li><a href="/accuracy-and-quality">Accuracy and quality of weather data</a></li>
+                  <li><a href="/stations">Connect your weather station</a></li>
+               </ul>
+            </div>
+         </div>
+         <div class="footer-section">
+            <p class="section-heading">Terms &amp; Conditions</p>
+            <div class="section-content">
+               <ul>
+                  <li><a href="https://openweather.co.uk/storage/app/media/Terms/Openweather_terms_and_conditions_of_sale.pdf" target="_blank">Terms and conditions of sale</a></li>
+                  <li><a href="https://openweather.co.uk/privacy-policy" target="_blank">Privacy Policy</a></li>
+                  <li><a href="https://openweather.co.uk/storage/app/media/Terms/Openweather_website_terms_and_conditions_of_use.pdf" target="_blank">Website terms and conditions</a></li>
+               </ul>
+            </div>
+         </div>
+         <div class="footer-section not-foldable">
+            <!-- <p class="section-heading">Contact us</p> -->
+            <div class="section-content">
+               <ul>
+                  <li><a href="/about-us" target="_blank">About us</a></li>
+                  <li><a href="https://openweather.co.uk/about/our-offices" target="_blank">Our offices</a></li>
+                  <li><a href="https://openweather.co.uk/blog/category/weather" target="_blank">Blog</a></li>
+                  <li><a href="https://openweather.co.uk/" target="_blank">OpenWeather for Business</a></li>
+                  <li><a href="/chat">Ulla, OpenWeather AI assistant</a></li>
+                  <li><a href="https://home.openweathermap.org/questions" target="_blank">Ask a question</a></li>
+                  <!--  <li><a href="mailto:info@openweathermap.org">info@openweathermap.org</a>  -->
+               </ul>
+            </div>
+         </div>
+      </div>
+      <div class="horizontal-section">
+         <div class="footer-section">
+            <div class="my-5">
+               <p>Download OpenWeather app</p>
+               <div>
+                  <a href="https://apps.apple.com/gb/app/openweather/id1535923697" target="_blank">
+                     <img src="..\..\assets\themes\openweathermap\assets\img\mobile_app\app-store-badge.svg" alt="Get it on AppStore">
+                  </a>
+                  <a href="https://play.google.com/store/apps/details?id=uk.co.openweather" target="_blank">
+                     <img src="..\..\assets\themes\openweathermap\assets\img\mobile_app\google-play-badge.png" class="google-play-img" alt="Get it on Google Play">
+                  </a>
+               </div>
+            </div>
+         </div>
+         <div class="footer-section">
+            <div class="my-5 logo-blocks">
+               <img src="..\..\assets\themes\openweathermap\assets\img\RMets_Logo_corp.png" width="200" height="70" alt="RMets logo">
+               <img src="..\..\assets\themes\openweathermap\assets\img\CNB_Business_Logo_2024.png" alt="CNB Business logo" width="170" height="170">
+            </div>
+         </div>
+
+      </div>
+      <div class="horizontal-section my-5">
+         <div>
+            <span>Supplier of Achilles UVDB community</span><br>
+            <span id="years-copyright"></span><br><br>
+         </div>
+         <div class="social">
+            <a href="https://www.facebook.com/groups/270748973021342" target="_blank"><img src="..\..\assets\themes\openweathermap\assets\img\owm_icons\icon_facebook.png" alt="facebook icon"></a>
+            <a href="https://twitter.com/OpenWeatherMap" target="_blank"><img src="..\..\assets\themes\openweathermap\assets\img\owm_icons\icon_x_black.png" alt="x icon"></a>
+            <a href="https://www.linkedin.com/company/9816754" target="_blank"><img src="..\..\assets\themes\openweathermap\assets\img\owm_icons\icon_linkedin.png" alt="linkedin icon "></a>
+            <a href="https://medium.com/@openweathermap" target="_blank"><img src="..\..\assets\themes\openweathermap\assets\img\owm_icons\new_medium.svg" alt="meduim icon"></a>
+            <a href="https://t.me/openweathermap" target="_blank"><img src="..\..\assets\themes\openweathermap\assets\img\owm_icons\icon_telegram.png" alt="telegram icon"></a>
+            <a href="https://github.com/openweathermap" target="_blank"><img src="..\..\assets\themes\openweathermap\assets\img\owm_icons\icon_github.png" alt="github icon"></a>
+         </div>
+      </div>
+      <div class="horizontal-section"></div>
+   </div>
+</div>  <script src="https://cdn.ravenjs.com/3.6.1/raven.min.js"></script>
+<script>Raven.config('http://66df88eb63e94f27964b84031e49b358@sentry.owm.io/16').install()</script>  <script src="..\..\assets\themes\openweathermap\assets\js\bundle_owm_postload.c31872127471c475ade1.js"></script>
+<script src="..\..\assets\themes\openweathermap\assets\js\advertising.js"></script>      <div class="gdpr-banner">
+        <div class="gdpr-banner__wrapper">
+            <div class="gdpr-banner__column gdpr-banner__column--1">
+    <div class="gdpr-banner__row">
+        <div class="gdpr-banner__message">
+    We use cookies to personalize content and to analyze our traffic. Please decide if you are willing to accept cookies from our website.
+</div>    </div>
+</div>
+<div class="gdpr-banner__column gdpr-banner__column--2">
+        <div class="gdpr-banner__settings">
+        <a role="link" rel="privacy" href="https://openweathermap.org/cookies" data-request="onDecline" data-request-success="document.location.href = 'https://openweathermap.org/cookies'">
+            Advanced Settings
+        </a>
+    </div>
+    <div class="gdpr-banner__opt-out">
+    <button role="button" tabindex="0" aria-pressed="false" class="gdpr-banner__button gdpr-banner__button--opt-out" data-request="onDecline" data-request-success="document.querySelector('.gdpr-banner').remove()">
+        Decline
+    </button>
+</div>    <div class="gdpr-banner__opt-in">
+    <button role="button" tabindex="0" aria-pressed="false" class="gdpr-banner__button gdpr-banner__button--opt-in" data-request="onAccept" data-request-success="document.querySelector('.gdpr-banner').remove()" data-request-update="'gtag' : '#gdpr-reload'">
+        Accept
+    </button>
+</div>
+    <div class="gdpr-banner__dismiss">
+    <button role="button" tabindex="0" aria-pressed="false" class="gdpr-banner__button--dismiss" onclick="document.querySelector('.gdpr-banner').remove()">×</button>
+</div></div>        </div>
+    </div>
+  <link href="..\..\assets\themes\openweathermap\assets\css\chat-banner.css" rel="stylesheet">
+<link href="..\..\assets\themes\openweathermap\assets\vendor\owm\css\assistant-index.DVVhxENO.css" rel="stylesheet">
+
+<style>
+  #owm-chat-bot p {
+    font-weight: normal;
+  }
+
+  #owm-chat-bot>div {
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  .pop-up-content h2 {
+    margin-top: 19.2px;
+  }
+
+  .owm-chat-bot-description ul {
+    margin: 0;
+    padding: 16px;
+    background-color: #4f4f4f;
+    color: white;
+    border-radius: 4.8px;
+  }
+
+  .owm-chat-bot-description ul.dashed {
+    list-style-type: none;
+  }
+
+  /* .owm-chat-bot-description ul.dashed>li {
+    text-indent: -1rem;
+  } */
+
+  .owm-chat-bot-description ul.dashed>li:before {
+    content: "- ";
+    text-indent: -16px;
+  }
+</style>
+
+<div id="owm-chat-bot" data-key="5796abbde9106b7da4febfae8c44c232" data-popup="" style="display: none; position: fixed; z-index: 50000; bottom: 16px; right: 16px; height: 640px; max-height: calc(100% - 32px); width: 480px; max-width: calc(100% - 32px);">
+</div>
+
+<script>
+  `ASSISTANT_URL=https://api.openweathermap.org`.split("\n").map(env => env.split('=')).map(env => window[env[0]] = env[1]);
+</script>
+<script src="..\..\assets\themes\openweathermap\assets\vendor\owm\js\assistant-index.ClVGaiQn.js"></script>
+
+<div id="chat-banner" class="banner-pop-up">
+  <div class="banner-pop-up-content">
+    <img src="..\..\assets\themes\openweathermap\assets\img\Ulla_bot.png" alt="Ulla the Bot" width="16" height="16">
+    <h3>Ulla Weather Assistant</h3>
+  </div>
+</div>
+
+
+<script>
+  const chatBanner = document.getElementById('chat-banner');
+  const chatBot = document.getElementById('owm-chat-bot');
+
+  chatBanner.addEventListener('click', () => {
+    chatBanner.style.display = 'none';
+    chatBot.style.display = chatBot.style.display === 'none' ? 'block' : 'none';
+    gtag('event', 'maxullaweather', {
+      'event_category': 'Chat',
+      'event_label': 'maxullaweather'
+    });
+  });
+
+  window.addEventListener('minimize', () => {
+    chatBot.style.display = 'none';
+    chatBanner.style.display = 'block';
+    gtag('event', 'minullaweather', {
+      'event_category': 'Chat',
+      'event_label': 'minullaweather'
+    });
+  });
+
+  const gdprBanner = document.querySelector('.gdpr-banner');
+
+  if (gdprBanner) {
+    chatBanner.style.bottom = '80px';
+
+    const observer = new MutationObserver(() => {
+      if (!document.body.contains(gdprBanner)) {
+        chatBanner.style.bottom = '50px';
+      } else {
+        chatBanner.style.bottom = (gdprBanner.clientHeight + 8) + 'px';
+      }
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
+</script>
+
+</body></html>

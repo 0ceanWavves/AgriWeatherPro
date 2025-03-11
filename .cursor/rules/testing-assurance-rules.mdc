@@ -1,0 +1,72 @@
+---
+description: Testing and Quality Assurance for AgriWeather Pro
+globs: 
+alwaysApply: true
+---
+
+---
+globs: **/*.{js,jsx,ts,tsx,py,test.js,spec.js}
+---
+# Testing and Quality Assurance
+
+<rule>
+name: testing_quality_assurance
+description: Standards for testing and quality assurance in AgriWeather Pro
+filters:
+  - type: file_extension
+    pattern: "\\.(js|jsx|ts|tsx|py|test.js|spec.js)$"
+  - type: file_path
+    pattern: ".*tests/.*|.*__tests__/.*|.*spec/.*"
+
+actions:
+  - type: suggest
+    message: |
+      # Testing and Quality Assurance Guidelines for AgriWeather Pro
+      
+      ## Testing Strategy
+      
+      1. **Weather Data Testing**:
+         - Mock OpenWeatherMap API responses
+         - Test data transformations and calculations
+         - Validate handling of missing or anomalous data
+         - Verify caching and synchronization
+      
+      2. **Agricultural Model Testing**:
+         ```javascript
+         // Example test for GDD calculation
+         describe('Growing Degree Days Calculations', () => {
+           test('calculates GDD correctly when temp above base', () => {
+             expect(calculateGDD(25, 15, 10)).toBeCloseTo(10);
+           });
+           
+           test('returns zero when average temp below base', () => {
+             expect(calculateGDD(12, 8, 10)).toBe(0);
+           });
+           
+           test('accumulates GDD correctly over period', () => {
+             const temps = [
+               { maxTemp: 25, minTemp: 15 },
+               { maxTemp: 28, minTemp: 16 },
+               { maxTemp: 22, minTemp: 12 }
+             ];
+             expect(accumulateGDD(temps, 10)).toBeCloseTo(30);
+           });
+         });
+         ```
+      
+      3. **Geospatial Testing**:
+         - Test field boundary calculations
+         - Verify coordinate transformations
+         - Test interpolation and spatial aggregation
+         - Validate map rendering
+      
+      4. **Performance Testing**:
+         - Test offline capabilities
+         - Verify performance with large datasets
+         - Benchmark calculations for real-time analytics
+         - Test on low-bandwidth connections
+
+metadata:
+  priority: medium
+  version: 1.0
+</rule>

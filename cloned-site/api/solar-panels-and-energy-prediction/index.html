@@ -1,0 +1,2900 @@
+<!DOCTYPE html><html lang="en"><head>
+  <title> Solar panels energy prediction - OpenWeatherMap</title>
+  <meta name="apple-itunes-app" content="app-id=1535923697">
+  <!-- Google tag (gtag.js) -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-31TSX35RJT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+
+  gtag('config', 'G-31TSX35RJT');
+</script>
+  <script type="text/javascript">
+  (function (c, l, a, r, i, t, y) {
+    c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
+    t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+    y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+  })(window, document, "clarity", "script", "niyw44l6sh");
+</script>  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="keywords" content="weather, world, Openstreetmap, forecast, Openweather, current">
+<meta name="description" content="OpenWeather introduces the Solar Panel Energy Prediction service, providing accurate solar power
+generation estimates in JSON format. Features include detailed daily output data for each panel, essential solar
+irradiation metrics (DNI, GHI, DHI), current and 15-day forecasts and historical data starting from 01-01-1979. Manage
+your
+unlimited solar panels by location, specifying panel types, tilt, and azimuth angles. Global coverage ensures
+reliability everywhere.">
+<meta name="author" content="OpenWeatherMap.org">
+<meta name="domain" content="OpenWeatherMap.org">
+<meta name="p:domain_verify" content="34fe229eab8562dca90f4a5962ff80a9">
+<meta property="title" content="Solar panels energy prediction">  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">  <link rel="shortcut icon" href="/themes/openweathermap/assets/vendor/owm/img/icons/favicon.ico">
+<link rel="icon" href="/themes/openweathermap/assets/vendor/owm/img/icons/logo_16x16.png" sizes="16x16" type="image/png">
+<link rel="icon" href="/themes/openweathermap/assets/vendor/owm/img/icons/logo_32x32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="/themes/openweathermap/assets/vendor/owm/img/icons/logo_60x60.png" sizes="60x60" type="image/png">  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald:400,700,300">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700,500,400italic,500italic">  <link rel="stylesheet" href="..\..\assets\plugins\offline\gdpr\assets\cookieBanner\banner.css">
+  <link href="..\..\assets\combine\f715fd89ab078cb9d62b06cf2ebe66e0-1741279879" rel="stylesheet">
+<!-- <link href="https://openweathermap.org/combine/9e05934b20b1168fe3f391e409e227a4-1741279879" rel="stylesheet"> -->
+<!-- <link href="/themes/openweathermap/assets/css/new_design.css" rel="stylesheet"> -->  <script src="..\..\assets\combine\d8fb6d080cb70d894318fcae14526239-1741279879"></script>
+<!-- <script src="https://openweathermap.org/combine/9dc69b9a99b742c8cd4a003c67dfede2-1741279879"></script> -->  </head>
+
+<body class="body-orange" onclick="closePopUps()">
+  <link href="..\..\assets\themes\openweathermap\assets\css\smart_banner_android.css" rel="stylesheet">
+
+<div id="banner_android" class="banner_stripe">
+    <div class="banner_container">
+        <a class="smartbanner__exit" onclick="bannerClose()"></a>
+        <img src="..\..\assets\themes\openweathermap\assets\img\mobile_app\android-app-top-banner.png" class="banner_icon" alt="banner android">
+        <div>
+            <p class="smartbanner-text">OpenWeather</p>
+            <p class="smartbanner-text">OpenWeather Ltd.</p>
+            <p class="smartbanner-text">GET - on Google Play</p>
+        </div>
+    </div>
+    <a class="google_button" href="https://play.google.com/store/apps/details?id=uk.co.openweather">VIEW</a>
+</div>
+
+<script src="..\..\assets\themes\openweathermap\assets\js\smart_banner_android.js"></script>  <nav id="nav-website" onclick="toggleMenu(event)">
+  <ul id="first-level-nav">
+    <li class="logo">
+      <a href="/">
+        <img src="..\..\assets\themes\openweathermap\assets\img\logo_white_cropped.png" alt="logo">
+      </a>
+    </li>
+    <li id="hamburger">
+      <img src="..\..\assets\themes\openweathermap\assets\img\owm_icons\icon_hamburger.svg" alt="icon hamburger">
+    </li>
+    <li id="desktop-menu">
+      <form role="search" action="/find" method="get">
+        <input type="text" name="q" placeholder="Weather in your city">
+        <input type="submit" class="submit">
+      </form>
+      <ul>
+        <li>
+          <a href="/guide">Guide</a>
+        </li>
+        <li>
+          <a href="/api">API</a>
+        </li>
+        <li>
+          <a href="https://dashboard.openweather.co.uk/" target="_blank">Dashboard</a>
+        </li>
+        <li>
+          <a href="https://home.openweathermap.org/marketplace" target="_blank">Marketplace</a>
+        </li>
+        <li>
+          <a href="/price">Pricing</a>
+        </li>
+        <li>
+          <a href="/weathermap">Maps</a>
+        </li>
+        <li>
+          <a href="/our-initiatives">Our Initiatives</a>
+        </li>
+        <li>
+          <a href="/examples">Partners</a>
+        </li>
+        <li>
+          <a href="https://openweather.co.uk/blog/category/weather" target="_blank">Blog</a>
+        </li>
+        <li>
+          <a href="https://openweather.co.uk" class="marketplace" target="_blank">For Business</a>
+        </li>
+                <li class="user-li"><a href="https://openweathermap.org/home/sign_in">Sign in</a></li>
+                <li><a href="/support-centre">Support centre</a></li>
+    
+  </ul>
+  </li>
+  </ul>
+  <ul id="mobile-menu">
+    <li>
+      <form role="search" action="/find" method="get">
+        <input type="text" name="q" placeholder="Weather in your city">
+        <input type="submit" class="submit">
+      </form>
+    </li>
+    <li>
+      <a href="/guide">Guide</a>
+    </li>
+    <li>
+      <a href="/api">API</a>
+    </li>
+    <li>
+      <a href="https://dashboard.openweather.co.uk/" target="_blank">Dashboard</a>
+    </li>
+    <li>
+      <a href="https://home.openweathermap.org/marketplace" target="_blank">Marketplace</a>
+    </li>
+    <li>
+      <a href="/price">Pricing</a>
+    </li>
+    <li>
+      <a href="/weathermap">Maps</a>
+    </li>
+    <li>
+      <a href="/our-initiatives">Our Initiatives</a>
+    </li>
+    <li>
+      <a href="/examples">Partners</a>
+    </li>
+    <li>
+      <a href="https://openweather.co.uk/blog/category/weather" target="_blank">Blog</a>
+    </li>
+    <li>
+      <a href="https://openweather.co.uk" class="marketplace" target="_blank">For Business</a>
+    </li>
+    <li><a href="/support-centre">Support centre</a></li>
+        <li><a href="https://openweathermap.org/home/sign_in">Sign in</a></li>
+      </ul>
+</nav>
+<div class="nav-styles"></div>  <main class="wrapper">
+        <div class="topic">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-7">
+                                    <h1 class="breadcrumb-title">Solar Panel Energy Prediction</h1>
+                            </div>
+            <div class="col-sm-5">
+                <ol class="breadcrumb pull-right hidden-xs">
+                    <li><a href="/">Home</a></li>
+                                            <li class="active"><a href="/api">API</a></li>
+                                                            
+                                                                        <li class="breadcrumb__leaf">Solar Panel Energy Prediction</li>
+                                                            </ol>
+            </div>
+        </div>
+    </div>   
+</div>        <div class="container" onclick="toggleSections(event)">
+
+   <div class="container documentation">
+      <div class="doc-container">
+         <div>
+            <nav>
+               <ul>
+                  <li><a href="#concept">Product concept</a></li>
+                  <li><a href="#how">How to use the service</a></li>
+                  <li><a href="#step1">Step 1: Manage my location</a>
+                     <ul>
+                        <li><a href="#post_location">How to create a unique location</a></li>
+                        <li><a href="#get_location">How to get a location data</a></li>
+                        <li><a href="#get_all_locations">How to get a list of created locations</a></li>
+                        <li><a href="#delete_location">How to delete a location</a></li>
+                     </ul>
+                  </li>
+                  <li><a href="#step2">Step 2: Operations with solar panels</a>
+                     <ul>
+                        <li><a href="#post_panel">How to create a solar panel</a></li>
+                        <li><a href="#get_panel">How to get a solar panel data</a></li>
+                        <li><a href="#get_all_panels">How to get a list of created solar panels</a></li>
+                        <li><a href="#delete_panel">How to delete a solar panel</a></li>
+                     </ul>
+                  </li>
+                  <li><a href="#step3">Step 3: Get solar panel power output and solar irradiation data by location</a>
+
+                     <ul>
+                        <li><a href="#route1">Route 1: daily aggregation with hourly detalization</a>
+                           <ul>
+                              <li><a href="#route1paneloutputapi">How to make an API call</a></li>
+                              <li><a href="#route1paneloutputexample">Example of API response</a></li>
+                              <li><a href="#route1paneloutputfields">Fields in API response</a></li>
+                           </ul>
+                        </li>
+                        <li><a href="#route2">Route 2: daily aggregation with detalization by intervals</a>
+                           <ul>
+                              <li><a href="#route2paneloutputapi">How to make an API call</a></li>
+                              <li><a href="#route2paneloutputexample">Example of API response</a></li>
+                              <li><a href="#route2paneloutputfields">Fields in API response</a></li>
+                           </ul>
+                        </li>
+                     </ul>
+                  </li>
+                  <li><a href="#errors">API errors</a>
+                     <ul>
+                        <li><a href="#errorstructure">Structure of API errors</a></li>
+                        <li><a href="#popularerrors">Errors list</a>
+                           <ul>
+                              <li><a href="#error400">Error 400</a></li>
+                              <li><a href="#error401">Error 401</a></li>
+                              <!--<li><a href="#error403">Error 403</a></li>-->
+                              <li><a href="#error404">Error 404</a></li>
+                              <li><a href="#error429">Error 429</a></li>
+                              <li><a href="#error500">Errors '5xx'</a></li>
+                           </ul>
+                        </li>
+                     </ul>
+                  </li>
+               </ul>
+            </nav>
+         </div>
+         <div>
+            <section id="concept">
+               <h2>Product concept</h2>
+               <p class="lead">OpenWeather are thrilled to announce the launch of our new <b>Solar Panel Energy Prediction
+                  </b> service. This API allows users to accurately estimate solar power generation and determine the
+                  energy output of each PV panel.
+               </p>
+               <!--<p class=lead>This service is available to test free up until <b>18 April 2023</b>.</p>-->
+               <p>Main features of Solar Panel Energy Prediction:</p>
+               <ul>
+                  <li>API response contains daily solar panel power output data for each solar panel with 1 hour and 15
+                     minutes detalization </li>
+                  <li>Each API response contains also essential solar irradiation data (DNI, GHI and DHI)</li>
+                  <li>Current and 15 days ahead forecast data for solar panel power output</li>
+                  <li>Historical solar panel power output data is available for 46+ years back (from
+                     1st
+                     January 1979)</li>
+                  <li>Create an unlimited number of solar panels for a particular location. Users could define solar
+                     panel by specifying its type, tilt and azimuth angles</li>
+                  <li>Making API call to particular location get solar panel power output data for all solar panels
+                     associated with this location </li>
+                  <li>Global coverage</li>
+               </ul>
+               <p>Data is available in JSON format.</p>
+            </section>
+
+            <section id="how">
+               <h2>How to use the service</h2>
+               <ol>
+                  <li>
+                     <p class="lead"><a href="https://home.openweathermap.org/users/sign_up" target="_blank">Sign up</a>
+                        to OpenWeather service in case you haven't got your <a href="https://home.openweathermap.org/api_keys" target="_blank">OpenWeather API key</a> yet.
+                        Do not forget to add your key to the each API call in paragraphs 3, 4 and 5. </p>
+                  </li>
+                  <li>
+                     <p class="lead">Follow the <a href="/price#solar_energy">pricing page</a> to learn details about
+                        the price.</p>
+                     <div class="info-board info-board-orange">
+                        <p> Please note that product is available via the separate subscription only, which allows you
+                           to pay only for the created locations.</p>
+                     </div>
+                  </li>
+                  <li>
+                     <p class="lead">Create a unique location via API call according <a href="#step1">"Step 1: Manage my
+                           location"</a>.</p>
+                     <p> Create a location where your solar panels are located in accordance with chapter <a href="#post_location"> "How to create a unique location"</a> and receive location ID number.
+                        Please pay attention that chapters <a href="#get_location"> "How to get a location"</a>, <a href="#get_all_locations"> "How to get a list of created locations" </a> ,<a href="#delete_location"> "How to delete a location"</a> described how to manage created
+                        locations.</p>
+                     <!-- <p>Enter geographical coordinates of location using API with method <code>POST</code> to create unique location and receive its ID number.<br>
+           Create as many locations ID as you need repeting action above for each location.<br>
+           Check location coordinates and receive list of all created locations using location ID via API with method  <code>GET</code>.<br>
+           If you do not need some of the created locations any more remove them via API with method <code>DELETE</code>.</p></li>-->
+                  </li><li>
+                     <p class="lead">Create a solar panels for your location according <a href="#step2">"Step 2:
+                           Operations with solar panels"</a>.</p>
+
+                     <p>Create a solar panel for location created at the previous step according to the documentation <a href="#post_panel"> "How to create a solar panel"</a>. Please note that you could create
+                        unlimited number of panels for one location.</p>
+                     <!--<p>Link solar panel with location using location ID and solar panel data via API with method <code>POST</code> to receive solar panel ID.<br>
+            Create as many solar panels assosiated with particular location repeating action above for each solar panel.</p></li>-->
+                  </li>
+                  <li>
+                     <p class="lead">Make an API call to get location solar panels power output and location solar
+                        irradiation data according <a href="#step3">step 3</a>.</p>
+                  </li>
+               </ol>
+            </section>
+            <section id="step1">
+               <h2>Step 1: Manage my location</h2>
+
+               <section id="post_location">
+                  <h3>How to create a unique location</h3>
+                  <p>This HTTP method is used to create a new location and receive location ID for it. You need to pass
+                     a geographical coordinates of location in parameters. In case of successful creation method returns
+                     an HTTP code <code>201</code>.</p>
+                  <p>Method: <code>POST</code></p>
+                  <p>Header: <code>Content-Type: application/json</code></p>
+                  <p class="sub-header">URL</p>
+                  <div class="api">
+                     <code>https://api.openweathermap.org/energy/1.0/locations?appid=<a href="https://home.openweathermap.org/api_keys" target="_blank">{API key}</a></code>
+                  </div>
+                  <table class="material-table">
+                     <tbody><tr>
+                        <th colspan="3">Parameters</th>
+                     </tr>
+                     <tr>
+                        <td><code>appid</code></td>
+                        <td><span class="sub">required</span></td>
+                        <td>Your unique API key (you can always find it on your account page under the <a href="https://home.openweathermap.org/api_keys" target="_blank">"API key" tab</a>)</td>
+                     </tr>
+                  </tbody></table>
+               </section>
+               <section id="examplepostlocation">
+                  <div class="response open">
+                     <div class="api">Example of the request body</div>
+                     <div class="content">
+                        <pre>                   <code class="json">
+{
+  "type": "point",
+  "coordinates": [
+    {
+      "lat": 51.507222,
+      "lon": -0.1275
+    }
+  ]
+}
+                   </code>
+                </pre>
+                     </div>
+                  </div>
+                  <table class="material-table">
+                     <tbody><tr>
+                        <th colspan="3">Parameters</th>
+                     </tr>
+                     <tr>
+                        <td><code class="nowrap">type</code></td>
+                        <td><span class="sub">required</span></td>
+                        <td>Type of the location. Allowed type - point </td>
+                     </tr>
+                     <tr>
+                        <td><code class="nowrap">lat</code></td>
+                        <td><span class="sub">required</span></td>
+                        <td>Latitude, decimal (−90; 90)</td>
+                     </tr>
+                     <tr>
+                        <td><code class="nowrap">lon</code></td>
+                        <td><span class="sub">required</span></td>
+                        <td>Longitude, decimal (−180; 180)</td>
+                     </tr>
+                  </tbody></table>
+               </section>
+               <section id="responsepostlocation">
+                  <p class="sub-header">Example of API response</p>
+                  <div class="response open">
+                     <div class="api">
+                        <code>Example of API response</code>
+                     </div>
+                     <div class="content">
+                        <pre>                <code class="json">
+{
+ "location_id": "F01E165B-22F3-4591-89D4-F238E92F6885",
+ "type": "point",
+ "coordinates": [
+   {
+    "lat": 51.507222,
+    "lon": -0.1275
+   }
+ ]
+}
+           </code>
+              </pre>
+                     </div>
+                  </div>
+               </section>
+               <section id="fieldspostlocation">
+                  <p class="sub-header">Fields in API response</p>
+                  <ul class="docs-list">
+                     <li><code>location_id</code> Unique identifer of the location assigned at resource creation</li>
+                     <li><code>type</code> Type of the location</li>
+                     <li><code>lat</code> Latitude of the location, decimal (−90; 90)</li>
+                     <li><code>lon</code> Longitude of the location, decimal (-180; 180)</li>
+                  </ul>
+                  <div class="info-board info-board-blue">
+                     <p>Please note:</p>
+                     <ul>
+                        <li>When creating unique locations, coordinates are rounded to 6 decimal places</li>
+                        <li>To check geographical coordinates of previously created location, please see section <a href="#get_location"><span style="color:#ea6d51">"How to get location"</span></a></li>
+                     </ul>
+                  </div>
+               </section>
+               <section id="get_location">
+                  <h3>How to get a location data</h3>
+                  <p>You could get geographical coordinates for previously created location by its id number following
+                     instruction below. In case of success method returns an HTTP code <code>200</code>.</p>
+                  <p>Method: <code>GET</code></p>
+                  <p class="sub-header">URL</p>
+                  <div class="api">
+                     <code>https://api.openweathermap.org/energy/1.0/location/{location_id}?appid=<a href="https://home.openweathermap.org/api_keys" target="_blank">{API key}</a></code>
+                  </div>
+                  <table class="material-table">
+                     <tbody><tr>
+                        <th colspan="3">Parameters</th>
+                     </tr>
+                     <tr>
+                        <td><code class="nowrap">location_id</code></td>
+                        <td><span class="sub">required</span></td>
+                        <td>Unique identifer of the location assigned at resource creation. You could find all created
+                           locations id using instruction <a href="#get_all_locations">here</a></td>
+                     </tr>
+                     <tr>
+                        <td><code>appid</code></td>
+                        <td><span class="sub">required</span></td>
+                        <td>Your unique API key (you can always find it on your account page under the <a href="https://home.openweathermap.org/api_keys" target="_blank">"API key" tab</a>)</td>
+                     </tr>
+                  </tbody></table>
+               </section>
+               <section id="examplegetlocation">
+                  <p class="sub-header">URL example</p>
+                  <div class="api example">
+                     <code>https://api.openweathermap.org/energy/1.0/location/F01E165B-22F3-4591-89D4-F238E92F6885?appid=<a href="https://home.openweathermap.org/api_keys" target="_blank">{API key}</a></code>
+                  </div>
+               </section>
+               <section id="responsegetlocation">
+                  <p class="sub-header">Example of API response</p>
+                  <div class="response open">
+                     <div class="api">
+                        <code>Example of API response</code>
+                     </div>
+                     <div class="content">
+                        <pre>                <code class="json">
+{
+  "location_id": "F01E165B-22F3-4591-89D4-F238E92F6885",
+  "type": "point",
+  "coordinates": [
+     {
+      "lat": 51.507222,
+      "lon": -0.1275
+     }
+   ]
+}
+           </code>
+              </pre>
+                     </div>
+                  </div>
+               </section>
+               <section id="fieldsgetlocation">
+                  <p class="sub-header">Fields in API response</p>
+                  <ul class="docs-list">
+                     <li><code>location_id</code> Unique identifer of the location assigned at resource creation</li>
+                     <li><code>type</code> Type of the location</li>
+                     <li><code>lat</code> Latitude of the location, decimal (−90; 90)</li>
+                     <li><code>lon</code> Longitude of the location, decimal (-180; 180)</li>
+                  </ul>
+               </section>
+
+               <section id="get_all_locations">
+                  <h3>How to get a list of created locations</h3>
+                  <p>You could get a list of all created locations using your <a href="https://home.openweathermap.org/api_keys" target="_blank">OpenWeather API key</a> and
+                     instruction below. In case of success method returns an HTTP code <code>200</code>.</p>
+                  <p>Method: <code>GET</code></p>
+                  <p class="sub-header">URL</p>
+                  <div class="api">
+                     <code>https://api.openweathermap.org/energy/1.0/locations?appid=<a href="https://home.openweathermap.org/api_keys" target="_blank">{API key}</a></code>
+                  </div>
+                  <table class="material-table">
+                     <tbody><tr>
+                        <th colspan="3">Parameters</th>
+                     </tr>
+                     <tr>
+                        <td><code>appid</code></td>
+                        <td><span class="sub">required</span></td>
+                        <td>Your unique API key (you can always find it on your account page under the <a href="https://home.openweathermap.org/api_keys" target="_blank">"API key" tab</a>)</td>
+                     </tr>
+                  </tbody></table>
+               </section>
+               <section id="responsegetalllocations">
+                  <p class="sub-header">Example of API response</p>
+                  <div class="response open">
+                     <div class="api">
+                        <code>Example of API response</code>
+                     </div>
+                     <div class="content">
+                        <pre>[                <code class="json">
+   {
+    "location_id": "F01E165B-22F3-4591-89D4-F238E92F6885",
+    "type": "point",
+    "coordinates": [
+       {
+        "lat": 51.5072,
+        "lon": -0.1275
+       }
+     ]
+  }
+]           </code>
+              </pre>
+                     </div>
+                  </div>
+               </section>
+               <section id="fieldsgetalllocations">
+                  <p class="sub-header">Fields in API response</p>
+                  <ul class="docs-list">
+                     <li><code>location_id</code> Unique identifer of the location assigned at resource creation</li>
+                     <li><code>type</code> Type of the location</li>
+                     <li><code>lat</code> Latitude of the location, decimal (−90; 90)</li>
+                     <li><code>lon</code> Longitude of the location, decimal (-180; 180)</li>
+
+                  </ul>
+               </section>
+
+               <section id="delete_location">
+                  <h3>How to delete a location</h3>
+                  <p>You could delete created location by its id number using folowing URL. Please pay attention, that
+                     all solar panels assosiated with this location will deleted as well. In case of successful removing
+                     method returns an HTTP code <code>204</code>.</p>
+                  <p>Method: <code>DELETE</code></p>
+                  <p class="sub-header">URL</p>
+                  <div class="api">
+                     <code>https://api.openweathermap.org/energy/1.0/location/{location_id}?appid=<a href="https://home.openweathermap.org/api_keys" target="_blank">{API key}</a></code>
+                  </div>
+                  <table class="material-table">
+                     <tbody><tr>
+                        <th colspan="3">Parameters</th>
+                     </tr>
+                     <tr>
+                        <td><code>location_id</code></td>
+                        <td><span class="sub">required</span></td>
+                        <td>Unique identifer of the location assigned at resource creation</td>
+                     </tr>
+                     <tr>
+                        <td><code>appid</code></td>
+                        <td><span class="sub">required</span></td>
+                        <td>Your unique API key (you can always find it on your account page under the <a href="https://home.openweathermap.org/api_keys" target="_blank">"API key" tab</a>)</td>
+                     </tr>
+                  </tbody></table>
+               </section>
+               <section id="exampledeletelocation">
+                  <p class="sub-header">URL example</p>
+                  <div class="api example">
+                     <code>https://api.openweathermap.org/energy/1.0/location/F01E165B-22F3-4591-89D4-F238E92F6885?appid=<a href="https://home.openweathermap.org/api_keys" target="_blank">{API key}</a></code>
+                  </div>
+               </section>
+               <section id="fieldsdeletelocation">
+                  <p class="sub-header">API response</p>
+                  <p>Please pay attention if the delete request is successfully processed, then no response will be
+                     returned.</p>
+               </section>
+            </section>
+
+            <section id="step2">
+               <h2>Step 2: Operations with solar panels</h2>
+               <section id="post_panel">
+                  <h3>How to create a solar panel</h3>
+                  <p>This HTTP method is used to create a new solar panel associated with location and receive solar
+                     panel ID for this panel. You need to pass a set of solar panel parameters: tilt, azimuth and peak
+                     power. In case of successful creation method returns an HTTP code <code>201</code>.</p>
+                  <p>Method: <code>POST</code></p>
+                  <p>Header: <code>Content-Type: application/json</code></p>
+                  <p class="sub-header">URL</p>
+                  <div class="api">
+                     <code>https://api.openweathermap.org/energy/1.0/location/{location_id}/panels?appid=<a href="https://home.openweathermap.org/api_keys" target="_blank">{API key}</a></code>
+                  </div>
+                  <table class="material-table">
+                     <tbody><tr>
+                        <th colspan="3">Parameters</th>
+                     </tr>
+                     <tr>
+                        <td><code class="nowrap">location_id</code></td>
+                        <td><span class="sub">required</span></td>
+                        <td>Unique identifer of the location assigned at resource creation</td>
+                     </tr>
+                     <tr>
+                        <td><code>appid</code></td>
+                        <td><span class="sub">required</span></td>
+                        <td>Your unique API key (you can always find it on your account page under the <a href="https://home.openweathermap.org/api_keys" target="_blank">"API key" tab</a>)</td>
+                     </tr>
+                  </tbody></table>
+               </section>
+               <section id="examplepostsolarpanel">
+                  <div class="response open">
+                     <div class="api">Example of the request body</div>
+                     <div class="content">
+                        <pre>                   <code class="json">
+{
+  "type": "mono-si",
+  "area": 1.5,
+  "tilt": 45,
+  "azimuth": 182,
+  "peak_power": 2.5
+}
+                   </code>
+                </pre>
+                     </div>
+                  </div>
+                  <table class="material-table">
+                     <tbody><tr>
+                        <th colspan="3">Parameters</th>
+                     </tr>
+                     <tr>
+                        <td><code class="nowrap">type</code></td>
+                        <td><span class="sub">required</span></td>
+                        <td>PV technology type used in solar panel. In case not specified <code>mono-si</code> will be
+                           assumed. Allowed technology types:
+                           <code>mono-si</code>┃<code>poly-si</code>┃<code>tf-as</code>┃<code>cdte</code>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td><code class="nowrap">area</code></td>
+                        <td><span class="sub">required</span></td>
+                        <td>Area of solar panel in square meters. In case <code>peak_power</code> is not specified then
+                           in the <code>POST</code> request then <code>area</code> must be specified instead to be able
+                           to estimate panel power output. Solar panel area must not be equal to or less than 0.</td>
+                     </tr>
+                     <tr>
+                        <td><code class="nowrap">tilt</code></td>
+                        <td><span class="sub">required</span></td>
+                        <td>Panel installation tilt angle in degrees (0; 90)</td>
+                     </tr>
+                     <tr>
+                        <td><code class="nowrap">azimuth</code></td>
+                        <td><span class="sub">required</span></td>
+                        <td> Panel installation azimuth angle in degrees (0; 360). An azimuth circle consists of 360
+                           degrees. Ninety degrees corresponds to east, 180 degrees is south, 270 degrees is west, and
+                           360 degrees and 0 degrees mark north</td>
+                     </tr>
+                     <tr>
+                        <td><code class="nowrap">peak_power</code></td>
+                        <td><span class="sub">required</span></td>
+                        <td>Total solar panel installation peak power output in kilowatts. In case <code>area</code> is
+                           not specified in the <code>POST</code> request then <code>peak_power</code> must be specified
+                           instead. In case both <code>area</code> and <code>peak_power</code> are specified,
+                           <code>peak_power</code> will be used. In case only <code>area</code> is specified,
+                           <code>peak_power</code> will be calculated from <code>area</code> and <code>type</code>.
+                           Solar panel peak power must not be equal to or less than 0.
+                        </td>
+                  </tr></tbody></table>
+               </section>
+               <section id="responsepostsolarpanel">
+                  <p class="sub-header">Example of API response</p>
+                  <div class="response open">
+                     <div class="api">
+                        <code>Example of API response</code>
+                     </div>
+                     <div class="content">
+                        <pre>                <code class="json">
+{
+  "panel_id": "F48BE762-6101-405B-BB72-E0CA9FE1A8FF",
+  "location_id": "F01E165B-22F3-4591-89D4-F238E92F6885",
+  "type": "mono-si",
+  "area": 1.5,
+  "tilt": 45,
+  "azimuth": 182,
+  "peak_power": 2.5
+}
+           </code>
+              </pre>
+                     </div>
+                  </div>
+               </section>
+               <section id="fieldspostsolarpanel">
+                  <p class="sub-header">Fields in API response</p>
+                  <ul class="docs-list">
+                     <li><code>panel_id</code>Unique identifer of the solar panel assigned at resource creation</li>
+                     <li><code>location_id</code>Unique identifer of the location assigned at resource creation </li>
+                     <li><code>type</code>PV technology type used in solar panel</li>
+                     <li><code>area</code> Area of solar panel, m<sup>2</sup></li>
+                     <li><code>tilt</code> Panel installation tilt angle in degrees (0; 90)</li>
+                     <li><code>azimuth</code> Panel installation azimuth angle in degrees (0; 360)</li>
+                     <li><code>peak_power</code> Total solar panel installation peak power output in kilowatts</li>
+                  </ul>
+               </section>
+               <section id="get_panel">
+                  <h3>How to get a solar panel data</h3>
+                  <p>You could get information about created solar panel by its id number using API call below. In case
+                     of success method returns an HTTP code <code>200</code>.</p>
+                  <p>Method: <code>GET</code></p>
+                  <p class="sub-header">URL</p>
+                  <div class="api">
+                     <code>https://api.openweathermap.org/energy/1.0/panel/{panel_id}?appid=<a href="https://home.openweathermap.org/api_keys" target="_blank">{API key}</a></code>
+                  </div>
+                  <table class="material-table">
+                     <tbody><tr>
+                        <th colspan="3">Parameters</th>
+                     </tr>
+                     <tr>
+                        <td><code class="nowrap">panel_id</code></td>
+                        <td><span class="sub">required</span></td>
+                        <td>Unique identifer of the solar panel assigned at resource creation</td>
+                     </tr>
+                     <tr>
+                        <td><code>appid</code></td>
+                        <td><span class="sub">required</span></td>
+                        <td>Your unique API key (you can always find it on your account page under the <a href="https://home.openweathermap.org/api_keys" target="_blank">"API key" tab</a>)</td>
+                     </tr>
+                  </tbody></table>
+               </section>
+               <section id="examplegetpanel">
+                  <p class="sub-header">URL example</p>
+                  <div class="api example">
+                     <code>https://api.openweathermap.org/energy/1.0/panel/F48BE762-6101-405B-BB72-E0CA9FE1A8FF?appid=<a href="https://home.openweathermap.org/api_keys" target="_blank">{API key}</a></code>
+                  </div>
+               </section>
+               <section id="responsegetpanel">
+                  <p class="sub-header">Example of API response</p>
+                  <div class="response open">
+                     <div class="api">
+                        <code>Example of API response</code>
+                     </div>
+                     <div class="content">
+                        <pre>                <code class="json">
+{
+  "panel_id": "F48BE762-6101-405B-BB72-E0CA9FE1A8FF",
+  "location_id": "F01E165B-22F3-4591-89D4-F238E92F6885",
+  "type": "mono-si",
+  "area": 1.5,
+  "tilt": 45,
+  "azimuth": 182,
+  "peak_power": 2.5
+}
+           </code>
+              </pre>
+                     </div>
+                  </div>
+               </section>
+               <section id="fieldsgetpanel">
+                  <p class="sub-header">Fields in API response</p>
+                  <ul class="docs-list">
+                     <li><code>panel_id</code> Unique identifer of the solar panel assigned at resource creation</li>
+                     <li><code>location_id</code>Unique identifer of the location assigned at resource creation </li>
+                     <li><code>type</code>PV technology type used in solar panel</li>
+                     <li><code>area</code> Area of solar panel, m<sup>2</sup></li>
+                     <li><code>tilt</code> Panel installation tilt angle in degrees (0; 90)</li>
+                     <li><code>azimuth</code> Panel installation azimuth angle in degrees (0; 360)</li>
+                     <li><code>peak_power</code> Total solar panel installation peak power output in kilowatts (kW)</li>
+                  </ul>
+               </section>
+
+               <section id="get_all_panels">
+                  <h3>How to get a list of created solar panels</h3>
+                  <p>You could get a list of all created solar panels for particular location using <a href="https://home.openweathermap.org/api_keys" target="_blank">OpenWeather API key</a>. In case
+                     of success method returns an HTTP code <code>200</code>.</p>
+                  <p>Method: <code>GET</code></p>
+                  <p class="sub-header">URL</p>
+                  <div class="api">
+
+                     <code>https://api.openweathermap.org/energy/1.0/location/{location_id}/panels?appid=<a href="https://home.openweathermap.org/api_keys" target="_blank">{API key}</a></code>
+                  </div>
+                  <table class="material-table">
+                     <tbody><tr>
+                        <th colspan="3">Parameters</th>
+                     </tr>
+                     <tr>
+                        <td><code class="nowrap">location_id</code></td>
+                        <td><span class="sub">required</span></td>
+                        <td>Unique identifer of the location assigned at resource creation</td>
+                     </tr>
+                     <tr>
+                        <td><code>appid</code></td>
+                        <td><span class="sub">required</span></td>
+                        <td>Your unique API key (you can always find it on your account page under the <a href="https://home.openweathermap.org/api_keys" target="_blank">"API key" tab</a>)</td>
+                     </tr>
+                  </tbody></table>
+               </section>
+               <section id="examplegetallpanels">
+                  <p class="sub-header">URL example</p>
+                  <div class="api example">
+                     <code>https://api.openweathermap.org/energy/1.0/location/F01E165B-22F3-4591-89D4-F238E92F6885/panels?appid=<a href="https://home.openweathermap.org/api_keys" target="_blank">{API key}</a></code>
+                  </div>
+               </section>
+               <section id="responsegetallpanels">
+                  <p class="sub-header">Example of API response</p>
+                  <div class="response open">
+                     <div class="api">
+                        <code>Example of API response</code>
+                     </div>
+                     <div class="content">
+                        <pre>                <code class="json">
+[
+  {
+    "panel_id": "F48BE762-6101-405B-BB72-E0CA9FE1A8FF",
+    "location_id": "F01E165B-22F3-4591-89D4-F238E92F6885",
+    "type": "mono-si",
+    "area": 1.5,
+    "tilt": 45,
+    "azimuth": 182,
+    "peak_power": 2.5
+  }
+]
+           </code>
+              </pre>
+                     </div>
+                  </div>
+               </section>
+               <section id="fields">
+                  <p class="sub-header">Fields in API response</p>
+                  <ul class="docs-list">
+                     <li><code>panel_id</code> Unique identifer of the solar panel assigned at resource creation</li>
+                     <li><code>location_id</code>Unique identifer of the location assigned at resource creation </li>
+                     <li><code>type</code>PV technology type used in solar panel</li>
+                     <li><code>area</code> Area of solar panel, m<sup>2</sup></li>
+                     <li><code>tilt</code> A Panel installation tilt angle in degrees (0; 90)</li>
+                     <li><code>azimuth</code> Panel installation azimuth angle in degrees (0; 360)</li>
+                     <li><code>peak_power</code> Total solar panel installation peak power output in kilowatts</li>
+                  </ul>
+               </section>
+
+
+               <section id="delete_panel">
+                  <h3>How to delete a solar panel</h3>
+                  <p>You could delete created solar panel by its id number using folowing API call. In case of
+                     successful removing method returns an HTTP code <code>204</code>.</p>
+                  <p>Method: <code>DELETE</code></p>
+                  <p class="sub-header">URL</p>
+                  <div class="api">
+                     <code>https://api.openweathermap.org/energy/1.0/panel/{panel_id}?appid=<a href="https://home.openweathermap.org/api_keys" target="_blank">{API key}</a></code>
+                  </div>
+                  <table class="material-table">
+                     <tbody><tr>
+                        <th colspan="3">Parameters</th>
+                     </tr>
+                     <tr>
+                        <td><code>panel_id</code></td>
+                        <td><span class="sub">required</span></td>
+                        <td>Unique identifer of the solar panel assigned at resource creation</td>
+                     </tr>
+                     <tr>
+                        <td><code>appid</code></td>
+                        <td><span class="sub">required</span></td>
+                        <td>Your unique API key (you can always find it on your account page under the <a href="https://home.openweathermap.org/api_keys" target="_blank">"API key" tab</a>)</td>
+                     </tr>
+                  </tbody></table>
+               </section>
+               <section id="exampledeletepanel">
+                  <p class="sub-header">URL example</p>
+                  <div class="api example">
+                     <code>https://api.openweathermap.org/energy/1.0/panel/F01E165B-22F3-4591-89D4-F238E92F6885?appid=<a href="https://home.openweathermap.org/api_keys" target="_blank">{API key}</a></code>
+                  </div>
+               </section>
+               <section id="fieldsdeletepanel">
+                  <p class="sub-header">API response</p>
+                  <p>Please pay attention if the delete request is successfully processed, then no response will be
+                     returned.</p>
+               </section>
+            </section>
+            <section id="step3">
+               <h2>Step 3: Get solar panel power output and solar irradiation data by location</h2>
+               <section id="get_solar_paneloutput">
+                  <p> To get solar panel power output data make an API call according rules below. <br>API response
+                     contains not only solar panel power output data for all solar panels associated with particular
+                     location but solar irradiation data for this location as well. You could find detailed information
+                     about what technologies, algorithms, etc. are behind the solar irradiation calculations<a href="/api/solar-radiation/behind-solar-radiation-api"> here</a>. In case of success method
+                     returns an HTTP code <code>200</code>. Please pay attention that solar panel output values are
+                     given for averaged efficiency with a performance ratio 0.75.</p>
+                  <p>There are two routes to receive solar panel power output data and solar irradiation data for
+                     specified location: </p>
+                  <ul>
+                     <li>Get daily aggregation with hourly detalization with <a href="#route1">Route 1</a></li>
+                     <li>Get daily aggregation with detalization by intervals with <a href="#route2">Route 2</a></li>
+                  </ul>
+
+                  <p>Method: <code>GET</code></p>
+                  <section id="route1">
+                     <h3>Route 1: daily aggregation with hourly detalization of solar panel power output and solar
+                        irradiation data</h3>
+                     <p>In this section you will find how to request historical starting from 1st January 1979, current
+                        or forecast for 15 days ahead daily aggregated and accumulated hourly detalization for solar
+                        panel power output and solar irradiation data for particular geographical location and for
+                        specified date.
+                        <br>If you are interested in daily aggregation with detalization by intervals for solar panel
+                        power output and solar irradiation data please use section <a href="#route2">Route 2: daily
+                           aggregation with detalization by intervals</a>.
+
+                     </p>
+                     <section id="route1paneloutputapi">
+                        <p class="sub-header">URL</p>
+                        <div class="api">
+                           <code>https://api.openweathermap.org/energy/1.0/location/{location_id}/data?date={date}&amp;appid=<a href="https://home.openweathermap.org/api_keys" target="_blank">{API key}</a></code>
+                        </div>
+                        <table class="material-table">
+                           <tbody><tr>
+                              <th colspan="3">Parameters</th>
+                           </tr>
+                           <tr>
+                              <td><code class="nowrap">location_id</code></td>
+                              <td><span class="sub">required</span></td>
+                              <td>Unique identifer of the location assigned at resource creation</td>
+                           </tr>
+                           <tr>
+                              <td><code class="nowrap">date</code></td>
+                              <td><span class="sub">required</span></td>
+                              <td>Date in the `YYYY-MM-DD` format for which data is requested. Date available from
+                                 1979-01-01 up to +15 days to the current date</td>
+                           </tr>
+                           <tr>
+                              <td><code>appid</code></td>
+                              <td><span class="sub">required</span></td>
+                              <td>Your unique API key (you can always find it on your account page under the <a href="https://home.openweathermap.org/api_keys" target="_blank">"API key" tab</a>)
+                              </td>
+                           </tr>
+                        </tbody></table>
+                        <div class="info-board info-board-blue">
+                           If the service detected timezone for your location incorrectly you can specify correct
+                           timezone manually by adding <code>tz</code> parameter in the ±XX:XX format to API call.
+                           <p class="sub-header">API call</p>
+                           <div class="api">
+                              <code>https://api.openweathermap.org/energy/1.0/location/{location_id}/data?date={date}&amp;tz={tz}&amp;appid=<a href="https://home.openweathermap.org/api_keys" target="_blank">{API key}</a></code>
+                           </div>
+                           <p class="sub-header">URL example</p>
+                           <div class="api example">
+                              <code>https://api.openweathermap.org/energy/1.0/location/F01E165B-22F3-4591-89D4-F238E92F6885/data?date=2023-03-30&amp;tz=+05:45&amp;appid=<a href="https://home.openweathermap.org/api_keys" target="_blank">{API key}</a></code>
+                           </div>
+                           Please pay attention that in case timezone is specified time of sunset and sunrise will be
+                           returned in accordance with this specified timezone.
+                        </div>
+                     </section>
+                     <section id="descr">
+                        <section id="api">
+                           <p class="sub-header">URL example</p>
+                           <div class="api example">
+                              <code>https://api.openweathermap.org/energy/1.0/location/0189d066-983b-8a33-ae7a-b60be1ab759f/data?date=2023-08-07&amp;appid=<a href="https://home.openweathermap.org/api_keys" target="_blank">{API key}</a></code>
+                           </div>
+                        </section>
+                        <section id="route1paneloutputexample">
+                           <p class="sub-header">Example of API response</p>
+                           <div class="response open">
+                              <div class="api">
+                                 <code>Example of API response</code>
+                              </div>
+                              <div class="content">
+                                 <pre>                <code class="json">
+{
+    "location_id": "0189d066-983b-8a33-ae7a-b60be1ab759f",
+    "lat": 42.301,
+    "lon": 19.185,
+    "date": "2023-08-07",
+    "tz": "+02:00",
+    "sunrise": "2023-08-07T05:41:22",
+    "sunset": "2023-08-07T19:56:06",
+    "irradiance": {
+        "daily": [
+            {
+                "clear_sky": {
+                    "ghi": 7738.01,
+                    "dni": 10286.11,
+                    "dhi": 1275.66
+                },
+                "cloudy_sky": {
+                    "ghi": 7695.01,
+                    "dni": 9659.94,
+                    "dhi": 1363.06
+                }
+            }
+        ],
+        "hourly": [
+            {
+                "hour": 0,
+                "clear_sky": {
+                    "ghi": 0.0,
+                    "dni": 0.0,
+                    "dhi": 0.0
+                },
+                "cloudy_sky": {
+                    "ghi": 0.0,
+                    "dni": 0.0,
+                    "dhi": 0.0
+                }
+            },
+            {
+                "hour": 1,
+                "clear_sky": {
+                    "ghi": 0.0,
+                    "dni": 0.0,
+                    "dhi": 0.0
+                },
+                "cloudy_sky": {
+                    "ghi": 0.0,
+                    "dni": 0.0,
+                    "dhi": 0.0
+                }
+            },
+            {
+                "hour": 2,
+                "clear_sky": {
+                    "ghi": 0.0,
+                    "dni": 0.0,
+                    "dhi": 0.0
+                },
+                "cloudy_sky": {
+                    "ghi": 0.0,
+                    "dni": 0.0,
+                    "dhi": 0.0
+                }
+            },
+            {
+                "hour": 3,
+                "clear_sky": {
+                    "ghi": 0.0,
+                    "dni": 0.0,
+                    "dhi": 0.0
+                },
+                "cloudy_sky": {
+                    "ghi": 0.0,
+                    "dni": 0.0,
+                    "dhi": 0.0
+                }
+            },
+            {
+                "hour": 4,
+                "clear_sky": {
+                    "ghi": 0.0,
+                    "dni": 0.0,
+                    "dhi": 0.0
+                },
+                "cloudy_sky": {
+                    "ghi": 0.0,
+                    "dni": 0.0,
+                    "dhi": 0.0
+                }
+            },
+            {
+                "hour": 5,
+                "clear_sky": {
+                    "ghi": 0.0,
+                    "dni": 0.0,
+                    "dhi": 0.0
+                },
+                "cloudy_sky": {
+                    "ghi": 0.0,
+                    "dni": 0.0,
+                    "dhi": 0.0
+                }
+            },
+            {
+                "hour": 6,
+                "clear_sky": {
+                    "ghi": 86.4,
+                    "dni": 390.66,
+                    "dhi": 43.5
+                },
+                "cloudy_sky": {
+                    "ghi": 77.43,
+                    "dni": 226.55,
+                    "dhi": 47.13
+                }
+            },
+            {
+                "hour": 7,
+                "clear_sky": {
+                    "ghi": 266.08,
+                    "dni": 634.47,
+                    "dhi": 71.86
+                },
+                "cloudy_sky": {
+                    "ghi": 239.15,
+                    "dni": 506.18,
+                    "dhi": 78.42
+                }
+            },
+            {
+                "hour": 8,
+                "clear_sky": {
+                    "ghi": 457.79,
+                    "dni": 757.88,
+                    "dhi": 90.29
+                },
+                "cloudy_sky": {
+                    "ghi": 457.77,
+                    "dni": 750.01,
+                    "dhi": 87.66
+                }
+            },
+            {
+                "hour": 9,
+                "clear_sky": {
+                    "ghi": 635.88,
+                    "dni": 831.13,
+                    "dhi": 103.17
+                },
+                "cloudy_sky": {
+                    "ghi": 635.84,
+                    "dni": 822.81,
+                    "dhi": 101.84
+                }
+            },
+            {
+                "hour": 10,
+                "clear_sky": {
+                    "ghi": 782.37,
+                    "dni": 876.2,
+                    "dhi": 111.98
+                },
+                "cloudy_sky": {
+                    "ghi": 782.34,
+                    "dni": 869.32,
+                    "dhi": 110.03
+                }
+            },
+            {
+                "hour": 11,
+                "clear_sky": {
+                    "ghi": 883.76,
+                    "dni": 902.16,
+                    "dhi": 117.42
+                },
+                "cloudy_sky": {
+                    "ghi": 883.74,
+                    "dni": 873.35,
+                    "dhi": 134.33
+                }
+            },
+            {
+                "hour": 12,
+                "clear_sky": {
+                    "ghi": 931.14,
+                    "dni": 913.16,
+                    "dhi": 119.81
+                },
+                "cloudy_sky": {
+                    "ghi": 931.12,
+                    "dni": 873.19,
+                    "dhi": 147.55
+                }
+            },
+            {
+                "hour": 13,
+                "clear_sky": {
+                    "ghi": 920.39,
+                    "dni": 910.73,
+                    "dhi": 119.27
+                },
+                "cloudy_sky": {
+                    "ghi": 920.34,
+                    "dni": 873.2,
+                    "dhi": 144.54
+                }
+            },
+            {
+                "hour": 14,
+                "clear_sky": {
+                    "ghi": 852.42,
+                    "dni": 894.54,
+                    "dhi": 115.78
+                },
+                "cloudy_sky": {
+                    "ghi": 852.37,
+                    "dni": 872.57,
+                    "dhi": 126.4
+                }
+            },
+            {
+                "hour": 15,
+                "clear_sky": {
+                    "ghi": 733.11,
+                    "dni": 862.22,
+                    "dhi": 109.15
+                },
+                "cloudy_sky": {
+                    "ghi": 731.35,
+                    "dni": 830.9,
+                    "dhi": 123.29
+                }
+            },
+            {
+                "hour": 16,
+                "clear_sky": {
+                    "ghi": 573.05,
+                    "dni": 808.17,
+                    "dhi": 98.94
+                },
+                "cloudy_sky": {
+                    "ghi": 571.38,
+                    "dni": 804.41,
+                    "dhi": 92.96
+                }
+            },
+            {
+                "hour": 17,
+                "clear_sky": {
+                    "ghi": 387.35,
+                    "dni": 720.06,
+                    "dhi": 84.24
+                },
+                "cloudy_sky": {
+                    "ghi": 385.39,
+                    "dni": 710.72,
+                    "dhi": 79.66
+                }
+            },
+            {
+                "hour": 18,
+                "clear_sky": {
+                    "ghi": 196.09,
+                    "dni": 565.48,
+                    "dhi": 62.93
+                },
+                "cloudy_sky": {
+                    "ghi": 194.76,
+                    "dni": 516.5,
+                    "dhi": 65.89
+                }
+            },
+            {
+                "hour": 19,
+                "clear_sky": {
+                    "ghi": 32.18,
+                    "dni": 219.25,
+                    "dhi": 27.32
+                },
+                "cloudy_sky": {
+                    "ghi": 32.03,
+                    "dni": 130.23,
+                    "dhi": 23.36
+                }
+            },
+            {
+                "hour": 20,
+                "clear_sky": {
+                    "ghi": 0.0,
+                    "dni": 0.0,
+                    "dhi": 0.0
+                },
+                "cloudy_sky": {
+                    "ghi": 0.0,
+                    "dni": 0.0,
+                    "dhi": 0.0
+                }
+            },
+            {
+                "hour": 21,
+                "clear_sky": {
+                    "ghi": 0.0,
+                    "dni": 0.0,
+                    "dhi": 0.0
+                },
+                "cloudy_sky": {
+                    "ghi": 0.0,
+                    "dni": 0.0,
+                    "dhi": 0.0
+                }
+            },
+            {
+                "hour": 22,
+                "clear_sky": {
+                    "ghi": 0.0,
+                    "dni": 0.0,
+                    "dhi": 0.0
+                },
+                "cloudy_sky": {
+                    "ghi": 0.0,
+                    "dni": 0.0,
+                    "dhi": 0.0
+                }
+            },
+            {
+                "hour": 23,
+                "clear_sky": {
+                    "ghi": 0.0,
+                    "dni": 0.0,
+                    "dhi": 0.0
+                },
+                "cloudy_sky": {
+                    "ghi": 0.0,
+                    "dni": 0.0,
+                    "dhi": 0.0
+                }
+            }
+        ]
+    },
+    "panels": [
+        {
+            "panel_id": "0189d067-a458-8dd9-8058-deac073e01de",
+            "output": {
+                "daily": {
+                    "clear_sky": {
+                        "power": 13.4922
+                    },
+                    "cloudy_sky": {
+                        "power": 13.1875
+                    }
+                },
+                "hourly": {
+                    "clear_sky": [
+                        {
+                            "hour": 0,
+                            "power": 0.0
+                        },
+                        {
+                            "hour": 1,
+                            "power": 0.0
+                        },
+                        {
+                            "hour": 2,
+                            "power": 0.0
+                        },
+                        {
+                            "hour": 3,
+                            "power": 0.0
+                        },
+                        {
+                            "hour": 4,
+                            "power": 0.0
+                        },
+                        {
+                            "hour": 5,
+                            "power": 0.0
+                        },
+                        {
+                            "hour": 6,
+                            "power": 0.2537
+                        },
+                        {
+                            "hour": 7,
+                            "power": 0.6937
+                        },
+                        {
+                            "hour": 8,
+                            "power": 1.1348
+                        },
+                        {
+                            "hour": 9,
+                            "power": 1.507
+                        },
+                        {
+                            "hour": 10,
+                            "power": 1.7635
+                        },
+                        {
+                            "hour": 11,
+                            "power": 1.8755
+                        },
+                        {
+                            "hour": 12,
+                            "power": 1.8316
+                        },
+                        {
+                            "hour": 13,
+                            "power": 1.6378
+                        },
+                        {
+                            "hour": 14,
+                            "power": 1.3167
+                        },
+                        {
+                            "hour": 15,
+                            "power": 0.9065
+                        },
+                        {
+                            "hour": 16,
+                            "power": 0.4601
+                        },
+                        {
+                            "hour": 17,
+                            "power": 0.0926
+                        },
+                        {
+                            "hour": 18,
+                            "power": 0.0162
+                        },
+                        {
+                            "hour": 19,
+                            "power": 0.0027
+                        },
+                        {
+                            "hour": 20,
+                            "power": 0.0
+                        },
+                        {
+                            "hour": 21,
+                            "power": 0.0
+                        },
+                        {
+                            "hour": 22,
+                            "power": 0.0
+                        },
+                        {
+                            "hour": 23,
+                            "power": 0.0
+                        }
+                    ],
+                    "cloudy_sky": [
+                        {
+                            "hour": 0,
+                            "power": 0.0
+                        },
+                        {
+                            "hour": 1,
+                            "power": 0.0
+                        },
+                        {
+                            "hour": 2,
+                            "power": 0.0
+                        },
+                        {
+                            "hour": 3,
+                            "power": 0.0
+                        },
+                        {
+                            "hour": 4,
+                            "power": 0.0
+                        },
+                        {
+                            "hour": 5,
+                            "power": 0.0
+                        },
+                        {
+                            "hour": 6,
+                            "power": 0.1854
+                        },
+                        {
+                            "hour": 7,
+                            "power": 0.5894
+                        },
+                        {
+                            "hour": 8,
+                            "power": 1.1211
+                        },
+                        {
+                            "hour": 9,
+                            "power": 1.492
+                        },
+                        {
+                            "hour": 10,
+                            "power": 1.7483
+                        },
+                        {
+                            "hour": 11,
+                            "power": 1.8536
+                        },
+                        {
+                            "hour": 12,
+                            "power": 1.8105
+                        },
+                        {
+                            "hour": 13,
+                            "power": 1.6212
+                        },
+                        {
+                            "hour": 14,
+                            "power": 1.3054
+                        },
+                        {
+                            "hour": 15,
+                            "power": 0.8984
+                        },
+                        {
+                            "hour": 16,
+                            "power": 0.4534
+                        },
+                        {
+                            "hour": 17,
+                            "power": 0.0901
+                        },
+                        {
+                            "hour": 18,
+                            "power": 0.016
+                        },
+                        {
+                            "hour": 19,
+                            "power": 0.0026
+                        },
+                        {
+                            "hour": 20,
+                            "power": 0.0
+                        },
+                        {
+                            "hour": 21,
+                            "power": 0.0
+                        },
+                        {
+                            "hour": 22,
+                            "power": 0.0
+                        },
+                        {
+                            "hour": 23,
+                            "power": 0.0
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}
+           </code>
+              </pre>
+                              </div>
+                           </div>
+                        </section>
+                        <section id="route1paneloutputfields">
+                           <p class="sub-header">Fields in API response</p>
+                           <ul class="docs-list">
+                              <li><code>location_id</code>Unique identifer of the location assigned at resource creation
+                              </li>
+                              <li><code>lat</code> Latitude of the location, decimal (−90; 90)</li>
+                              <li><code>lon</code> Longitude of the location, decimal (-180; 180)</li>
+                              <li><code>date</code> Date specified in the API request in the `YYYY-MM-DD` format (from
+                                 1979-01-01 up to +15 days to the current date)</li>
+                              <li><code>tz</code> Timezone in the ±XX:XX format</li>
+                              <li><code>sunrise</code> Date and time of sunrise based on date specified in the API
+                                 request and timezone authomatically determinated by on latitude and longitute of
+                                 requested location. If you added timezone parameter into API request, then time of
+                                 sunrise will be recalculated in accordance with this timezone. For polar areas in
+                                 midnight sun and polar night periods this parameter is not returned in the response
+                              </li>
+                              <li><code>sunset</code>Date and time of sunset based on date specified in the API request
+                                 and timezone authomatically determinated by on latitude and longitute of requested
+                                 location. If you added timezone parameter into API request, then time of sunset will be
+                                 recalculated in accordance with this timezone. For polar areas in midnight sun and
+                                 polar night periods this parameter is not returned in the response</li>
+                              <li><code>irradiance</code>Irradiance related information
+                                 <ul>
+                                    <li><code>daily</code> Daily aggregated irradiation data for the requested date
+                                       <ul>
+                                          <li><code>clear_sky</code>Clear sky model
+                                             <ul>
+                                                <li><code>ghi</code> Clear sky GHI - <a href="/api/solar-radiation/behind-solar-radiation-api#introduction">Global
+                                                      Horizontal Irradiation</a>, Wh/m<sup>2</sup></li>
+                                                <li><code>dni</code> Clear sky DNI - <a href="/api/solar-radiation/behind-solar-radiation-api#introduction">Direct
+                                                      Normal Irradiation</a>, Wh/m<sup>2</sup></li>
+                                                <li><code>dhi</code> Clear sky DHI - <a href="/api/solar-radiation/behind-solar-radiation-api#introduction">Diffuse
+                                                      Horizontal Irradiation</a>, Wh/m<sup>2</sup></li>
+                                             </ul>
+                                          </li>
+                                          <li><code>cloudy_sky</code>Cloudy sky model
+                                             <ul>
+                                                <li><code>ghi</code> Cloudy sky GHI - <a href="/api/solar-radiation/behind-solar-radiation-api#introduction">Global
+                                                      Horizontal Irradiation</a>, Wh/m<sup>2</sup> </li>
+                                                <li><code>dni</code> Cloudy sky DNI - <a href="/api/solar-radiation/behind-solar-radiation-api#introduction">Direct
+                                                      Normal Irradiation</a>, Wh/m<sup>2</sup></li>
+                                                <li><code>dhi</code> Cloudy sky DHI - <a href="/api/solar-radiation/behind-solar-radiation-api#introduction">Diffuse
+                                                      Horizontal Irradiation</a>, Wh/m<sup>2</sup></li>
+                                             </ul>
+                                          </li>
+                                       </ul>
+                                    </li><li> <code>hourly</code> Hourly detalization of daily aggregated irradiation data
+                                       for
+                                       the requested date
+                                       <ul>
+                                          <li><code>hour</code> the ordinal number of the hour of start for which the
+                                             energy is summed up. The parameter can take integer values from 0 to 23
+                                          </li>
+                                          <li><code>clear_sky</code>Clear sky model
+                                             <ul>
+                                                <li><code>ghi</code> Clear sky GHI - <a href="/api/solar-radiation/behind-solar-radiation-api#introduction">Global
+                                                      Horizontal Irradiation</a>, Wh/m<sup>2</sup></li>
+                                                <li><code>dni</code> Clear sky DNI - <a href="/api/solar-radiation/behind-solar-radiation-api#introduction">Direct
+                                                      Normal Irradiation</a>, Wh/m<sup>2</sup></li>
+                                                <li><code>dhi</code> Clear sky DHI - <a href="/api/solar-radiation/behind-solar-radiation-api#introduction">Diffuse
+                                                      Horizontal Irradiation</a>, Wh/m<sup>2</sup></li>
+                                             </ul>
+                                          </li>
+                                          <li><code>cloudy_sky</code>Cloudy sky model
+                                             <ul>
+                                                <li><code>ghi</code> Cloudy sky GHI - <a href="/api/solar-radiation/behind-solar-radiation-api#introduction">Global
+                                                      Horizontal Irradiation</a>, Wh/m<sup>2</sup> </li>
+                                                <li><code>dni</code> Cloudy sky DNI - <a href="/api/solar-radiation/behind-solar-radiation-api#introduction">Direct
+                                                      Normal Irradiation</a>, Wh/m<sup>2</sup></li>
+                                                <li><code>dhi</code> Cloudy sky DHI - <a href="/api/solar-radiation/behind-solar-radiation-api#introduction">Diffuse
+                                                      Horizontal Irradiation</a>, Wh/m<sup>2</sup></li>
+                                             </ul>
+                                          </li>
+                                       </ul>
+                                    </li>
+                                 </ul>
+                              </li>
+                              <li><code>panels</code> Solar panels related information
+                                 <ul>
+                                    <li><code>panel_id</code> Unique identifer of the solar panel assigned at resource
+                                       creation</li>
+                                    <li><code>output</code>Solar panel power output data
+                                       <ul>
+                                          <li><code>daily</code>Daily aggeregated solar panel power output data. Please
+                                             pay
+                                             attention that solar panel output values are given for averaged efficiency
+                                             with a
+                                             performance ratio 0.75
+                                             <ul>
+                                                <li><code>clear_sky</code>Clear sky model
+                                                   <ul>
+                                                      <li><code>power</code>Daily solar panel power output amount for
+                                                         clear
+                                                         sky
+                                                         model, kW. Please pay attention that solar panel output values
+                                                         are
+                                                         given
+                                                         for averaged efficiency with a performance ratio 0.75</li>
+                                                   </ul>
+                                                </li>
+                                                <li><code>cloudy_sky</code>Cloudy sky model
+                                                   <ul>
+                                                      <li><code>power</code>Daily solar panel power output amount for
+                                                         cloudy
+                                                         sky
+                                                         model, kW. Please pay attention that solar panel output values
+                                                         are
+                                                         given
+                                                         for averaged efficiency with a performance ratio 0.75</li>
+                                                   </ul>
+                                                </li>
+                                             </ul>
+                                          </li>
+                                          <li><code>hourly</code>Hourly detalization of solar panel power output data.
+                                             Please
+                                             pay attention that solar panel output values are given for averaged
+                                             efficiency
+                                             with a performance ratio 0.75
+                                             <ul>
+                                                <li><code>clear_sky</code>Clear sky model
+                                                   <ul>
+                                                      <li><code>hour</code>the ordinal number of the hour of start for
+                                                         which the power output is calculated. The parameter can take
+                                                         integer values from 0 to 23
+                                                      </li>
+                                                      <li><code>power</code>Hourly solar panel power output amount for
+                                                         clear sky
+                                                         model, kW. Please pay attention that solar panel output values
+                                                         are
+                                                         given
+                                                         for averaged efficiency with a performance ratio 0.75</li>
+                                                   </ul>
+                                                </li>
+                                                <li><code>cloudy_sky</code>Cloudy sky model
+                                                   <ul>
+                                                      <li><code>hour</code>the ordinal number of the hour of start for
+                                                         which the power output is calculated. The parameter can take
+                                                         integer values from 0 to 23
+                                                      </li>
+                                                      <li><code>power</code>Hourly solar panel power output amount for
+                                                         cloudy sky
+                                                         model, kW. Please pay attention that solar panel output values
+                                                         are
+                                                         given
+                                                         for averaged efficiency with a performance ratio 0.75</li>
+                                                   </ul>
+                                                </li>
+                                             </ul>
+                                          </li>
+                                       </ul>
+                                    </li>
+                                 </ul>
+                              </li>
+                           </ul>
+                        </section>
+                     </section>
+                  </section>
+               </section>
+               <section>
+                  <section id="route2">
+                     <h3>Route 2: daily aggregation with detalization by intervals of solar panel power output and solar
+                        irradiation data</h3>
+                     <p>In this section you will find how to request historical starting from 1st January 1979, current
+                        or forecast for 15 days ahead daily aggregated and accumulated 1 hour and 15 minutes interval
+                        detalization for solar panel power output and solar irradiation data for particular geographical
+                        location and for specified date.
+                        <br>If you are interested in daily aggregation with hourly detalization for solar panel power
+                        output and solar irradiation data please use section <a href="#route1">Route 1: daily
+                           aggregation with hourly detalization</a>.
+
+                     </p>
+                     <section id="route2paneloutputapi">
+                        <p class="sub-header">URL</p>
+                        <div class="api">
+                           <code>https://api.openweathermap.org/energy/1.0/location/{location_id}/interval_data?date={date}&amp;interval={interval}&amp;appid=<a href="https://home.openweathermap.org/api_keys" target="_blank">{API key}</a></code>
+                        </div>
+                        <table class="material-table">
+                           <tbody><tr>
+                              <th colspan="3">Parameters</th>
+                           </tr>
+                           <tr>
+                              <td><code class="nowrap">location_id</code></td>
+                              <td><span class="sub">required</span></td>
+                              <td>Unique identifer of the location assigned at resource creation</td>
+                           </tr>
+                           <tr>
+                              <td><code class="nowrap">date</code></td>
+                              <td><span class="sub">required</span></td>
+                              <td>Date in the `YYYY-MM-DD` format for which data is requested. Date available from
+                                 1979-01-01 up to +15 days to the current date</td>
+                           </tr>
+                           <tr>
+                              <td><code class="nowrap">interval</code></td>
+                              <td><span class="sub">optional</span></td>
+                              <td>The time interval during which the energy is summed up and solar panel power output is
+                                 calculated, defines the temporary resolution of solar radiation data. If not specified,
+                                 the default interval of "1h" (1 hour) will be used. Available values for this parameter
+                                 include: "1h" (1 hour) and "15m" (15 minutes)</td>
+                           </tr>
+                           <tr>
+                              <td><code>appid</code></td>
+                              <td><span class="sub">required</span></td>
+                              <td>Your unique API key (you can always find it on your account page under the <a href="https://home.openweathermap.org/api_keys" target="_blank">"API key" tab</a>)
+                              </td>
+                           </tr>
+                        </tbody></table>
+                        <div class="info-board info-board-blue">
+                           If the service detected timezone for your location incorrectly you can specify correct
+                           timezone manually by adding <code>tz</code> parameter in the ±XX:XX format to API call.
+                           <p class="sub-header">API call</p>
+                           <div class="api">
+                              <code>https://api.openweathermap.org/energy/1.0/location/{location_id}/interval_data?date={date}&amp;interval={interval}&amp;tz={tz}&amp;appid=<a href="https://home.openweathermap.org/api_keys" target="_blank">{API key}</a></code>
+                           </div>
+                           <p class="sub-header">URL example</p>
+                           <div class="api example">
+                              <code>https://api.openweathermap.org/energy/1.0/location/F01E165B-22F3-4591-89D4-F238E92F6885/interval_data?date=2023-03-30&amp;interval=1h&amp;tz=+05:45&amp;appid=<a href="https://home.openweathermap.org/api_keys" target="_blank">{API key}</a></code>
+                           </div>
+                           Please pay attention that in case timezone is specified time of sunset and sunrise will be
+                           returned in accordance with this specified timezone.
+                        </div>
+                     </section>
+                     <section id="description">
+                        <section id="api2">
+                           <p class="sub-header">URL example</p>
+                           <div class="api example">
+                              <code>https://api.openweathermap.org/energy/1.0/location/018aa7aa-3d5f-85a2-91ee-b1b53c3e98a4/interval_data?date=2021-05-01&amp;interval=1h&amp;appid=<a href="https://home.openweathermap.org/api_keys" target="_blank">{API key}</a></code>
+                           </div>
+                        </section>
+                        <section id="route2paneloutputexample">
+                           <p class="sub-header">Example of API response</p>
+                           <div class="response open">
+                              <div class="api">
+                                 <code>Example of API response</code>
+                              </div>
+                              <div class="content">
+                                 <pre>                <code class="json">
+{
+   "location_id":"018aa7aa-3d5f-85a2-91ee-b1b53c3e98a4",
+   "lat":60.16986,
+   "lon":24.93838,
+   "date":"2021-05-01",
+   "tz":"+03:00",
+   "interval":"1h",
+   "sunrise":"2021-05-01T05:16:36",
+   "sunset":"2021-05-01T21:19:47",
+   "irradiance":{
+      "daily":[
+         {
+            "clear_sky":{
+               "ghi":6428.85,
+               "dni":10469.57,
+               "dhi":1271.66
+            },
+            "cloudy_sky":{
+               "ghi":6318.7,
+               "dni":9562.88,
+               "dhi":1491.64
+            }
+         }
+      ],
+      "intervals":[
+         {
+            "start":"00:00",
+            "end":"01:00",
+            "clear_sky":{
+               "ghi":0,
+               "dni":0,
+               "dhi":0
+            },
+            "cloudy_sky":{
+               "ghi":0,
+               "dni":0,
+               "dhi":0
+            }
+         },
+         {
+            "start":"01:00",
+            "end":"02:00",
+            "clear_sky":{
+               "ghi":0,
+               "dni":0,
+               "dhi":0
+            },
+            "cloudy_sky":{
+               "ghi":0,
+               "dni":0,
+               "dhi":0
+            }
+         },
+         {
+            "start":"02:00",
+            "end":"03:00",
+            "clear_sky":{
+               "ghi":0,
+               "dni":0,
+               "dhi":0
+            },
+            "cloudy_sky":{
+               "ghi":0,
+               "dni":0,
+               "dhi":0
+            }
+         },
+         {
+            "start":"03:00",
+            "end":"04:00",
+            "clear_sky":{
+               "ghi":0,
+               "dni":0,
+               "dhi":0
+            },
+            "cloudy_sky":{
+               "ghi":0,
+               "dni":0,
+               "dhi":0
+            }
+         },
+         {
+            "start":"04:00",
+            "end":"05:00",
+            "clear_sky":{
+               "ghi":0,
+               "dni":0,
+               "dhi":0
+            },
+            "cloudy_sky":{
+               "ghi":0,
+               "dni":0,
+               "dhi":0
+            }
+         },
+         {
+            "start":"05:00",
+            "end":"06:00",
+            "clear_sky":{
+               "ghi":8.56,
+               "dni":66.34,
+               "dhi":10.37
+            },
+            "cloudy_sky":{
+               "ghi":8.56,
+               "dni":7.47,
+               "dhi":8.14
+            }
+         },
+         {
+            "start":"06:00",
+            "end":"07:00",
+            "clear_sky":{
+               "ghi":84.84,
+               "dni":377.47,
+               "dhi":42.87
+            },
+            "cloudy_sky":{
+               "ghi":84.84,
+               "dni":334.94,
+               "dhi":38.4
+            }
+         },
+         {
+            "start":"07:00",
+            "end":"08:00",
+            "clear_sky":{
+               "ghi":203.02,
+               "dni":572.19,
+               "dhi":64.42
+            },
+            "cloudy_sky":{
+               "ghi":203.02,
+               "dni":551.03,
+               "dhi":61.66
+            }
+         },
+         {
+            "start":"08:00",
+            "end":"09:00",
+            "clear_sky":{
+               "ghi":332.67,
+               "dni":687.73,
+               "dhi":79.94
+            },
+            "cloudy_sky":{
+               "ghi":332.53,
+               "dni":670.61,
+               "dhi":79.13
+            }
+         },
+         {
+            "start":"09:00",
+            "end":"10:00",
+            "clear_sky":{
+               "ghi":458.18,
+               "dni":762.29,
+               "dhi":91.47
+            },
+            "cloudy_sky":{
+               "ghi":456.73,
+               "dni":732.71,
+               "dhi":97.91
+            }
+         },
+         {
+            "start":"10:00",
+            "end":"11:00",
+            "clear_sky":{
+               "ghi":567.24,
+               "dni":811.26,
+               "dhi":99.86
+            },
+            "cloudy_sky":{
+               "ghi":560.89,
+               "dni":766.56,
+               "dhi":113.13
+            }
+         },
+         {
+            "start":"11:00",
+            "end":"12:00",
+            "clear_sky":{
+               "ghi":649.96,
+               "dni":842.02,
+               "dhi":105.5
+            },
+            "cloudy_sky":{
+               "ghi":611.09,
+               "dni":683.8,
+               "dhi":164.13
+            }
+         },
+         {
+            "start":"12:00",
+            "end":"13:00",
+            "clear_sky":{
+               "ghi":699.11,
+               "dni":858.29,
+               "dhi":108.63
+            },
+            "cloudy_sky":{
+               "ghi":660.3,
+               "dni":681.77,
+               "dhi":184.85
+            }
+         },
+         {
+            "start":"13:00",
+            "end":"14:00",
+            "clear_sky":{
+               "ghi":710.5,
+               "dni":861.83,
+               "dhi":109.35
+            },
+            "cloudy_sky":{
+               "ghi":708.26,
+               "dni":812.08,
+               "dhi":135.12
+            }
+         },
+         {
+            "start":"14:00",
+            "end":"15:00",
+            "clear_sky":{
+               "ghi":683.19,
+               "dni":853.1,
+               "dhi":107.65
+            },
+            "cloudy_sky":{
+               "ghi":675.85,
+               "dni":793.48,
+               "dhi":133.9
+            }
+         },
+         {
+            "start":"15:00",
+            "end":"16:00",
+            "clear_sky":{
+               "ghi":619.53,
+               "dni":831.16,
+               "dhi":103.51
+            },
+            "cloudy_sky":{
+               "ghi":607.9,
+               "dni":767.8,
+               "dhi":125.36
+            }
+         },
+         {
+            "start":"16:00",
+            "end":"17:00",
+            "clear_sky":{
+               "ghi":525.02,
+               "dni":793.54,
+               "dhi":96.78
+            },
+            "cloudy_sky":{
+               "ghi":523.37,
+               "dni":759.9,
+               "dhi":106.81
+            }
+         },
+         {
+            "start":"17:00",
+            "end":"18:00",
+            "clear_sky":{
+               "ghi":408.06,
+               "dni":735.34,
+               "dhi":87.18
+            },
+            "cloudy_sky":{
+               "ghi":406.77,
+               "dni":711.18,
+               "dhi":89.93
+            }
+         },
+         {
+            "start":"18:00",
+            "end":"19:00",
+            "clear_sky":{
+               "ghi":279.52,
+               "dni":646.85,
+               "dhi":74.18
+            },
+            "cloudy_sky":{
+               "ghi":279.15,
+               "dni":627.16,
+               "dhi":72.79
+            }
+         },
+         {
+            "start":"19:00",
+            "end":"20:00",
+            "clear_sky":{
+               "ghi":152.75,
+               "dni":506.63,
+               "dhi":56.64
+            },
+            "cloudy_sky":{
+               "ghi":152.75,
+               "dni":483.2,
+               "dhi":52.63
+            }
+         },
+         {
+            "start":"20:00",
+            "end":"21:00",
+            "clear_sky":{
+               "ghi":46.07,
+               "dni":257.91,
+               "dhi":31.36
+            },
+            "cloudy_sky":{
+               "ghi":46.07,
+               "dni":179.19,
+               "dhi":27.13
+            }
+         },
+         {
+            "start":"21:00",
+            "end":"22:00",
+            "clear_sky":{
+               "ghi":0.63,
+               "dni":5.62,
+               "dhi":1.98
+            },
+            "cloudy_sky":{
+               "ghi":0.63,
+               "dni":0,
+               "dhi":0.63
+            }
+         },
+         {
+            "start":"22:00",
+            "end":"23:00",
+            "clear_sky":{
+               "ghi":0,
+               "dni":0,
+               "dhi":0
+            },
+            "cloudy_sky":{
+               "ghi":0,
+               "dni":0,
+               "dhi":0
+            }
+         },
+         {
+            "start":"23:00",
+            "end":"00:00",
+            "clear_sky":{
+               "ghi":0,
+               "dni":0,
+               "dhi":0
+            },
+            "cloudy_sky":{
+               "ghi":0,
+               "dni":0,
+               "dhi":0
+            }
+         }
+      ]
+   },
+   "panels":[
+      {
+         "panel_id":"018aa7aa-f224-893a-9907-ff7befe87968",
+         "output":{
+            "daily":{
+               "clear_sky":{
+                  "power":3.3902
+               },
+               "cloudy_sky":{
+                  "power":3.2197
+               }
+            },
+            "intervals":{
+               "clear_sky":[
+                  {
+                     "start":"00:00",
+                     "end":"01:00",
+                     "power":0
+                  },
+                  {
+                     "start":"01:00",
+                     "end":"02:00",
+                     "power":0
+                  },
+                  {
+                     "start":"02:00",
+                     "end":"03:00",
+                     "power":0
+                  },
+                  {
+                     "start":"03:00",
+                     "end":"04:00",
+                     "power":0
+                  },
+                  {
+                     "start":"04:00",
+                     "end":"05:00",
+                     "power":0
+                  },
+                  {
+                     "start":"05:00",
+                     "end":"06:00",
+                     "power":0.0215
+                  },
+                  {
+                     "start":"06:00",
+                     "end":"07:00",
+                     "power":0.1544
+                  },
+                  {
+                     "start":"07:00",
+                     "end":"08:00",
+                     "power":0.2852
+                  },
+                  {
+                     "start":"08:00",
+                     "end":"09:00",
+                     "power":0.388
+                  },
+                  {
+                     "start":"09:00",
+                     "end":"10:00",
+                     "power":0.4554
+                  },
+                  {
+                     "start":"10:00",
+                     "end":"11:00",
+                     "power":0.4825
+                  },
+                  {
+                     "start":"11:00",
+                     "end":"12:00",
+                     "power":0.468
+                  },
+                  {
+                     "start":"12:00",
+                     "end":"13:00",
+                     "power":0.4147
+                  },
+                  {
+                     "start":"13:00",
+                     "end":"14:00",
+                     "power":0.3292
+                  },
+                  {
+                     "start":"14:00",
+                     "end":"15:00",
+                     "power":0.2214
+                  },
+                  {
+                     "start":"15:00",
+                     "end":"16:00",
+                     "power":0.1037
+                  },
+                  {
+                     "start":"16:00",
+                     "end":"17:00",
+                     "power":0.0278
+                  },
+                  {
+                     "start":"17:00",
+                     "end":"18:00",
+                     "power":0.0196
+                  },
+                  {
+                     "start":"18:00",
+                     "end":"19:00",
+                     "power":0.0142
+                  },
+                  {
+                     "start":"19:00",
+                     "end":"20:00",
+                     "power":0.0035
+                  },
+                  {
+                     "start":"20:00",
+                     "end":"21:00",
+                     "power":0.0011
+                  },
+                  {
+                     "start":"21:00",
+                     "end":"22:00",
+                     "power":0
+                  },
+                  {
+                     "start":"22:00",
+                     "end":"23:00",
+                     "power":0
+                  },
+                  {
+                     "start":"23:00",
+                     "end":"00:00",
+                     "power":0
+                  }
+               ],
+               "cloudy_sky":[
+                  {
+                     "start":"00:00",
+                     "end":"01:00",
+                     "power":0
+                  },
+                  {
+                     "start":"01:00",
+                     "end":"02:00",
+                     "power":0
+                  },
+                  {
+                     "start":"02:00",
+                     "end":"03:00",
+                     "power":0
+                  },
+                  {
+                     "start":"03:00",
+                     "end":"04:00",
+                     "power":0
+                  },
+                  {
+                     "start":"04:00",
+                     "end":"05:00",
+                     "power":0
+                  },
+                  {
+                     "start":"05:00",
+                     "end":"06:00",
+                     "power":0.0058
+                  },
+                  {
+                     "start":"06:00",
+                     "end":"07:00",
+                     "power":0.1375
+                  },
+                  {
+                     "start":"07:00",
+                     "end":"08:00",
+                     "power":0.2747
+                  },
+                  {
+                     "start":"08:00",
+                     "end":"09:00",
+                     "power":0.379
+                  },
+                  {
+                     "start":"09:00",
+                     "end":"10:00",
+                     "power":0.443
+                  },
+                  {
+                     "start":"10:00",
+                     "end":"11:00",
+                     "power":0.4657
+                  },
+                  {
+                     "start":"11:00",
+                     "end":"12:00",
+                     "power":0.4191
+                  },
+                  {
+                     "start":"12:00",
+                     "end":"13:00",
+                     "power":0.3757
+                  },
+                  {
+                     "start":"13:00",
+                     "end":"14:00",
+                     "power":0.3237
+                  },
+                  {
+                     "start":"14:00",
+                     "end":"15:00",
+                     "power":0.2185
+                  },
+                  {
+                     "start":"15:00",
+                     "end":"16:00",
+                     "power":0.1056
+                  },
+                  {
+                     "start":"16:00",
+                     "end":"17:00",
+                     "power":0.0308
+                  },
+                  {
+                     "start":"17:00",
+                     "end":"18:00",
+                     "power":0.0209
+                  },
+                  {
+                     "start":"18:00",
+                     "end":"19:00",
+                     "power":0.0148
+                  },
+                  {
+                     "start":"19:00",
+                     "end":"20:00",
+                     "power":0.0035
+                  },
+                  {
+                     "start":"20:00",
+                     "end":"21:00",
+                     "power":0.0011
+                  },
+                  {
+                     "start":"21:00",
+                     "end":"22:00",
+                     "power":0.0003
+                  },
+                  {
+                     "start":"22:00",
+                     "end":"23:00",
+                     "power":0
+                  },
+                  {
+                     "start":"23:00",
+                     "end":"00:00",
+                     "power":0
+                  }
+               ]
+            }
+         }
+      }
+   ]
+}
+           </code>
+              </pre>
+                              </div>
+                           </div>
+                        </section>
+                        <section id="route2paneloutputfields">
+                           <p class="sub-header">Fields in API response</p>
+                           <ul class="docs-list">
+                              <li><code>location_id</code>Unique identifer of the location assigned at resource creation
+                              </li>
+                              <li><code>lat</code> Latitude of the location, decimal (−90; 90)</li>
+                              <li><code>lon</code> Longitude of the location, decimal (-180; 180)</li>
+                              <li><code>date</code> Date specified in the API request in the `YYYY-MM-DD` format (from
+                                 1979-01-01 up to +15 days to the current date)</li>
+                              <li><code>tz</code> Timezone in the ±XX:XX format</li>
+                              <li><code>interval</code> Time interval during which the energy is summed up and solar
+                                 panel power output is calculated. Determines temporary resolution of solar radiation
+                                 data. If not specified "1h" interval will be used. Available values : 1h, 15m</li>
+                              <li><code>sunrise</code> Date and time of sunrise based on date specified in the API
+                                 request and timezone authomatically determinated by on latitude and longitute of
+                                 requested location. If you added timezone parameter into API request, then time of
+                                 sunrise will be recalculated in accordance with this timezone. For polar areas in
+                                 midnight sun and polar night periods this parameter is not returned in the response
+                              </li>
+                              <li><code>sunset</code>Date and time of sunset based on date specified in the API request
+                                 and timezone authomatically determinated by on latitude and longitute of requested
+                                 location. If you added timezone parameter into API request, then time of sunset will be
+                                 recalculated in accordance with this timezone. For polar areas in midnight sun and
+                                 polar night periods this parameter is not returned in the response</li>
+                              <li><code>irradiance</code>Irradiance related information
+                                 <ul>
+                                    <li><code>daily</code> Daily aggregated irradiation data for the requested date
+                                       <ul>
+                                          <li><code>clear_sky</code>Clear sky model
+                                             <ul>
+                                                <li><code>ghi</code> Clear sky GHI - <a href="/api/solar-radiation/behind-solar-radiation-api#introduction">Global
+                                                      Horizontal Irradiation</a>, Wh/m<sup>2</sup></li>
+                                                <li><code>dni</code> Clear sky DNI - <a href="/api/solar-radiation/behind-solar-radiation-api#introduction">Direct
+                                                      Normal Irradiation</a>, Wh/m<sup>2</sup></li>
+                                                <li><code>dhi</code> Clear sky DHI - <a href="/api/solar-radiation/behind-solar-radiation-api#introduction">Diffuse
+                                                      Horizontal Irradiation</a>, Wh/m<sup>2</sup></li>
+                                             </ul>
+                                          </li>
+                                          <li><code>cloudy_sky</code>Cloudy sky model
+                                             <ul>
+                                                <li><code>ghi</code> Cloudy sky GHI - <a href="/api/solar-radiation/behind-solar-radiation-api#introduction">Global
+                                                      Horizontal Irradiation</a>, Wh/m<sup>2</sup> </li>
+                                                <li><code>dni</code> Cloudy sky DNI - <a href="/api/solar-radiation/behind-solar-radiation-api#introduction">Direct
+                                                      Normal Irradiation</a>, Wh/m<sup>2</sup></li>
+                                                <li><code>dhi</code> Cloudy sky DHI - <a href="/api/solar-radiation/behind-solar-radiation-api#introduction">Diffuse
+                                                      Horizontal Irradiation</a>, Wh/m<sup>2</sup></li>
+                                             </ul>
+                                          </li>
+                                       </ul>
+                                    </li>
+                                    <li><code>intervals</code> Interval detalization of daily aggregated irradiation
+                                       data
+                                       for the requested date
+                                       <ul>
+                                          <li><code>start</code>Start of the time interval for which the energy is
+                                             summed
+                                             up.
+                                             Time interval displays hour and minutes of the day for which indexes were
+                                             aggregated in "hh:mm" format</li>
+                                          <li><code>end</code>End of the time interval for which the energy is summed
+                                             up.
+                                             Time
+                                             interval displays hour and minutes of the day for which indexes were
+                                             aggregated
+                                             in "hh:mm" format</li>
+                                          <li><code>clear_sky</code>Clear sky model
+                                             <ul>
+                                                <li><code>ghi</code> Clear sky GHI - <a href="/api/solar-radiation/behind-solar-radiation-api#introduction">Global
+                                                      Horizontal Irradiation</a>, Wh/m<sup>2</sup></li>
+                                                <li><code>dni</code> Clear sky DNI - <a href="/api/solar-radiation/behind-solar-radiation-api#introduction">Direct
+                                                      Normal Irradiation</a>, Wh/m<sup>2</sup></li>
+                                                <li><code>dhi</code> Clear sky DHI - <a href="/api/solar-radiation/behind-solar-radiation-api#introduction">Diffuse
+                                                      Horizontal Irradiation</a>, Wh/m<sup>2</sup></li>
+                                             </ul>
+                                          </li>
+                                          <li><code>cloudy_sky</code>Cloudy sky model
+                                             <ul>
+                                                <li><code>ghi</code> Cloudy sky GHI - <a href="/api/solar-radiation/behind-solar-radiation-api#introduction">Global
+                                                      Horizontal Irradiation</a>, Wh/m<sup>2</sup> </li>
+                                                <li><code>dni</code> Cloudy sky DNI - <a href="/api/solar-radiation/behind-solar-radiation-api#introduction">Direct
+                                                      Normal Irradiation</a>, Wh/m<sup>2</sup></li>
+                                                <li><code>dhi</code> Cloudy sky DHI - <a href="/api/solar-radiation/behind-solar-radiation-api#introduction">Diffuse
+                                                      Horizontal Irradiation</a>, Wh/m<sup>2</sup></li>
+                                             </ul>
+                                          </li>
+                                       </ul>
+                                    </li>
+                                 </ul>
+                              </li>
+                              <li><code>panels</code> Solar panels related information
+                                 <ul>
+                                    <li><code>panel_id</code> Unique identifer of the solar panel assigned at resource
+                                       creation</li>
+                                    <li><code>output</code>Solar panel power output data
+                                       <ul>
+                                          <li><code>daily</code>Daily aggeregated solar panel power output data. Please
+                                             pay
+                                             attention that solar panel output values are given for averaged efficiency
+                                             with a
+                                             performance ratio 0.75
+                                             <ul>
+                                                <li><code>clear_sky</code>Clear sky model
+                                                   <ul>
+                                                      <li><code>power</code>Daily solar panel power output amount for
+                                                         clear
+                                                         sky
+                                                         model, kW. Please pay attention that solar panel output values
+                                                         are
+                                                         given
+                                                         for averaged efficiency with a performance ratio 0.75</li>
+                                                   </ul>
+                                                </li>
+                                                <li><code>cloudy_sky</code>Cloudy sky model
+                                                   <ul>
+                                                      <li><code>power</code>Daily solar panel power output amount for
+                                                         cloudy
+                                                         sky
+                                                         model, kW. Please pay attention that solar panel output values
+                                                         are
+                                                         given
+                                                         for averaged efficiency with a performance ratio 0.75</li>
+                                                   </ul>
+                                                </li>
+                                             </ul>
+                                          </li>
+                                          <li><code>intervals</code> Interval detalization of daily aggregated solar
+                                             panel
+                                             power output data for the requested date. Please pay attention that solar
+                                             panel
+                                             output values are given for averaged efficiency with a performance ratio
+                                             0.75
+
+                                             <ul>
+                                                <li><code>clear_sky</code>Clear sky model
+                                                   <ul>
+                                                      <li><code>start</code>Start of the time interval for which the
+                                                         solar
+                                                         panel
+                                                         power output is calculated. Time interval displays hour and
+                                                         minutes
+                                                         of
+                                                         the day for which indexes were aggregated in "hh:mm" format
+                                                      </li>
+                                                      <li><code>end</code>End of the time interval for which the solar
+                                                         panel
+                                                         power output is calculated. Time interval displays hour and
+                                                         minutes
+                                                         of
+                                                         the day for which indexes were aggregated in "hh:mm" format
+                                                      </li>
+                                                      <li><code>power</code>Solar panel power output amount per requeted
+                                                         interval
+                                                         for clear sky model, kW. Please pay attention that solar panel
+                                                         output
+                                                         values are given for averaged efficiency with a performance
+                                                         ratio
+                                                         0.75
+                                                      </li>
+                                                   </ul>
+                                                </li><li><code>cloudy_sky</code>Cloudy sky model
+                                                   <ul>
+                                                      <li><code>start</code>Start of the time interval for which the
+                                                         solar
+                                                         panel
+                                                         power output is calculated. Time interval displays hour and
+                                                         minutes
+                                                         of
+                                                         the day for which indexes were aggregated in "hh:mm" format
+                                                      </li>
+                                                      <li><code>end</code>End of the time interval for which the solar
+                                                         panel
+                                                         power output is calculated. Time interval displays hour and
+                                                         minutes
+                                                         of
+                                                         the day for which indexes were aggregated in "hh:mm" format
+                                                      </li>
+                                                      <li><code>power</code>Solar panel power output amount per requeted
+                                                         interval
+                                                         for cloudy sky model, kW. Please pay attention that solar panel
+                                                         output
+                                                         values are given for averaged efficiency with a performance
+                                                         ratio
+                                                         0.75
+                                                      </li>
+                                                   </ul>
+                                             </li></ul>
+                                          </li>
+                                       </ul>
+                                    </li>
+                                 </ul>
+                              </li>
+                           </ul>
+                        </section>
+                     </section>
+                  </section>
+               </section>
+            </section>
+
+            <section id="errors" class="anchor_el">
+               <h2>API errors</h2>
+               <section id="errorstructure">
+                  <h3>Structure of API errors</h3>
+                  <p>In case of incorrected API call you will receive API error response. Error response payload
+                     returned for all types of errors with the structure below.</p>
+                  <p class="sub-header">Example of error response</p>
+                  <div class="response open">
+                     <div class="api">
+                        <code>Example of error response</code>
+                     </div>
+                     <div class="content">
+                        <pre>                <code class="json">
+{
+    "code": "400",
+    "message": "Invalid date format",
+    "parameters": [
+        "date"
+    ]
+}
+        </code>
+              </pre>
+                     </div>
+                  </div>
+                  <p class="sub-header">Fields in error response</p>
+                  <ul class="docs-list">
+                     <li><code>code</code> Code of error</li>
+                     <li><code>message</code> Description of error</li>
+                     <li><code>parameters</code><span class="sub">(optional)</span> List of request parameters names
+                        that are related to this particular error</li>
+                  </ul>
+               </section>
+               <section id="popularerrors">
+                  <h3>Errors list</h3>
+                  <br>Please find more detailed information about some popular errors below.
+                  <section id="error400" class="anchor_el">
+                     <div class="question">
+                        <p class="question-heading">API calls return an error 400</p>
+                        <div class="question-content">
+                           <p>Error 400 - Bad Request. You can get error 400 error if either some mandatory
+                              parameters in the request are missing or some of request parameters have incorrect
+                              format or values out of allowed range. List of all parameters names that are missong or
+                              incorrect will be returned in `parameters`attribute of the `ErrorResponse` object.</p>
+                        </div>
+                     </div>
+                  </section>
+                  <section id="error401" class="anchor_el">
+                     <div class="question">
+                        <p class="question-heading">API calls return an error 401</p>
+                        <div class="question-content">
+                           <p>Error 401 - Unauthorized. You can get 401 error if API token did not providen in the
+                              request or in case API token provided in the request does not grant access to this API.
+                              You must add API token with granted access to the product to the request before
+                              returing it.</p>
+                           <!--<p>Error 401 - Unauthorized. You can gat 401 error if API token did not provide in the request. You must add API token to the request before returing it.</p>-->
+                        </div>
+                     </div>
+                  </section>
+                  <!--<section id="error403" class="anchor_el">
+              <div class="question">
+                  <p class="question-heading">API calls return an error 403</p>
+                  <div class="question-content">
+                   <p> Error 403 - Forbidden. You can get 403 error in case API token provided in the request does not grant access to this API. You must replace API with one granted to acess Solar Radiation API before retrying request.</p>
+                  </div>
+              </div>
+            </section>-->
+                  <section id="error404" class="anchor_el">
+                     <div class="question">
+                        <p class="question-heading">API calls return an error 404</p>
+                        <div class="question-content">
+                           <p>Error 404 - Not Found. You can get 404 error if data with requested parameters
+                              (<code>lat</code>, <code>lon</code>, <code>date</code>, <code>location_id</code>,
+                              <code>panel_id</code>) does not exist in service database. You must not retry the same
+                              request.
+                           </p>
+                        </div>
+                     </div>
+                  </section>
+
+                  <section id="error429" class="anchor_el">
+                     <div class="question">
+                        <p class="question-heading">API calls return an error 429</p>
+                        <div class="question-content">
+                           <p>Error 429 - Too Many Requests. You can get 429 error if key quato of requests for
+                              provided API to this API was exceeded. You may retry request after some time or after
+                              extending your key quota.</p>
+                        </div>
+                     </div>
+                  </section>
+
+                  <section id="error500" class="anchor_el">
+                     <div class="question">
+                        <p class="question-heading">API calls return errors '5xx'</p>
+                        <div class="question-content">
+                           <p>Errors 5xx - Unexpected Error. You can get '5xx' error in case of other internal
+                              errors. Error Response code will be `5xx`. Please <a href="https://home.openweathermap.org/questions" target="_blank">contact us</a> and
+                              enclose an example of your API request that receives this error into your email to let
+                              us analyze it and find a solution for you promptly. You may retry the request which led
+                              to this error.</p>
+                        </div>
+                     </div>
+                  </section>
+               </section>
+            </section>
+         </div>
+      </div>
+   </div>
+</div>  </main>
+  <div id="footer-website" onclick="toggleFooterSection(event)">
+   <div class="inner-footer-container">
+      <div class="horizontal-section">
+         <div class="footer-section">
+            <p class="section-heading">Product Collections</p>
+            <div class="section-content">
+               <ul>
+                  <li><a href="/api#current">Current and Forecast APIs</a></li>
+                  <li><a href="/api#history">Historical Weather Data</a></li>
+                  <li><a href="/api#maps">Weather Maps</a></li>
+                  <li><a href="https://dashboard.openweather.co.uk/" target="_blank">Weather Dashboard</a></li>
+                  <li><a href="/widgets-constructor">Widgets</a></li>
+               </ul>
+            </div>
+         </div>
+         <div class="footer-section">
+            <p class="section-heading">Subscription</p>
+            <div class="section-content">
+               <ul>
+                  <li><a href="/appid">How to start</a></li>
+                  <li><a href="/price">Pricing</a></li>
+                  <li><a href="https://home.openweathermap.org/users/sign_up">Subscribe for free</a></li>
+                  <li><a href="/faq">FAQ</a></li>
+               </ul>
+            </div>
+         </div>
+         <div class="footer-section">
+            <p class="section-heading">Company</p>
+            <div class="section-content">
+               <p>OpenWeather is a team of IT experts and data scientists that has been practising deep weather data
+                  science. For each point on the globe, OpenWeather provides historical, current and forecasted weather
+                  data via light-speed APIs. Headquarters in London, UK.</p>
+            </div>
+         </div>
+      </div>
+      <div class="horizontal-section">
+         <div class="footer-section">
+            <p class="section-heading">Technologies</p>
+            <div class="section-content">
+               <ul>
+                  <li><a href="/technology">Our technology</a></li>
+                  <li><a href="/accuracy-and-quality">Accuracy and quality of weather data</a></li>
+                  <li><a href="/stations">Connect your weather station</a></li>
+               </ul>
+            </div>
+         </div>
+         <div class="footer-section">
+            <p class="section-heading">Terms &amp; Conditions</p>
+            <div class="section-content">
+               <ul>
+                  <li><a href="https://openweather.co.uk/storage/app/media/Terms/Openweather_terms_and_conditions_of_sale.pdf" target="_blank">Terms and conditions of sale</a></li>
+                  <li><a href="https://openweather.co.uk/privacy-policy" target="_blank">Privacy Policy</a></li>
+                  <li><a href="https://openweather.co.uk/storage/app/media/Terms/Openweather_website_terms_and_conditions_of_use.pdf" target="_blank">Website terms and conditions</a></li>
+               </ul>
+            </div>
+         </div>
+         <div class="footer-section not-foldable">
+            <!-- <p class="section-heading">Contact us</p> -->
+            <div class="section-content">
+               <ul>
+                  <li><a href="/about-us" target="_blank">About us</a></li>
+                  <li><a href="https://openweather.co.uk/about/our-offices" target="_blank">Our offices</a></li>
+                  <li><a href="https://openweather.co.uk/blog/category/weather" target="_blank">Blog</a></li>
+                  <li><a href="https://openweather.co.uk/" target="_blank">OpenWeather for Business</a></li>
+                  <li><a href="/chat">Ulla, OpenWeather AI assistant</a></li>
+                  <li><a href="https://home.openweathermap.org/questions" target="_blank">Ask a question</a></li>
+                  <!--  <li><a href="mailto:info@openweathermap.org">info@openweathermap.org</a>  -->
+               </ul>
+            </div>
+         </div>
+      </div>
+      <div class="horizontal-section">
+         <div class="footer-section">
+            <div class="my-5">
+               <p>Download OpenWeather app</p>
+               <div>
+                  <a href="https://apps.apple.com/gb/app/openweather/id1535923697" target="_blank">
+                     <img src="..\..\assets\themes\openweathermap\assets\img\mobile_app\app-store-badge.svg" alt="Get it on AppStore">
+                  </a>
+                  <a href="https://play.google.com/store/apps/details?id=uk.co.openweather" target="_blank">
+                     <img src="..\..\assets\themes\openweathermap\assets\img\mobile_app\google-play-badge.png" class="google-play-img" alt="Get it on Google Play">
+                  </a>
+               </div>
+            </div>
+         </div>
+         <div class="footer-section">
+            <div class="my-5 logo-blocks">
+               <img src="..\..\assets\themes\openweathermap\assets\img\RMets_Logo_corp.png" width="200" height="70" alt="RMets logo">
+               <img src="..\..\assets\themes\openweathermap\assets\img\CNB_Business_Logo_2024.png" alt="CNB Business logo" width="170" height="170">
+            </div>
+         </div>
+
+      </div>
+      <div class="horizontal-section my-5">
+         <div>
+            <span>Supplier of Achilles UVDB community</span><br>
+            <span id="years-copyright"></span><br><br>
+         </div>
+         <div class="social">
+            <a href="https://www.facebook.com/groups/270748973021342" target="_blank"><img src="..\..\assets\themes\openweathermap\assets\img\owm_icons\icon_facebook.png" alt="facebook icon"></a>
+            <a href="https://twitter.com/OpenWeatherMap" target="_blank"><img src="..\..\assets\themes\openweathermap\assets\img\owm_icons\icon_x_black.png" alt="x icon"></a>
+            <a href="https://www.linkedin.com/company/9816754" target="_blank"><img src="..\..\assets\themes\openweathermap\assets\img\owm_icons\icon_linkedin.png" alt="linkedin icon "></a>
+            <a href="https://medium.com/@openweathermap" target="_blank"><img src="..\..\assets\themes\openweathermap\assets\img\owm_icons\new_medium.svg" alt="meduim icon"></a>
+            <a href="https://t.me/openweathermap" target="_blank"><img src="..\..\assets\themes\openweathermap\assets\img\owm_icons\icon_telegram.png" alt="telegram icon"></a>
+            <a href="https://github.com/openweathermap" target="_blank"><img src="..\..\assets\themes\openweathermap\assets\img\owm_icons\icon_github.png" alt="github icon"></a>
+         </div>
+      </div>
+      <div class="horizontal-section"></div>
+   </div>
+</div>  <script src="https://cdn.ravenjs.com/3.6.1/raven.min.js"></script>
+<script>Raven.config('http://66df88eb63e94f27964b84031e49b358@sentry.owm.io/16').install()</script>  <script src="..\..\assets\themes\openweathermap\assets\js\bundle_owm_postload.c31872127471c475ade1.js"></script>
+<script src="..\..\assets\themes\openweathermap\assets\js\advertising.js"></script>      <div class="gdpr-banner">
+        <div class="gdpr-banner__wrapper">
+            <div class="gdpr-banner__column gdpr-banner__column--1">
+    <div class="gdpr-banner__row">
+        <div class="gdpr-banner__message">
+    We use cookies to personalize content and to analyze our traffic. Please decide if you are willing to accept cookies from our website.
+</div>    </div>
+</div>
+<div class="gdpr-banner__column gdpr-banner__column--2">
+        <div class="gdpr-banner__settings">
+        <a role="link" rel="privacy" href="https://openweathermap.org/cookies" data-request="onDecline" data-request-success="document.location.href = 'https://openweathermap.org/cookies'">
+            Advanced Settings
+        </a>
+    </div>
+    <div class="gdpr-banner__opt-out">
+    <button role="button" tabindex="0" aria-pressed="false" class="gdpr-banner__button gdpr-banner__button--opt-out" data-request="onDecline" data-request-success="document.querySelector('.gdpr-banner').remove()">
+        Decline
+    </button>
+</div>    <div class="gdpr-banner__opt-in">
+    <button role="button" tabindex="0" aria-pressed="false" class="gdpr-banner__button gdpr-banner__button--opt-in" data-request="onAccept" data-request-success="document.querySelector('.gdpr-banner').remove()" data-request-update="'gtag' : '#gdpr-reload'">
+        Accept
+    </button>
+</div>
+    <div class="gdpr-banner__dismiss">
+    <button role="button" tabindex="0" aria-pressed="false" class="gdpr-banner__button--dismiss" onclick="document.querySelector('.gdpr-banner').remove()">×</button>
+</div></div>        </div>
+    </div>
+  <link href="..\..\assets\themes\openweathermap\assets\css\chat-banner.css" rel="stylesheet">
+<link href="..\..\assets\themes\openweathermap\assets\vendor\owm\css\assistant-index.DVVhxENO.css" rel="stylesheet">
+
+<style>
+  #owm-chat-bot p {
+    font-weight: normal;
+  }
+
+  #owm-chat-bot>div {
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  .pop-up-content h2 {
+    margin-top: 19.2px;
+  }
+
+  .owm-chat-bot-description ul {
+    margin: 0;
+    padding: 16px;
+    background-color: #4f4f4f;
+    color: white;
+    border-radius: 4.8px;
+  }
+
+  .owm-chat-bot-description ul.dashed {
+    list-style-type: none;
+  }
+
+  /* .owm-chat-bot-description ul.dashed>li {
+    text-indent: -1rem;
+  } */
+
+  .owm-chat-bot-description ul.dashed>li:before {
+    content: "- ";
+    text-indent: -16px;
+  }
+</style>
+
+<div id="owm-chat-bot" data-key="5796abbde9106b7da4febfae8c44c232" data-popup="" style="display: none; position: fixed; z-index: 50000; bottom: 16px; right: 16px; height: 640px; max-height: calc(100% - 32px); width: 480px; max-width: calc(100% - 32px);">
+</div>
+
+<script>
+  `ASSISTANT_URL=https://api.openweathermap.org`.split("\n").map(env => env.split('=')).map(env => window[env[0]] = env[1]);
+</script>
+<script src="..\..\assets\themes\openweathermap\assets\vendor\owm\js\assistant-index.ClVGaiQn.js"></script>
+
+<div id="chat-banner" class="banner-pop-up">
+  <div class="banner-pop-up-content">
+    <img src="..\..\assets\themes\openweathermap\assets\img\Ulla_bot.png" alt="Ulla the Bot" width="16" height="16">
+    <h3>Ulla Weather Assistant</h3>
+  </div>
+</div>
+
+
+<script>
+  const chatBanner = document.getElementById('chat-banner');
+  const chatBot = document.getElementById('owm-chat-bot');
+
+  chatBanner.addEventListener('click', () => {
+    chatBanner.style.display = 'none';
+    chatBot.style.display = chatBot.style.display === 'none' ? 'block' : 'none';
+    gtag('event', 'maxullaweather', {
+      'event_category': 'Chat',
+      'event_label': 'maxullaweather'
+    });
+  });
+
+  window.addEventListener('minimize', () => {
+    chatBot.style.display = 'none';
+    chatBanner.style.display = 'block';
+    gtag('event', 'minullaweather', {
+      'event_category': 'Chat',
+      'event_label': 'minullaweather'
+    });
+  });
+
+  const gdprBanner = document.querySelector('.gdpr-banner');
+
+  if (gdprBanner) {
+    chatBanner.style.bottom = '80px';
+
+    const observer = new MutationObserver(() => {
+      if (!document.body.contains(gdprBanner)) {
+        chatBanner.style.bottom = '50px';
+      } else {
+        chatBanner.style.bottom = (gdprBanner.clientHeight + 8) + 'px';
+      }
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
+</script>
+
+</body></html>

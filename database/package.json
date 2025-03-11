@@ -1,0 +1,13 @@
+{
+  "name": "agriweatherpro-database",
+  "version": "1.0.0",
+  "description": "Database management scripts for AgriWeather Pro",
+  "main": "init-database.js",
+  "scripts": {
+    "init": "node init-database.js",
+    "check": "node check-database.js"
+  },
+  "dependencies": {
+    "axios": "^1.6.2"
+  }
+}

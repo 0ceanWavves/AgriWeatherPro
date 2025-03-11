@@ -1,0 +1,66 @@
+---
+description: Agricultural Data Processing Standards
+globs: 
+alwaysApply: true
+---
+---
+
+globs: **/*.{js,jsx,ts,tsx,py}
+---
+# Agricultural Data Processing
+
+<rule>
+name: agricultural_data_processing
+description: Standards for processing agricultural data with weather information
+filters:
+  - type: file_extension
+    pattern: "\\.(js|jsx|ts|tsx|py)$"
+  - type: content
+    pattern: "crop|yield|harvest|soil|field|farm"
+
+actions:
+  - type: suggest
+    message: |
+      # Agricultural Data Processing for AgriWeather Pro
+      
+      ## Data Integration Standards
+      
+      1. **Crop Growth Models**:
+         - Use degree day calculations for crop development stages
+         - Integrate precipitation data with soil moisture models
+         - Apply solar radiation data for photosynthesis calculations
+      
+      2. **Data Normalization**:
+         ```javascript
+         function normalizeWeatherForCrop(weatherData, cropType) {
+           // Define crop-specific thresholds
+           const thresholds = CROP_THRESHOLDS[cropType];
+           
+           // Normalize temperature and precipitation based on crop needs
+           const normalizedTemp = (weatherData.temp - thresholds.minTemp) / 
+                                 (thresholds.maxTemp - thresholds.minTemp);
+           
+           // Return normalized values for analysis
+           return {
+             temperature: clamp(normalizedTemp, 0, 1),
+             precipitation: normalizePrecipitation(weatherData.rain, cropType),
+             growthStage: calculateGrowthStage(weatherData.degreeDay, cropType)
+           };
+         }
+         ```
+      
+      3. **Field Data Structure**:
+         - Geospatial representation using GeoJSON
+         - Crop rotation history tracking
+         - Soil type and composition by field segment
+         - Historical yield data per field
+      
+      4. **Data Validation**:
+         - Implement range checks for all sensor/weather data
+         - Flag anomalous readings for human review
+         - Use statistical methods to identify potential data errors
+
+metadata:
+  priority: high
+  version: 1.0
+</rule>

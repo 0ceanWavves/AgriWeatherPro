@@ -1,0 +1,77 @@
+---
+description: Agricultural Analytics for AgriWeather Pro
+globs: 
+alwaysApply: false
+---
+---
+globs: **/*.{js,jsx,ts,tsx,py}
+---
+# Agricultural Analytics
+
+<rule>
+name: agricultural_analytics
+description: Standards for agricultural analytics in AgriWeather Pro
+filters:
+  - type: file_extension
+    pattern: "\\.(js|jsx|ts|tsx|py)$"
+  - type: content
+    pattern: "analytics|metrics|calculate|predict|forecast|yield"
+
+actions:
+  - type: suggest
+    message: |
+      # Agricultural Analytics Guidelines for AgriWeather Pro
+      
+      ## Analytics Implementation
+      
+      1. **Key Agricultural Metrics**:
+         - Growing Degree Days (GDD)
+         - Crop Water Demand (ET)
+         - Frost Risk Probability
+         - Disease Pressure Index
+         - Yield Potential Score
+      
+      2. **Calculation Framework**:
+         ```javascript
+         // Growing Degree Days calculation
+         function calculateGDD(maxTemp, minTemp, baseTemp = 10) {
+           const avgTemp = (maxTemp + minTemp) / 2;
+           return Math.max(0, avgTemp - baseTemp);
+         }
+         
+         // Accumulate GDD over time period
+         function accumulateGDD(dailyTemps, baseTemp = 10) {
+           return dailyTemps.reduce((total, day) => {
+             return total + calculateGDD(day.maxTemp, day.minTemp, baseTemp);
+           }, 0);
+         }
+         
+         // Disease pressure based on humidity and temperature
+         function calculateDiseasePressure(humidity, temperature, precipDays) {
+           // Different models for different diseases
+           const models = {
+             'late_blight': calculateLateBlight(humidity, temperature, precipDays),
+             'powdery_mildew': calculatePowderyMildew(humidity, temperature),
+             'rust': calculateRust(humidity, temperature, precipDays)
+           };
+           
+           return models;
+         }
+         ```
+      
+      3. **Reporting Structure**:
+         - Daily field status summaries
+         - Weekly trend analysis
+         - Seasonal comparisons to historical norms
+         - Year-over-year yield performance
+      
+      4. **Integration with External Data**:
+         - Import soil test results
+         - Connect with equipment sensors for real-time data
+         - Integrate satellite imagery for NDVI analysis
+         - Support manual observation data entry
+
+metadata:
+  priority: high
+  version: 1.0
+</rule>
