@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { 
   FaHome, 
   FaChartLine, 
@@ -30,9 +29,9 @@ const Sidebar = ({ activeView, setActiveView }) => {
         </span>
         <span className="overflow-hidden">Emily Foster</span>
         <span className="flex-1"></span>
-        <a href="#" title="Sign out">
+        <button type="button" title="Sign out">
           <FaSignOutAlt className="w-5 h-5 hover:text-orange-2" />
-        </a>
+        </button>
       </div>
       
       <div className="weather-data-panel px-4 py-3">
@@ -71,6 +70,7 @@ const Sidebar = ({ activeView, setActiveView }) => {
       <ul className="flex flex-col justify-start space-y-1 px-1">
         <li className="relative">
           <button 
+            type="button"
             className={`relative flex items-center hover:text-orange-1 hover:bg-orange-1/30 rounded-full px-4 py-1 ${activeView === 'home' ? 'text-orange-1 bg-orange-1/30' : 'text-white'}`}
             onClick={() => setActiveView('home')}
           >
@@ -80,6 +80,7 @@ const Sidebar = ({ activeView, setActiveView }) => {
         </li>
         <li className="relative">
           <button 
+            type="button"
             className={`relative flex items-center hover:text-orange-1 hover:bg-orange-1/30 rounded-full px-4 py-1 ${activeView === 'reports' ? 'text-orange-1 bg-orange-1/30' : 'text-white'}`}
             onClick={() => setActiveView('reports')}
           >
@@ -89,6 +90,7 @@ const Sidebar = ({ activeView, setActiveView }) => {
         </li>
         <li className="relative">
           <button 
+            type="button"
             className={`relative flex items-center hover:text-orange-1 hover:bg-orange-1/30 rounded-full px-4 py-1 ${activeView === 'triggers' ? 'text-orange-1 bg-orange-1/30' : 'text-white'}`}
             onClick={() => setActiveView('triggers')}
           >
@@ -98,6 +100,7 @@ const Sidebar = ({ activeView, setActiveView }) => {
         </li>
         <li className="relative">
           <button 
+            type="button"
             className={`relative flex items-center hover:text-orange-1 hover:bg-orange-1/30 rounded-full px-4 py-1 ${activeView === 'tariff' ? 'text-orange-1 bg-orange-1/30' : 'text-white'}`}
             onClick={() => setActiveView('tariff')}
           >
@@ -107,6 +110,7 @@ const Sidebar = ({ activeView, setActiveView }) => {
         </li>
         <li className="relative">
           <button 
+            type="button"
             className={`relative flex items-center hover:text-orange-1 hover:bg-orange-1/30 rounded-full px-4 py-1 ${activeView === 'support' ? 'text-orange-1 bg-orange-1/30' : 'text-white'}`}
             onClick={() => setActiveView('support')}
           >
@@ -116,6 +120,7 @@ const Sidebar = ({ activeView, setActiveView }) => {
         </li>
         <li className="relative">
           <button 
+            type="button"
             className={`relative flex items-center hover:text-orange-1 hover:bg-orange-1/30 rounded-full px-4 py-1 ${activeView === 'about' ? 'text-orange-1 bg-orange-1/30' : 'text-white'}`}
             onClick={() => setActiveView('about')}
           >
@@ -125,6 +130,7 @@ const Sidebar = ({ activeView, setActiveView }) => {
         </li>
         <li className="relative">
           <button 
+            type="button"
             className={`relative flex items-center hover:text-orange-1 hover:bg-orange-1/30 rounded-full px-4 py-1 ${activeView === 'settings' ? 'text-orange-1 bg-orange-1/30' : 'text-white'}`}
             onClick={() => setActiveView('settings')}
           >
@@ -137,7 +143,10 @@ const Sidebar = ({ activeView, setActiveView }) => {
       <div className="border-t border-black-3"></div>
 
       <div className="px-1">
-        <button className="flex gap-2 rounded-full justify-center whitespace-nowrap items-center py-3 px-6 bg-orange-1 text-black-1 hover:enabled:bg-black-2 hover:enabled:text-white w-full">
+        <button 
+          type="button"
+          className="flex gap-2 rounded-full justify-center whitespace-nowrap items-center py-3 px-6 bg-orange-1 text-black-1 hover:enabled:bg-black-2 hover:enabled:text-white w-full"
+        >
           <FaCommentDots className="w-6 h-6" />
           <span className="pl-3">Ask a question</span>
         </button>

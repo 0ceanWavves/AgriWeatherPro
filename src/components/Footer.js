@@ -20,16 +20,16 @@ const Footer = () => {
               Advanced weather analytics platform helping farmers optimize crop yields through AI-powered climate trend analysis and predictions.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-accent" aria-label="Twitter">
+              <a href="https://twitter.com" className="text-gray-400 hover:text-accent" aria-label="Twitter">
                 <FaTwitter className="text-xl" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-accent" aria-label="Facebook">
+              <a href="https://facebook.com" className="text-gray-400 hover:text-accent" aria-label="Facebook">
                 <FaFacebook className="text-xl" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-accent" aria-label="LinkedIn">
+              <a href="https://linkedin.com" className="text-gray-400 hover:text-accent" aria-label="LinkedIn">
                 <FaLinkedin className="text-xl" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-accent" aria-label="GitHub">
+              <a href="https://github.com" className="text-gray-400 hover:text-accent" aria-label="GitHub">
                 <FaGithub className="text-xl" />
               </a>
             </div>
@@ -72,9 +72,9 @@ const Footer = () => {
         <div className="text-center text-gray-400 text-sm">
           <p>&copy; {currentYear} AgriWeather Pro. All rights reserved.</p>
           <p className="mt-2">
-            <Link to="#" className="hover:text-accent">Privacy Policy</Link>
+            <Link to="/privacy" className="hover:text-accent">Privacy Policy</Link>
             {' '} | {' '}
-            <Link to="#" className="hover:text-accent">Terms of Service</Link>
+            <Link to="/terms" className="hover:text-accent">Terms of Service</Link>
           </p>
         </div>
       </div>

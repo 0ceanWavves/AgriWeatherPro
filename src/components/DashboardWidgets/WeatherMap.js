@@ -1,9 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, LayersControl, ZoomControl } from 'react-leaflet';
-import { getWeatherMapUrl, getLocationWeather } from '../../api/weatherApi';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { FaTemperatureHigh, FaCloudRain, FaWind, FaCloud, FaTachometerAlt } from 'react-icons/fa';
+
+// Mock function until real API is connected
+const getWeatherMapUrl = (layerId) => {
+  return `https://tile.openweathermap.org/map/${layerId}/{z}/{x}/{y}.png?appid=YOUR_API_KEY`;
+};
+
+// Mock function until real API is connected
+const getLocationWeather = async (lat, lng) => {
+  // In a real app, this would fetch from an API
+  return {
+    temp: -8.8,
+    feelsLike: -11.9,
+    precipitation: 0,
+    windSpeed: 1.54,
+    windDirection: 20,
+    humidity: 94,
+    clouds: 100,
+    pressure: 1017
+  };
+};
 
 // Fix for Leaflet icons
 delete L.Icon.Default.prototype._getIconUrl;
@@ -119,6 +138,7 @@ const WeatherMap = ({ location = { lat: 51.505, lng: -0.09, name: 'London' } }) 
               key={layer.id}
               className={`layer-button ${activeLayer === layer.id ? 'active' : ''}`}
               onClick={() => handleLayerChange(layer.id)}
+              type="button"
             >
               {layer.icon}
               <span>{layer.name}</span>
@@ -208,16 +228,17 @@ const WeatherMap = ({ location = { lat: 51.505, lng: -0.09, name: 'London' } }) 
       <div className="time-navigation">
         <p className="time-label">27 November at 11:00</p>
         <div className="timeline">
-          <button className="prev-time-btn">‹</button>
+          <button className="prev-time-btn" type="button">‹</button>
           {timeSlots.map((time, index) => (
             <button 
-              key={index} 
+              key={index}
               className={`time-slot ${time === '11:00' ? 'active' : ''}`}
+              type="button"
             >
               {time}
             </button>
           ))}
-          <button className="next-time-btn">›</button>
+          <button className="next-time-btn" type="button">›</button>
         </div>
       </div>
       

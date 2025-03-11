@@ -51,30 +51,35 @@ const AlertsPanel = () => {
       <div className="alerts-header px-4 py-3 border-b border-gray-200 dark:border-gray-700">
         <div className="filter-buttons flex flex-wrap gap-1">
           <button 
+            type="button"
             className={`filter-btn px-3 py-1 rounded-full text-sm ${activeTab === 'all' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-gray-800'}`}
             onClick={() => setActiveTab('all')}
           >
             All
           </button>
           <button 
+            type="button"
             className={`filter-btn px-3 py-1 rounded-full text-sm ${activeTab === 'alerts' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-gray-800'}`}
             onClick={() => setActiveTab('alerts')}
           >
             Alerts
           </button>
           <button 
+            type="button"
             className={`filter-btn px-3 py-1 rounded-full text-sm ${activeTab === 'cases' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-gray-800'}`}
             onClick={() => setActiveTab('cases')}
           >
             Cases
           </button>
           <button 
+            type="button"
             className={`filter-btn px-3 py-1 rounded-full text-sm ${activeTab === 'reports' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-gray-800'}`}
             onClick={() => setActiveTab('reports')}
           >
             Reports
           </button>
           <button 
+            type="button"
             className={`filter-btn px-3 py-1 rounded-full text-sm ${activeTab === 'triggers' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-gray-800'}`}
             onClick={() => setActiveTab('triggers')}
           >
