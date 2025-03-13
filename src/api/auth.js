@@ -1,10 +1,4 @@
-import { createClient } from '@supabase/supabase-js';
-
-// Initialize the Supabase client
-const supabaseUrl = process.env.REACT_APP_SUPABASE_URL || 'https://gexynwadeancyvnthsbu.supabase.co';
-const supabaseAnonKey = process.env.REACT_APP_SUPABASE_ANON_KEY;
-
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+import { supabase } from '../lib/supabase.js';
 
 // Get the current user
 export const getCurrentUser = async () => {

@@ -1,7 +1,9 @@
 import axios from 'axios';
 
-// Use the environment variable for the API key
-const OPENWEATHERMAP_API_KEY = process.env.REACT_APP_OPENWEATHERMAP_API_KEY;
+import { OPENWEATHERMAP_API_KEY as ENV_API_KEY } from '../utils/config';
+
+// Use the environment variable for the API key with fallback
+const OPENWEATHERMAP_API_KEY = ENV_API_KEY || '11d494e6c254ca3a724c694a4ebeb27f';
 
 // Geocoding API to convert city name to coordinates
 export const getCoordinates = async (city) => {

@@ -12,30 +12,25 @@ import {
   FaMoon,
   FaSun
 } from 'react-icons/fa';
-import { getUserProfile, logout } from '../../api/auth';
+import { useAuth } from '../../contexts/AuthContext';
 import './Sidebar.css';
 
 const Sidebar = ({ activeView, setActiveView }) => {
   const [darkMode, setDarkMode] = useState(true);
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const { user, userProfile, loading, signOut } = useAuth();
   const navigate = useNavigate();
   
-  useEffect(() => {
-    const fetchUserProfile = async () => {
-      setLoading(true);
-      const userData = await getUserProfile();
-      setUser(userData);
-      setLoading(false);
-    };
-
-    fetchUserProfile();
-  }, []);
-  
   const handleLogout = async () => {
-    const success = await logout();
-    if (success) {
-      navigate('/login');
+    try {
+      const { error } = await signOut();
+      if (!error) {
+        console.log('User signed out successfully');
+        navigate('/signin', { replace: true });
+      } else {
+        console.error('Error signing out:', error);
+      }
+    } catch (error) {
+      console.error('Exception during logout:', error);
     }
   };
   
@@ -47,13 +42,13 @@ const Sidebar = ({ activeView, setActiveView }) => {
   // Get user display name
   const getUserDisplayName = () => {
     if (!user) return 'User';
-    return user.profile?.display_name || user.profile?.full_name || user.email?.split('@')[0] || 'User';
+    return userProfile?.full_name || user.email?.split('@')[0] || 'User';
   };
   
   // Get user avatar or first letter
   const getUserAvatar = () => {
-    if (user?.profile?.avatar_url) {
-      return <img alt={getUserDisplayName()} className="rounded-full w-8 h-8" src={user.profile.avatar_url} />;
+    if (userProfile?.avatar_url) {
+      return <img alt={getUserDisplayName()} className="rounded-full w-8 h-8" src={userProfile.avatar_url} />;
     } else {
       return <div className="w-8 h-8 rounded-full bg-orange-1 text-black-1 flex items-center justify-center font-bold">
         {getUserDisplayName().charAt(0).toUpperCase()}

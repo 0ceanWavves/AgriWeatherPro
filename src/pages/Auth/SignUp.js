@@ -22,24 +22,43 @@ const SignUp = () => {
     setError(null);
     setLoading(true);
     
+    const formEmail = e.target.email.value;
+    const formPassword = e.target.password.value;
+    const formFullName = e.target.fullName.value;
+    
+    // Validate inputs before attempting signup
+    if (!formEmail || !formPassword || !formFullName) {
+      setError('All fields are required');
+      setLoading(false);
+      return;
+    }
+    
     try {
+      console.log('Starting signup process for:', formEmail);
+      
       // Use the signUp function from AuthContext instead of direct Supabase call
       const { data, error } = await signUp(
-        e.target.email.value,
-        e.target.password.value,
-        e.target.fullName.value
+        formEmail,
+        formPassword,
+        formFullName
       );
 
-      if (error) throw error;
+      if (error) {
+        console.log('Signup error received:', error.message);
+        throw error;
+      }
       
+      console.log('Signup successful, user created:', data?.user?.id);
       setSuccess(true);
+      
       // Redirect after successful signup
       setTimeout(() => {
-        navigate('/dashboard');
+        navigate('/dashboard', { replace: true });
       }, 2000);
       
     } catch (error) {
-      setError(error.message);
+      console.error('Signup submission error:', error);
+      setError(error.message || 'An error occurred during signup');
     } finally {
       setLoading(false);
     }
@@ -115,9 +134,10 @@ const SignUp = () => {
           
           <button
             type="submit"
-            className="w-full bg-primary hover:bg-primary/90 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            disabled={loading}
+            className="w-full bg-primary hover:bg-primary/90 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:opacity-50"
           >
-            Sign Up
+            {loading ? 'Creating account...' : 'Sign Up'}
           </button>
         </form>
         

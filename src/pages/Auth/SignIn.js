@@ -19,10 +19,18 @@ const SignIn = () => {
     setLoading(true);
     
     try {
+      console.log('Attempting to sign in with:', email);
       const { error } = await signIn(email, password);
-      if (error) throw error;
-      navigate('/dashboard');
+      
+      if (error) {
+        console.error('Sign in error:', error);
+        throw error;
+      }
+      
+      console.log('Sign in successful, redirecting to dashboard');
+      navigate('/dashboard', { replace: true });
     } catch (error) {
+      console.error('Sign in submission error:', error);
       setError(error.message || 'Failed to sign in');
     } finally {
       setLoading(false);

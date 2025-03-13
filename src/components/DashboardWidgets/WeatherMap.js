@@ -4,9 +4,12 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { FaTemperatureHigh, FaCloudRain, FaWind, FaCloud, FaTachometerAlt } from 'react-icons/fa';
 
-// Mock function until real API is connected
+import { OPENWEATHERMAP_API_KEY } from '../../utils/config';
+
+// Function to get weather map tile URL
 const getWeatherMapUrl = (layerId) => {
-  return `https://tile.openweathermap.org/map/${layerId}/{z}/{x}/{y}.png?appid=YOUR_API_KEY`;
+  const apiKey = OPENWEATHERMAP_API_KEY || '11d494e6c254ca3a724c694a4ebeb27f'; // Demo API key as fallback
+  return `https://tile.openweathermap.org/map/${layerId}/{z}/{x}/{y}.png?appid=${apiKey}`;
 };
 
 // Mock function until real API is connected

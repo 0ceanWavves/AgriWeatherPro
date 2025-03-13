@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { getUserProfile, supabase } from '../api/auth';
+import { getUserProfile } from '../api/auth';
+import { supabase } from '../lib/supabase';
 
 const ProfileSettings = () => {
   const [user, setUser] = useState(null);
@@ -48,7 +49,7 @@ const ProfileSettings = () => {
 
     try {
       const { data, error } = await supabase
-        .from('user_profiles')
+        .from('profiles')
         .upsert({
           id: user.id,
           ...formData,

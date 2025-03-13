@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { Navigate } from 'react-router-dom';
 import { WeatherMap, AlertsPanel } from '../components/DashboardWidgets';
 import Sidebar from '../components/Sidebar/Sidebar';
 import CropYieldDisplay from '../components/CropYieldDisplay';
 import WeatherForecast from '../components/WeatherForecast';
 import ProfileSettings from '../components/ProfileSettings';
+import LoadingScreen from '../components/LoadingScreen';
+import { useAuth } from '../contexts/AuthContext';
 import '../styles/Dashboard.css';
 
 const Dashboard = () => {
   const [activeView, setActiveView] = useState('maps');
+  const { loading, user } = useAuth();
   
   // Enable dark mode when Dashboard mounts
   useEffect(() => {
@@ -18,6 +22,14 @@ const Dashboard = () => {
       document.body.classList.remove('dark-mode');
     };
   }, []);
+  
+  if (loading) {
+    return <LoadingScreen />;
+  }
+  
+  if (!user) {
+    return <Navigate to="/signin" replace />;
+  }
   
   // Sample location data
   const london = { lat: 51.505, lng: -0.09, name: 'London' };
@@ -79,6 +91,19 @@ const Dashboard = () => {
     }
   };
 
+  // Force refresh the component when it first mounts
+  useEffect(() => {
+    console.log('Dashboard mounted, user:', user?.id);
+    const timer = setTimeout(() => {
+      console.log('Forcing dashboard refresh');
+      setActiveView(prev => prev === 'maps' ? 'home' : 'maps');
+    }, 500);
+    
+    return () => clearTimeout(timer);
+  }, [user]);
+
+  console.log('Rendering dashboard with activeView:', activeView);
+  
   return (
     <div className="dashboard-layout">
       <Sidebar activeView={activeView} setActiveView={setActiveView} />

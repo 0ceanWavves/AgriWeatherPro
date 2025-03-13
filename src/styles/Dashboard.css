@@ -17,10 +17,15 @@ body.dark-mode {
 .dashboard-layout {
   display: grid;
   grid-template-columns: auto 1fr;
-  height: 100vh;
+  min-height: 100vh;
+  height: 100%;
   overflow: hidden;
   background-color: var(--bg-darker);
   color: var(--text-light);
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
 }
 
 .dashboard-main {
