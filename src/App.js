@@ -14,6 +14,8 @@ import SignUp from './pages/Auth/SignUp';
 import ForgotPassword from './pages/Auth/ForgotPassword';
 import AuthRequired from './pages/AuthRequired';
 import ProtectedRoute from './components/ProtectedRoute';
+import PestManagement from './pages/ServicePages/PestManagement';
+import IrrigationPlanning from './pages/ServicePages/IrrigationPlanning';
 
 function App() {
   return (
@@ -50,8 +52,8 @@ function App() {
                   <Route path="/services/crop-yield-prediction" element={<CropYields />} />
                   <Route path="/services/climate-analysis" element={<AuthRequired />} />
                   <Route path="/services/agricultural-insights" element={<AuthRequired />} />
-                  <Route path="/services/pest-management" element={<Forecast />} />
-                  <Route path="/services/irrigation-planning" element={<Maps />} />
+                  <Route path="/services/pest-management" element={<PestManagement />} />
+                  <Route path="/services/irrigation-planning" element={<IrrigationPlanning />} />
                 </Routes>
               </main>
               <Footer />
