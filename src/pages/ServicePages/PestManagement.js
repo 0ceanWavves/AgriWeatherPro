@@ -12,12 +12,13 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
 });
 
-// Custom pest icon
-const pestIcon = new L.Icon({
-  iconUrl: '/images/pest-icon.png',
-  iconSize: [32, 32],
-  iconAnchor: [16, 32],
-  popupAnchor: [0, -32]
+// Custom pest icon using Font Awesome
+const pestIcon = L.divIcon({
+  html: '<i class="fa fa-bug" style="font-size: 24px; color: #d97706;"></i>',
+  className: 'bg-transparent',
+  iconSize: [24, 24],
+  iconAnchor: [12, 12],
+  popupAnchor: [0, -12]
 });
 
 const PestManagement = () => {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { FaBars, FaTimes, FaLeaf, FaCaretDown } from 'react-icons/fa';
+import { FaBars, FaTimes, FaLeaf, FaCaretDown, FaSeedling, FaCloudSun, FaWater, FaTractor } from 'react-icons/fa';
 import ServicesMenu from './ServicesMenu';
 
 const Header = () => {
@@ -36,11 +36,13 @@ const Header = () => {
   }, []);
 
   return (
-    <header className="bg-primary text-white shadow-md">
+    <header className="bg-gradient-to-r from-green-800 to-green-700 text-white shadow-md">
       <div className="container mx-auto px-4 py-3">
         <div className="flex justify-between items-center">
           <Link to="/" className="flex items-center space-x-2">
-            <FaLeaf className="text-2xl text-accent" />
+            <div className="bg-green-100 rounded-full p-1.5">
+              <FaSeedling className="text-2xl text-green-600" />
+            </div>
             <span className="text-xl font-heading font-bold">AgriWeather Pro</span>
           </Link>
           
@@ -53,56 +55,73 @@ const Header = () => {
             {isMenuOpen ? <FaTimes className="text-2xl" /> : <FaBars className="text-2xl" />}
           </button>
           
-          {/* Desktop navigation - Simplified to match the image */}
-          <nav className="hidden md:flex space-x-6">
-            <Link to="/dashboard" className="hover:text-accent transition-colors">Dashboard</Link>
+          {/* Desktop navigation */}
+          <nav className="hidden md:flex space-x-6 items-center">
+            <Link to="/dashboard" className="flex items-center space-x-1 hover:text-green-200 transition-colors">
+              <FaTractor className="text-green-300" />
+              <span>Dashboard</span>
+            </Link>
             <div className="relative" ref={servicesMenuRef}>
               <button 
                 onClick={toggleServicesMenu}
-                className="flex items-center hover:text-accent transition-colors focus:outline-none"
+                className="flex items-center hover:text-green-200 transition-colors focus:outline-none"
                 aria-label="Services"
               >
+                <FaLeaf className="mr-1 text-green-300" />
                 Services <FaCaretDown className="ml-1" />
               </button>
               {showServicesMenu && (
-                <div className="absolute top-full left-0 mt-1 bg-dark p-4 rounded-md shadow-lg z-10 w-64">
+                <div className="absolute top-full left-0 mt-1 bg-green-900 p-4 rounded-md shadow-lg z-10 w-64 border border-green-700">
                   <ServicesMenu onSelectService={handleServiceSelected} />
                 </div>
               )}
             </div>
-            <Link to="/about" className="hover:text-accent transition-colors">About</Link>
-            <Link to="/signin" className="bg-accent hover:bg-accent/80 text-white py-1 px-4 rounded transition-colors">Sign In</Link>
+            <Link to="/about" className="flex items-center space-x-1 hover:text-green-200 transition-colors">
+              <FaCloudSun className="text-green-300" />
+              <span>About</span>
+            </Link>
+            <Link to="/signin" className="bg-green-600 hover:bg-green-500 text-white py-2 px-4 rounded-md transition-colors flex items-center">
+              <FaWater className="mr-2" />
+              Sign In
+            </Link>
           </nav>
         </div>
         
-        {/* Mobile navigation - Simplified to match the image */}
+        {/* Mobile navigation */}
         {isMenuOpen && (
-          <nav className="md:hidden mt-4 flex flex-col space-y-4 pb-4">
+          <nav className="md:hidden mt-4 flex flex-col space-y-4 pb-4 bg-green-800 rounded-md p-4">
             <Link 
               to="/dashboard" 
-              className="hover:text-accent transition-colors"
+              className="flex items-center space-x-2 hover:text-green-200 transition-colors border-b border-green-700 pb-2"
               onClick={() => setIsMenuOpen(false)}
             >
-              Dashboard
+              <FaTractor className="text-green-300" />
+              <span>Dashboard</span>
             </Link>
             
-            <div className="py-2 px-4 bg-primary/20 rounded-md">
-              <ServicesMenu onSelectService={handleServiceSelected} />
+            <div className="py-2 px-4 bg-green-900/50 rounded-md border-l-4 border-green-600">
+              <h3 className="flex items-center text-green-300 font-semibold mb-2">
+                <FaLeaf className="mr-2" />
+                Services
+              </h3>
+              <ServicesMenu onSelectService={handleServiceSelected} className="pl-2" />
             </div>
             
             <Link 
               to="/about" 
-              className="hover:text-accent transition-colors"
+              className="flex items-center space-x-2 hover:text-green-200 transition-colors border-b border-green-700 pb-2"
               onClick={() => setIsMenuOpen(false)}
             >
-              About
+              <FaCloudSun className="text-green-300" />
+              <span>About</span>
             </Link>
             
             <Link 
               to="/signin" 
-              className="bg-accent hover:bg-accent/80 text-white py-1 px-4 rounded transition-colors inline-block text-center"
+              className="bg-green-600 hover:bg-green-500 text-white py-2 px-4 rounded-md transition-colors flex items-center justify-center"
               onClick={() => setIsMenuOpen(false)}
             >
+              <FaWater className="mr-2" />
               Sign In
             </Link>
           </nav>
