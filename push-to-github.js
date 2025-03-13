@@ -50,12 +50,12 @@ async function pushToGitHub() {
   
   // Commit changes
   console.log('Committing changes...');
-  const commitMessage = 'Add complete AgriWeather Pro project';
+  const commitMessage = 'Update landing page with interactive map and chart visualizations';
   runCommand(`git commit -m "${commitMessage}"`);
   
   // Push to GitHub
   console.log('Pushing to GitHub...');
-  runCommand('git push -f origin main');
+  runCommand('git push -u origin main');
   
   console.log('Successfully pushed to GitHub!');
   console.log(`Repository URL: ${GITHUB_REPO}`);
