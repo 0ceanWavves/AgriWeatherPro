@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   FaHome, 
@@ -9,8 +9,7 @@ import {
   FaInfoCircle, 
   FaCog, 
   FaSignOutAlt,
-  FaMoon,
-  FaSun
+  FaMoon
 } from 'react-icons/fa';
 import { useAuth } from '../../contexts/AuthContext';
 import './Sidebar.css';

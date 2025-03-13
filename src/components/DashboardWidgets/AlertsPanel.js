@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaExclamationTriangle, FaInfoCircle, FaFileAlt } from 'react-icons/fa';
+import { } from 'react-icons/fa';
 
 const AlertsPanel = () => {
   const [activeTab, setActiveTab] = useState('all');

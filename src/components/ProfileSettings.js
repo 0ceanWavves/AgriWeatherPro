@@ -48,7 +48,7 @@ const ProfileSettings = () => {
     setMessage({ text: '', type: '' });
 
     try {
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from('profiles')
         .upsert({
           id: user.id,
