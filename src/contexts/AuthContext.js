@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { supabase } from '../lib/supabase';
+import { supabase, getUserProfile } from '../api/auth';
 
 const AuthContext = createContext();
 
@@ -9,16 +9,22 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [userProfile, setUserProfile] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Check for active session on page load
     const checkSession = async () => {
-      console.log('Checking for active session...');
       try {
         const { data } = await supabase.auth.getSession();
-        console.log('Session data:', data);
-        setUser(data?.session?.user || null);
+        const userData = data?.session?.user || null;
+        setUser(userData);
+        
+        // Fetch user profile if user is logged in
+        if (userData) {
+          const profileData = await getUserProfile();
+          setUserProfile(profileData?.profile || null);
+        }
       } catch (error) {
         console.error('Error checking session:', error);
       } finally {
@@ -29,11 +35,19 @@ export function AuthProvider({ children }) {
     checkSession();
 
     // Listen for auth state changes
-    console.log('Setting up auth state listener...');
     const { data: authListener } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        console.log('Auth state changed:', event, session?.user?.email);
-        setUser(session?.user || null);
+      async (event, session) => {
+        const userData = session?.user || null;
+        setUser(userData);
+        
+        // Fetch user profile if user is logged in or clear it on logout
+        if (userData && (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED')) {
+          const profileData = await getUserProfile();
+          setUserProfile(profileData?.profile || null);
+        } else if (event === 'SIGNED_OUT') {
+          setUserProfile(null);
+        }
+        
         setLoading(false);
       }
     );
@@ -41,28 +55,47 @@ export function AuthProvider({ children }) {
     return () => {
       // Clean up subscription
       if (authListener && authListener.subscription) {
-        console.log('Cleaning up auth listener...');
         authListener.subscription.unsubscribe();
       }
     };
   }, []);
 
   // Sign up function
-  async function signUp(email, password) {
-    console.log('Attempting to sign up with email:', email);
-    console.log('Supabase client initialized:', !!supabase);
+  async function signUp(email, password, fullName) {
     try {
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
+        options: {
+          data: {
+            full_name: fullName,
+          },
+        },
       });
       
-      console.log('Sign up response:', data ? 'Data received' : 'No data');
-      if (error) {
-        console.error('Sign up error:', error.message, error);
-        throw error;
+      if (error) throw error;
+      
+      // Create user profile if signup successful and user created
+      if (data?.user) {
+        try {
+          const { error: profileError } = await supabase
+            .from('user_profiles')
+            .insert([
+              {
+                id: data.user.id,
+                full_name: fullName,
+                display_name: fullName.split(' ')[0], // Default display name to first name
+                created_at: new Date().toISOString(),
+              },
+            ]);
+
+          if (profileError) throw profileError;
+        } catch (profileError) {
+          console.error('Error creating user profile:', profileError);
+          // Continue anyway as auth is successful
+        }
       }
-      console.log('Sign up successful for:', email);
+      
       return { data, error: null };
     } catch (error) {
       console.error('Sign up exception:', error.message);
@@ -72,19 +105,13 @@ export function AuthProvider({ children }) {
 
   // Sign in function
   async function signIn(email, password) {
-    console.log('Attempting to sign in with email:', email);
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
       
-      console.log('Sign in response:', data ? 'Data received' : 'No data');
-      if (error) {
-        console.error('Sign in error:', error.message);
-        throw error;
-      }
-      console.log('Sign in successful for:', email);
+      if (error) throw error;
       return { data, error: null };
     } catch (error) {
       console.error('Sign in exception:', error.message);
@@ -94,14 +121,9 @@ export function AuthProvider({ children }) {
 
   // Sign out function
   async function signOut() {
-    console.log('Attempting to sign out...');
     try {
       const { error } = await supabase.auth.signOut();
-      if (error) {
-        console.error('Sign out error:', error.message);
-        throw error;
-      }
-      console.log('Sign out successful');
+      if (error) throw error;
       return { error: null };
     } catch (error) {
       console.error('Sign out exception:', error.message);
@@ -111,18 +133,12 @@ export function AuthProvider({ children }) {
 
   // Reset password function
   async function resetPassword(email) {
-    console.log('Attempting to reset password for:', email);
     try {
       const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
         redirectTo: `${window.location.origin}/reset-password`,
       });
       
-      console.log('Reset password response:', data ? 'Data received' : 'No data');
-      if (error) {
-        console.error('Reset password error:', error.message);
-        throw error;
-      }
-      console.log('Reset password email sent to:', email);
+      if (error) throw error;
       return { data, error: null };
     } catch (error) {
       console.error('Reset password exception:', error.message);
@@ -130,13 +146,41 @@ export function AuthProvider({ children }) {
     }
   }
 
+  // Update user profile
+  async function updateProfile(profileData) {
+    try {
+      const { data, error } = await supabase
+        .from('user_profiles')
+        .upsert({
+          id: user.id,
+          ...profileData,
+          updated_at: new Date().toISOString()
+        });
+
+      if (error) throw error;
+      
+      // Update local profile state
+      setUserProfile(prevProfile => ({
+        ...prevProfile,
+        ...profileData
+      }));
+      
+      return { data, error: null };
+    } catch (error) {
+      console.error('Update profile exception:', error.message);
+      return { data: null, error };
+    }
+  }
+
   const value = {
     user,
+    userProfile,
     loading,
     signUp,
     signIn,
     signOut,
     resetPassword,
+    updateProfile
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

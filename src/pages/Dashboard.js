@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { WeatherMap, AlertsPanel } from '../components/DashboardWidgets';
-import Sidebar from '../components/Sidebar';
+import Sidebar from '../components/Sidebar/Sidebar';
 import CropYieldDisplay from '../components/CropYieldDisplay';
 import WeatherForecast from '../components/WeatherForecast';
+import ProfileSettings from '../components/ProfileSettings';
 import '../styles/Dashboard.css';
 
 const Dashboard = () => {
@@ -46,12 +47,7 @@ const Dashboard = () => {
           </div>
         );
       case 'settings':
-        return (
-          <div className="settings-panel p-5">
-            <h2 className="text-xl font-semibold mb-4">Settings</h2>
-            <p>Application settings and preferences will be displayed here.</p>
-          </div>
-        );
+        return <ProfileSettings />;
       case 'support':
         return (
           <div className="support-panel p-5">

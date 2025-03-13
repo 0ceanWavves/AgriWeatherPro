@@ -53,12 +53,8 @@ const Header = () => {
             {isMenuOpen ? <FaTimes className="text-2xl" /> : <FaBars className="text-2xl" />}
           </button>
           
-          {/* Desktop navigation */}
+          {/* Desktop navigation - Simplified to match the image */}
           <nav className="hidden md:flex space-x-6">
-            <Link to="/" className="hover:text-accent transition-colors">Home</Link>
-            <Link to="/forecast" className="hover:text-accent transition-colors">Forecast</Link>
-            <Link to="/maps" className="hover:text-accent transition-colors">Maps</Link>
-            <Link to="/crop-yields" className="hover:text-accent transition-colors">Crop Yields</Link>
             <Link to="/dashboard" className="hover:text-accent transition-colors">Dashboard</Link>
             <div className="relative" ref={servicesMenuRef}>
               <button 
@@ -75,40 +71,13 @@ const Header = () => {
               )}
             </div>
             <Link to="/about" className="hover:text-accent transition-colors">About</Link>
+            <Link to="/signin" className="bg-accent hover:bg-accent/80 text-white py-1 px-4 rounded transition-colors">Sign In</Link>
           </nav>
         </div>
         
-        {/* Mobile navigation */}
+        {/* Mobile navigation - Simplified to match the image */}
         {isMenuOpen && (
           <nav className="md:hidden mt-4 flex flex-col space-y-4 pb-4">
-            <Link 
-              to="/" 
-              className="hover:text-accent transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Home
-            </Link>
-            <Link 
-              to="/forecast" 
-              className="hover:text-accent transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Forecast
-            </Link>
-            <Link 
-              to="/maps" 
-              className="hover:text-accent transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Maps
-            </Link>
-            <Link 
-              to="/crop-yields" 
-              className="hover:text-accent transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Crop Yields
-            </Link>
             <Link 
               to="/dashboard" 
               className="hover:text-accent transition-colors"
@@ -127,6 +96,14 @@ const Header = () => {
               onClick={() => setIsMenuOpen(false)}
             >
               About
+            </Link>
+            
+            <Link 
+              to="/signin" 
+              className="bg-accent hover:bg-accent/80 text-white py-1 px-4 rounded transition-colors inline-block text-center"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Sign In
             </Link>
           </nav>
         )}

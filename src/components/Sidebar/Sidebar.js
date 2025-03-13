@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
   FaHome, 
   FaChartLine, 
@@ -11,25 +12,78 @@ import {
   FaMoon,
   FaSun
 } from 'react-icons/fa';
+import { getUserProfile, logout } from '../../api/auth';
 import './Sidebar.css';
 
 const Sidebar = ({ activeView, setActiveView }) => {
   const [darkMode, setDarkMode] = useState(true);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      setLoading(true);
+      const userData = await getUserProfile();
+      setUser(userData);
+      setLoading(false);
+    };
+
+    fetchUserProfile();
+  }, []);
+  
+  const handleLogout = async () => {
+    const success = await logout();
+    if (success) {
+      navigate('/login');
+    }
+  };
   
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
     document.body.classList.toggle('dark-mode');
   };
   
+  // Get user display name
+  const getUserDisplayName = () => {
+    if (!user) return 'User';
+    return user.profile?.display_name || user.profile?.full_name || user.email?.split('@')[0] || 'User';
+  };
+  
+  // Get user avatar or first letter
+  const getUserAvatar = () => {
+    if (user?.profile?.avatar_url) {
+      return <img alt={getUserDisplayName()} className="rounded-full w-8 h-8" src={user.profile.avatar_url} />;
+    } else {
+      return <div className="w-8 h-8 rounded-full bg-orange-1 text-black-1 flex items-center justify-center font-bold">
+        {getUserDisplayName().charAt(0).toUpperCase()}
+      </div>;
+    }
+  };
+  
   return (
     <div className="flex-1 bg-black-2 text-white rounded-xl flex flex-col justify-between gap-4">
       <div className="border-b-black-3 border-b px-5 py-6 flex items-center justify-between gap-2">
         <span className="shrink-0 w-8 h-8 flex items-center justify-center rounded-full">
-          <img alt="Emily Foster" className="rounded-full" src="https://via.placeholder.com/40" />
+          {loading ? (
+            <div className="w-8 h-8 rounded-full bg-gray-600 animate-pulse"></div>
+          ) : (
+            getUserAvatar()
+          )}
         </span>
-        <span className="overflow-hidden">Emily Foster</span>
+        <span className="overflow-hidden">
+          {loading ? (
+            <div className="w-24 h-4 bg-gray-600 rounded animate-pulse"></div>
+          ) : (
+            getUserDisplayName()
+          )}
+        </span>
         <span className="flex-1"></span>
-        <button type="button" title="Sign out">
+        <button 
+          type="button" 
+          title="Sign out" 
+          onClick={handleLogout}
+        >
           <FaSignOutAlt className="w-5 h-5 hover:text-orange-2" />
         </button>
       </div>
