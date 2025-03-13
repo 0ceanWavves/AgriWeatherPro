@@ -5,9 +5,9 @@ import { createClient } from '@supabase/supabase-js';
 const isDevelopment = process.env.NODE_ENV === 'development';
 const supabaseUrl = isDevelopment 
   ? '/supabase-api' // This will be proxied through your dev server
-  : 'https://gexynwadeancyvnthsbu.supabase.co';
+  : 'https://imykwqkjiphztfyolsmn.supabase.co';
 
-const supabaseKey = 'YOUR_SUPABASE_ANON_KEY'; // Replace with your actual key
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlteWt3cWtqaXBoenRmeW9sc21uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE5MDI5NTUsImV4cCI6MjA1NzQ3ODk1NX0.zITI20Fs6wyys55gTNVFRXt7FALs9dPfcfQlwNaIMko'; // Replace with your actual key
 
 // Initialize the client
 const supabase = createClient(supabaseUrl, supabaseKey, {
