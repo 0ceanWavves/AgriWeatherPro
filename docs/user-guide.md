@@ -9,9 +9,11 @@ This guide provides instructions on how to use AgriWeather Pro to optimize your 
 - [Managing Locations](#managing-locations)
 - [Weather Forecasts](#weather-forecasts)
 - [Crop Predictions](#crop-predictions)
+- [Irrigation Planning](#irrigation-planning)
 - [Weather Alerts](#weather-alerts)
 - [Reports](#reports)
 - [Account Settings](#account-settings)
+- [Premium Features](#premium-features)
 
 ## Getting Started
 
@@ -96,7 +98,7 @@ The forecast includes:
 - UV Index
 - Soil moisture predictions
 
-### Weather Maps
+#### Weather Maps
 
 1. Click on "Weather Maps" in the forecast view
 2. Select the data layer you want to view:
@@ -106,6 +108,8 @@ The forecast includes:
    - Pressure
    - Cloud Cover
 3. Use the timeline slider to view predictions for different times
+
+For irrigation-specific map layers, see the [Irrigation Planning](#irrigation-planning) section.
 
 ## Crop Predictions
 
@@ -133,10 +137,12 @@ The crop prediction page shows:
 ### Adjusting Farming Activities
 
 Based on predictions, you'll receive recommendations for:
-- Irrigation scheduling
+- Basic irrigation guidance
 - Pest and disease risk management
 - Optimal harvest timing
 - Resource allocation
+
+For advanced irrigation management, see the [Irrigation Planning](#irrigation-planning) section.
 
 ## Weather Alerts
 
@@ -185,6 +191,52 @@ Once generated, you can:
 - Share via email
 - Schedule regular report generation
 
+## Irrigation Planning
+
+The Irrigation Planning feature helps optimize water usage based on weather conditions, soil moisture, and crop requirements.
+
+### Accessing Irrigation Planning
+
+1. From the main menu, select "Services" > "Irrigation Planning"
+2. Alternatively, navigate to `/services/irrigation-planning` in your browser
+
+### Irrigation Map
+
+1. The default view shows the Irrigation Map with multiple data layers:
+   - Temperature
+   - Precipitation
+   - Wind speed
+   - Clouds
+   - Soil Moisture (Premium)
+   - Irrigation Needs (Premium)
+   - Crop Growth (Premium)
+2. Select different layers by clicking the layer buttons
+3. View location-specific irrigation data in the details panel
+4. Use the timeline to see predicted irrigation needs
+
+### Using Additional Irrigation Features
+
+The Irrigation Planning page has several tabs:
+
+1. **Irrigation Map**: Interactive map with irrigation-specific weather and soil data
+2. **Schedule** (Premium): Create automated irrigation schedules based on weather forecasts
+3. **Analytics** (Premium): Track water usage, efficiency metrics, and cost savings
+4. **Crop Settings** (Premium): Configure crop types, growth stages, and water requirements
+
+### Interpreting Irrigation Data
+
+The map interface provides key irrigation metrics:
+- Current soil moisture levels
+- Precipitation forecast
+- Water needs based on crop type and growth stage
+- Irrigation efficiency recommendations
+
+Premium users receive additional metrics:
+- Optimal irrigation scheduling
+- Water usage analytics
+- Crop-specific water requirements
+- Efficiency improvements
+
 ## Account Settings
 
 ### Updating Your Profile
@@ -211,6 +263,50 @@ Once generated, you can:
 3. Set delivery methods (app, email, SMS)
 4. Set quiet hours if desired
 5. Click "Save Notification Settings"
+
+## Premium Features
+
+AgriWeather Pro offers a premium subscription that unlocks advanced features to optimize your farming operations.
+
+### Premium Subscription Benefits
+
+- **Advanced Irrigation Planning**:
+  - Soil moisture analysis
+  - Irrigation scheduling
+  - Water usage analytics
+  - Crop-specific water requirements
+  
+- **Enhanced Weather Analytics**:
+  - High-resolution forecasts
+  - Extended forecast range
+  - Custom weather metrics
+  
+- **Advanced Crop Management**:
+  - Detailed growth stage tracking
+  - Precise yield predictions
+  - Crop-specific pest risk analysis
+  
+- **Priority Support**:
+  - Faster response times
+  - Dedicated support channels
+  - Custom feature requests
+
+### Accessing Premium Features
+
+Premium features are marked with a lock icon throughout the application. When you attempt to access a premium feature:
+
+1. A premium overlay will appear
+2. Click "Upgrade to Premium" to view subscription options
+3. Select your preferred subscription plan
+4. Complete the payment process
+5. Premium features will be unlocked immediately
+
+### Managing Your Subscription
+
+1. Go to "Settings" > "Subscription"
+2. View your current subscription status
+3. Change plans or billing information
+4. Cancel or renew your subscription
 
 ## Further Assistance
 

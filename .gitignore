@@ -31,3 +31,6 @@ yarn-error.log*
 cloned-site-backup/
 *.txt
 *.bak
+
+# Local Netlify folder
+.netlify

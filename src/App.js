@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import Header from './components/Header';
@@ -18,9 +18,50 @@ import PestManagement from './pages/ServicePages/PestManagement';
 import IrrigationPlanning from './pages/ServicePages/IrrigationPlanning';
 
 function App() {
+  // Cleanup any debug elements that might accidentally be displayed
+  useEffect(() => {
+    // Remove any debug information elements that might get injected
+    const removeDebugElements = () => {
+      // Look for elements that contain debug information strings
+      const debugElements = document.querySelectorAll('div, pre, span, p');
+      
+      for (const element of debugElements) {
+        const text = element.textContent || '';
+        
+        // Check if element contains debug information
+        if (
+          (text.includes('Debug Info') || 
+           text.includes('Supabase Initialized') || 
+           text.includes('API Status') || 
+           text.includes('API Key')) && 
+          !element.classList.contains('app-content')
+        ) {
+          // Remove the debug element
+          element.remove();
+        }
+      }
+    };
+    
+    // Run on load
+    removeDebugElements();
+    
+    // Set up an observer to catch any dynamically added debug elements
+    const observer = new MutationObserver(() => {
+      removeDebugElements();
+    });
+    
+    // Start observing
+    observer.observe(document.body, { 
+      childList: true,
+      subtree: true
+    });
+    
+    return () => observer.disconnect();
+  }, []);
+  
   return (
     <AuthProvider>
-      <div className="flex flex-col min-h-screen">
+      <div className="flex flex-col min-h-screen app-content">
         <Routes>
           {/* Auth Routes */}
           <Route path="/signin" element={<SignIn />} />

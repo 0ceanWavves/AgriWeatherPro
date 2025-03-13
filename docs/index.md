@@ -8,6 +8,7 @@ Welcome to the official documentation for AgriWeather Pro, an advanced weather a
 
 - [**Getting Started**](./getting-started.md) - Installation and setup guide
 - [**User Guide**](./user-guide.md) - How to use the application and its features
+- [**Premium Features**](./premium-features.md) - Overview of subscription benefits
 - [**Troubleshooting**](./troubleshooting.md) - Solutions to common issues
 
 ### Technical Documentation
@@ -22,11 +23,13 @@ Welcome to the official documentation for AgriWeather Pro, an advanced weather a
 
 - **Hyperlocal Weather Forecasting**: Precise weather predictions for specific field locations
 - **Crop-Specific Analytics**: Customized weather insights based on crop types and growth stages
+- **Advanced Irrigation Planning**: Optimize water usage with smart irrigation recommendations
 - **Climate Trend Analysis**: Historical patterns and future projections to aid in long-term planning
 - **Risk Assessment**: Early warnings for extreme weather events, frost, drought, or excessive rainfall
 - **Mobile Accessibility**: Access critical information from anywhere via web and mobile interfaces
 - **Customizable Alerts**: Personalized notifications for weather conditions affecting your crops
 - **Integration Capabilities**: Connect with farm management systems and IoT devices
+- **Premium Subscription Options**: Unlock advanced features for more sophisticated farm management
 
 ## Quick Links
 

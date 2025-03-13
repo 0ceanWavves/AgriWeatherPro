@@ -33,6 +33,7 @@ AgriWeather Pro is built as a modern web application with a React frontend and a
 - **TailwindCSS**: For styling
 - **React Icons**: UI icons
 - **React Hot Toast**: For notifications
+- **Premium Feature Gating**: For subscription-based feature access
 
 ### Backend
 - **Supabase**: Backend-as-a-Service platform providing:
@@ -55,6 +56,8 @@ AgriWeather Pro uses a PostgreSQL database managed by Supabase. The main data mo
 - **Weather Reports**: Saved historical and forecast reports
 - **Crop Predictions**: Crop yield predictions
 - **Weather Alerts**: User-configured alert settings
+- **Subscription Plans**: Premium subscription information and access levels
+- **Irrigation Plans**: Water management plans and scheduling information
 
 For a detailed database schema, refer to the [Database Schema](./database-schema.md) document.
 

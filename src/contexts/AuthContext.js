@@ -17,11 +17,9 @@ export function AuthProvider({ children }) {
     // Check for active session on page load
     const checkSession = async () => {
       try {
-        console.log('Checking for existing session');
+        // Remove debug logging in production
         const { data } = await supabase.auth.getSession();
         const userData = data?.session?.user || null;
-        
-        console.log('Session check result:', userData ? 'User found' : 'No user found');
         
         // IMPORTANT: Set loading to false even if no user is found
         if (!userData) {
@@ -98,12 +96,11 @@ export function AuthProvider({ children }) {
     // Listen for auth state changes
     const { data: authListener } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-        console.log('Auth state changed:', event);
+        // Auth state has changed
         const userData = session?.user || null;
         
         // When signed out, clear everything
         if (event === 'SIGNED_OUT') {
-          console.log('User signed out, clearing state');
           setUser(null);
           setUserProfile(null);
           setLoading(false);
@@ -213,12 +210,9 @@ export function AuthProvider({ children }) {
   // Sign up function with improved error handling and duplicate detection
   async function signUp(email, password, fullName) {
     try {
-      console.log('Attempting to sign up with email:', email);
-      
       // Check if user already exists first
       const userExists = await checkUserExists(email);
       if (userExists) {
-        console.log('Sign up prevented - email already exists:', email);
         return { 
           data: null, 
           error: { message: 'An account with this email already exists. Please sign in instead.' } 
@@ -229,21 +223,18 @@ export function AuthProvider({ children }) {
       window.localStorage.removeItem('agriweatherpro_auth');
       await supabase.auth.signOut();
       
-      // Try to sign up with minimal metadata to reduce chance of errors
+      // Simplified signup without extra options that might cause issues
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
           data: {
             full_name: fullName
-          },
-          emailRedirectTo: `${window.location.origin}/dashboard`
-        },
+          }
+        }
       });
       
       if (error) {
-        console.error('Supabase sign up error:', error);
-        
         // Provide better error messages for common issues
         if (error.message.includes('email') && 
             (error.message.includes('already') || error.message.includes('duplicate'))) {
@@ -255,8 +246,6 @@ export function AuthProvider({ children }) {
         
         throw error;
       }
-      
-      console.log('Sign up successful:', data);
       
       // Check for empty identities array, which indicates the user already exists
       if (data?.user?.identities?.length === 0) {
