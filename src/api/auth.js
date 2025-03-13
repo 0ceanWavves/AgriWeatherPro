@@ -19,7 +19,7 @@ export const getUserProfile = async () => {
   if (!user) return null;
   
   const { data, error } = await supabase
-    .from('user_profiles')
+    .from('profiles')  // Changed from user_profiles to profiles to match the actual table name
     .select('*')
     .eq('id', user.id)
     .single();

@@ -75,26 +75,8 @@ export function AuthProvider({ children }) {
       
       if (error) throw error;
       
-      // Create user profile if signup successful and user created
-      if (data?.user) {
-        try {
-          const { error: profileError } = await supabase
-            .from('user_profiles')
-            .insert([
-              {
-                id: data.user.id,
-                full_name: fullName,
-                display_name: fullName.split(' ')[0], // Default display name to first name
-                created_at: new Date().toISOString(),
-              },
-            ]);
-
-          if (profileError) throw profileError;
-        } catch (profileError) {
-          console.error('Error creating user profile:', profileError);
-          // Continue anyway as auth is successful
-        }
-      }
+      // Note: We don't need to manually create a profile record
+      // The database trigger in supabase-setup.sql handles this automatically
       
       return { data, error: null };
     } catch (error) {
@@ -150,7 +132,7 @@ export function AuthProvider({ children }) {
   async function updateProfile(profileData) {
     try {
       const { data, error } = await supabase
-        .from('user_profiles')
+        .from('profiles')  // Changed from user_profiles to profiles to match the actual table name
         .upsert({
           id: user.id,
           ...profileData,

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { FaLeaf, FaEnvelope, FaLock, FaEye, FaEyeSlash, FaUser } from 'react-icons/fa';
-import { supabase } from '../../lib/supabase';
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
@@ -21,28 +20,28 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
+    setLoading(true);
     
     try {
-      const { data, error } = await supabase.auth.signUp({
-        email: e.target.email.value,
-        password: e.target.password.value,
-        options: {
-          data: {
-            full_name: e.target.fullName.value,
-          }
-        }
-      });
+      // Use the signUp function from AuthContext instead of direct Supabase call
+      const { data, error } = await signUp(
+        e.target.email.value,
+        e.target.password.value,
+        e.target.fullName.value
+      );
 
       if (error) throw error;
       
       setSuccess(true);
       // Redirect after successful signup
       setTimeout(() => {
-        window.location.href = '/dashboard';
+        navigate('/dashboard');
       }, 2000);
       
     } catch (error) {
       setError(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
