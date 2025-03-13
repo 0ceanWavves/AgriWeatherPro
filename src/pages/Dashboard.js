@@ -22,6 +22,19 @@ const Dashboard = () => {
       document.body.classList.remove('dark-mode');
     };
   }, []);
+
+  // Force refresh the component when it first mounts
+  useEffect(() => {
+    if (!user) return; // Early return but inside the hook
+    
+    console.log('Dashboard mounted, user:', user?.id);
+    const timer = setTimeout(() => {
+      console.log('Forcing dashboard refresh');
+      setActiveView(prev => prev === 'maps' ? 'home' : 'maps');
+    }, 500);
+    
+    return () => clearTimeout(timer);
+  }, [user]);
   
   if (loading) {
     return <LoadingScreen />;
@@ -90,17 +103,6 @@ const Dashboard = () => {
         );
     }
   };
-
-  // Force refresh the component when it first mounts
-  useEffect(() => {
-    console.log('Dashboard mounted, user:', user?.id);
-    const timer = setTimeout(() => {
-      console.log('Forcing dashboard refresh');
-      setActiveView(prev => prev === 'maps' ? 'home' : 'maps');
-    }, 500);
-    
-    return () => clearTimeout(timer);
-  }, [user]);
 
   console.log('Rendering dashboard with activeView:', activeView);
   
