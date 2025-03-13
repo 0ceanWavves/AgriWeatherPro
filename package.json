@@ -2,6 +2,7 @@
   "name": "agriweather-pro",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "dependencies": {
     "@supabase/supabase-js": "^2.39.3",
     "@testing-library/jest-dom": "^5.17.0",
@@ -20,16 +21,17 @@
     "react-icons": "^4.12.0",
     "react-leaflet": "^4.2.1",
     "react-router-dom": "^6.20.0",
-    "react-scripts": "^5.0.1",
     "tailwindcss": "^3.3.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "export NODE_OPTIONS=--openssl-legacy-provider && react-scripts start",
-    "build": "CI=false react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "deploy": "node push-to-github.js"
+    "start": "vite",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "deploy": "node push-to-github.js",
+    "deploy:netlify": "node deploy-to-netlify.js"
   },
   "eslintConfig": {
     "extends": [
@@ -50,7 +52,13 @@
     ]
   },
   "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.0",
     "autoprefixer": "^10.4.16",
-    "postcss": "^8.4.31"
+    "http-proxy-middleware": "^3.0.3",
+    "netlify-cli": "^15.10.0",
+    "postcss": "^8.4.31",
+    "supabase": "^2.19.7",
+    "vite": "^5.0.0",
+    "vitest": "^1.0.4"
   }
 }

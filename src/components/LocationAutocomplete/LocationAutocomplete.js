@@ -166,7 +166,26 @@ const LocationAutocomplete = ({ onLocationSelect }) => {
             onFocus={() => value.length >= 3 && setShowSuggestions(true)}
             placeholder="Enter city, state or country..."
             className="input-field flex-grow px-4 py-3 rounded-l-md focus:outline-none focus:ring-2 focus:ring-primary w-full"
+            autoComplete="on"
+            autoCorrect="on"
+            spellCheck="true"
+            list="common-locations"
           />
+          <datalist id="common-locations">
+            <option value="New York, US">New York, US</option>
+            <option value="London, GB">London, GB</option>
+            <option value="Tokyo, JP">Tokyo, JP</option>
+            <option value="Paris, FR">Paris, FR</option>
+            <option value="Dubai, AE">Dubai, AE</option>
+            <option value="Beijing, CN">Beijing, CN</option>
+            <option value="Los Angeles, US">Los Angeles, US</option>
+            <option value="Mumbai, IN">Mumbai, IN</option>
+            <option value="Sydney, AU">Sydney, AU</option>
+            <option value="Berlin, DE">Berlin, DE</option>
+            <option value="20001">Washington DC, US</option>
+            <option value="90210">Beverly Hills, US</option>
+            <option value="75001">Paris, FR</option>
+          </datalist>
           
           {showSuggestions && suggestions.length > 0 && (
             <ul 

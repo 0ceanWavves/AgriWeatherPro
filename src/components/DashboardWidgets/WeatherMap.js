@@ -242,6 +242,67 @@ const WeatherMap = ({ location = { lat: 51.505, lng: -0.09, name: 'London' }, mo
             attribution='&copy; <a href="https://openweathermap.org">OpenWeatherMap</a>'
           />
           
+          {/* Map Legend */}
+          <div className="map-legend bg-white bg-opacity-90 px-3 py-2 rounded shadow-md absolute bottom-5 right-5 z-500">
+            <h4 className="font-bold text-sm mb-2">{weatherLayers.find(layer => layer.id === activeLayer)?.name || 'Map Legend'}</h4>
+            {activeLayer === 'temp_new' && (
+              <div className="legend-items flex flex-col gap-1 text-xs">
+                <div className="flex items-center"><span className="w-4 h-4 inline-block mr-2 bg-purple-900"></span>Below -20°C</div>
+                <div className="flex items-center"><span className="w-4 h-4 inline-block mr-2 bg-blue-700"></span>-20°C to -10°C</div>
+                <div className="flex items-center"><span className="w-4 h-4 inline-block mr-2 bg-blue-500"></span>-10°C to 0°C</div>
+                <div className="flex items-center"><span className="w-4 h-4 inline-block mr-2 bg-green-500"></span>0°C to 10°C</div>
+                <div className="flex items-center"><span className="w-4 h-4 inline-block mr-2 bg-yellow-500"></span>10°C to 20°C</div>
+                <div className="flex items-center"><span className="w-4 h-4 inline-block mr-2 bg-orange-500"></span>20°C to 30°C</div>
+                <div className="flex items-center"><span className="w-4 h-4 inline-block mr-2 bg-red-500"></span>Above 30°C</div>
+              </div>
+            )}
+            {activeLayer === 'precipitation_new' && (
+              <div className="legend-items flex flex-col gap-1 text-xs">
+                <div className="flex items-center"><span className="w-4 h-4 inline-block mr-2 bg-blue-100"></span>0-0.1 mm/h</div>
+                <div className="flex items-center"><span className="w-4 h-4 inline-block mr-2 bg-blue-300"></span>0.1-1 mm/h</div>
+                <div className="flex items-center"><span className="w-4 h-4 inline-block mr-2 bg-blue-500"></span>1-2 mm/h</div>
+                <div className="flex items-center"><span className="w-4 h-4 inline-block mr-2 bg-blue-700"></span>2-4 mm/h</div>
+                <div className="flex items-center"><span className="w-4 h-4 inline-block mr-2 bg-blue-900"></span>Above 4 mm/h</div>
+              </div>
+            )}
+            {activeLayer === 'wind_new' && (
+              <div className="legend-items flex flex-col gap-1 text-xs">
+                <div className="flex items-center"><span className="w-4 h-4 inline-block mr-2 bg-green-200"></span>0-3 m/s</div>
+                <div className="flex items-center"><span className="w-4 h-4 inline-block mr-2 bg-green-400"></span>3-6 m/s</div>
+                <div className="flex items-center"><span className="w-4 h-4 inline-block mr-2 bg-yellow-400"></span>6-9 m/s</div>
+                <div className="flex items-center"><span className="w-4 h-4 inline-block mr-2 bg-orange-400"></span>9-12 m/s</div>
+                <div className="flex items-center"><span className="w-4 h-4 inline-block mr-2 bg-red-500"></span>Above 12 m/s</div>
+              </div>
+            )}
+            {activeLayer === 'clouds_new' && (
+              <div className="legend-items flex flex-col gap-1 text-xs">
+                <div className="flex items-center"><span className="w-4 h-4 inline-block mr-2 bg-blue-100"></span>0-20%</div>
+                <div className="flex items-center"><span className="w-4 h-4 inline-block mr-2 bg-blue-200"></span>20-40%</div>
+                <div className="flex items-center"><span className="w-4 h-4 inline-block mr-2 bg-blue-300"></span>40-60%</div>
+                <div className="flex items-center"><span className="w-4 h-4 inline-block mr-2 bg-blue-400"></span>60-80%</div>
+                <div className="flex items-center"><span className="w-4 h-4 inline-block mr-2 bg-blue-500"></span>80-100%</div>
+              </div>
+            )}
+            {activeLayer === 'pressure_new' && (
+              <div className="legend-items flex flex-col gap-1 text-xs">
+                <div className="flex items-center"><span className="w-4 h-4 inline-block mr-2 bg-purple-500"></span>Below 950 hPa</div>
+                <div className="flex items-center"><span className="w-4 h-4 inline-block mr-2 bg-blue-500"></span>950-980 hPa</div>
+                <div className="flex items-center"><span className="w-4 h-4 inline-block mr-2 bg-green-500"></span>980-1010 hPa</div>
+                <div className="flex items-center"><span className="w-4 h-4 inline-block mr-2 bg-yellow-500"></span>1010-1040 hPa</div>
+                <div className="flex items-center"><span className="w-4 h-4 inline-block mr-2 bg-red-500"></span>Above 1040 hPa</div>
+              </div>
+            )}
+            {(activeLayer === 'soil_moisture' || activeLayer === 'irrigation_needs' || activeLayer === 'crop_growth') && (
+              <div className="legend-items flex flex-col gap-1 text-xs">
+                <div className="flex items-center"><span className="w-4 h-4 inline-block mr-2 bg-red-500"></span>Very Low</div>
+                <div className="flex items-center"><span className="w-4 h-4 inline-block mr-2 bg-orange-400"></span>Low</div>
+                <div className="flex items-center"><span className="w-4 h-4 inline-block mr-2 bg-yellow-400"></span>Medium</div>
+                <div className="flex items-center"><span className="w-4 h-4 inline-block mr-2 bg-green-400"></span>Good</div>
+                <div className="flex items-center"><span className="w-4 h-4 inline-block mr-2 bg-green-600"></span>Optimal</div>
+              </div>
+            )}
+          </div>
+          
           {/* City markers */}
           {cities.map((city, index) => (
             <Marker 
@@ -260,7 +321,23 @@ const WeatherMap = ({ location = { lat: 51.505, lng: -0.09, name: 'London' }, mo
         </MapContainer>
         
         <div className="city-search">
-          <input type="text" placeholder="Name or zip code..." />
+          <input 
+            type="text" 
+            placeholder="Name or zip code..." 
+            autoComplete="on" 
+            spellCheck="true"
+            list="city-suggestions"
+          />
+          <datalist id="city-suggestions">
+            <option value="New York, US">New York, US</option>
+            <option value="London, GB">London, GB</option>
+            <option value="Tokyo, JP">Tokyo, JP</option>
+            <option value="Paris, FR">Paris, FR</option>
+            <option value="Dubai, AE">Dubai, AE</option>
+            <option value="20001">Washington DC, US</option>
+            <option value="90210">Beverly Hills, US</option>
+            <option value="75001">Paris, FR</option>
+          </datalist>
         </div>
         
         <div className="weather-details-panel">

@@ -54,7 +54,76 @@ const PestManagement = () => {
       { name: 'Rice Water Weevil', riskFactors: ['Early flooding', 'Nearby infested fields'], management: 'Delayed flooding, seed treatments, drain fields when larvae detected' },
       { name: 'Rice Stink Bug', riskFactors: ['Heading stage', 'Nearby grassy areas'], management: 'Scout during heading, treat when thresholds reached, manage field borders' },
       { name: 'Fall Armyworm', riskFactors: ['Late planting', 'Drought stress'], management: 'Early planting, maintain optimal water levels, targeted insecticide application' }
+    ],
+    palm: [
+      { name: 'Red Palm Weevil', riskFactors: ['Wounds in trunk', 'Nearby infested palms', 'Improper pruning'], management: 'Regular inspection, pheromone traps, trunk injection with systemic insecticides, proper pruning protocols' },
+      { name: 'Dubas Bug', riskFactors: ['High temperatures', 'Dense planting'], management: 'Canopy sprays during nymph stage, proper spacing between trees, natural predator conservation' },
+      { name: 'Date Palm Scale', riskFactors: ['Dry conditions', 'High temperatures'], management: 'Horticultural oil sprays, pruning of heavily infested fronds, natural predator introduction' }
+    ],
+    citrus: [
+      { name: 'Citrus Leafminer', riskFactors: ['New flush growth', 'High humidity'], management: 'Time sprays with flush growth, natural enemy conservation, avoid excess nitrogen fertilization' },
+      { name: 'Asian Citrus Psyllid', riskFactors: ['New flush growth', 'Warm temperatures'], management: 'Regular scouting, systemic insecticides, yellow sticky traps for monitoring' },
+      { name: 'Citrus Mealybug', riskFactors: ['Dry environment', 'Ants protecting colonies'], management: 'Horticultural oils, ant control, beneficial insect release' }
     ]
+  };
+  
+  // Region-specific pest information
+  const regionPests = {
+    // UAE - Dubai specific pests
+    "AE": {
+      "Dubai": [
+        {
+          name: "Red Palm Weevil",
+          scientificName: "Rhynchophorus ferrugineus",
+          description: "Major pest of date palms in Dubai and throughout UAE. Adult weevils are reddish-brown with a long snout and can fly up to 1km. Larvae tunnel through palm trunk causing severe damage.",
+          symptoms: "Wilting fronds, holes in trunk with reddish-brown sawdust, fermented odor, empty pupal cases around base of tree.",
+          management: "Regular inspection, pheromone traps, injection of systemic insecticides, proper pruning and sanitation techniques. Affected palms should be reported to municipality.",
+          severity: "High",
+          image: "https://www.plantwise.org/KnowledgeBank/800x640/PMDG_98764.jpg"
+        },
+        {
+          name: "Dubas Bug",
+          scientificName: "Ommatissus lybicus",
+          description: "Small whitish planthopper that feeds on date palm sap. Causes honeydew secretion that leads to black sooty mold growth.",
+          symptoms: "Yellowing of fronds, sticky honeydew on leaves, black sooty mold, reduced fruit quality and yield.",
+          management: "Canopy sprays during nymph stages (April-May and October-November), proper spacing between trees, natural predator conservation.",
+          severity: "Medium",
+          image: "https://www.ecoport.org/fileadmin/ecoport/0/37500.jpg"
+        },
+        {
+          name: "Rhinoceros Beetle",
+          scientificName: "Oryctes rhinoceros",
+          description: "Large black beetle that bores into the crown of palms and damages the growing point. Common in organic farms and areas with decaying vegetation.",
+          symptoms: "V-shaped cuts in fronds, holes at base of fronds, damaged or dead growing point.",
+          management: "Pheromone traps, removal of breeding sites like decaying vegetation, application of beneficial fungi Metarhizium anisopliae.",
+          severity: "Medium",
+          image: "https://www.infonet-biovision.org/sites/default/files/plant_health/pests/621.jpeg"
+        }
+      ]
+    },
+    // US - Washington DC
+    "US": {
+      "20001": [
+        {
+          name: "Brown Marmorated Stink Bug",
+          scientificName: "Halyomorpha halys",
+          description: "Invasive pest that damages fruits, vegetables, and ornamental plants in the DC area. Shield-shaped body with distinctive brown marbled pattern.",
+          symptoms: "Sunken areas and cat-facing on fruits, stippling on leaves, early fruit drop.",
+          management: "Seal home entry points, use pheromone traps, targeted applications of insecticidal soap and neem oil for home gardens.",
+          severity: "Medium",
+          image: "https://entomology.ces.ncsu.edu/wp-content/uploads/2013/09/BMSB-on-Apple-2.jpg"
+        },
+        {
+          name: "Emerald Ash Borer",
+          scientificName: "Agrilus planipennis",
+          description: "Metallic green beetle that infests and kills all species of ash trees in the DC region. A significant threat to urban forests.",
+          symptoms: "D-shaped exit holes in bark, S-shaped tunnels under bark, canopy dieback, woodpecker feeding.",
+          management: "Preventative systemic insecticides for valuable trees, removal and proper disposal of infested trees, avoid moving firewood.",
+          severity: "High",
+          image: "https://extension.umd.edu/sites/extension.umd.edu/files/styles/optimized/public/2021-03/EAB-symptoms_tunnels.jpg"
+        }
+      ]
+    }
   };
 
   useEffect(() => {
@@ -74,6 +143,9 @@ const PestManagement = () => {
     }
   }, []);
 
+  const [regionSpecificPests, setRegionSpecificPests] = useState([]);
+  const [regionInfo, setRegionInfo] = useState(null);
+
   useEffect(() => {
     const fetchWeatherData = async () => {
       setLoading(true);
@@ -87,6 +159,47 @@ const PestManagement = () => {
         
         // Calculate pest risks based on weather conditions
         calculatePestRisks(response.data, selectedCrop);
+
+        // Get location data for region-specific pests
+        try {
+          const geoResponse = await axios.get(
+            `https://api.openweathermap.org/geo/1.0/reverse?lat=${location.lat}&lon=${location.lng}&limit=1&appid=${apiKey}`
+          );
+          
+          if (geoResponse.data && geoResponse.data.length > 0) {
+            const locationData = geoResponse.data[0];
+            const countryCode = locationData.country;
+            const city = locationData.name;
+            const zipCode = locationData.zip || '';
+            
+            setRegionInfo({
+              countryCode,
+              city,
+              zipCode
+            });
+            
+            // Check if we have region-specific pest data
+            if (regionPests[countryCode]) {
+              // First check for zip code match
+              if (zipCode && regionPests[countryCode][zipCode]) {
+                setRegionSpecificPests(regionPests[countryCode][zipCode]);
+              } 
+              // Then try city match
+              else if (regionPests[countryCode][city]) {
+                setRegionSpecificPests(regionPests[countryCode][city]);
+              } 
+              // Default to empty array if no match
+              else {
+                setRegionSpecificPests([]);
+              }
+            } else {
+              setRegionSpecificPests([]);
+            }
+          }
+        } catch (error) {
+          console.error("Error fetching location data:", error);
+          setRegionSpecificPests([]);
+        }
       } catch (error) {
         console.error("Error fetching weather data:", error);
       } finally {
@@ -303,6 +416,61 @@ const PestManagement = () => {
               </div>
             </div>
             
+            {/* Region-Specific Pest Information */}
+            {regionSpecificPests.length > 0 && (
+              <div className="mt-8 bg-yellow-50 rounded-lg border border-yellow-200 p-6">
+                <h2 className="text-xl font-semibold text-yellow-800 mb-4">
+                  {regionInfo?.city ? `Local Pest Alerts for ${regionInfo.city}` : 'Local Pest Alerts'}
+                </h2>
+                
+                <div className="space-y-6">
+                  {regionSpecificPests.map((pest, index) => (
+                    <div key={index} className="bg-white rounded-lg p-5 border border-yellow-200 shadow-sm">
+                      <div className="flex flex-col md:flex-row gap-4">
+                        <div className="md:w-1/4">
+                          {pest.image && (
+                            <img 
+                              src={pest.image} 
+                              alt={pest.name} 
+                              className="w-full h-auto rounded-lg object-cover"
+                              onError={(e) => {e.target.onerror = null; e.target.src = "https://via.placeholder.com/400x300?text=Pest+Image"}}
+                            />
+                          )}
+                        </div>
+                        <div className="md:w-3/4">
+                          <div className="flex justify-between items-start">
+                            <h3 className="text-lg font-bold text-yellow-800">{pest.name}</h3>
+                            <span className={`px-2 py-1 text-xs font-semibold rounded-full ${
+                              pest.severity === 'High' ? 'bg-red-100 text-red-800' : 
+                              pest.severity === 'Medium' ? 'bg-yellow-100 text-yellow-800' : 
+                              'bg-green-100 text-green-800'
+                            }`}>
+                              {pest.severity} Risk
+                            </span>
+                          </div>
+                          
+                          <p className="text-sm italic text-gray-600 mt-1">{pest.scientificName}</p>
+                          
+                          <p className="mt-3 text-sm text-gray-700">{pest.description}</p>
+                          
+                          <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div>
+                              <h4 className="font-semibold text-yellow-700 text-sm">Key Symptoms</h4>
+                              <p className="mt-1 text-sm text-gray-600">{pest.symptoms}</p>
+                            </div>
+                            <div>
+                              <h4 className="font-semibold text-green-700 text-sm">Management</h4>
+                              <p className="mt-1 text-sm text-gray-600">{pest.management}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Organic Pest Management Section */}
             <div className="mt-8 bg-green-50 rounded-lg border border-green-200 p-6">
               <h2 className="text-xl font-semibold text-green-800 mb-4">

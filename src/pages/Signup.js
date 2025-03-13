@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { supabase } from '../lib/supabase';
+import { useAuth } from '../contexts/AuthContext';
 
 const Signup = () => {
   const [email, setEmail] = useState('');
@@ -10,12 +10,12 @@ const Signup = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-
+  const { signUp } = useAuth();
+  
   const handleSignup = async (e) => {
     e.preventDefault();
     setError(null);
     
-    // Check if passwords match
     if (password !== confirmPassword) {
       setError('Passwords do not match');
       return;
@@ -24,27 +24,17 @@ const Signup = () => {
     setLoading(true);
 
     try {
-      // Create user account
-      const { data: authData, error: authError } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            full_name: fullName,
-          },
-        },
-      });
-
-      if (authError) throw authError;
+      const { data, error } = await signUp(email, password, fullName);
       
-      // Navigate to login page with success message
+      if (error) throw error;
+      
       navigate('/login', { 
         state: { 
           message: 'Account created successfully! Please check your email for verification link.' 
         } 
       });
     } catch (error) {
-      console.error('Error signing up:', error);
+      console.error('Signup submission error:', error);
       setError(error.message || 'An error occurred during signup');
     } finally {
       setLoading(false);

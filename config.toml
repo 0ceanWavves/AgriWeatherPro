@@ -1,0 +1,8 @@
+[api]
+cors = [
+  "http://localhost:4202",                # Local development
+  "http://localhost:3000",                # Alternative local development port
+  "https://curious-puffpuff-0f9d76.netlify.app", # Your current Netlify domain
+  "https://agriweatherpro.netlify.app",   # If you set up a custom Netlify domain later
+  "https://your-production-domain.com"    # Your actual production domain
+]

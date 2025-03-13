@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Supabase Direct Test</title>
+</head>
+<body>
+  <h1>Supabase Direct Test</h1>
+  <button id="testBtn">Test API Key</button>
+  <pre id="result"></pre>
+
+  <script>
+    document.getElementById('testBtn').addEventListener('click', async () => {
+      const url = 'https://gexynwadeancyvnthsbu.supabase.co/rest/v1/profiles?limit=1';
+      // REPLACE THIS WITH YOUR FRESHLY COPIED ANON KEY
+      const apiKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdleHlud2FkZWFuY3l2bnRoc2J1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTAzMzczMDMsImV4cCI6MjAyNTkxMzMwM30.DjMm1jKSxjhSJxcCoUJcX1fxFc9oTGUPc0IwTfLQJFM';
+      
+      try {
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+            'apikey': apiKey,
+            'Authorization': `Bearer ${apiKey}`
+          }
+        });
+        
+        const result = {
+          status: response.status,
+          statusText: response.statusText,
+          headers: Object.fromEntries([...response.headers])
+        };
+        
+        try {
+          result.data = await response.json();
+        } catch (e) {
+          result.parseError = e.message;
+        }
+        
+        document.getElementById('result').textContent = JSON.stringify(result, null, 2);
+      } catch (error) {
+        document.getElementById('result').textContent = JSON.stringify({error: error.message}, null, 2);
+      }
+    });
+  </script>
+</body>
+</html>

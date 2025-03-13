@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { AuthProvider } from './contexts/AuthContext';
+import { FixedAuthProvider } from './contexts/FixedAuthContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -11,8 +11,8 @@ import Dashboard from './pages/Dashboard';
 import About from './pages/About';
 import SignIn from './pages/Auth/SignIn';
 import SignUp from './pages/Auth/SignUp';
-import DirectSignup from './pages/Auth/DirectSignup'; 
-import FixedSignup from './pages/FixedSignup'; // Import the fixed signup component
+import DirectSignup from './pages/Auth/DirectSignup';
+import FixedSignup from './pages/FixedSignup';
 import SignupDebug from './pages/SignupDebug';
 import ForgotPassword from './pages/Auth/ForgotPassword';
 import AuthRequired from './pages/AuthRequired';
@@ -21,64 +21,16 @@ import PestManagement from './pages/ServicePages/PestManagement';
 import IrrigationPlanning from './pages/ServicePages/IrrigationPlanning';
 
 function App() {
-  // Test Supabase connection and cleanup debug elements
-  useEffect(() => {
-    // Test Supabase connection on app load
-    const testSupabaseConnection = async () => {
-      try {
-        // Import supabase directly here to ensure it's properly initialized
-        const { supabase } = await import('./lib/supabase');
-        
-        // Test if we can read public data
-        await supabase.auth.getSession();
-        
-        // Remove any debug API key displays
-        removeDebugElements();
-      } catch (error) {
-        console.error('Supabase connection test error:', error);
-      }
-    };
-    
-    // Remove any debug information elements
-    const removeDebugElements = () => {
-      const debugElements = document.querySelectorAll('div, pre, span, p');
-      
-      for (const element of debugElements) {
-        const text = element.textContent || '';
-        
-        // Check if element contains debug information
-        if (
-          (text.includes('Debug Info') || 
-           text.includes('Supabase Initialized') || 
-           text.includes('API Status') || 
-           text.includes('API Key')) && 
-          !element.classList.contains('app-content')
-        ) {
-          element.remove();
-        }
-      }
-    };
-    
-    // Run Supabase connection test on load
-    testSupabaseConnection();
-    
-    // Set up an observer to catch dynamically added debug elements
-    const observer = new MutationObserver(removeDebugElements);
-    observer.observe(document.body, { childList: true, subtree: true });
-    
-    return () => observer.disconnect();
-  }, []);
-  
   return (
-    <AuthProvider>
+    <FixedAuthProvider>
       <div className="flex flex-col min-h-screen app-content">
         <Routes>
           {/* Auth Routes */}
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/direct-signup" element={<DirectSignup />} /> 
-          <Route path="/fixed-signup" element={<FixedSignup />} /> {/* Fixed signup route */}
-          <Route path="/signup-debug" element={<SignupDebug />} /> 
+          <Route path="/direct-signup" element={<DirectSignup />} />
+          <Route path="/fixed-signup" element={<FixedSignup />} />
+          <Route path="/signup-debug" element={<SignupDebug />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/auth-required" element={<AuthRequired />} />
           
@@ -101,7 +53,7 @@ function App() {
                   <Route path="/crop-yields" element={<CropYields />} />
                   <Route path="/about" element={<About />} />
                   
-                  {/* Service-specific routes will redirect to the appropriate pages */}
+                  {/* Service-specific routes */}
                   <Route path="/services/weather-forecasting" element={<Forecast />} />
                   <Route path="/services/crop-yield-prediction" element={<CropYields />} />
                   <Route path="/services/climate-analysis" element={<AuthRequired />} />
@@ -115,7 +67,7 @@ function App() {
           } />
         </Routes>
       </div>
-    </AuthProvider>
+    </FixedAuthProvider>
   );
 }
 

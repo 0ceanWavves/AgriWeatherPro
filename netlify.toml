@@ -1,18 +1,11 @@
 [build]
-  command = "CI=false NODE_ENV=production npm run build"
-  publish = "build"
+  command = "npm run build"
+  publish = "dist"
 
 [build.environment]
   NODE_VERSION = "18"
-  CI = "false"
-  NODE_ENV = "production"
   VITE_SUPABASE_URL = "https://gexynwadeancyvnthsbu.supabase.co"
   VITE_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdleHlud2FkZWFuY3l2bnRoc2J1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTAzMzczMDMsImV4cCI6MjAyNTkxMzMwM30.DjMm1jKSxjhSJxcCoUJcX1fxFc9oTGUPc0IwTfLQJFM"
-  REACT_APP_SUPABASE_URL = "https://gexynwadeancyvnthsbu.supabase.co" 
-  REACT_APP_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdleHlud2FkZWFuY3l2bnRoc2J1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTAzMzczMDMsImV4cCI6MjAyNTkxMzMwM30.DjMm1jKSxjhSJxcCoUJcX1fxFc9oTGUPc0IwTfLQJFM"
-  # Explicitly disable any debug settings
-  VITE_DEBUG_MODE = "false"
-  REACT_APP_DEBUG_MODE = "false"
 
 [[redirects]]
   from = "/*"

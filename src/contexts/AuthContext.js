@@ -17,9 +17,13 @@ export function AuthProvider({ children }) {
     // Check for active session on page load
     const checkSession = async () => {
       try {
-        // Remove debug logging in production
+        // Log for debugging
+        console.log('Checking for existing session...');
+        
         const { data } = await supabase.auth.getSession();
         const userData = data?.session?.user || null;
+        
+        console.log('Session check result:', userData ? 'User found' : 'No user found');
         
         // IMPORTANT: Set loading to false even if no user is found
         if (!userData) {
@@ -97,6 +101,7 @@ export function AuthProvider({ children }) {
     const { data: authListener } = supabase.auth.onAuthStateChange(
       async (event, session) => {
         // Auth state has changed
+        console.log('Auth state changed:', event);
         const userData = session?.user || null;
         
         // When signed out, clear everything
@@ -175,55 +180,14 @@ export function AuthProvider({ children }) {
     };
   }, []);
 
-  // Check if a user already exists with the given email
-  async function checkUserExists(email) {
-    try {
-      // Try to sign in with an incorrect password
-      // If we get "Invalid login credentials", the user exists
-      // If we get "Email not found", the user doesn't exist
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password: 'intentional-wrong-password-for-check',
-      });
-      
-      if (error) {
-        // "Invalid login credentials" means user exists
-        if (error.message.includes('Invalid login credentials')) {
-          console.log('Email exists check: User exists with email', email);
-          return true;
-        }
-        
-        // Any other error suggests user doesn't exist
-        console.log('Email exists check: No user with email', email);
-        return false;
-      }
-      
-      // If no error (should never happen with wrong password)
-      return true;
-    } catch (e) {
-      console.error('Error checking if user exists:', e);
-      // Assume user might exist on error to prevent duplicates
-      return false;
-    }
-  }
-  
-  // Sign up function with improved error handling and duplicate detection
+  // Sign up function with detailed error handling
   async function signUp(email, password, fullName) {
+    console.log('Starting signup process for:', email);
+    
     try {
-      // Check if user already exists first
-      const userExists = await checkUserExists(email);
-      if (userExists) {
-        return { 
-          data: null, 
-          error: { message: 'An account with this email already exists. Please sign in instead.' } 
-        };
-      }
+      // Try a direct signup with minimal options
+      console.log('Making signup API call...');
       
-      // Clear any existing auth state to prevent conflicts
-      window.localStorage.removeItem('agriweatherpro_auth');
-      await supabase.auth.signOut();
-      
-      // Simplified signup without extra options that might cause issues
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
@@ -235,106 +199,65 @@ export function AuthProvider({ children }) {
       });
       
       if (error) {
-        // Provide better error messages for common issues
-        if (error.message.includes('email') && 
-            (error.message.includes('already') || error.message.includes('duplicate'))) {
-          return { 
-            data: null, 
-            error: { message: 'This email is already registered. Please sign in instead.' } 
-          };
-        }
-        
-        throw error;
+        console.error('Signup API returned error:', error);
+        return { data: null, error };
       }
       
-      // Check for empty identities array, which indicates the user already exists
-      if (data?.user?.identities?.length === 0) {
-        return { 
-          data: null, 
-          error: { message: 'This email is already registered. Please sign in instead.' } 
-        };
-      }
+      console.log('Signup API call succeeded:', data ? 'Data returned' : 'No data');
       
-      // Create user profile in the profiles table
+      // If user was created, try to create a profile
       if (data?.user) {
+        console.log('User created, id:', data.user.id);
+        
         try {
-          console.log('Creating user profile for:', data.user.id);
-          // First check if profile already exists
-          const { data: existingProfile } = await supabase
+          const { error: profileError } = await supabase
             .from('profiles')
-            .select('*')
-            .eq('id', data.user.id)
-            .single();
+            .upsert({
+              id: data.user.id,
+              full_name: fullName,
+              email: email,
+              created_at: new Date().toISOString(),
+              updated_at: new Date().toISOString()
+            });
             
-          if (!existingProfile) {
-            // Only insert if profile doesn't exist
-            const { error: profileError } = await supabase
-              .from('profiles')
-              .upsert({  // Use upsert instead of insert to handle possible duplicates
-                id: data.user.id,
-                full_name: fullName,
-                email: email,
-                created_at: new Date().toISOString(),
-                updated_at: new Date().toISOString()
-              });
-              
-            if (profileError) {
-              console.error('Error creating user profile:', profileError);
-              // Continue anyway as the auth user was created
-            } else {
-              console.log('User profile created successfully');
-            }
+          if (profileError) {
+            console.error('Error creating profile:', profileError);
           } else {
-            console.log('Profile already exists, skipping creation');
+            console.log('Profile created successfully');
           }
-        } catch (profileErr) {
-          console.error('Exception creating profile:', profileErr);
-          // Continue anyway as the auth user was created
+        } catch (profileError) {
+          console.error('Exception creating profile:', profileError);
         }
       }
       
       return { data, error: null };
     } catch (error) {
-      console.error('Sign up exception:', error.message);
-      
-      // User-friendly error message for database errors
-      if (error.message && 
-          (error.message.includes('duplicate') || 
-           error.message.includes('constraint') || 
-           error.message.includes('violates'))) {
-        return { 
-          data: null, 
-          error: { message: 'There was an issue creating your account. This email may already be registered.' } 
-        };
-      }
-      
-      return { data: null, error };
+      console.error('Exception during signup:', error);
+      return { 
+        data: null, 
+        error: { 
+          message: 'There was an issue creating your account. Please try again later.',
+          originalError: error
+        } 
+      };
     }
   }
 
-  // Sign in function
+  // Sign in function - simplified for reliability
   async function signIn(email, password) {
     try {
-      console.log('Attempting to sign in with email:', email);
-      
-      // Clear any existing sessions before signing in
-      await supabase.auth.signOut();
-      
-      // Now attempt to sign in
+      // Directly attempt to sign in without any extra operations
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
       
       if (error) {
-        console.error('Supabase sign in error:', error);
         throw error;
       }
       
-      console.log('Sign in successful:', data);
       return { data, error: null };
     } catch (error) {
-      console.error('Sign in exception:', error.message);
       return { data: null, error };
     }
   }

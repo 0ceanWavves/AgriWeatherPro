@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaChartLine, FaCloudSun, FaMapMarkedAlt, FaLeaf } from 'react-icons/fa';
+import { FaChartLine, FaDatabase, FaNetworkWired, FaChartArea, FaDna } from 'react-icons/fa';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
@@ -29,15 +29,24 @@ const cityIcon = new L.Icon({
 });
 
 const Home = () => {
-  // Sample chart data for crop yield display
+  // Sample chart data for pattern analysis display
   const chartData = {
-    labels: ['2019', '2020', '2021', '2022', '2023', '2024'],
+    labels: ['Q1 2023', 'Q2 2023', 'Q3 2023', 'Q4 2023', 'Q1 2024', 'Q2 2024'],
     datasets: [
       {
-        label: 'Corn Yield',
-        data: [172, 181, 174, 188, 193, 201],
+        label: 'Pattern Recognition Accuracy',
+        data: [92.8, 94.3, 95.1, 96.0, 97.3, 97.8],
         borderColor: 'rgb(60, 165, 92)',
         backgroundColor: 'rgba(60, 165, 92, 0.5)',
+        tension: 0.2,
+        pointRadius: 4,
+        pointHoverRadius: 6,
+      },
+      {
+        label: 'Anomaly Detection Rate',
+        data: [88.4, 90.2, 92.7, 94.1, 95.8, 96.5],
+        borderColor: 'rgb(75, 102, 192)',
+        backgroundColor: 'rgba(75, 102, 192, 0.5)',
         tension: 0.2,
         pointRadius: 4,
         pointHoverRadius: 6,
@@ -55,16 +64,18 @@ const Home = () => {
       tooltip: {
         callbacks: {
           label: function(context) {
-            return `Yield: ${context.parsed.y} bu/acre`;
+            return `${context.dataset.label}: ${context.parsed.y}%`;
           }
         }
       }
     },
     scales: {
       y: {
+        min: 85,
+        max: 100,
         ticks: {
           callback: function(value) {
-            return `${value} bu`;
+            return `${value}%`;
           }
         }
       }
@@ -82,65 +93,52 @@ const Home = () => {
 
   return (
     <div>
-      {/* Hero Section */}
+      {/* Hero Section (Data-Centric Focus) */}
       <section className="bg-primary text-white py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-heading font-bold mb-4">AgriWeather Pro</h1>
+            <h1 className="text-4xl md:text-5xl font-heading font-bold mb-4">Unlock the Power of Hyper-Targeted Agricultural Data</h1>
             <p className="text-xl mb-8">
-              Advanced weather analytics helping farmers optimize crop yields through AI-powered climate analysis.
+              Advanced analytics and predictive insights for diverse species, fauna, and climates.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/forecast" className="btn-accent px-8 py-3 text-lg">
-                View Forecast
+              <Link to="/dashboard" className="btn-accent px-8 py-3 text-lg">
+                Explore Data Solutions
               </Link>
-              <Link to="/dashboard" className="bg-white text-primary hover:bg-gray-100 px-8 py-3 rounded-md text-lg transition-colors">
-                Explore Dashboard
+              <Link to="/about" className="bg-white text-primary hover:bg-gray-100 px-8 py-3 rounded-md text-lg transition-colors">
+                Discover Our Analytics Platform
               </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Core Services Section */}
+      {/* Key Features (Data and Analysis Focus) */}
       <section className="py-16 bg-background">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-heading font-bold text-center mb-12">Our Core Services</h2>
+          <h2 className="text-3xl font-heading font-bold text-center mb-12">Key Features</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="card text-center hover:shadow-lg transition-shadow">
               <div className="flex justify-center mb-4">
-                <FaCloudSun className="text-5xl text-primary" />
+                <FaDatabase className="text-5xl text-primary" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">Weather Forecasting</h3>
+              <h3 className="text-xl font-semibold mb-2">Comprehensive Data Aggregation</h3>
               <p className="text-gray-600">
-                Localized weather forecasts for agricultural needs.
+                Multi-source data integration from sensors, satellites, and historical records.
               </p>
-              <Link to="/forecast" className="block mt-4 text-primary hover:underline">
-                View Forecast
+              <Link to="/dashboard" className="block mt-4 text-primary hover:underline">
+                Explore Data Sources
               </Link>
             </div>
             
             <div className="card text-center hover:shadow-lg transition-shadow">
               <div className="flex justify-center mb-4">
-                <FaMapMarkedAlt className="text-5xl text-primary" />
+                <FaChartLine className="text-5xl text-primary" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">Interactive Maps</h3>
+              <h3 className="text-xl font-semibold mb-2">Advanced Predictive Modeling</h3>
               <p className="text-gray-600">
-                Visualize weather patterns and temperature trends.
-              </p>
-              <Link to="/maps" className="block mt-4 text-primary hover:underline">
-                Explore Maps
-              </Link>
-            </div>
-            
-            <div className="card text-center hover:shadow-lg transition-shadow">
-              <div className="flex justify-center mb-4">
-                <FaLeaf className="text-5xl text-primary" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Crop Yield Predictions</h3>
-              <p className="text-gray-600">
-                AI-driven crop yield forecasts based on weather data.
+                AI-powered trend analysis and anomaly detection algorithms.
               </p>
               <Link to="/crop-yields" className="block mt-4 text-primary hover:underline">
                 View Predictions
@@ -149,26 +147,39 @@ const Home = () => {
             
             <div className="card text-center hover:shadow-lg transition-shadow">
               <div className="flex justify-center mb-4">
-                <FaChartLine className="text-5xl text-primary" />
+                <FaNetworkWired className="text-5xl text-primary" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">Climate Analytics</h3>
+              <h3 className="text-xl font-semibold mb-2">Real-Time Environmental Monitoring</h3>
               <p className="text-gray-600">
-                Historical weather trend analysis for agricultural planning.
+                Live tracking of critical environmental variables across regions.
+              </p>
+              <Link to="/maps" className="block mt-4 text-primary hover:underline">
+                Monitor Conditions
+              </Link>
+            </div>
+            
+            <div className="card text-center hover:shadow-lg transition-shadow">
+              <div className="flex justify-center mb-4">
+                <FaDna className="text-5xl text-primary" />
+              </div>
+              <h3 className="text-xl font-semibold mb-2">Species & Climate Pattern Analysis</h3>
+              <p className="text-gray-600">
+                Specialized insights for diverse agricultural ecosystems and species.
               </p>
               <Link to="/dashboard" className="block mt-4 text-primary hover:underline">
-                View Analytics
+                View Analysis
               </Link>
             </div>
           </div>
         </div>
       </section>
       
-      {/* Weather Map Visualization */}
+      {/* Data Visualization Platform */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-heading font-bold text-center mb-4">Interactive Weather Map</h2>
+          <h2 className="text-3xl font-heading font-bold text-center mb-4">Advanced Data Visualization Platform</h2>
           <p className="text-xl text-center mb-12 max-w-3xl mx-auto">
-            Our dashboard features real-time weather maps with multiple data layers and location-specific details.
+            Our interactive dashboards reveal insights through powerful geographic visualizations with multiple data layers.
           </p>
           
           <div className="bg-white p-6 rounded-lg shadow-md max-w-5xl mx-auto">
@@ -205,34 +216,34 @@ const Home = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
               <div className="p-4 bg-blue-50 rounded-lg">
-                <h3 className="font-semibold mb-2">Temperature Overlay</h3>
-                <p className="text-sm">View real-time temperature patterns across regions</p>
+                <h3 className="font-semibold mb-2">Multi-Factor Data Overlays</h3>
+                <p className="text-sm">Visualize multiple data points and variables simultaneously</p>
               </div>
               <div className="p-4 bg-blue-50 rounded-lg">
-                <h3 className="font-semibold mb-2">Precipitation Radar</h3>
-                <p className="text-sm">Track rainfall and precipitation forecasts</p>
+                <h3 className="font-semibold mb-2">Anomaly Detection</h3>
+                <p className="text-sm">Identify environmental pattern deviations and outliers</p>
               </div>
               <div className="p-4 bg-blue-50 rounded-lg">
-                <h3 className="font-semibold mb-2">Wind Patterns</h3>
-                <p className="text-sm">Monitor wind direction and speed changes</p>
+                <h3 className="font-semibold mb-2">Cross-Species Analysis</h3>
+                <p className="text-sm">Compare environmental impacts across diverse species</p>
               </div>
             </div>
             
             <div className="text-center">
               <Link to="/maps" className="inline-block bg-primary text-white hover:bg-primary/90 px-6 py-2 rounded-md transition-colors">
-                Explore Full Weather Map
+                Explore Data Visualization Platform
               </Link>
             </div>
           </div>
         </div>
       </section>
       
-      {/* Crop Yield Chart Visualization */}
+      {/* Predictive Analytics Section */}
       <section className="py-16 bg-primary/5">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-heading font-bold text-center mb-4">Crop Yield Predictions</h2>
+          <h2 className="text-3xl font-heading font-bold text-center mb-4">Predictive Analytics & Trend Analysis</h2>
           <p className="text-xl text-center mb-12 max-w-3xl mx-auto">
-            Our AI models analyze weather patterns and historical data to forecast crop yields with high accuracy.
+            Our AI algorithms identify patterns and predict outcomes across diverse agricultural variables with industry-leading accuracy.
           </p>
           
           <div className="bg-white p-6 rounded-lg shadow-md max-w-5xl mx-auto">
@@ -242,58 +253,58 @@ const Home = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
               <div className="bg-primary/10 p-4 rounded-lg">
-                <h3 className="text-lg font-semibold mb-2">Current Yield</h3>
+                <h3 className="text-lg font-semibold mb-2">Pattern Recognition</h3>
                 <div className="flex items-center mb-2">
-                  <span className="text-2xl font-bold">193 <span className="text-sm font-normal">bu/acre</span></span>
+                  <span className="text-2xl font-bold">97.3<span className="text-sm font-normal">% accuracy</span></span>
                 </div>
                 <p className="text-sm text-gray-600">
-                  Up 2.7% from previous year
+                  AI-driven pattern identification across species
                 </p>
               </div>
               
               <div className="bg-primary/10 p-4 rounded-lg">
-                <h3 className="text-lg font-semibold mb-2">Forecast Yield</h3>
+                <h3 className="text-lg font-semibold mb-2">Predictive Modeling</h3>
                 <div className="flex items-center mb-2">
-                  <span className="text-2xl font-bold">201 <span className="text-sm font-normal">bu/acre</span></span>
+                  <span className="text-2xl font-bold">96.1<span className="text-sm font-normal">% confidence</span></span>
                 </div>
                 <p className="text-sm text-gray-600">
-                  Expected 4.1% increase from current
+                  Multi-factor variable analysis and forecasting
                 </p>
               </div>
               
               <div className="bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-500">
-                <h3 className="text-lg font-semibold mb-2">Primary Risk Factor</h3>
-                <p className="text-sm mb-2">Precipitation Variability (Risk: Medium)</p>
+                <h3 className="text-lg font-semibold mb-2">Anomaly Detection</h3>
+                <p className="text-sm mb-2">Early Warning System (Response Time: 24-48h)</p>
                 <p className="text-xs text-gray-600">
-                  Monitor rainfall patterns to optimize irrigation scheduling
+                  Identifying environmental deviations before visible impact
                 </p>
               </div>
             </div>
             
             <div className="text-center">
               <Link to="/crop-yields" className="inline-block bg-primary text-white hover:bg-primary/90 px-6 py-2 rounded-md transition-colors">
-                View Detailed Crop Analysis
+                Explore Analytics Capabilities
               </Link>
             </div>
           </div>
         </div>
       </section>
       
-      {/* Testimonial Section - Reduced to one key testimonial */}
+      {/* Testimonial Section - Research Focus */}
       <section className="py-16 bg-background">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-heading font-bold text-center mb-8">What Farmers Say</h2>
+          <h2 className="text-3xl font-heading font-bold text-center mb-8">What Our Partners Say</h2>
           
           <div className="max-w-3xl mx-auto">
             <div className="card text-center">
               <p className="italic mb-6 text-lg">
-                "AgriWeather Pro transformed our farm operations. The accurate forecasts and yield predictions have increased our productivity by 18% while reducing resource waste. The interactive maps help us make precise decisions for each field."
+                "This platform has revolutionized our research capabilities. The comprehensive data integration and advanced analytics have accelerated our findings, allowing us to identify previously undetectable patterns across diverse species and environmental conditions."
               </p>
               <div className="flex items-center justify-center">
                 <div className="w-12 h-12 bg-primary/20 rounded-full mr-4"></div>
                 <div>
-                  <h4 className="font-semibold">John Deere</h4>
-                  <p className="text-sm text-gray-600">Corn Farmer, Iowa</p>
+                  <h4 className="font-semibold">Dr. Elena Rodriguez</h4>
+                  <p className="text-sm text-gray-600">Senior Research Scientist, Agricultural Innovation Institute</p>
                 </div>
               </div>
             </div>
@@ -301,19 +312,19 @@ const Home = () => {
         </div>
       </section>
       
-      {/* CTA Section */}
+      {/* CTA Section - Data-Centric */}
       <section className="py-16 bg-accent text-white">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-heading font-bold mb-4">Ready to Optimize Your Farm?</h2>
+          <h2 className="text-3xl font-heading font-bold mb-4">Unlock the Full Potential of Your Data</h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto">
-            Start using AgriWeather Pro today for data-driven farming decisions.
+            Transform complex environmental data into actionable insights across diverse species and ecosystems.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/dashboard" className="bg-white text-accent hover:bg-gray-100 px-8 py-3 rounded-md text-lg transition-colors font-semibold">
-              Explore Dashboard
+              Explore Our Analytics Platform
             </Link>
             <Link to="/about" className="border-2 border-white hover:bg-white/10 px-8 py-3 rounded-md text-lg transition-colors">
-              Learn More
+              Learn About Our Technology
             </Link>
           </div>
         </div>
