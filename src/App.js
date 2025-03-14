@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react';
+import React, { lazy, Suspense, useEffect, useState } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import Header from './components/Header';
@@ -25,6 +25,9 @@ const AuthRequired = lazy(() => import('./pages/AuthRequired'));
 const AuthError = lazy(() => import('./pages/Auth/AuthError'));
 
 function App() {
+  // Add any state you need
+  const [isLoading, setIsLoading] = useState(false);
+
   // Detect auth errors in URL (from Supabase redirects)
   useEffect(() => {
     const handleAuthError = () => {
@@ -46,6 +49,11 @@ function App() {
     };
     
     handleAuthError();
+
+    // Return cleanup function if needed
+    return () => {
+      console.log('App component unmounted');
+    };
   }, []);
   
   return (
