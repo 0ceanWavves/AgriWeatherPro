@@ -1,5 +1,5 @@
 import React, { lazy, Suspense, useEffect, useState } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -25,6 +25,7 @@ const AuthRequired = lazy(() => import('./pages/AuthRequired'));
 const AuthError = lazy(() => import('./pages/Auth/AuthError'));
 
 function App() {
+  const location = useLocation();
   // Add any state you need
   const [isLoading, setIsLoading] = useState(false);
 
@@ -54,7 +55,7 @@ function App() {
     return () => {
       console.log('App component unmounted');
     };
-  }, []);
+  }, [location]);
   
   return (
     <AuthProvider>
@@ -70,8 +71,8 @@ function App() {
             <Route path="/auth-error" element={<AuthError />} />
             
             {/* Redirect routes for handling auth errors in the URL */}
-            <Route path="/#error=/*" element={<Navigate to="/auth-error" replace />} />
-            <Route path="/?error=/*" element={<Navigate to="/auth-error" replace />} />
+            <Route path="/#error=/*" element={<Navigate to={`/auth-error${location.hash}`} replace />} />
+            <Route path="/?error=/*" element={<Navigate to={`/auth-error${location.search}`} replace />} />
             
             {/* Protected Dashboard Route */}
             <Route path="/dashboard" element={

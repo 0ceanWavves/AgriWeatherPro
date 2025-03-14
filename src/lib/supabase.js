@@ -19,7 +19,8 @@ function getSupabaseClient() {
       autoRefreshToken: true,
       persistSession: true,
       detectSessionInUrl: true,
-      storageKey: 'agriweatherpro-supabase-auth' // Unique storage key to avoid conflicts
+      storageKey: 'agriweatherpro-supabase-auth', // Unique storage key to avoid conflicts
+      flowType: 'pkce' // Add PKCE flow for improved security
     },
     global: {
       headers: {
@@ -36,5 +37,27 @@ function getSupabaseClient() {
 
 // Export the singleton instance
 const supabase = getSupabaseClient();
+
+// Testing function - use this for troubleshooting
+export async function testSupabaseAuth() {
+  try {
+    // Test if we can make a basic auth request
+    const { data, error } = await supabase.auth.getSession();
+    
+    return {
+      success: !error,
+      data,
+      error,
+      url: supabaseUrl,
+      keyPrefix: supabaseKey.substring(0, 10) + '...' // Show first 10 chars of key for safety
+    };
+  } catch (err) {
+    return {
+      success: false,
+      error: err.message,
+      url: supabaseUrl
+    };
+  }
+}
 
 export { supabase };

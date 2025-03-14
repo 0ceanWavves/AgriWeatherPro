@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { FaLeaf, FaEnvelope, FaLock, FaEye, FaEyeSlash } from 'react-icons/fa';
+import AuthDebug from '../../components/AuthDebug';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
@@ -31,12 +32,9 @@ const SignIn = () => {
       }
       
       console.log('Sign in successful, preparing to navigate');
-      
-      // Add a small delay to allow auth state to propagate
-      setTimeout(() => {
-        setLoading(false);
-        navigate('/dashboard', { replace: true });
-      }, 500);
+      // Immediately set loading to false and navigate
+      setLoading(false);
+      navigate('/dashboard', { replace: true });
       
     } catch (err) {
       console.error('Sign in error:', err);
@@ -46,7 +44,11 @@ const SignIn = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 dark:bg-gray-900">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 dark:bg-gray-900">
+      <div className="w-full max-w-md">
+        {process.env.NODE_ENV === 'development' && <AuthDebug />}
+      </div>
+      
       <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-lg shadow-md dark:bg-gray-800">
         <div className="text-center">
           <div className="flex justify-center">
