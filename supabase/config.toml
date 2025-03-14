@@ -102,7 +102,7 @@ enabled = true
 # in emails.
 site_url = "http://127.0.0.1:3000"
 # A list of *exact* URLs that auth providers are permitted to redirect to post authentication.
-additional_redirect_urls = ["https://127.0.0.1:3000"]
+additional_redirect_urls = ["https://127.0.0.1:3000", "http://localhost:4200", "http://127.0.0.1:4200", "http://localhost:4202", "http://127.0.0.1:4202", "http://localhost:3000", "file:///E:/projects/AgriWeatherPro/public/signup.html"]
 # How long tokens are valid for, in seconds. Defaults to 3600 (1 hour), maximum 604,800 (1 week).
 jwt_expiry = 3600
 # If disabled, the refresh token will never expire.
@@ -288,3 +288,14 @@ s3_region = "env(S3_REGION)"
 s3_access_key = "env(S3_ACCESS_KEY)"
 # Configures AWS_SECRET_ACCESS_KEY for S3 bucket
 s3_secret_key = "env(S3_SECRET_KEY)"
+
+[functions.hello-world]
+enabled = true
+verify_jwt = false # Set to true if you want to require JWT authentication
+# import_map = "./functions/hello-world/deno.json" # Uncomment if you're using an import map
+# entrypoint = "./functions/hello-world/index.ts" # Uncomment if the entrypoint is different
+
+[functions.create-profile]
+enabled = true
+verify_jwt = false  # Important: This function doesn't need JWT verification
+import_map = "./functions/create-profile/deno.json" # Path to the import map
