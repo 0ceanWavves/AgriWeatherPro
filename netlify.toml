@@ -1,12 +1,20 @@
-[build]
-  command = "npm run build"
-  publish = "dist"
+# netlify.toml - Configuration for your Netlify deployment
 
+# Environment variables for the site
 [build.environment]
-  NODE_VERSION = "18"
-  VITE_SUPABASE_URL = "https://gexynwadeancyvnthsbu.supabase.co"
-  VITE_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdleHlud2FkZWFuY3l2bnRoc2J1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTAzMzczMDMsImV4cCI6MjAyNTkxMzMwM30.DjMm1jKSxjhSJxcCoUJcX1fxFc9oTGUPc0IwTfLQJFM"
+  # Supabase auth configuration
+  VITE_SUPABASE_URL = "https://imykwqkjiphztfyolsmn.supabase.co"
+  # Keep the anonymous key secure in Netlify environment variables
+  # VITE_SUPABASE_ANON_KEY = "" # Define in Netlify UI
 
+# Build configuration
+[build]
+  # Directory with the built files (after running the build command)
+  publish = "dist"
+  # Build command to generate the production files
+  command = "npm run build"
+
+# Redirects for SPA routing
 [[redirects]]
   from = "/*"
   to = "/index.html"

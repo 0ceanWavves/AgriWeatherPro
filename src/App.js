@@ -15,6 +15,7 @@ import DirectSignup from './pages/Auth/DirectSignup';
 import FixedSignup from './pages/FixedSignup'; // Import the fixed signup component
 import SignupDebug from './pages/SignupDebug';
 import ForgotPassword from './pages/Auth/ForgotPassword';
+import ResetPassword from './pages/Auth/ResetPassword'; // Import the ResetPassword component
 import AuthRequired from './pages/AuthRequired';
 import AuthError from './pages/Auth/AuthError'; // Import the new AuthError component
 import ProtectedRoute from './components/ProtectedRoute';
@@ -104,10 +105,11 @@ function App() {
           <Route path="/fixed-signup" element={<FixedSignup />} /> {/* Fixed signup route */}
           <Route path="/signup-debug" element={<SignupDebug />} /> 
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} /> {/* Password reset route */}
           <Route path="/auth-required" element={<AuthRequired />} />
           <Route path="/auth-error" element={<AuthError />} />
           
-          {/* Redirect route for handling auth errors in the URL */}
+          {/* Redirect routes for handling auth errors in the URL */}
           <Route path="/#error=*" element={<Navigate to="/auth-error" replace />} />
           <Route path="/?error=*" element={<Navigate to="/auth-error" replace />} />
           
