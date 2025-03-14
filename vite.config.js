@@ -17,10 +17,19 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          'supabase': ['@supabase/supabase-js']
+          'vendor': ['react', 'react-dom', 'react-router-dom'],
+          'auth': [
+            './src/pages/Auth/SignIn.js', 
+            './src/pages/Auth/SignUp.js',
+            './src/pages/Auth/ForgotPassword.js',
+            './src/pages/Auth/ResetPassword.js'
+          ],
+          'dashboard': ['./src/pages/Dashboard.js'],
+          'weather': [] // Add weather-related components here
         }
       }
-    }
+    },
+    chunkSizeWarningLimit: 700
   },
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx']
