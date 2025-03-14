@@ -48,6 +48,7 @@ export function AuthProvider({ children }) {
                 const { error: createError } = await supabase.from('profiles').insert({
                   id: userData.id,
                   email: userData.email,
+                  first_name: userData?.user_metadata?.full_name || '',
                   created_at: new Date().toISOString(),
                   updated_at: new Date().toISOString()
                 });
@@ -111,9 +112,26 @@ export function AuthProvider({ children }) {
               console.log('No profile found after auth change, creating new profile');
               
               try {
+                // Split name from user metadata if available
+                let firstName = '';
+                let lastName = '';
+                
+                if (userData?.user_metadata?.full_name) {
+                  const fullName = userData.user_metadata.full_name;
+                  if (fullName.includes(' ')) {
+                    const nameParts = fullName.split(' ');
+                    firstName = nameParts[0];
+                    lastName = nameParts.slice(1).join(' ');
+                  } else {
+                    firstName = fullName;
+                  }
+                }
+                
                 const { error: createError } = await supabase.from('profiles').insert({
                   id: userData.id,
                   email: userData.email,
+                  first_name: firstName,
+                  last_name: lastName,
                   created_at: new Date().toISOString(),
                   updated_at: new Date().toISOString()
                 });
@@ -183,12 +201,23 @@ export function AuthProvider({ children }) {
         console.log('User created, id:', data.user.id);
         
         try {
+          // Split fullName into first_name and last_name (assuming format "First Last")
+          let firstName = fullName;
+          let lastName = '';
+          
+          if (fullName.includes(' ')) {
+            const nameParts = fullName.split(' ');
+            firstName = nameParts[0];
+            lastName = nameParts.slice(1).join(' ');
+          }
+        
           const { error: profileError } = await supabase
             .from('profiles')
             .upsert({
               id: data.user.id,
-              full_name: fullName,
               email: email,
+              first_name: firstName,
+              last_name: lastName,
               created_at: new Date().toISOString(),
               updated_at: new Date().toISOString()
             });
@@ -303,11 +332,28 @@ export function AuthProvider({ children }) {
   // Update user profile
   async function updateProfile(profileData) {
     try {
+      // Ensure the data matches the column names in the database
+      const updatedData = { ...profileData };
+      
+      // If the profile data includes a full_name, split it into first_name and last_name
+      if (updatedData.full_name && !updatedData.first_name) {
+        const fullName = updatedData.full_name;
+        delete updatedData.full_name;
+        
+        if (fullName.includes(' ')) {
+          const nameParts = fullName.split(' ');
+          updatedData.first_name = nameParts[0];
+          updatedData.last_name = nameParts.slice(1).join(' ');
+        } else {
+          updatedData.first_name = fullName;
+        }
+      }
+      
       const { data, error } = await supabase
         .from('profiles')  // Use the profiles table
         .upsert({
           id: user.id,
-          ...profileData,
+          ...updatedData,
           updated_at: new Date().toISOString()
         });
 
@@ -316,7 +362,7 @@ export function AuthProvider({ children }) {
       // Update local profile state
       setUserProfile(prevProfile => ({
         ...prevProfile,
-        ...profileData
+        ...updatedData
       }));
       
       return { data, error: null };
