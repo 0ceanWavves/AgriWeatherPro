@@ -17,73 +17,59 @@ export function AuthProvider({ children }) {
     // Check for active session on page load
     const checkSession = async () => {
       try {
-        // Log for debugging
         console.log('Checking for existing session...');
+        const { data, error } = await supabase.auth.getSession();
         
-        const { data } = await supabase.auth.getSession();
-        const userData = data?.session?.user || null;
-        
-        console.log('Session check result:', userData ? 'User found' : 'No user found');
-        
-        // IMPORTANT: Set loading to false even if no user is found
-        if (!userData) {
+        if (error) {
+          console.error('Session check error:', error);
           setUser(null);
-          setUserProfile(null);
           setLoading(false);
           return;
         }
         
+        console.log('Session check result:', data?.session ? 'Session exists' : 'No session');
+        
+        // Update user state from session
+        const userData = data?.session?.user || null;
         setUser(userData);
         
-        // Fetch user profile if user is logged in
-        try {
-          const profileData = await getUserProfile();
-          console.log('Profile data fetched:', profileData);
-          
-          // If profile doesn't exist but we have user data, create the profile
-          if (!profileData?.profile && userData.user_metadata?.full_name) {
-            console.log('Profile not found during session check, creating one for user:', userData.id);
-            try {
-              // First check if profile already exists (extra safety)
-              const { data: existingProfile } = await supabase
-                .from('profiles')
-                .select('*')
-                .eq('id', userData.id)
-                .single();
+        // If user exists, get their profile
+        if (userData) {
+          try {
+            console.log('Fetching user profile for ID:', userData.id);
+            const profileData = await getUserProfile(userData.id);
+            
+            // If no profile exists yet, create one
+            if (!profileData?.profile) {
+              console.log('No profile found, creating new profile');
+              
+              try {
+                // Try to create a profile
+                const { error: createError } = await supabase.from('profiles').insert({
+                  id: userData.id,
+                  email: userData.email,
+                  created_at: new Date().toISOString(),
+                  updated_at: new Date().toISOString()
+                });
                 
-              if (!existingProfile) {
-                // Use upsert instead of insert to handle possible duplicates
-                const { error: profileError } = await supabase
-                  .from('profiles')
-                  .upsert({
-                    id: userData.id,
-                    full_name: userData.user_metadata.full_name,
-                    email: userData.email,
-                    created_at: new Date().toISOString(),
-                    updated_at: new Date().toISOString()
-                  });
-                
-                if (profileError) {
-                  console.error('Error creating profile during session check:', profileError);
+                if (createError) {
+                  console.error('Error creating profile during session check:', createError);
                 } else {
-                  console.log('Profile created during session check');
-                  // Refresh profile data after creation
-                  const freshProfileData = await getUserProfile();
-                  setUserProfile(freshProfileData?.profile || null);
+                  console.log('Profile created successfully during session check');
+                  // Fetch the newly created profile
+                  const newProfileData = await getUserProfile(userData.id);
+                  setUserProfile(newProfileData?.profile || null);
                 }
-              } else {
-                console.log('Profile already exists during session check, using existing');
-                setUserProfile(existingProfile);
+              } catch (createError) {
+                console.error('Exception creating profile during session check:', createError);
               }
-            } catch (createError) {
-              console.error('Exception creating profile during session check:', createError);
+            } else {
+              setUserProfile(profileData?.profile || null);
             }
-          } else {
-            setUserProfile(profileData?.profile || null);
+          } catch (profileError) {
+            console.error('Error fetching profile:', profileError);
+            // Still consider the user logged in even if profile fetch fails
           }
-        } catch (profileError) {
-          console.error('Error fetching profile:', profileError);
-          // Still consider the user logged in even if profile fetch fails
         }
       } catch (error) {
         console.error('Error checking session:', error);
@@ -115,45 +101,30 @@ export function AuthProvider({ children }) {
         // For other events, update the user state
         setUser(userData);
         
-        // Fetch user profile only if signed in or token refreshed
-        if (userData && (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED')) {
+        // If user exists after auth state change, fetch or create their profile
+        if (userData) {
           try {
-            const profileData = await getUserProfile();
+            console.log('Fetching user profile after auth change for ID:', userData.id);
+            const profileData = await getUserProfile(userData.id);
             
-            // If the profile doesn't exist but we have user data, create the profile
-            if (!profileData?.profile && userData?.user_metadata?.full_name) {
-              console.log('Profile not found, creating one for user:', userData.id);
+            if (!profileData?.profile) {
+              console.log('No profile found after auth change, creating new profile');
+              
               try {
-                // First check if profile already exists
-                const { data: existingProfile } = await supabase
-                  .from('profiles')
-                  .select('*')
-                  .eq('id', userData.id)
-                  .single();
-                  
-                if (!existingProfile) {
-                  // Use upsert instead of insert to handle possible duplicates
-                  const { error: profileError } = await supabase
-                    .from('profiles')
-                    .upsert({
-                      id: userData.id,
-                      full_name: userData.user_metadata.full_name,
-                      email: userData.email,
-                      created_at: new Date().toISOString(),
-                      updated_at: new Date().toISOString()
-                    });
-                  
-                  if (profileError) {
-                    console.error('Error creating profile on auth change:', profileError);
-                  } else {
-                    console.log('Profile created on auth change');
-                    // Refresh profile data after creation
-                    const freshProfileData = await getUserProfile();
-                    setUserProfile(freshProfileData?.profile || null);
-                  }
+                const { error: createError } = await supabase.from('profiles').insert({
+                  id: userData.id,
+                  email: userData.email,
+                  created_at: new Date().toISOString(),
+                  updated_at: new Date().toISOString()
+                });
+                
+                if (createError) {
+                  console.error('Error creating profile after auth change:', createError);
                 } else {
-                  console.log('Profile already exists during auth change, using existing');
-                  setUserProfile(existingProfile);
+                  console.log('Profile created successfully after auth change');
+                  // Fetch the newly created profile
+                  const newProfileData = await getUserProfile(userData.id);
+                  setUserProfile(newProfileData?.profile || null);
                 }
               } catch (createError) {
                 console.error('Exception creating profile on auth change:', createError);
@@ -194,7 +165,9 @@ export function AuthProvider({ children }) {
         options: {
           data: {
             full_name: fullName
-          }
+          },
+          // Redirect to dashboard after verification, but error page will handle failures
+          emailRedirectTo: `${window.location.origin}/dashboard`
         }
       });
       
@@ -240,6 +213,44 @@ export function AuthProvider({ children }) {
           originalError: error
         } 
       };
+    }
+  }
+
+  // Resend email verification
+  async function resendVerification(email) {
+    try {
+      const { data, error } = await supabase.auth.resend({
+        type: 'signup',
+        email: email,
+        options: {
+          emailRedirectTo: window.location.origin + '/dashboard',
+        },
+      });
+      
+      if (error) throw error;
+      
+      return { data, error: null };
+    } catch (error) {
+      console.error('Error resending verification email:', error);
+      return { data: null, error };
+    }
+  }
+
+  // Check if user email is verified
+  async function isEmailVerified() {
+    try {
+      if (!user) return false;
+      
+      // Refresh the session to get the latest user data
+      const { data, error } = await supabase.auth.getUser();
+      
+      if (error) throw error;
+      
+      // Check if email is confirmed in user metadata
+      return data?.user?.email_confirmed_at != null;
+    } catch (error) {
+      console.error('Error checking email verification:', error);
+      return false;
     }
   }
 
@@ -323,8 +334,14 @@ export function AuthProvider({ children }) {
     signIn,
     signOut,
     resetPassword,
-    updateProfile
+    updateProfile,
+    resendVerification,
+    isEmailVerified
   };
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={value}>
+      {children}
+    </AuthContext.Provider>
+  );
 }

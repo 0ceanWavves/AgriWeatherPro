@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -16,6 +16,7 @@ import FixedSignup from './pages/FixedSignup'; // Import the fixed signup compon
 import SignupDebug from './pages/SignupDebug';
 import ForgotPassword from './pages/Auth/ForgotPassword';
 import AuthRequired from './pages/AuthRequired';
+import AuthError from './pages/Auth/AuthError'; // Import the new AuthError component
 import ProtectedRoute from './components/ProtectedRoute';
 import PestManagement from './pages/ServicePages/PestManagement';
 import IrrigationPlanning from './pages/ServicePages/IrrigationPlanning';
@@ -69,6 +70,29 @@ function App() {
     return () => observer.disconnect();
   }, []);
   
+  // Detect auth errors in URL (from Supabase redirects)
+  useEffect(() => {
+    const handleAuthError = () => {
+      const url = window.location.href;
+      
+      // Check if URL contains error parameters (either in hash or query params)
+      if (url.includes('error=') || url.includes('error_code=') || url.includes('error_description=')) {
+        // Redirect to our error handling page while preserving the error parameters
+        const hash = window.location.hash;
+        const search = window.location.search;
+        
+        // Determine which format the error is in (hash or query)
+        if (hash && (hash.includes('error=') || hash.includes('error_code='))) {
+          window.location.href = `/auth-error${hash}`;
+        } else if (search && (search.includes('error=') || search.includes('error_code='))) {
+          window.location.href = `/auth-error${search}`;
+        }
+      }
+    };
+    
+    handleAuthError();
+  }, []);
+  
   return (
     <AuthProvider>
       <div className="flex flex-col min-h-screen app-content">
@@ -81,6 +105,11 @@ function App() {
           <Route path="/signup-debug" element={<SignupDebug />} /> 
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/auth-required" element={<AuthRequired />} />
+          <Route path="/auth-error" element={<AuthError />} />
+          
+          {/* Redirect route for handling auth errors in the URL */}
+          <Route path="/#error=*" element={<Navigate to="/auth-error" replace />} />
+          <Route path="/?error=*" element={<Navigate to="/auth-error" replace />} />
           
           {/* Protected Dashboard Route */}
           <Route path="/dashboard" element={

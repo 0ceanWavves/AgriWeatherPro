@@ -16,26 +16,26 @@ Deno.serve(async (req) => {
   try {
     const { user } = await req.json();
 
-    // Insert a new row into the public.profiles table
+    // Update the profile instead of inserting a new one
     const { error } = await supabaseAdminClient
       .from('profiles')
-      .insert([{
-        id: user.id,
-        username: user.user_metadata.username, // Get username from metadata
-        full_name: user.user_metadata.full_name, // Get full_name from metadata
-        website: user.user_metadata.website, // Get website from metadata
-      }]);
+      .update({
+        first_name: user.user_metadata?.full_name?.split(' ')[0] || '',
+        last_name: user.user_metadata?.full_name?.split(' ').slice(1).join(' ') || '',
+        updated_at: new Date()
+      })
+      .eq('id', user.id);
 
     if (error) {
       throw error;
     }
 
-    return new Response(JSON.stringify({ message: 'Profile created' }), {
+    return new Response(JSON.stringify({ message: 'Profile updated' }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200,
     });
   } catch (error: any) {
-    console.error('Error creating profile:', error);
+    console.error('Error updating profile:', error);
     return new Response(JSON.stringify({ error: error.message }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 500,
