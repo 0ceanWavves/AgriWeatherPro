@@ -31,8 +31,13 @@ const SignIn = () => {
       }
       
       console.log('Sign in successful, preparing to navigate');
-      setLoading(false);
-      navigate('/dashboard');
+      
+      // Add a small delay to allow auth state to propagate
+      setTimeout(() => {
+        setLoading(false);
+        navigate('/dashboard', { replace: true });
+      }, 500);
+      
     } catch (err) {
       console.error('Sign in error:', err);
       setError(err.message || 'Failed to sign in. Please check your credentials.');

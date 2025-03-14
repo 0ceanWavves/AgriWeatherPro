@@ -51,6 +51,7 @@ const WeatherMap = ({ location = { lat: 51.505, lng: -0.09, name: 'London' }, mo
   const [activeLayer, setActiveLayer] = useState(mode === 'irrigation' ? 'precipitation_new' : 'temp_new');
   const [showPremiumOverlay, setShowPremiumOverlay] = useState(false);
   const [isPremiumUser, setIsPremiumUser] = useState(false);
+  const [currentLocation, setCurrentLocation] = useState(location);
   const [currentWeather, setCurrentWeather] = useState({
     temp: -8.8,
     feelsLike: -11.9,
@@ -64,11 +65,16 @@ const WeatherMap = ({ location = { lat: 51.505, lng: -0.09, name: 'London' }, mo
     irrigationNeeded: true // New field for irrigation planning
   });
   
+  // Update internal location state when props change
+  useEffect(() => {
+    setCurrentLocation(location);
+  }, [location]);
+  
   // Fetch weather data for the main location
   useEffect(() => {
     const fetchWeather = async () => {
       try {
-        const weatherData = await getLocationWeather(location.lat, location.lng);
+        const weatherData = await getLocationWeather(currentLocation.lat, currentLocation.lng);
         setCurrentWeather(weatherData);
       } catch (error) {
         console.error("Failed to fetch current weather:", error);
@@ -76,7 +82,7 @@ const WeatherMap = ({ location = { lat: 51.505, lng: -0.09, name: 'London' }, mo
     };
     
     fetchWeather();
-  }, [location]);
+  }, [currentLocation]);
   
   // Get the appropriate layers based on the current mode
   const getLayers = () => {
@@ -125,31 +131,33 @@ const WeatherMap = ({ location = { lat: 51.505, lng: -0.09, name: 'London' }, mo
   const handleLocationSelect = (locationData) => {
     if (!locationData) return;
     
-    // Update map center and current weather
+    console.log("Location selected:", locationData);
+    
     try {
-      const mapContainer = document.querySelector('.leaflet-container');
-      if (mapContainer && mapContainer._leaflet_id) {
-        const map = L.DomUtil.get(mapContainer)._leaflet;
-        if (map) {
-          map.setView([locationData.lat, locationData.lon], 8);
-        }
-      }
-      
-      // Update location in component props
-      location = {
+      // Update our internal location state - this will trigger the useEffect to fetch new weather
+      setCurrentLocation({
         lat: locationData.lat,
         lng: locationData.lon,
         name: locationData.name
+      });
+      
+      // Generate mock data for immediate feedback
+      const mockWeatherData = {
+        temp: Math.floor(Math.random() * 35) - 5,
+        feelsLike: Math.floor(Math.random() * 35) - 7,
+        precipitation: Math.random() * 10,
+        windSpeed: Math.random() * 10,
+        windDirection: Math.floor(Math.random() * 360),
+        humidity: Math.floor(Math.random() * 100),
+        clouds: Math.floor(Math.random() * 100),
+        pressure: 990 + Math.floor(Math.random() * 60),
+        soilMoisture: Math.floor(Math.random() * 100),
+        irrigationNeeded: Math.random() > 0.5
       };
       
-      // Fetch weather for the new location
-      getLocationWeather(locationData.lat, locationData.lon)
-        .then(weatherData => {
-          setCurrentWeather(weatherData);
-        })
-        .catch(error => {
-          console.error("Failed to fetch current weather:", error);
-        });
+      // Update the current weather with the mock data
+      setCurrentWeather(mockWeatherData);
+      
     } catch (error) {
       console.error("Error updating map location:", error);
     }
@@ -234,8 +242,8 @@ const WeatherMap = ({ location = { lat: 51.505, lng: -0.09, name: 'London' }, mo
     
       <div className="map-header">
         <div className="map-title">
-          <h1>{mode === 'irrigation' ? 'Irrigation Planning' : 'Weather Map'}: {location.name}</h1>
-          <span className="date-display">27 November 2024</span>
+          <h1>{mode === 'irrigation' ? 'Irrigation Planning' : 'Weather Map'}: {currentLocation.name}</h1>
+          <span className="date-display">{new Date().toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
         </div>
         
         <div className="map-layers">
@@ -259,10 +267,11 @@ const WeatherMap = ({ location = { lat: 51.505, lng: -0.09, name: 'London' }, mo
       
       <div className="map-container">
         <MapContainer 
-          center={[location.lat, location.lng]} 
+          center={[currentLocation.lat, currentLocation.lng]} 
           zoom={6} 
           style={{ height: '100%', width: '100%' }}
           zoomControl={false}
+          key={`${currentLocation.lat}-${currentLocation.lng}`} // Force re-render when location changes
         >
           <ZoomControl position="topleft" />
           
@@ -475,7 +484,7 @@ const WeatherMap = ({ location = { lat: 51.505, lng: -0.09, name: 'London' }, mo
       </div>
       
       <div className="time-navigation">
-        <p className="time-label">27 November at 11:00</p>
+        <p className="time-label">{new Date().toLocaleDateString('en-US', { day: 'numeric', month: 'long' })} at {new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</p>
         <div className="timeline">
           <button className="prev-time-btn" type="button">‹</button>
           {timeSlots.map((time, index) => (
