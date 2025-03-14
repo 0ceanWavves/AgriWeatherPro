@@ -70,8 +70,8 @@ function App() {
             <Route path="/auth-error" element={<AuthError />} />
             
             {/* Redirect routes for handling auth errors in the URL */}
-            <Route path="/#error=*" element={<Navigate to="/auth-error" replace />} />
-            <Route path="/?error=*" element={<Navigate to="/auth-error" replace />} />
+            <Route path="/#error=/*" element={<Navigate to="/auth-error" replace />} />
+            <Route path="/?error=/*" element={<Navigate to="/auth-error" replace />} />
             
             {/* Protected Dashboard Route */}
             <Route path="/dashboard" element={
