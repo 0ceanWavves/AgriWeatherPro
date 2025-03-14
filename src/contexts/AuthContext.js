@@ -17,17 +17,13 @@ export function AuthProvider({ children }) {
     // Check for active session on page load
     const checkSession = async () => {
       try {
-        console.log('Checking for existing session...');
         const { data, error } = await supabase.auth.getSession();
         
         if (error) {
-          console.error('Session check error:', error);
           setUser(null);
           setLoading(false);
           return;
         }
-        
-        console.log('Session check result:', data?.session ? 'Session exists' : 'No session');
         
         // Update user state from session
         const userData = data?.session?.user || null;
@@ -36,25 +32,16 @@ export function AuthProvider({ children }) {
         // If user exists, get their profile
         if (userData) {
           try {
-            console.log('Fetching user profile for ID:', userData.id);
             const profileData = await getUserProfile(userData.id);
             setUserProfile(profileData?.profile || null);
-            
-            if (!profileData?.profile) {
-              console.log('No profile found. This might be normal for new users.');
-              // Profile creation is now handled by a database trigger
-            }
           } catch (profileError) {
-            console.error('Error fetching profile:', profileError);
             // Still consider the user logged in even if profile fetch fails
           }
         }
+        
+        setLoading(false);
       } catch (error) {
-        console.error('Error checking session:', error);
-        // Clear user data on error and finish loading
         setUser(null);
-        setUserProfile(null);
-      } finally {
         setLoading(false);
       }
     };
@@ -65,7 +52,6 @@ export function AuthProvider({ children }) {
     const { data: authListener } = supabase.auth.onAuthStateChange(
       async (event, session) => {
         // Auth state has changed
-        console.log('Auth state changed:', event);
         const userData = session?.user || null;
         
         // When signed out, clear everything
@@ -82,16 +68,9 @@ export function AuthProvider({ children }) {
         // If user exists after auth state change, fetch profile
         if (userData) {
           try {
-            console.log('Fetching user profile after auth change for ID:', userData.id);
             const profileData = await getUserProfile(userData.id);
             setUserProfile(profileData?.profile || null);
-            
-            if (!profileData?.profile) {
-              console.log('No profile found after auth change. Might be normal for new users.');
-              // Profile creation is now handled by a database trigger
-            }
           } catch (profileError) {
-            console.error('Error fetching profile on auth change:', profileError);
             // Continue without profile
           }
         }
@@ -111,15 +90,10 @@ export function AuthProvider({ children }) {
 
   // Sign up function with detailed error handling
   async function signUp(email, password, fullName) {
-    console.log('Starting signup process for:', email);
-    
     try {
       // Try a direct signup with minimal options
-      console.log('Making signup API call...');
-      
       // Get the current site URL - works in both development and production
       const siteUrl = window.location.origin;
-      console.log('Using site URL for redirects:', siteUrl);
       
       const { data, error } = await supabase.auth.signUp({
         email,
@@ -134,18 +108,11 @@ export function AuthProvider({ children }) {
       });
       
       if (error) {
-        console.error('Signup API returned error:', error);
         return { data: null, error };
       }
       
-      console.log('Signup API call succeeded:', data ? 'Data returned' : 'No data');
-      
-      // Note: Profile creation is now handled by a database trigger
-      console.log('Profile creation will be handled by database trigger');
-      
       return { data, error: null };
     } catch (error) {
-      console.error('Exception during signup:', error);
       return { 
         data: null, 
         error: { 
@@ -171,7 +138,6 @@ export function AuthProvider({ children }) {
       
       return { data, error: null };
     } catch (error) {
-      console.error('Error resending verification email:', error);
       return { data: null, error };
     }
   }
@@ -189,7 +155,6 @@ export function AuthProvider({ children }) {
       // Check if email is confirmed in user metadata
       return data?.user?.email_confirmed_at != null;
     } catch (error) {
-      console.error('Error checking email verification:', error);
       return false;
     }
   }
@@ -220,7 +185,6 @@ export function AuthProvider({ children }) {
       if (error) throw error;
       return { error: null };
     } catch (error) {
-      console.error('Sign out exception:', error.message);
       return { error };
     }
   }
@@ -228,23 +192,16 @@ export function AuthProvider({ children }) {
   // Password reset function with improved error handling
   async function resetPassword(email) {
     try {
-      console.log('Requesting password reset for:', email);
-      
       // Use the current site URL for redirects
       const siteUrl = window.location.origin;
-      console.log('Using site URL for reset redirects:', siteUrl);
       
       const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
         redirectTo: `${siteUrl}/reset-password`,
       });
       
       if (error) {
-        console.error('Reset password API error:', error);
-        
         // Handle specific error codes
         if (error.status === 429 || error.message?.includes('rate limit') || error.message?.includes('security purposes')) {
-          console.log('Rate limit detected for password reset');
-          
           // If we have the error code for rate limiting, provide a more specific error
           if (error.message?.includes('after')) {
             return { 
@@ -271,10 +228,8 @@ export function AuthProvider({ children }) {
         throw error;
       }
       
-      console.log('Password reset email sent successfully');
       return { data, error: null };
     } catch (error) {
-      console.error('Reset password exception:', error.message);
       return { data: null, error };
     }
   }
@@ -317,7 +272,6 @@ export function AuthProvider({ children }) {
       
       return { data, error: null };
     } catch (error) {
-      console.error('Update profile exception:', error.message);
       return { data: null, error };
     }
   }
