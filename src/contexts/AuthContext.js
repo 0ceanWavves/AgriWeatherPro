@@ -14,75 +14,41 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check for active session on page load
-    const checkSession = async () => {
+    let mounted = true;
+    
+    async function checkSession() {
       try {
+        console.log('Checking for existing session...');
         const { data, error } = await supabase.auth.getSession();
         
         if (error) {
-          setUser(null);
-          setLoading(false);
-          return;
+          console.error('Session check error:', error);
+          if (mounted) setUser(null);
+        } else {
+          console.log('Session check result:', data.session ? 'Session found' : 'No session');
+          if (mounted) setUser(data.session?.user || null);
         }
-        
-        // Update user state from session
-        const userData = data?.session?.user || null;
-        setUser(userData);
-        
-        // If user exists, get their profile
-        if (userData) {
-          try {
-            const profileData = await getUserProfile(userData.id);
-            setUserProfile(profileData?.profile || null);
-          } catch (profileError) {
-            // Still consider the user logged in even if profile fetch fails
-          }
-        }
-        
-        setLoading(false);
-      } catch (error) {
-        setUser(null);
-        setLoading(false);
+      } catch (err) {
+        console.error('Exception checking session:', err);
+        if (mounted) setUser(null);
+      } finally {
+        if (mounted) setLoading(false);
       }
-    };
+    }
     
     checkSession();
-
-    // Listen for auth state changes
+    
+    // Ensure we're properly tracking auth state changes
     const { data: authListener } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        // Auth state has changed
-        const userData = session?.user || null;
-        
-        // When signed out, clear everything
-        if (event === 'SIGNED_OUT') {
-          setUser(null);
-          setUserProfile(null);
-          setLoading(false);
-          return;
-        }
-        
-        // For other events, update the user state
-        setUser(userData);
-        
-        // If user exists after auth state change, fetch profile
-        if (userData) {
-          try {
-            const profileData = await getUserProfile(userData.id);
-            setUserProfile(profileData?.profile || null);
-          } catch (profileError) {
-            // Continue without profile
-          }
-        }
-        
-        // Always finish loading at the end
-        setLoading(false);
+      (event, session) => {
+        console.log('Auth state changed:', event, session ? 'Session exists' : 'No session');
+        if (mounted) setUser(session?.user || null);
       }
     );
-
+    
     return () => {
-      // Clean up subscription
-      if (authListener && authListener.subscription) {
+      mounted = false;
+      if (authListener?.subscription) {
         authListener.subscription.unsubscribe();
       }
     };

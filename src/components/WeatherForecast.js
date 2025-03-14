@@ -1,12 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaTemperatureHigh, FaWind, FaCloudRain, FaSun, FaCloud } from 'react-icons/fa';
 import { getWeatherForecast } from '../api/weatherApi';
 import LocationAutocomplete from './LocationAutocomplete';
 
-const WeatherForecast = () => {
+const WeatherForecast = ({ initialLocation }) => {
   const [forecastData, setForecastData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  
+  // Use the initial location (from geolocation) when component mounts
+  useEffect(() => {
+    if (initialLocation) {
+      handleLocationSelect(initialLocation);
+    }
+  }, [initialLocation]);
 
   const handleLocationSelect = async (locationData) => {
     if (!locationData) return;

@@ -3,6 +3,7 @@ import { Navigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 
 const ProtectedRoute = ({ children }) => {
+  console.log("USING ProtectedRoute.js (flat version)");
   const [loading, setLoading] = useState(true);
   const [authenticated, setAuthenticated] = useState(false);
 

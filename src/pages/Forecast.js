@@ -1,8 +1,41 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import WeatherForecast from '../components/WeatherForecast';
 import { FaCloudSun, FaChartLine, FaMapMarkedAlt } from 'react-icons/fa';
 
 const Forecast = () => {
+  const [userLocation, setUserLocation] = useState(null);
+
+  // Request user location when component mounts
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          try {
+            // Reverse geocoding to get location name
+            const response = await fetch(
+              `https://api.openweathermap.org/geo/1.0/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}&limit=1&appid=${process.env.VITE_OPENWEATHERMAP_API_KEY || '11d494e6c254ca3a724c694a4ebeb27f'}`
+            );
+            const data = await response.json();
+            
+            if (data && data.length > 0) {
+              setUserLocation({
+                name: data[0].name,
+                lat: position.coords.latitude,
+                lon: position.coords.longitude,
+                country: data[0].country
+              });
+            }
+          } catch (error) {
+            console.error('Error getting location name:', error);
+          }
+        },
+        (error) => {
+          console.error('Error getting user location:', error);
+        }
+      );
+    }
+  }, []);
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-5xl mx-auto">
@@ -13,7 +46,7 @@ const Forecast = () => {
           </p>
         </div>
         
-        <WeatherForecast />
+        <WeatherForecast initialLocation={userLocation} />
         
         <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="card bg-primary/5">

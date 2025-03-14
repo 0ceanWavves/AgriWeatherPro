@@ -4,6 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { FaTemperatureHigh, FaCloudRain, FaWind, FaCloud, FaTachometerAlt, FaWater, FaTint, FaSeedling, FaLock } from 'react-icons/fa';
 
+import LocationAutocomplete from '../LocationAutocomplete';
 import { OPENWEATHERMAP_API_KEY } from '../../utils/config';
 
 // Function to get weather map tile URL
@@ -118,6 +119,40 @@ const WeatherMap = ({ location = { lat: 51.505, lng: -0.09, name: 'London' }, mo
     { name: 'Plymouth', position: [50.3755, -4.1427], temp: 7 },
     { name: 'Saint Malo', position: [48.6493, -2.0136], temp: 10 },
   ];
+  
+  // Handle location selection from autocomplete
+  const handleLocationSelect = (locationData) => {
+    if (!locationData) return;
+    
+    // Update map center and current weather
+    try {
+      const mapContainer = document.querySelector('.leaflet-container');
+      if (mapContainer && mapContainer._leaflet_id) {
+        const map = L.DomUtil.get(mapContainer)._leaflet;
+        if (map) {
+          map.setView([locationData.lat, locationData.lon], 8);
+        }
+      }
+      
+      // Update location in component props
+      location = {
+        lat: locationData.lat,
+        lng: locationData.lon,
+        name: locationData.name
+      };
+      
+      // Fetch weather for the new location
+      getLocationWeather(locationData.lat, locationData.lon)
+        .then(weatherData => {
+          setCurrentWeather(weatherData);
+        })
+        .catch(error => {
+          console.error("Failed to fetch current weather:", error);
+        });
+    } catch (error) {
+      console.error("Error updating map location:", error);
+    }
+  };
   
   const handleLayerChange = (layerId, isPremium) => {
     if (isPremium && !isPremiumUser) {
@@ -321,23 +356,7 @@ const WeatherMap = ({ location = { lat: 51.505, lng: -0.09, name: 'London' }, mo
         </MapContainer>
         
         <div className="city-search">
-          <input 
-            type="text" 
-            placeholder="Name or zip code..." 
-            autoComplete="on" 
-            spellCheck="true"
-            list="city-suggestions"
-          />
-          <datalist id="city-suggestions">
-            <option value="New York, US">New York, US</option>
-            <option value="London, GB">London, GB</option>
-            <option value="Tokyo, JP">Tokyo, JP</option>
-            <option value="Paris, FR">Paris, FR</option>
-            <option value="Dubai, AE">Dubai, AE</option>
-            <option value="20001">Washington DC, US</option>
-            <option value="90210">Beverly Hills, US</option>
-            <option value="75001">Paris, FR</option>
-          </datalist>
+          <LocationAutocomplete onLocationSelect={handleLocationSelect} />
         </div>
         
         <div className="weather-details-panel">

@@ -57,6 +57,7 @@
     "http-proxy-middleware": "^3.0.3",
     "netlify-cli": "^15.10.0",
     "postcss": "^8.4.31",
+    "rollup-plugin-visualizer": "^5.14.0",
     "supabase": "^2.19.7",
     "vite": "^5.0.0",
     "vitest": "^1.0.4"

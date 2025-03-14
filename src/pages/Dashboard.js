@@ -12,6 +12,7 @@ import '../styles/Dashboard.css';
 const Dashboard = () => {
   const [activeView, setActiveView] = useState('maps');
   const { loading, user } = useAuth();
+  const [userLocation, setUserLocation] = useState({ lat: 51.505, lng: -0.09, name: 'London' });
   
   // Enable dark mode when Dashboard mounts
   useEffect(() => {
@@ -21,6 +22,48 @@ const Dashboard = () => {
     return () => {
       document.body.classList.remove('dark-mode');
     };
+  }, []);
+
+  // Request user location when the component mounts
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          try {
+            // Reverse geocoding to get location name
+            const response = await fetch(
+              `https://api.openweathermap.org/geo/1.0/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}&limit=1&appid=${process.env.VITE_OPENWEATHERMAP_API_KEY || '11d494e6c254ca3a724c694a4ebeb27f'}`
+            );
+            const data = await response.json();
+            
+            if (data && data.length > 0) {
+              setUserLocation({
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+                name: data[0].name || 'Your Location'
+              });
+            } else {
+              setUserLocation({
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+                name: 'Your Location'
+              });
+            }
+          } catch (error) {
+            console.error('Error getting location name:', error);
+            setUserLocation({
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+              name: 'Your Location'
+            });
+          }
+        },
+        (error) => {
+          console.error('Error getting user location:', error);
+          // Keep default London location
+        }
+      );
+    }
   }, []);
 
   // Force refresh the component when it first mounts
@@ -44,9 +87,6 @@ const Dashboard = () => {
     return <Navigate to="/signin" replace />;
   }
   
-  // Sample location data
-  const london = { lat: 51.505, lng: -0.09, name: 'London' };
-  
   // Render the appropriate content based on the active view
   const renderContent = () => {
     switch(activeView) {
@@ -56,7 +96,7 @@ const Dashboard = () => {
         return <CropYieldDisplay />;
       case 'maps':
       case 'home':
-        return <WeatherMap location={london} />;
+        return <WeatherMap location={userLocation} />;
       case 'reports':
         return (
           <div className="reports-panel p-5">
