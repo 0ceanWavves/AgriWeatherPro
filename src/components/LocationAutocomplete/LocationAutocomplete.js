@@ -23,7 +23,7 @@ const LocationAutocomplete = ({ onLocationSelect }) => {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        `https://api.openweathermap.org/geo/1.0/direct?q=${input}&limit=5&appid=${OPENWEATHERMAP_API_KEY}`
+        `https://api.openweathermap.org/geo/1.0/direct?q=${input}&limit=5&appid=deeaa95f4b7b2543dc8c3d9cb96396c6`
       );
       
       const formattedSuggestions = response.data.map(location => ({
@@ -133,7 +133,7 @@ const LocationAutocomplete = ({ onLocationSelect }) => {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        `https://api.openweathermap.org/geo/1.0/direct?q=${value}&limit=1&appid=${OPENWEATHERMAP_API_KEY}`
+        `https://api.openweathermap.org/geo/1.0/direct?q=${value}&limit=1&appid=deeaa95f4b7b2543dc8c3d9cb96396c6`
       );
       
       if (response.data && response.data.length > 0) {

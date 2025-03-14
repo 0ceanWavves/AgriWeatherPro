@@ -9,7 +9,8 @@ import { OPENWEATHERMAP_API_KEY } from '../../utils/config';
 
 // Function to get weather map tile URL
 const getWeatherMapUrl = (layerId) => {
-  const apiKey = OPENWEATHERMAP_API_KEY || '11d494e6c254ca3a724c694a4ebeb27f'; // Demo API key as fallback
+  // Use the API key from .env file
+  const apiKey = 'deeaa95f4b7b2543dc8c3d9cb96396c6';
   return `https://tile.openweathermap.org/map/${layerId}/{z}/{x}/{y}.png?appid=${apiKey}`;
 };
 

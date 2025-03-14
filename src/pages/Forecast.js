@@ -13,7 +13,7 @@ const Forecast = () => {
           try {
             // Reverse geocoding to get location name
             const response = await fetch(
-              `https://api.openweathermap.org/geo/1.0/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}&limit=1&appid=${process.env.VITE_OPENWEATHERMAP_API_KEY || '11d494e6c254ca3a724c694a4ebeb27f'}`
+              `https://api.openweathermap.org/geo/1.0/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}&limit=1&appid=deeaa95f4b7b2543dc8c3d9cb96396c6`
             );
             const data = await response.json();
             
