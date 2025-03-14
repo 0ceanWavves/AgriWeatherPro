@@ -38,34 +38,11 @@ export function AuthProvider({ children }) {
           try {
             console.log('Fetching user profile for ID:', userData.id);
             const profileData = await getUserProfile(userData.id);
+            setUserProfile(profileData?.profile || null);
             
-            // If no profile exists yet, create one
             if (!profileData?.profile) {
-              console.log('No profile found, creating new profile');
-              
-              try {
-                // Try to create a profile
-                const { error: createError } = await supabase.from('profiles').insert({
-                  id: userData.id,
-                  email: userData.email,
-                  first_name: userData?.user_metadata?.full_name || '',
-                  created_at: new Date().toISOString(),
-                  updated_at: new Date().toISOString()
-                });
-                
-                if (createError) {
-                  console.error('Error creating profile during session check:', createError);
-                } else {
-                  console.log('Profile created successfully during session check');
-                  // Fetch the newly created profile
-                  const newProfileData = await getUserProfile(userData.id);
-                  setUserProfile(newProfileData?.profile || null);
-                }
-              } catch (createError) {
-                console.error('Exception creating profile during session check:', createError);
-              }
-            } else {
-              setUserProfile(profileData?.profile || null);
+              console.log('No profile found. This might be normal for new users.');
+              // Profile creation is now handled by a database trigger
             }
           } catch (profileError) {
             console.error('Error fetching profile:', profileError);
@@ -102,53 +79,16 @@ export function AuthProvider({ children }) {
         // For other events, update the user state
         setUser(userData);
         
-        // If user exists after auth state change, fetch or create their profile
+        // If user exists after auth state change, fetch profile
         if (userData) {
           try {
             console.log('Fetching user profile after auth change for ID:', userData.id);
             const profileData = await getUserProfile(userData.id);
+            setUserProfile(profileData?.profile || null);
             
             if (!profileData?.profile) {
-              console.log('No profile found after auth change, creating new profile');
-              
-              try {
-                // Split name from user metadata if available
-                let firstName = '';
-                let lastName = '';
-                
-                if (userData?.user_metadata?.full_name) {
-                  const fullName = userData.user_metadata.full_name;
-                  if (fullName.includes(' ')) {
-                    const nameParts = fullName.split(' ');
-                    firstName = nameParts[0];
-                    lastName = nameParts.slice(1).join(' ');
-                  } else {
-                    firstName = fullName;
-                  }
-                }
-                
-                const { error: createError } = await supabase.from('profiles').insert({
-                  id: userData.id,
-                  email: userData.email,
-                  first_name: firstName,
-                  last_name: lastName,
-                  created_at: new Date().toISOString(),
-                  updated_at: new Date().toISOString()
-                });
-                
-                if (createError) {
-                  console.error('Error creating profile after auth change:', createError);
-                } else {
-                  console.log('Profile created successfully after auth change');
-                  // Fetch the newly created profile
-                  const newProfileData = await getUserProfile(userData.id);
-                  setUserProfile(newProfileData?.profile || null);
-                }
-              } catch (createError) {
-                console.error('Exception creating profile on auth change:', createError);
-              }
-            } else {
-              setUserProfile(profileData?.profile || null);
+              console.log('No profile found after auth change. Might be normal for new users.');
+              // Profile creation is now handled by a database trigger
             }
           } catch (profileError) {
             console.error('Error fetching profile on auth change:', profileError);
@@ -196,58 +136,8 @@ export function AuthProvider({ children }) {
       
       console.log('Signup API call succeeded:', data ? 'Data returned' : 'No data');
       
-      // If user was created, try to create a profile using raw SQL instead
-      if (data?.user) {
-        console.log('User created, id:', data.user.id);
-        
-        try {
-          // Split fullName into first_name and last_name (assuming format "First Last")
-          let firstName = fullName;
-          let lastName = '';
-          
-          if (fullName.includes(' ')) {
-            const nameParts = fullName.split(' ');
-            firstName = nameParts[0];
-            lastName = nameParts.slice(1).join(' ');
-          }
-          
-          // Use a direct RPC call to avoid schema cache issues
-          const { error: profileError } = await supabase.rpc('create_user_profile', {
-            user_id: data.user.id,
-            user_email: email,
-            user_first_name: firstName,
-            user_last_name: lastName
-          });
-          
-          if (profileError) {
-            console.error('Error creating profile:', profileError);
-            
-            // Fall back to direct SQL if RPC fails
-            console.log('Attempting alternative profile creation method...');
-            
-            // Trying simpler approach with fewer columns
-            const { error: insertError } = await supabase
-              .from('profiles')
-              .insert([
-                { 
-                  id: data.user.id,
-                  first_name: firstName,
-                  last_name: lastName
-                }
-              ]);
-              
-            if (insertError) {
-              console.error('Alternative profile creation failed:', insertError);
-            } else {
-              console.log('Profile created successfully with alternative method');
-            }
-          } else {
-            console.log('Profile created successfully via RPC');
-          }
-        } catch (profileError) {
-          console.error('Exception creating profile:', profileError);
-        }
-      }
+      // Note: Profile creation is now handled by a database trigger
+      console.log('Profile creation will be handled by database trigger');
       
       return { data, error: null };
     } catch (error) {

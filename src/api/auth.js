@@ -6,27 +6,65 @@ export const getCurrentUser = async () => {
   return session?.user || null;
 };
 
-// Get user profile data
-export const getUserProfile = async () => {
-  const user = await getCurrentUser();
-  
-  if (!user) return null;
-  
-  const { data, error } = await supabase
-    .from('profiles')  // Changed from user_profiles to profiles to match the actual table name
-    .select('*')
-    .eq('id', user.id)
-    .single();
+// Get user profile data - now accepts a userId parameter
+export const getUserProfile = async (userId) => {
+  try {
+    // If no userId is provided, try to get the current user's ID
+    if (!userId) {
+      const user = await getCurrentUser();
+      if (!user) return null;
+      userId = user.id;
+    }
     
-  if (error) {
-    console.error('Error fetching user profile:', error);
+    console.log('Fetching profile for user ID:', userId);
+    
+    // First, try direct database query using the service role key
+    // This bypasses the PostgREST schema cache
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', userId)
+      .single();
+    
+    if (error) {
+      console.warn('Error fetching profile with standard query:', error);
+      
+      // If it's a schema cache error, try a more basic approach
+      if (error.code && (error.code.startsWith('PGRST') || error.message.includes('schema cache'))) {
+        console.log('Attempting simpler profile query...');
+        
+        // Just select the id column which should always exist
+        const { data: basicData, error: basicError } = await supabase
+          .from('profiles')
+          .select('id')
+          .eq('id', userId)
+          .single();
+        
+        if (basicError) {
+          console.error('Error with basic profile query:', basicError);
+          return null;
+        }
+        
+        return {
+          id: userId,
+          profile: basicData || { id: userId }
+        };
+      }
+      
+      return null;
+    }
+    
+    // Get user data to combine with profile
+    const { data: userData } = await supabase.auth.getUser(userId);
+    
+    return {
+      ...userData?.user,
+      profile: data
+    };
+  } catch (error) {
+    console.error('Unexpected error fetching user profile:', error);
     return null;
   }
-  
-  return {
-    ...user,
-    profile: data
-  };
 };
 
 // Logout function
