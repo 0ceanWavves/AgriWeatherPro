@@ -1,25 +1,69 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { FaLeaf, FaEnvelope } from 'react-icons/fa';
+import { FaLeaf, FaEnvelope, FaClock } from 'react-icons/fa';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
+  const [cooldown, setCooldown] = useState(0);
+  const [lastRequestTime, setLastRequestTime] = useState(0);
   
   const { resetPassword } = useAuth();
+
+  // Cooldown timer effect
+  useEffect(() => {
+    let timer;
+    if (cooldown > 0) {
+      timer = setInterval(() => {
+        setCooldown(prev => Math.max(0, prev - 1));
+      }, 1000);
+    }
+    
+    return () => {
+      if (timer) clearInterval(timer);
+    };
+  }, [cooldown]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setMessage('');
+    
+    // Check if we're in cooldown period
+    if (cooldown > 0) {
+      setError(`Please wait ${cooldown} seconds before requesting another reset link`);
+      return;
+    }
+    
     setLoading(true);
     
     try {
       const { error } = await resetPassword(email);
-      if (error) throw error;
+      
+      if (error) {
+        // Handle rate limit errors
+        if (error.message?.includes('security purposes') || 
+            error.message?.includes('rate limit') || 
+            error.message?.includes('after')) {
+          
+          // Extract number of seconds from the error message if available
+          const secondsMatch = error.message.match(/(\d+)\s*seconds/);
+          const waitSeconds = secondsMatch ? parseInt(secondsMatch[1]) : 30;
+          
+          setCooldown(waitSeconds);
+          setLastRequestTime(Date.now());
+          throw new Error(`Rate limit reached. Please wait ${waitSeconds} seconds before trying again.`);
+        }
+        
+        throw error;
+      }
+      
+      // Set a default cooldown even on success to prevent rapid successive requests
+      setCooldown(30);
+      setLastRequestTime(Date.now());
       setMessage('Check your email for password reset instructions');
     } catch (error) {
       setError(error.message || 'Failed to reset password');
@@ -79,12 +123,21 @@ const ForgotPassword = () => {
           
           <button
             type="submit"
-            disabled={loading}
+            disabled={loading || cooldown > 0}
             className="w-full bg-primary hover:bg-primary/90 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors disabled:opacity-50"
           >
-            {loading ? 'Sending...' : 'Send Reset Link'}
+            {loading ? 'Sending...' : 
+             cooldown > 0 ? `Wait ${cooldown}s` : 
+             'Send Reset Link'}
           </button>
         </form>
+        
+        {cooldown > 0 && (
+          <div className="mt-4 flex items-center justify-center text-gray-600 dark:text-gray-400">
+            <FaClock className="mr-2" />
+            <span>You can request another reset link in {cooldown} seconds</span>
+          </div>
+        )}
         
         <div className="mt-6 text-center">
           <p className="text-sm text-gray-600 dark:text-gray-400">

@@ -117,6 +117,10 @@ export function AuthProvider({ children }) {
       // Try a direct signup with minimal options
       console.log('Making signup API call...');
       
+      // Get the current site URL - works in both development and production
+      const siteUrl = window.location.origin;
+      console.log('Using site URL for redirects:', siteUrl);
+      
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
@@ -124,8 +128,8 @@ export function AuthProvider({ children }) {
           data: {
             full_name: fullName
           },
-          // Redirect to dashboard after verification, but error page will handle failures
-          emailRedirectTo: `${window.location.origin}/dashboard`
+          // Use dynamic origin instead of hardcoded URL
+          emailRedirectTo: `${siteUrl}/dashboard`
         }
       });
       
@@ -221,14 +225,53 @@ export function AuthProvider({ children }) {
     }
   }
 
-  // Reset password function
+  // Password reset function with improved error handling
   async function resetPassword(email) {
     try {
+      console.log('Requesting password reset for:', email);
+      
+      // Use the current site URL for redirects
+      const siteUrl = window.location.origin;
+      console.log('Using site URL for reset redirects:', siteUrl);
+      
       const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}/reset-password`,
+        redirectTo: `${siteUrl}/reset-password`,
       });
       
-      if (error) throw error;
+      if (error) {
+        console.error('Reset password API error:', error);
+        
+        // Handle specific error codes
+        if (error.status === 429 || error.message?.includes('rate limit') || error.message?.includes('security purposes')) {
+          console.log('Rate limit detected for password reset');
+          
+          // If we have the error code for rate limiting, provide a more specific error
+          if (error.message?.includes('after')) {
+            return { 
+              data: null, 
+              error: {
+                ...error,
+                message: error.message,
+                isRateLimit: true,
+              }
+            };
+          }
+          
+          // Generic rate limit error if we can't extract specific details
+          return { 
+            data: null, 
+            error: {
+              ...error,
+              message: 'Too many password reset attempts. Please wait before trying again.',
+              isRateLimit: true,
+            }
+          };
+        }
+        
+        throw error;
+      }
+      
+      console.log('Password reset email sent successfully');
       return { data, error: null };
     } catch (error) {
       console.error('Reset password exception:', error.message);
