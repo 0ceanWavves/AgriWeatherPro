@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { FaLeaf, FaEnvelope, FaLock, FaEye, FaEyeSlash } from 'react-icons/fa';
 
@@ -12,133 +12,149 @@ const SignIn = () => {
   
   const { signIn } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const message = location.state?.message || '';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log('Starting sign in process');
     setError('');
     setLoading(true);
     
     try {
+      console.log('Making auth request for:', email);
       const { data, error } = await signIn(email, password);
+      console.log('Auth response received:', error ? 'Error occurred' : 'Success');
       
       if (error) {
         throw error;
       }
       
-      // Redirect to dashboard
+      console.log('Sign in successful, preparing to navigate');
+      setLoading(false);
       navigate('/dashboard');
     } catch (err) {
+      console.error('Sign in error:', err);
       setError(err.message || 'Failed to sign in. Please check your credentials.');
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">
-      <div className="max-w-md w-full p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
-        <div className="flex justify-center mb-8">
-          <div className="bg-primary/10 p-3 rounded-full">
-            <FaLeaf className="text-4xl text-primary" />
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 dark:bg-gray-900">
+      <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-lg shadow-md dark:bg-gray-800">
+        <div className="text-center">
+          <div className="flex justify-center">
+            <FaLeaf className="h-12 w-12 text-primary" />
           </div>
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-white">
+            Sign in to AgriWeather Pro
+          </h2>
+          {message && (
+            <div className="mt-2 p-2 bg-blue-50 text-blue-800 rounded dark:bg-blue-900 dark:text-blue-100">
+              {message}
+            </div>
+          )}
         </div>
         
-        <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-white mb-6">
-          Sign in to AgriWeather Pro
-        </h2>
-        
         {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-            {error}
+          <div className="bg-red-50 border-l-4 border-red-500 p-4 dark:bg-red-900 dark:text-red-100">
+            <p className="text-red-700 dark:text-red-100">{error}</p>
           </div>
         )}
         
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" htmlFor="email">
-              Email Address
-            </label>
-            <div className="relative">
-              <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                <FaEnvelope className="text-gray-400" />
-              </span>
-              <input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="w-full pl-10 pr-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white"
-                placeholder="Enter your email"
-              />
+        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+          <div className="rounded-md shadow-sm -space-y-px">
+            <div className="mb-4">
+              <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2 dark:text-gray-300">
+                Email Address
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <FaEnvelope className="h-5 w-5 text-gray-400" />
+                </div>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="appearance-none rounded-md relative block w-full pl-10 py-2 px-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                  placeholder="Email address"
+                />
+              </div>
+            </div>
+            
+            <div className="mb-4">
+              <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2 dark:text-gray-300">
+                Password
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <FaLock className="h-5 w-5 text-gray-400" />
+                </div>
+                <input
+                  id="password"
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  autoComplete="current-password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="appearance-none rounded-md relative block w-full pl-10 pr-10 py-2 px-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                  placeholder="Password"
+                />
+                <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="text-gray-400 hover:text-gray-500 focus:outline-none"
+                  >
+                    {showPassword ? <FaEyeSlash className="h-5 w-5" /> : <FaEye className="h-5 w-5" />}
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
-          
-          <div className="mb-6">
-            <label className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" htmlFor="password">
-              Password
-            </label>
-            <div className="relative">
-              <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                <FaLock className="text-gray-400" />
-              </span>
-              <input
-                id="password"
-                type={showPassword ? "text" : "password"}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                className="w-full pl-10 pr-10 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white"
-                placeholder="Enter your password"
-              />
-              <button
-                type="button"
-                className="absolute inset-y-0 right-0 flex items-center pr-3"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? (
-                  <FaEyeSlash className="text-gray-400" />
-                ) : (
-                  <FaEye className="text-gray-400" />
-                )}
-              </button>
-            </div>
-          </div>
-          
-          <div className="flex items-center justify-between mb-6">
+
+          <div className="flex items-center justify-between">
             <div className="flex items-center">
               <input
-                id="remember"
+                id="remember-me"
+                name="remember-me"
                 type="checkbox"
-                className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
+                className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600"
               />
-              <label htmlFor="remember" className="ml-2 block text-sm text-gray-700 dark:text-gray-300">
+              <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900 dark:text-gray-300">
                 Remember me
               </label>
             </div>
-            <div>
-              <Link to="/forgot-password" className="text-sm text-primary hover:underline">
-                Forgot password?
+
+            <div className="text-sm">
+              <Link to="/forgot-password" className="font-medium text-primary hover:text-primary/80">
+                Forgot your password?
               </Link>
             </div>
           </div>
+
+          <div>
+            <button
+              type="submit"
+              disabled={loading}
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+            >
+              {loading ? 'Signing in...' : 'Sign in'}
+            </button>
+          </div>
           
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-primary hover:bg-primary/90 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors disabled:opacity-50"
-          >
-            {loading ? 'Signing in...' : 'Sign In'}
-          </button>
-        </form>
-        
-        <div className="mt-6 text-center">
-          <p className="text-sm text-gray-600 dark:text-gray-400">
-            Don't have an account?{' '}
-            <Link to="/signup" className="text-primary hover:underline">
-              Sign up now
+          <div className="text-center">
+            <Link to="/signup" className="font-medium text-primary hover:text-primary/80">
+              Don't have an account? Sign up
             </Link>
-          </p>
-        </div>
+          </div>
+        </form>
       </div>
     </div>
   );

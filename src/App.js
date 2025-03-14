@@ -10,12 +10,12 @@ import CropYields from './pages/CropYields';
 import Dashboard from './pages/Dashboard';
 import About from './pages/About';
 import SignIn from './pages/Auth/SignIn';
-import DirectSignup from './pages/Auth/DirectSignup';
+import SignUp from './pages/Auth/SignUp';
 import ForgotPassword from './pages/Auth/ForgotPassword';
 import ResetPassword from './pages/Auth/ResetPassword';
 import AuthRequired from './pages/AuthRequired';
 import AuthError from './pages/Auth/AuthError';
-import ProtectedRoute from './components/ProtectedRoute';
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import PestManagement from './pages/ServicePages/PestManagement';
 import IrrigationPlanning from './pages/ServicePages/IrrigationPlanning';
 
@@ -49,7 +49,7 @@ function App() {
         <Routes>
           {/* Auth Routes */}
           <Route path="/signin" element={<SignIn />} />
-          <Route path="/signup" element={<DirectSignup />} />
+          <Route path="/signup" element={<SignUp />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/auth-required" element={<AuthRequired />} />

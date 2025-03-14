@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import LoadingScreen from '../LoadingScreen';
 
@@ -7,25 +7,47 @@ const ProtectedRoute = ({ children }) => {
   const { user, loading, isEmailVerified } = useAuth();
   const [emailVerified, setEmailVerified] = useState(null);
   const [verifyingEmail, setVerifyingEmail] = useState(false);
-  const navigate = useNavigate();
-
-  // Log authentication state
+  
+  console.log('ProtectedRoute - Auth state:', { loading, isAuthenticated: !!user });
+  
   useEffect(() => {
-    console.log('ProtectedRoute - Auth state:', { loading, isAuthenticated: !!user });
+    let mounted = true;
     
-    // Check email verification status when user is available
     const checkEmailVerification = async () => {
-      if (user) {
+      if (!user) return;
+      
+      try {
+        console.log('Starting email verification check...');
         setVerifyingEmail(true);
-        const verified = await isEmailVerified();
-        setEmailVerified(verified);
-        setVerifyingEmail(false);
         
-        console.log('Email verification status:', verified ? 'Verified' : 'Not verified');
+        // Add timeout to prevent indefinite hanging
+        const verificationPromise = isEmailVerified();
+        const timeoutPromise = new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('Email verification timed out')), 5000)
+        );
+        
+        const verified = await Promise.race([verificationPromise, timeoutPromise]);
+        
+        if (mounted) {
+          console.log('Email verification result:', verified);
+          setEmailVerified(verified);
+          setVerifyingEmail(false);
+        }
+      } catch (error) {
+        console.error('Email verification error:', error);
+        if (mounted) {
+          // Fail open - assume verified in case of errors
+          setEmailVerified(true);
+          setVerifyingEmail(false);
+        }
       }
     };
     
     checkEmailVerification();
+    
+    return () => {
+      mounted = false;
+    };
   }, [user, isEmailVerified]);
 
   if (loading || verifyingEmail) {
@@ -33,12 +55,10 @@ const ProtectedRoute = ({ children }) => {
   }
 
   if (!user) {
-    // Redirect to sign in if not authenticated
     return <Navigate to="/signin" replace />;
   }
   
   if (emailVerified === false) {
-    // Redirect to auth required page if email is not verified
     return <Navigate to="/auth-required" replace state={{ message: "Please verify your email address to access this content." }} />;
   }
 
