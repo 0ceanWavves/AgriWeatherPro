@@ -9,30 +9,48 @@ const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [debugInfo, setDebugInfo] = useState('');
   
   const { signIn } = useAuth();
   const navigate = useNavigate();
+
+  // Helper to log debug info
+  const logDebug = (message, data = null) => {
+    const logMsg = data ? `${message}: ${JSON.stringify(data, null, 2)}` : message;
+    console.log(logMsg);
+    setDebugInfo(prev => `${prev}\n${logMsg}`);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
+    logDebug('Starting sign-in process...');
     
     try {
-      console.log('Attempting to sign in with:', email);
-      const { error } = await signIn(email, password);
+      logDebug('Attempting to sign in with:', { email });
+      const { data, error } = await signIn(email, password);
       
       if (error) {
-        console.error('Sign in error:', error);
+        logDebug('Sign-in error received:', { message: error.message });
         throw error;
       }
       
-      console.log('Sign in successful, redirecting to dashboard');
-      navigate('/dashboard', { replace: true });
-    } catch (error) {
-      console.error('Sign in submission error:', error);
-      setError(error.message || 'Failed to sign in');
-    } finally {
+      logDebug('Sign-in successful, user data received', data?.user?.id ? { userId: data.user.id } : 'No user ID found');
+      
+      // Deliberately add a slight delay to ensure state updates
+      logDebug('Redirecting to dashboard in 500ms...');
+      setTimeout(() => {
+        logDebug('Executing redirect now');
+        navigate('/dashboard');
+      }, 500);
+    } catch (err) {
+      logDebug('Sign-in exception:', { 
+        message: err.message, 
+        name: err.name,
+        code: err.code
+      });
+      setError(err.message || 'Failed to sign in. Please check your credentials.');
       setLoading(false);
     }
   };
@@ -53,6 +71,12 @@ const SignIn = () => {
         {error && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
             {error}
+          </div>
+        )}
+        
+        {debugInfo && (
+          <div className="bg-gray-100 border border-gray-300 text-xs text-gray-700 p-2 rounded mb-4 max-h-40 overflow-auto font-mono">
+            <pre>{debugInfo}</pre>
           </div>
         )}
         

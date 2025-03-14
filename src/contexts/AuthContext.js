@@ -328,6 +328,7 @@ export function AuthProvider({ children }) {
     loading,
     signUp,
     signIn,
+    login: signIn,
     signOut,
     resetPassword,
     updateProfile,
@@ -341,3 +342,5 @@ export function AuthProvider({ children }) {
     </AuthContext.Provider>
   );
 }
+
+export default AuthProvider;
