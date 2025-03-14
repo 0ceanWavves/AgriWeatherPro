@@ -196,7 +196,7 @@ export function AuthProvider({ children }) {
       
       console.log('Signup API call succeeded:', data ? 'Data returned' : 'No data');
       
-      // If user was created, try to create a profile
+      // If user was created, try to create a profile using raw SQL instead
       if (data?.user) {
         console.log('User created, id:', data.user.id);
         
@@ -210,22 +210,39 @@ export function AuthProvider({ children }) {
             firstName = nameParts[0];
             lastName = nameParts.slice(1).join(' ');
           }
-        
-          const { error: profileError } = await supabase
-            .from('profiles')
-            .upsert({
-              id: data.user.id,
-              email: email,
-              first_name: firstName,
-              last_name: lastName,
-              created_at: new Date().toISOString(),
-              updated_at: new Date().toISOString()
-            });
-            
+          
+          // Use a direct RPC call to avoid schema cache issues
+          const { error: profileError } = await supabase.rpc('create_user_profile', {
+            user_id: data.user.id,
+            user_email: email,
+            user_first_name: firstName,
+            user_last_name: lastName
+          });
+          
           if (profileError) {
             console.error('Error creating profile:', profileError);
+            
+            // Fall back to direct SQL if RPC fails
+            console.log('Attempting alternative profile creation method...');
+            
+            // Trying simpler approach with fewer columns
+            const { error: insertError } = await supabase
+              .from('profiles')
+              .insert([
+                { 
+                  id: data.user.id,
+                  first_name: firstName,
+                  last_name: lastName
+                }
+              ]);
+              
+            if (insertError) {
+              console.error('Alternative profile creation failed:', insertError);
+            } else {
+              console.log('Profile created successfully with alternative method');
+            }
           } else {
-            console.log('Profile created successfully');
+            console.log('Profile created successfully via RPC');
           }
         } catch (profileError) {
           console.error('Exception creating profile:', profileError);
