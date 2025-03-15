@@ -20,12 +20,14 @@ const LocationAutocomplete = ({ onLocationSelect }) => {
       return;
     }
     
+    console.log("Fetching suggestions for:", input);
     setIsLoading(true);
     try {
       const response = await axios.get(
         `https://api.openweathermap.org/geo/1.0/direct?q=${input}&limit=5&appid=deeaa95f4b7b2543dc8c3d9cb96396c6`
       );
       
+      console.log("Suggestions response:", response.data);
       const formattedSuggestions = response.data.map(location => ({
         name: location.name,
         fullName: location.state 
@@ -165,8 +167,8 @@ const LocationAutocomplete = ({ onLocationSelect }) => {
             onKeyDown={handleKeyDown}
             onFocus={() => value.length >= 3 && setShowSuggestions(true)}
             placeholder="Enter city, state or country..."
-            className="input-field flex-grow px-4 py-3 rounded-l-md focus:outline-none focus:ring-2 focus:ring-primary w-full"
-            autoComplete="on"
+            className="input-field flex-grow px-4 py-3 rounded-l-md focus:outline-none focus:ring-2 focus:ring-primary w-full text-gray-800 dark:text-white"
+            autoComplete="off"
             autoCorrect="on"
             spellCheck="true"
             list="common-locations"
@@ -190,12 +192,12 @@ const LocationAutocomplete = ({ onLocationSelect }) => {
           {showSuggestions && suggestions.length > 0 && (
             <ul 
               ref={suggestionsRef}
-              className="suggestions-list absolute top-full left-0 right-0 bg-white border border-gray-300 rounded-b-md shadow-lg z-10 max-h-60 overflow-y-auto"
+              className="suggestions-list absolute top-full left-0 right-0 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-b-md shadow-lg z-10 max-h-60 overflow-y-auto"
             >
               {suggestions.map((suggestion, index) => (
                 <li 
                   key={index}
-                  className={`suggestion-item px-4 py-2 cursor-pointer hover:bg-gray-100 ${index === highlightedIndex ? 'bg-gray-100' : ''}`}
+                  className={`suggestion-item px-4 py-2 cursor-pointer hover:bg-gray-100 hover:dark:bg-gray-700 ${index === highlightedIndex ? 'bg-gray-100 dark:bg-gray-700' : ''} text-gray-800 dark:text-white`}
                   onClick={() => handleSuggestionClick(suggestion)}
                   onMouseEnter={() => setHighlightedIndex(index)}
                 >

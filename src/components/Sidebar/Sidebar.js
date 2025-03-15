@@ -82,40 +82,7 @@ const Sidebar = ({ activeView, setActiveView }) => {
         </button>
       </div>
       
-      <div className="weather-data-panel px-4 py-3">
-        <h2 className="text-3xl font-bold">-8.8 °C</h2>
-        <div className="weather-icon">☁️</div>
-        <p className="text-sm mb-3">Feels like: <span>-11.9 °C</span></p>
-        
-        <div className="weather-metrics space-y-2">
-          <div className="flex justify-between">
-            <span className="text-sm">Precipitation</span>
-            <span className="text-sm font-medium">0 mm</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-sm">Wind speed</span>
-            <span className="text-sm font-medium">1.54 m/s</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-sm">Wind Direction</span>
-            <span className="text-sm font-medium">20 deg</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-sm">Humidity</span>
-            <span className="text-sm font-medium">94 %</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-sm">Clouds</span>
-            <span className="text-sm font-medium">100 %</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-sm">Pressure</span>
-            <span className="text-sm font-medium">1017 hPa</span>
-          </div>
-        </div>
-      </div>
-
-      <ul className="flex flex-col justify-start space-y-1 px-1">
+      <ul className="flex flex-col justify-start space-y-1 px-1 mt-4">
         <li className="relative">
           <button 
             type="button"

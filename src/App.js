@@ -9,9 +9,10 @@ import Maps from './pages/Maps';
 import CropYields from './pages/CropYields';
 import About from './pages/About';
 import LoadingScreen from './components/LoadingScreen';
-import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import PestManagement from './pages/ServicePages/PestManagement';
 import IrrigationPlanning from './pages/ServicePages/IrrigationPlanning';
+import './styles/App.css';
+import './styles/fixes.css';
 
 // Only import components needed for initial load immediately
 import SignIn from './pages/Auth/SignIn';
@@ -62,24 +63,20 @@ function App() {
       <div className="flex flex-col min-h-screen app-content">
         <Suspense fallback={<LoadingScreen message="Loading..." />}>
           <Routes>
-            {/* Auth Routes */}
-            <Route path="/signin" element={<SignIn />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/reset-password" element={<ResetPassword />} />
-            <Route path="/auth-required" element={<AuthRequired />} />
-            <Route path="/auth-error" element={<AuthError />} />
+            {/* Auth Routes - Redirect to Dashboard for now */}
+            <Route path="/signin" element={<Navigate to="/dashboard" replace />} />
+            <Route path="/signup" element={<Navigate to="/dashboard" replace />} />
+            <Route path="/forgot-password" element={<Navigate to="/dashboard" replace />} />
+            <Route path="/reset-password" element={<Navigate to="/dashboard" replace />} />
+            <Route path="/auth-required" element={<Navigate to="/dashboard" replace />} />
+            <Route path="/auth-error" element={<Navigate to="/dashboard" replace />} />
             
             {/* Redirect routes for handling auth errors in the URL */}
-            <Route path="/#error=/*" element={<Navigate to={`/auth-error${location.hash}`} replace />} />
-            <Route path="/?error=/*" element={<Navigate to={`/auth-error${location.search}`} replace />} />
+            <Route path="/#error=/*" element={<Navigate to="/dashboard" replace />} />
+            <Route path="/?error=/*" element={<Navigate to="/dashboard" replace />} />
             
-            {/* Protected Dashboard Route */}
-            <Route path="/dashboard" element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            } />
+            {/* Dashboard Route - No longer protected */}
+            <Route path="/dashboard" element={<Dashboard />} />
             
             {/* Public Routes with Header/Footer */}
             <Route path="/*" element={
@@ -96,8 +93,8 @@ function App() {
                     {/* Service-specific routes will redirect to the appropriate pages */}
                     <Route path="/services/weather-forecasting" element={<Forecast />} />
                     <Route path="/services/crop-yield-prediction" element={<CropYields />} />
-                    <Route path="/services/climate-analysis" element={<AuthRequired />} />
-                    <Route path="/services/agricultural-insights" element={<AuthRequired />} />
+                    <Route path="/services/climate-analysis" element={<Maps />} />
+                    <Route path="/services/agricultural-insights" element={<CropYields />} />
                     <Route path="/services/pest-management" element={<PestManagement />} />
                     <Route path="/services/irrigation-planning" element={<IrrigationPlanning />} />
                   </Routes>

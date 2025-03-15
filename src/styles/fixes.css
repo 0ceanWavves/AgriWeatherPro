@@ -1,0 +1,20 @@
+/* Modern fixes for outdated CSS */
+
+/* Fix legacy IE filters causing errors */
+.leaflet-oldie .leaflet-popup-tip {
+  -ms-filter: none !important;
+  filter: none !important;
+}
+
+.fa-rotate-90,
+.fa-rotate-180,
+.fa-rotate-270,
+.fa-flip-horizontal,
+.fa-flip-vertical {
+  filter: none !important;
+}
+
+.carousel-control.left,
+.carousel-control.right {
+  filter: none !important;
+} 
