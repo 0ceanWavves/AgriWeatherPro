@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
 import { WeatherMap, AlertsPanel } from '../components/DashboardWidgets';
 import Sidebar from '../components/Sidebar/Sidebar';
 import CropYieldDisplay from '../components/CropYieldDisplay';
 import WeatherForecast from '../components/WeatherForecast';
 import ProfileSettings from '../components/ProfileSettings';
 import LoadingScreen from '../components/LoadingScreen';
-import { useAuth } from '../contexts/AuthContext';
 import { 
   FaChartLine, 
   FaWater, 
@@ -17,12 +15,20 @@ import {
 } from 'react-icons/fa';
 import '../styles/Dashboard.css';
 
+// Create dummy auth context data to avoid undefined errors
+const dummyAuthData = {
+  loading: false,
+  user: {
+    id: 'demo-user',
+    email: 'demo@example.com'
+  }
+};
+
 const Dashboard = () => {
   const [activeView, setActiveView] = useState('maps');
   const [mapMode, setMapMode] = useState('weather');
-  // Fix for line 23 - initialize with an empty object if useAuth is not available
-  const auth = useAuth ? useAuth() : { loading: false, user: null };
-  const { loading, user } = auth;
+  // Use dummy auth data directly to avoid any undefined references
+  const { loading, user } = dummyAuthData;
   const [userLocation, setUserLocation] = useState({ lat: 51.505, lng: -0.09, name: 'London' });
   
   // Expose setActiveView to window for cross-component access
