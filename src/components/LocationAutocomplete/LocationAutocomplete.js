@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { OPENWEATHERMAP_API_KEY } from '../../utils/config';
 import './LocationAutocomplete.css';
-import { FaSearch, FaSpinner } from 'react-icons/fa';
+import { FaSearch, FaSpinner, FaMapMarkerAlt } from 'react-icons/fa';
 
 const LocationAutocomplete = ({ onLocationSelect }) => {
   const [value, setValue] = useState('');
@@ -20,14 +20,12 @@ const LocationAutocomplete = ({ onLocationSelect }) => {
       return;
     }
     
-    console.log("Fetching suggestions for:", input);
     setIsLoading(true);
     try {
       const response = await axios.get(
         `https://api.openweathermap.org/geo/1.0/direct?q=${input}&limit=5&appid=deeaa95f4b7b2543dc8c3d9cb96396c6`
       );
       
-      console.log("Suggestions response:", response.data);
       const formattedSuggestions = response.data.map(location => ({
         name: location.name,
         fullName: location.state 
@@ -156,9 +154,12 @@ const LocationAutocomplete = ({ onLocationSelect }) => {
   };
 
   return (
-    <div className="location-autocomplete-container">
-      <form onSubmit={handleSubmit} className="flex w-full">
+    <div className="forecast-search">
+      <form onSubmit={handleSubmit} className="flex w-full relative">
         <div className="relative flex-grow">
+          <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
+            <FaMapMarkerAlt />
+          </span>
           <input
             ref={inputRef}
             type="text"
@@ -166,8 +167,8 @@ const LocationAutocomplete = ({ onLocationSelect }) => {
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
             onFocus={() => value.length >= 3 && setShowSuggestions(true)}
-            placeholder="Enter city, state or country..."
-            className="input-field flex-grow px-4 py-3 rounded-l-md focus:outline-none focus:ring-2 focus:ring-primary w-full text-gray-800 dark:text-white"
+            placeholder="Search for a city or zip code..."
+            className="w-full pl-10 pr-10 py-3 border-2 border-green-700 rounded-full focus:outline-none focus:ring-2 focus:ring-green-600 shadow-md"
             autoComplete="off"
             autoCorrect="on"
             spellCheck="true"
@@ -189,33 +190,35 @@ const LocationAutocomplete = ({ onLocationSelect }) => {
             <option value="75001">Paris, FR</option>
           </datalist>
           
+          <button 
+            type="submit" 
+            className="absolute right-0 top-0 bottom-0 px-4 bg-green-700 hover:bg-green-800 text-white rounded-r-full transition-colors"
+            disabled={isLoading}
+            aria-label="Search"
+          >
+            {isLoading ? <FaSpinner className="animate-spin" /> : <FaSearch />}
+          </button>
+          
           {showSuggestions && suggestions.length > 0 && (
             <ul 
               ref={suggestionsRef}
-              className="suggestions-list absolute top-full left-0 right-0 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-b-md shadow-lg z-10 max-h-60 overflow-y-auto"
+              className="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg shadow-lg z-10 max-h-60 overflow-y-auto divide-y divide-gray-100"
             >
               {suggestions.map((suggestion, index) => (
                 <li 
                   key={index}
-                  className={`suggestion-item px-4 py-2 cursor-pointer hover:bg-gray-100 hover:dark:bg-gray-700 ${index === highlightedIndex ? 'bg-gray-100 dark:bg-gray-700' : ''} text-gray-800 dark:text-white`}
+                  className={`py-3 px-4 cursor-pointer transition-colors flex items-center
+                    ${index === highlightedIndex ? 'bg-green-50' : 'hover:bg-green-50'}`}
                   onClick={() => handleSuggestionClick(suggestion)}
                   onMouseEnter={() => setHighlightedIndex(index)}
                 >
-                  {suggestion.fullName}
+                  <FaMapMarkerAlt className="text-green-600 mr-2" />
+                  <span>{suggestion.fullName}</span>
                 </li>
               ))}
             </ul>
           )}
         </div>
-        
-        <button 
-          type="submit" 
-          className="btn-primary rounded-l-none rounded-r-md px-4 py-2 flex items-center justify-center"
-          disabled={isLoading}
-          aria-label="Search"
-        >
-          {isLoading ? <FaSpinner className="animate-spin" /> : <FaSearch />}
-        </button>
       </form>
     </div>
   );

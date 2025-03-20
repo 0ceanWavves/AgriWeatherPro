@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-col: #3b82f6;
+  --secondary-col: #10b981;
+  --background-col: #f3f4f6;
+}
+
+body {
+  background-color: var(--background-col);
+}
+
+.primary-color {
+  color: var(--primary-col);
+}
+
+.secondary-color {
+  color: var(--secondary-col);
+}

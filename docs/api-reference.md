@@ -257,6 +257,23 @@ curl -X POST "https://gexynwadeancyvnthsbu.supabase.co/rest/v1/crop_predictions"
 }
 ```
 
+### Risk Assessment Methodology
+
+Our risk assessment API endpoints employ advanced machine learning models to evaluate multiple factors affecting crop health. The risk calculations are performed through the following process:
+
+1. **Data Collection**: Weather data, historical patterns, and crop-specific factors are gathered
+2. **Risk Scoring**: Each risk factor is analyzed independently based on current conditions
+3. **Level Determination**: Raw scores are converted to risk levels (Low, Medium, High)
+4. **Impact Assessment**: Potential effects on yield and farm operations are calculated
+5. **Final Assessment**: Combined analysis with actionable recommendations
+
+**Risk Level Scale**:
+- Low: 1-3 (Minor impact, continue regular monitoring)
+- Medium: 4-6 (Moderate impact, prepare mitigation strategies)
+- High: 7-10 (Significant impact, immediate action recommended)
+
+For complete methodology details, refer to the Risk Assessment Methodology page in the AgriWeather Pro application.
+
 ## Location Endpoints
 
 ### Get Locations
@@ -402,5 +419,70 @@ Available webhook events:
 ## Further Information
 
 For additional support or information about the API:
-- Contact developer support at api-support@agriweatherpro.com
+- Contact developer support at Sales@synthed.xyz
 - Join our developer community at forum.agriweatherpro.com/developers
+
+## Maps API
+
+AgriWeather Pro uses the following map services:
+
+- **Base Maps**: OpenStreetMap
+- **Weather Data**: OpenWeatherMap API
+
+### Map Tile URLs
+
+#### Base Map Tiles
+```
+https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
+```
+
+#### Weather Layer Tiles
+Weather layers use the OpenWeatherMap API with the following patterns:
+
+```javascript
+// Temperature layer
+https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid={API_KEY}
+
+// Precipitation layer
+https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid={API_KEY}
+
+// Wind speed layer
+https://tile.openweathermap.org/map/wind_new/{z}/{x}/{y}.png?appid={API_KEY}
+
+// Clouds layer
+https://tile.openweathermap.org/map/clouds_new/{z}/{x}/{y}.png?appid={API_KEY}
+
+// Pressure layer
+https://tile.openweathermap.org/map/pressure_new/{z}/{x}/{y}.png?appid={API_KEY}
+```
+
+### Layer Management
+
+The application manages these layers using Leaflet's tile layer system. The general pattern for adding a weather layer is:
+
+```javascript
+const layer = L.tileLayer(tileUrl, {
+  attribution: 'Weather data © OpenWeatherMap',
+  opacity: 0.7
+});
+
+// Add to map
+layer.addTo(map);
+```
+
+### Map Reference Management
+
+The application uses React useRef to store and manage map and layer references:
+
+```javascript
+const mapRef = useRef(null);
+const layerRefs = useRef({});
+
+// Storing layer references
+layerRefs.current[layerId] = layer;
+
+// Checking if a layer exists on the map
+if (mapRef.current.hasLayer(layerRefs.current[layerId])) {
+  // Layer exists
+}
+```

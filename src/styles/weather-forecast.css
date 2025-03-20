@@ -1,0 +1,361 @@
+/* Enhanced Weather Forecast Styling */
+
+/* Page background with subtle gradient */
+.forecast-page {
+  background: linear-gradient(to bottom, #e8f5e9 0%, #e3f2fd 100%);
+  min-height: 100vh;
+  padding: 2rem 0;
+}
+
+/* Main card container */
+.card {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  border: none;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* Main weather forecast title */
+.weather-forecast-title {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #1b5e20;
+  font-weight: 700;
+  font-size: 2.5rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Subtitle styling */
+.weather-forecast-subtitle {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 2rem;
+  line-height: 1.6;
+  color: #37474f;
+  font-size: 1.1rem;
+}
+
+/* Search box styling */
+.forecast-search {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.forecast-search input {
+  width: 100%;
+  padding: 12px 50px 12px 20px;
+  border: 2px solid #1b5e20;
+  border-radius: 30px;
+  font-size: 1rem;
+  transition: all 0.3s;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.forecast-search input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(27, 94, 32, 0.3);
+}
+
+.forecast-search button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 50px;
+  border: none;
+  background: #1b5e20;
+  color: white;
+  border-radius: 0 30px 30px 0;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.forecast-search button:hover {
+  background: #2e7d32;
+}
+
+/* Current weather display */
+.current-weather {
+  background: linear-gradient(135deg, #1b5e20 0%, #0d47a1 100%);
+  color: white;
+  padding: 2rem;
+  border-radius: 10px;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.current-location {
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.current-location h2 {
+  font-size: 1.8rem;
+  margin: 0;
+  font-weight: 700;
+}
+
+.current-location p {
+  margin: 0;
+  opacity: 0.9;
+}
+
+.current-temp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.temp-value {
+  font-size: 4rem;
+  font-weight: 700;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+  line-height: 1;
+}
+
+.temp-condition {
+  margin-top: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.current-details {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+}
+
+.detail-item svg {
+  margin-right: 0.5rem;
+}
+
+/* Hourly forecast section */
+.hourly-forecast-container {
+  background: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.hourly-forecast-container h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: #1b5e20;
+  font-weight: 600;
+}
+
+.hourly-forecast {
+  display: flex;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  gap: 10px;
+  scrollbar-width: thin;
+  scrollbar-color: #1b5e20 #e0e0e0;
+}
+
+.hourly-forecast::-webkit-scrollbar {
+  height: 6px;
+}
+
+.hourly-forecast::-webkit-scrollbar-thumb {
+  background-color: #1b5e20;
+  border-radius: 10px;
+}
+
+.hourly-forecast::-webkit-scrollbar-track {
+  background-color: #e0e0e0;
+  border-radius: 10px;
+}
+
+.hour-card {
+  min-width: 85px;
+  text-align: center;
+  padding: 1rem 0.5rem;
+  background: linear-gradient(to bottom, #e8f5e9, #e3f2fd);
+  border-radius: 8px;
+  transition: transform 0.2s;
+  border-left: 3px solid #1b5e20;
+}
+
+.hour-card:hover {
+  transform: translateY(-3px);
+}
+
+.hour-time {
+  font-size: 0.9rem;
+  color: #37474f;
+  margin-bottom: 0.5rem;
+}
+
+.hour-icon {
+  margin: 0.5rem 0;
+  width: 40px;
+  height: 40px;
+  filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.2));
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
+  100% { transform: translateY(0px); }
+}
+
+.hour-temp {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #263238;
+}
+
+/* Daily forecast section */
+.daily-forecast-container {
+  background: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.daily-forecast-container h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: #1b5e20;
+  font-weight: 600;
+}
+
+.day-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 0.8rem;
+  transition: transform 0.2s;
+}
+
+.day-row:hover {
+  transform: translateX(5px);
+}
+
+.day-row:nth-child(odd) {
+  background-color: rgba(227, 242, 253, 0.5);
+}
+
+.day-row:nth-child(even) {
+  background-color: rgba(232, 245, 233, 0.5);
+}
+
+.day-date {
+  font-weight: 600;
+  color: #263238;
+}
+
+.day-condition {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.day-icon {
+  width: 40px;
+  height: 40px;
+  margin-right: 0.5rem;
+  filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.2));
+}
+
+.day-condition-text {
+  font-size: 0.9rem;
+}
+
+.day-temps {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.min-temp, .max-temp {
+  font-size: 0.9rem;
+}
+
+.min-temp {
+  color: #0d47a1;
+}
+
+.max-temp {
+  color: #d32f2f;
+}
+
+/* Agricultural tips section */
+.ag-tips {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: rgba(27, 94, 32, 0.1);
+  border-left: 5px solid #1b5e20;
+  border-radius: 0 8px 8px 0;
+}
+
+.ag-tips h4 {
+  margin-top: 0;
+  color: #1b5e20;
+}
+
+.ag-tips p {
+  margin-bottom: 0;
+}
+
+/* Weather animations */
+.rain-animation {
+  position: relative;
+  overflow: hidden;
+}
+
+.rain-drop {
+  position: absolute;
+  width: 2px;
+  height: 10px;
+  background-color: rgba(120, 180, 255, 0.8);
+  border-radius: 10px;
+  top: -10px;
+  animation: rain-fall linear infinite;
+}
+
+@keyframes rain-fall {
+  to { 
+    transform: translateY(50px);
+    opacity: 0;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .current-weather {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .current-details {
+    margin-top: 1.5rem;
+    grid-template-columns: 1fr;
+  }
+  
+  .day-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  
+  .day-condition, .day-temps {
+    grid-column: span 2;
+  }
+}

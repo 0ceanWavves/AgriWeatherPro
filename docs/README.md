@@ -22,11 +22,11 @@ AgriWeather Pro integrates multiple weather data sources with machine learning a
 - **Hyperlocal Weather Forecasting**: Precise weather predictions for specific field locations
 - **Crop-Specific Analytics**: Customized weather insights based on crop types and growth stages
 - **Climate Trend Analysis**: Historical patterns and future projections to aid in long-term planning
-- **Risk Assessment**: Early warnings for extreme weather events, frost, drought, or excessive rainfall
+- **Risk Assessment**: Early warnings for extreme weather events, frost, drought, or excessive rainfall, with transparent methodology documentation and machine learning-backed predictions
 - **Mobile Accessibility**: Access critical information from anywhere via web and mobile interfaces
 - **Customizable Alerts**: Personalized notifications for weather conditions affecting your crops
 - **Integration Capabilities**: Connect with farm management systems and IoT devices
 
 ## Contact
 
-For support or questions, contact [support@agriweatherpro.com](mailto:support@agriweatherpro.com)
+For support or questions, contact [Sales@synthed.xyz](mailto:Sales@synthed.xyz)

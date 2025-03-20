@@ -93,7 +93,7 @@ AgriWeather Pro offers a tiered subscription model to meet the needs of farms of
 - View billing history
 
 ### Enterprise Solutions
-For large farms or organizations, contact sales@agriweatherpro.com to discuss:
+For large farms or organizations, contact Sales@synthed.xyz to discuss:
 - Custom pricing
 - Tailored features
 - Integration with existing farm management systems
@@ -102,6 +102,6 @@ For large farms or organizations, contact sales@agriweatherpro.com to discuss:
 ## Support
 
 Premium subscribers receive priority support:
-- Email: premium-support@agriweatherpro.com
-- Phone: +1-555-123-4567 (Pro and Enterprise plans only)
+- Email: Sales@synthed.xyz
+- Phone: 480-382-0287 (Pro and Enterprise plans only)
 - Office Hours: Monday-Sunday, 7 AM - 7 PM

@@ -94,6 +94,8 @@ body.dark-mode {
 .leaflet-container {
   width: 100% !important;
   height: 100% !important;
+  background-color: #333;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .map-title {
@@ -149,16 +151,17 @@ body.dark-mode {
   left: 50%;
   transform: translateX(-50%);
   z-index: 1000;
-  width: 300px;
+  width: 360px;
 }
 
 .city-search input {
   width: 100%;
-  padding: 10px 15px;
-  border: 1px solid var(--border-dark);
-  border-radius: 4px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  font-size: 0.9rem;
+  padding: 12px 18px;
+  border: 2px solid var(--border-dark);
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  font-size: 16px;
+  font-weight: 600;
   background-color: var(--bg-dark);
   color: var(--text-light);
 }
@@ -382,10 +385,6 @@ body.dark-mode {
 }
 
 /* Leaflet map customizations */
-.leaflet-container {
-  background-color: #333;
-}
-
 .leaflet-control-zoom {
   border: none !important;
 }
@@ -394,6 +393,8 @@ body.dark-mode {
   background-color: var(--bg-dark) !important;
   color: var(--text-light) !important;
   border: 1px solid var(--border-dark) !important;
+  font-size: 16px !important;
+  font-weight: bold !important;
 }
 
 .leaflet-control-zoom a:hover {
@@ -404,20 +405,51 @@ body.dark-mode {
   background-color: var(--bg-dark);
   color: var(--text-light);
   border-radius: 4px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.35);
+  padding: 2px;
 }
 
 .leaflet-popup-tip {
   background-color: var(--bg-dark);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.35);
 }
 
+/* Improve map labels */
+.leaflet-marker-icon {
+  filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.5));
+}
+
+/* Larger popup content */
 .city-popup h3 {
-  margin: 0 0 5px;
-  font-size: 1rem;
+  margin: 0 0 8px;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  color: #2D7D46 !important;
 }
 
 .city-popup p {
-  margin: 0;
-  font-size: 0.9rem;
+  margin: 0 0 6px;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  line-height: 1.4 !important;
+}
+
+/* Enhanced map attribution */
+.leaflet-control-attribution {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  color: #000 !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  padding: 6px 10px !important;
+  border-radius: 4px !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+  margin: 10px !important;
+}
+
+.dark-mode .leaflet-control-attribution {
+  background-color: rgba(40, 40, 40, 0.9) !important;
+  color: #fff !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
 }
 
 /* Responsive adjustments */
@@ -443,4 +475,62 @@ body.dark-mode {
     overflow-x: auto;
     padding-bottom: 5px;
   }
+}
+
+/* Extra high-contrast popups and text for maximum readability */
+.high-contrast-popup .leaflet-popup-content-wrapper {
+  background-color: #FFFFFF !important;
+  border: 3px solid #000000 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5) !important;
+  padding: 0 !important;
+}
+
+.high-contrast-popup .leaflet-popup-content {
+  font-size: 18px !important;
+  line-height: 1.6 !important;
+  padding: 15px !important;
+  margin: 0 !important;
+  color: #000000 !important;
+  font-weight: 600 !important;
+  min-width: 250px !important;
+}
+
+.high-contrast-popup .leaflet-popup-tip {
+  background-color: #FFFFFF !important;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4) !important;
+  border: 2px solid #000000 !important;
+  width: 16px !important;
+  height: 16px !important;
+}
+
+.dark-mode .high-contrast-popup .leaflet-popup-content-wrapper {
+  background-color: #222222 !important;
+  border: 3px solid #FFFFFF !important;
+}
+
+.dark-mode .high-contrast-popup .leaflet-popup-content {
+  color: #FFFFFF !important;
+}
+
+.dark-mode .high-contrast-popup .leaflet-popup-tip {
+  background-color: #222222 !important;
+  border: 2px solid #FFFFFF !important;
+}
+
+/* Enhanced map text */
+.leaflet-marker-pane text,
+.leaflet-overlay-pane text {
+  font-weight: 800 !important;
+  font-size: 15px !important;
+  text-shadow: 
+    -1px -1px 0 #FFFFFF,
+    1px -1px 0 #FFFFFF,
+    -1px 1px 0 #FFFFFF,
+    1px 1px 0 #FFFFFF,
+    0 0 5px #FFFFFF !important;
+  fill: #000000 !important;
+  stroke: #FFFFFF !important;
+  stroke-width: 0.5px !important;
+  paint-order: stroke !important;
 }

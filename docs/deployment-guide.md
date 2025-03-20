@@ -279,4 +279,4 @@ After deployment:
 4. Document common issues and resolution steps
 5. Plan a regular maintenance schedule
 
-For additional deployment support, contact devops@agriweatherpro.com.
+For additional deployment support, contact Sales@synthed.xyz.

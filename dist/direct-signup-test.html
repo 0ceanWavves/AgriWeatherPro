@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Direct Supabase Signup Test</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .container {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+        
+        h2 {
+            color: #444;
+            margin-top: 20px;
+        }
+        
+        input {
+            display: block;
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        button {
+            background-color: #4d8ecc;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        button:hover {
+            background-color: #3a7cb8;
+        }
+        
+        pre {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            border: 1px solid #ddd;
+            margin-top: 15px;
+        }
+        
+        .success {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .error {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        
+        #logs {
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <h1>Direct Supabase Signup Test</h1>
+    
+    <div class="container">
+        <h2>Signup Test</h2>
+        <form id="signupForm">
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" required>
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password" required value="Password123!">
+            </div>
+            <button type="submit">Test Signup</button>
+        </form>
+    </div>
+    
+    <div class="container">
+        <h2>Results</h2>
+        <div id="result"></div>
+    </div>
+    
+    <div class="container">
+        <h2>Logs</h2>
+        <div id="logs"></div>
+    </div>
+    
+    <script>
+        // DOM elements
+        const signupForm = document.getElementById('signupForm');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const resultDiv = document.getElementById('result');
+        const logsDiv = document.getElementById('logs');
+        
+        // Set a default email with timestamp
+        emailInput.value = `test.${Date.now()}@example.com`;
+        
+        // Log function
+        function log(message, data = null) {
+            const timestamp = new Date().toISOString().substring(11, 23);
+            let logMessage = `[${timestamp}] ${message}`;
+            
+            if (data) {
+                try {
+                    if (typeof data === 'object') {
+                        logMessage += `\n${JSON.stringify(data, null, 2)}`;
+                    } else {
+                        logMessage += ` ${data}`;
+                    }
+                } catch (e) {
+                    logMessage += ` [Error stringifying data: ${e.message}]`;
+                }
+            }
+            
+            logsDiv.innerHTML = logMessage + '\n\n' + logsDiv.innerHTML;
+            console.log(message, data);
+        }
+        
+        // Show result function
+        function showResult(isSuccess, message, data = null) {
+            resultDiv.innerHTML = `<div class="${isSuccess ? 'success' : 'error'}">${message}</div>`;
+            
+            if (data) {
+                resultDiv.innerHTML += `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+            }
+        }
+        
+        // Direct Supabase signup using fetch
+        async function directSignup(email, password) {
+            log('Starting direct signup test', { email });
+            
+            const url = 'https://gexynwadeancyvnthsbu.supabase.co/auth/v1/signup';
+            const apiKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdleHlud2FkZWFuY3l2bnRoc2J1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTAzMzczMDMsImV4cCI6MjAyNTkxMzMwM30.DjMm1jKSxjhSJxcCoUJcX1fxFc9oTGUPc0IwTfLQJFM';
+            
+            const headers = {
+                'Content-Type': 'application/json',
+                'apikey': apiKey,
+                'Authorization': `Bearer ${apiKey}`,
+                'X-Client-Info': 'direct-html-test'
+            };
+            
+            const body = JSON.stringify({
+                email,
+                password,
+                data: {
+                    full_name: 'Test User'
+                }
+            });
+            
+            log('Request details', { url, headers, body: JSON.parse(body) });
+            
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers,
+                    body
+                });
+                
+                log('Response status', `${response.status} ${response.statusText}`);
+                log('Response headers', Object.fromEntries([...response.headers]));
+                
+                const data = await response.json();
+                log('Response data', data);
+                
+                if (!response.ok) {
+                    showResult(false, `Signup failed: ${data.error || response.statusText}`, data);
+                    return;
+                }
+                
+                showResult(true, 'Signup successful!', data);
+            } catch (error) {
+                log('Fetch error', error);
+                showResult(false, `Error: ${error.message}`);
+            }
+        }
+        
+        // Handle form submission
+        signupForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = emailInput.value;
+            const password = passwordInput.value;
+            
+            // Generate a new email with timestamp
+            const timestampEmail = `test.${Date.now()}@example.com`;
+            emailInput.value = timestampEmail;
+            
+            directSignup(timestampEmail, password);
+        });
+        
+        // Initial log
+        log('Test page loaded');
+    </script>
+</body>
+</html>

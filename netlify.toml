@@ -1,20 +1,8 @@
-# netlify.toml - Configuration for your Netlify deployment
-
-# Environment variables for the site
-[build.environment]
-  # Supabase auth configuration
-  VITE_SUPABASE_URL = "https://imykwqkjiphztfyolsmn.supabase.co"
-  # Keep the anonymous key secure in Netlify environment variables
-  # VITE_SUPABASE_ANON_KEY = "" # Define in Netlify UI
-
-# Build configuration
 [build]
-  # Directory with the built files (after running the build command)
-  publish = "dist"
-  # Build command to generate the production files
+  publish = "build"
   command = "npm run build"
 
-# Redirects for SPA routing
+# Handle React Router's client-side routing
 [[redirects]]
   from = "/*"
   to = "/index.html"

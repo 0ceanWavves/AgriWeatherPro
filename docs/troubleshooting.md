@@ -81,7 +81,7 @@ This guide helps solve common issues you might encounter when using or developin
    Wait for the lockout period to expire (typically 30 minutes).
 
 2. **Contact Support**:
-   Reach out to support@agriweatherpro.com for assistance.
+   Reach out to Sales@synthed.xyz for assistance.
 
 ## Data and API Issues
 
@@ -137,6 +137,50 @@ This guide helps solve common issues you might encounter when using or developin
 
 4. **Try Another Browser**:
    Some map features might work better in specific browsers.
+
+### Maps Not Loading
+
+**Symptoms**: Maps show as gray boxes, error messages, or fail to display weather layers.
+
+**Possible Solutions**:
+
+1. **Check Internet Connection**:
+   Maps require a stable internet connection to load map tiles and weather data.
+
+2. **Clear Browser Cache**:
+   Browser caching issues can sometimes prevent maps from loading properly:
+   ```
+   Chrome: Ctrl+Shift+Delete > Select "Cached images and files" > Clear data
+   Firefox: Ctrl+Shift+Delete > Select "Cache" > Clear Now
+   ```
+
+3. **Allow Mixed Content**:
+   If your site uses HTTPS but map resources are loaded over HTTP:
+   - Look for a shield icon in your browser's address bar
+   - Click it and select "Load unsafe scripts" or similar option
+
+4. **Enable JavaScript**:
+   Maps require JavaScript to function properly:
+   - Ensure JavaScript is enabled in your browser settings
+   - Temporarily disable JavaScript blockers like NoScript
+
+5. **Check Console for Errors**:
+   - Open browser developer tools (F12)
+   - Look for errors related to Leaflet or map initialization
+   - Common errors include:
+     * Missing API keys
+     * Network request failures
+     * JavaScript conflicts
+
+6. **Verify Map Container Visibility**:
+   The map container must be visible when initialized:
+   - If using tabs, ensure the map tab is active when loading
+   - Check CSS styles that might hide or collapse the map container
+
+7. **Check API Key Validity**:
+   Weather map tiles require a valid OpenWeatherMap API key:
+   - Verify the API key in the application settings
+   - Check API key usage limits and quotas
 
 ### Cannot Add Locations on Map
 
@@ -338,7 +382,7 @@ If you've tried the solutions above and are still experiencing problems:
    Visit our community forum at forum.agriweatherpro.com for help from other users.
 
 3. **Contact Support**:
-   Email us at support@agriweatherpro.com with:
+   Email us at Sales@synthed.xyz with:
    - Detailed description of the issue
    - Steps to reproduce
    - Screenshots if applicable
@@ -361,4 +405,4 @@ To help us improve AgriWeather Pro, please report any bugs or issues:
 4. **Note Time and Date**:
    When the issue occurred, including timezone.
 
-Submit bug reports to bugs@agriweatherpro.com or via the in-app feedback form.
+Submit bug reports to Sales@synthed.xyz or via the in-app feedback form.

@@ -102,12 +102,33 @@ The forecast includes:
 
 1. Click on "Weather Maps" in the forecast view
 2. Select the data layer you want to view:
-   - Precipitation
    - Temperature
+   - Precipitation
    - Wind
    - Pressure
    - Cloud Cover
 3. Use the timeline slider to view predictions for different times
+
+For irrigation-specific map layers, see the [Irrigation Planning](#irrigation-planning) section.
+
+#### Weather Maps
+
+1. Click on "Weather Maps" in the forecast view
+2. The interactive map will display your selected location with current weather data
+3. Select different weather layers using the buttons on the left side of the map:
+   - **Temperature**: View temperature distribution across the region
+   - **Precipitation**: Monitor rainfall and precipitation patterns
+   - **Wind Speed**: Check wind conditions and patterns
+   - **Cloud Cover**: See cloud distribution and density
+   - **Pressure**: View atmospheric pressure patterns
+4. Click on any layer button to:
+   - Activate that layer on the map
+   - View detailed information about that weather parameter
+   - See current readings and forecasts for your location
+   - Access relevant alerts and triggers
+5. Use the location search bar at the top to change locations
+6. Toggle between Celsius and Fahrenheit using the button at the bottom
+7. View the color scale legend to interpret the map colors
 
 For irrigation-specific map layers, see the [Irrigation Planning](#irrigation-planning) section.
 
@@ -133,6 +154,31 @@ The crop prediction page shows:
 - Growth stage indicators
 - Weather impacts on crop development
 - Historical comparison
+
+### Understanding Risk Assessments
+
+The Risk Assessment section provides critical information about potential threats to your crops:
+
+1. **Risk Factors**: Each potential risk (Heat Stress, Drought, Excess Moisture, Pests) is displayed with:
+   - Risk Level (Low, Medium, High) determined by current conditions
+   - Impact Score (1-10) showing potential severity
+   - Recommended actions based on risk level
+
+2. **Data Sources**: Risk assessments integrate multiple reliable data sources:
+   - NOAA weather services (hourly updates)
+   - USDA historical records (quarterly updates)
+   - Climate research databases (monthly updates)
+   - Pest & disease monitoring networks (daily updates)
+
+3. **Reading the Assessment**:
+   - Color-coded indicators (green/yellow/red) show risk severity
+   - Each risk includes specific monitoring recommendations
+   - Impact scores help prioritize which risks need immediate attention
+
+4. **Methodology Documentation**:
+   - For complete details on how risks are calculated, visit the Methodology page
+   - Access this page by clicking "Learn more about our risk assessment methodology" at the bottom of the Risk Assessment section
+   - The Methodology page explains data sources, machine learning models, and validation processes
 
 ### Adjusting Farming Activities
 
@@ -312,5 +358,5 @@ Premium features are marked with a lock icon throughout the application. When yo
 
 If you need additional help:
 - Check our [FAQ](./faq.md)
-- Contact support at support@agriweatherpro.com
+- Contact support at Sales@synthed.xyz
 - Join our community forum at forum.agriweatherpro.com

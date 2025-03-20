@@ -479,4 +479,128 @@ If database initialization fails:
 - [TailwindCSS Documentation](https://tailwindcss.com/docs)
 - [OpenWeatherMap API Documentation](https://openweathermap.org/api)
 
-For further assistance, contact the development team at dev@agriweatherpro.com.
+For further assistance, contact the development team at Sales@synthed.xyz.
+
+## Key Components
+
+### WeatherMap Component
+
+The `WeatherMap` component (`src/components/DashboardWidgets/WeatherMap.js`) provides interactive maps for displaying weather data. This component uses Leaflet directly instead of React-Leaflet for better control and performance.
+
+#### Core Principles
+
+1. **Direct Leaflet Integration**:
+   - Uses the Leaflet library directly without React-Leaflet
+   - Provides better control over map lifecycle and performance
+
+2. **Map Reference Management**:
+   - Uses `useRef` to store and manage the map instance
+   - All map operations are performed through `mapRef.current`
+   - Prevents memory leaks by properly cleaning up
+
+3. **Layer Management**:
+   - Weather layers (temperature, precipitation, etc.) are managed as Leaflet tile layers
+   - Uses a `layerRefs` object to track and manage all layer instances
+   - Only displays the active layer at any time
+
+#### Component Usage
+
+```jsx
+<WeatherMap 
+  location={{ lat: 51.505, lng: -0.09, name: 'London' }}
+  mode="weather"
+/>
+```
+
+#### Implementation Details
+
+1. **Initialization**:
+   ```javascript
+   // Initialize the map when the component mounts
+   useEffect(() => {
+     if (mapRef.current || isLoading) return;
+     
+     try {
+       // Create the map with the specified options
+       const map = L.map(mapId.current, {
+         center: [locationLat, locationLng],
+         zoom: 8,
+         zoomControl: true,
+         attributionControl: true,
+       });
+       
+       // Store the map reference
+       mapRef.current = map;
+       
+       // Add the base layer (OpenStreetMap)
+       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+       }).addTo(map);
+       
+       // Initialize layer references and add marker
+       // ...
+     } catch (error) {
+       console.error("Error initializing weather map:", error);
+     }
+   }, [dependencies]);
+   ```
+
+2. **Layer Management**:
+   ```javascript
+   // Handle layer change
+   const handleLayerChange = (layerId) => {
+     if (!mapRef.current) return;
+     
+     try {
+       // Set the active layer
+       setActiveLayer(layerId);
+       
+       // Remove all existing weather layers
+       Object.keys(layerRefs.current).forEach(id => {
+         if (layerRefs.current[id] && mapRef.current.hasLayer(layerRefs.current[id])) {
+           mapRef.current.removeLayer(layerRefs.current[id]);
+         }
+       });
+       
+       // Add the selected layer or create if it doesn't exist
+       // ...
+     } catch (error) {
+       console.error("Error changing weather layer:", error);
+     }
+   };
+   ```
+
+3. **Cleanup**:
+   ```javascript
+   // Cleanup when component unmounts
+   useEffect(() => {
+     return () => {
+       if (mapRef.current) {
+         // Remove all layers
+         Object.values(layerRefs.current || {}).forEach(layer => {
+           if (layer && mapRef.current.hasLayer(layer)) {
+             mapRef.current.removeLayer(layer);
+           }
+         });
+         
+         // Remove marker
+         if (window.marker && mapRef.current.hasLayer(window.marker)) {
+           mapRef.current.removeLayer(window.marker);
+           window.marker = null;
+         }
+         
+         // Remove the map
+         mapRef.current.remove();
+         mapRef.current = null;
+       }
+     };
+   }, []);
+   ```
+
+#### Best Practices
+
+1. **Always clean up resources** when the component unmounts
+2. **Manage all references** through React refs for better lifecycle control
+3. **Handle errors robustly** in all map operations
+4. **Avoid storing map instance in global variables** like `window.weatherMap`
+5. **Check if map is initialized** before performing operations

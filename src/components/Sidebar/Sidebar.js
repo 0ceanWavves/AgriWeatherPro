@@ -97,7 +97,10 @@ const Sidebar = ({ activeView, setActiveView }) => {
           <button 
             type="button"
             className={`relative flex items-center hover:text-orange-1 hover:bg-orange-1/30 rounded-full px-4 py-1 ${activeView === 'reports' ? 'text-orange-1 bg-orange-1/30' : 'text-white'}`}
-            onClick={() => setActiveView('reports')}
+            onClick={() => {
+              console.log("Sidebar: Setting view to reports");
+              setActiveView('reports');
+            }}
           >
             <FaChartLine className="w-6 h-6" />
             <span className="relative pl-3">Reports</span>
