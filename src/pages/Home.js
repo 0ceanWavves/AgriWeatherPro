@@ -105,7 +105,7 @@ const Home = () => {
               <Link to="/dashboard" className="btn-accent px-8 py-3 text-lg">
                 Explore Data Solutions
               </Link>
-              <Link to="/about" className="bg-white text-primary hover:bg-gray-100 px-8 py-3 rounded-md text-lg transition-colors">
+              <Link to="/dashboard" className="bg-white text-primary hover:bg-gray-100 px-8 py-3 rounded-md text-lg transition-colors">
                 Discover Our Analytics Platform
               </Link>
             </div>
@@ -166,7 +166,7 @@ const Home = () => {
               <p className="text-gray-600">
                 Specialized insights for diverse agricultural ecosystems and species.
               </p>
-              <Link to="/dashboard" className="block mt-4 text-primary hover:underline">
+              <Link to="/climate-analysis" className="block mt-4 text-primary hover:underline">
                 View Analysis
               </Link>
             </div>

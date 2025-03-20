@@ -1,6 +1,11 @@
 import { execSync } from 'child_process';
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// Get __dirname equivalent in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Colors for console output
 const colors = {
@@ -12,31 +17,9 @@ const colors = {
   cyan: '\x1b[36m'
 };
 
-console.log(`${colors.magenta}Starting deployment process...${colors.reset}`);
+console.log(`${colors.magenta}Starting deployment to Netlify...${colors.reset}`);
 
-// Step 1: Add changes to Git and create a commit
-try {
-  console.log(`${colors.blue}Adding changes to Git...${colors.reset}`);
-  execSync('git add .', { stdio: 'inherit' });
-  console.log(`${colors.blue}Creating Git commit...${colors.reset}`);
-  execSync('git commit -m "Deploy to Netlify" --no-verify', { stdio: 'inherit' }); // --no-verify to skip git hooks if needed
-  console.log(`${colors.green}Git commit created successfully.${colors.reset}`);
-} catch (error) {
-  console.error('Error during Git commit:', error);
-  process.exit(1);
-}
-
-// Step 2: Push changes to Git repository
-try {
-  console.log(`${colors.blue}Pushing changes to Git repository...${colors.reset}`);
-  execSync('git push', { stdio: 'inherit' });
-  console.log(`${colors.green}Git push completed successfully.${colors.reset}`);
-} catch (error) {
-  console.error('Error during Git push:', error);
-  process.exit(1);
-}
-
-// Step 3: Build the project
+// Step 1: Build the project
 try {
   console.log(`${colors.blue}Building the project...${colors.reset}`);
   execSync('npm run build', { stdio: 'inherit' });
@@ -46,10 +29,10 @@ try {
   process.exit(1);
 }
 
-// Step 4: Ensure netlify.toml exists with proper config
+// Step 2: Ensure netlify.toml exists with proper config
 const netlifyTomlPath = path.join(__dirname, 'netlify.toml');
 const netlifyTomlContent = `[build]
-  publish = "build"
+  publish = "dist"
   command = "npm run build"
 
 # Handle React Router's client-side routing
@@ -67,7 +50,7 @@ try {
   process.exit(1);
 }
 
-// Step 5: Deploy to Netlify
+// Step 3: Deploy to Netlify
 try {
   console.log(`${colors.yellow}Deploying to Netlify...${colors.reset}`);
   
@@ -79,9 +62,9 @@ try {
     execSync('npm install -g netlify-cli', { stdio: 'inherit' });
   }
   
-  // Deploy
+  // Deploy manually specifying the correct publish directory
   console.log(`${colors.cyan}Running Netlify deploy command...${colors.reset}`);
-  execSync('netlify deploy --prod', { stdio: 'inherit' });
+  execSync('netlify deploy --prod --dir=dist', { stdio: 'inherit' });
   
   console.log(`${colors.green}Deployment complete! Your site is now live on Netlify.${colors.reset}`);
 } catch (error) {
