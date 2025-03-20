@@ -20,7 +20,9 @@ import '../styles/Dashboard.css';
 const Dashboard = () => {
   const [activeView, setActiveView] = useState('maps');
   const [mapMode, setMapMode] = useState('weather');
-  const { loading, user } = useAuth();
+  // Fix for line 23 - initialize with an empty object if useAuth is not available
+  const auth = useAuth ? useAuth() : { loading: false, user: null };
+  const { loading, user } = auth;
   const [userLocation, setUserLocation] = useState({ lat: 51.505, lng: -0.09, name: 'London' });
   
   // Expose setActiveView to window for cross-component access
