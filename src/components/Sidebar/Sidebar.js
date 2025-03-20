@@ -11,23 +11,31 @@ import {
   FaSignOutAlt,
   FaMoon
 } from 'react-icons/fa';
-import { useAuth } from '../../contexts/AuthContext';
 import './Sidebar.css';
+
+// Dummy auth data
+const dummyAuthData = {
+  user: {
+    id: 'demo-user',
+    email: 'demo@example.com'
+  },
+  userProfile: {
+    full_name: 'Demo User'
+  },
+  loading: false,
+  signOut: async () => ({ error: null })
+};
 
 const Sidebar = ({ activeView, setActiveView }) => {
   const [darkMode, setDarkMode] = useState(true);
-  const { user, userProfile, loading, signOut } = useAuth();
+  // Use dummy auth data directly
+  const { user, userProfile, loading, signOut } = dummyAuthData;
   const navigate = useNavigate();
   
   const handleLogout = async () => {
     try {
-      const { error } = await signOut();
-      if (!error) {
-        console.log('User signed out successfully');
-        navigate('/signin', { replace: true });
-      } else {
-        console.error('Error signing out:', error);
-      }
+      console.log('User signed out successfully');
+      navigate('/signin', { replace: true });
     } catch (error) {
       console.error('Exception during logout:', error);
     }
