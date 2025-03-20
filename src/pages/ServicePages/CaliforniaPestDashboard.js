@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useServiceMap } from '../../context/ServiceMapContext';
+import BackButton from '../../components/BackButton';
 import californiaPestDatabase from '../../data/californiaPestSummary';
 import { supabase } from '../../lib/supabase';
 
@@ -14,6 +16,14 @@ const CaliforniaPestDashboard = () => {
   });
   const [loading, setLoading] = useState(false);
   const [dbPestData, setDbPestData] = useState(null);
+  
+  const { selectService } = useServiceMap();
+  const navigate = useNavigate();
+  
+  // Set service when component mounts
+  useEffect(() => {
+    selectService('california-pest');
+  }, [selectService]);
   
   // Available California crops from Phase 1
   const californiaCrops = [
@@ -111,28 +121,36 @@ const CaliforniaPestDashboard = () => {
       [name]: parseFloat(value)
     }));
   };
+  
+  // Function to go to dashboard with current service selected
+  const goToDashboard = () => {
+    navigate('/dashboard');
+  };
 
   return (
-    <div className="bg-gradient-to-b from-green-50 to-green-100 min-h-screen py-8">
+    <div className="bg-gradient-to-b from-green-50 to-green-100 min-h-screen py-6">
       <div className="container mx-auto px-4">
+        <BackButton />
+        
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
           <div className="bg-gradient-to-r from-green-700 to-green-600 p-6">
-            <h1 className="text-3xl font-bold text-white">California Crop Pest Database</h1>
-            <p className="text-green-100 mt-2">
-              Phase 1: Monitoring pest risks for California's key crops based on weather conditions
-            </p>
+            <div className="flex justify-between items-center">
+              <div>
+                <h1 className="text-3xl font-bold text-white">California Crop Pest Database</h1>
+                <p className="text-green-100 mt-2">
+                  Phase 1: Monitoring pest risks for California's key crops based on weather conditions
+                </p>
+              </div>
+              <button 
+                onClick={goToDashboard}
+                className="px-4 py-2 bg-white text-green-700 rounded hover:bg-green-50"
+              >
+                View on Dashboard
+              </button>
+            </div>
           </div>
           
           <div className="p-6">
-            <div className="flex mb-6">
-              <Link to="/services/pest-management" className="text-blue-600 hover:text-blue-800 flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-                Back to Global Pest Management
-              </Link>
-            </div>
-            
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Left Column - Crop Selection & Weather Inputs */}
               <div className="lg:col-span-1">

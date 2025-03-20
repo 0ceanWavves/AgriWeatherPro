@@ -3,13 +3,23 @@
 @tailwind utilities;
 
 :root {
-  --primary-col: #3b82f6;
-  --secondary-col: #10b981;
+  --primary-col: #2c7d7b;
+  --secondary-col: #155e30;
+  --sidebar-bg: #1e293b;
   --background-col: #f3f4f6;
 }
 
 body {
   background-color: var(--background-col);
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+/* Make the app take full height */
+html, body, #root {
+  height: 100%;
 }
 
 .primary-color {
@@ -18,4 +28,249 @@ body {
 
 .secondary-color {
   color: var(--secondary-col);
+}
+
+/* Override tailwind primary color */
+.bg-primary {
+  background-color: var(--primary-col) !important;
+}
+
+.text-primary {
+  color: var(--primary-col) !important;
+}
+
+.hover\:bg-primary:hover {
+  background-color: var(--primary-col) !important;
+}
+
+.hover\:text-primary:hover {
+  color: var(--primary-col) !important;
+}
+
+/* Sidebar styling */
+aside {
+  background-color: var(--sidebar-bg) !important;
+}
+
+.services-menu {
+  background-color: var(--secondary-col) !important;
+}
+
+/* Secondary service menu background */
+.bg-green-700 {
+  background-color: #155e30 !important;
+}
+
+.hover\:bg-green-700:hover {
+  background-color: #155e30 !important;
+}
+
+/* Fix leaflet map container */
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+}
+
+/* Make map markers more visible */
+.leaflet-div-icon {
+  background: transparent;
+  border: none;
+}
+
+/* Compact styling for the weather dashboard */
+.pest-marker {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: white;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.2);
+}
+
+.high-risk {
+  background-color: rgba(239, 68, 68, 0.9);
+  border: 2px solid #dc2626;
+}
+
+.medium-risk {
+  background-color: rgba(245, 158, 11, 0.9);
+  border: 2px solid #d97706; 
+}
+
+.low-risk {
+  background-color: rgba(16, 185, 129, 0.9);
+  border: 2px solid #059669;
+}
+
+/* Make info panels more compact */
+.info-panel {
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  background-color: white;
+  border-radius: 0.375rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.info-panel h3 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.info-panel-content {
+  font-size: 0.75rem;
+}
+
+/* Compact form controls */
+.form-control-sm {
+  height: 1.75rem;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+}
+
+/* Dense data tables */
+.dense-table th,
+.dense-table td {
+  padding: 0.375rem 0.5rem;
+  font-size: 0.75rem;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Weather map styles */
+.map-legend h4 {
+  font-size: 12px;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+}
+
+.leaflet-control-zoom {
+  margin-top: 40px !important;
+}
+
+.leaflet-control-zoom a {
+  width: 28px !important;
+  height: 28px !important;
+  line-height: 28px !important;
+}
+
+/* Override leaflet attribution to make it less prominent */
+.leaflet-control-attribution {
+  font-size: 9px !important;
+  padding: 2px 4px !important;
+  background-color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Compact layer selector */
+.layer-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+}
+
+.layer-selector button {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 2px;
+  border: 1px solid #e2e8f0;
+}
+
+/* Weather data info cards */
+.weather-data-card {
+  display: flex;
+  flex-direction: column;
+  padding: 6px;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.weather-data-title {
+  font-size: 10px;
+  color: #6b7280;
+  margin-bottom: 2px;
+}
+
+.weather-data-value {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Compact weather metrics display */
+.weather-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+/* Make the map interface more like Image 2 */
+.sleek-map-container {
+  position: relative;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+.weather-data-sidebar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 80px;
+  background-color: rgba(17, 24, 39, 0.8);
+  color: white;
+  z-index: 1000;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 12px;
+}
+
+.temperature-display {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.feels-like {
+  font-size: 11px;
+  opacity: 0.8;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .weather-metrics {
+    grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+  }
+  
+  .weather-data-sidebar {
+    width: 60px;
+    font-size: 10px;
+  }
+  
+  .temperature-display {
+    font-size: 20px;
+  }
 }

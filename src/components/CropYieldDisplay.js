@@ -212,7 +212,7 @@ const CropYieldDisplay = () => {
             </div>
             <div>
               <p className="text-sm">
-                <span className="font-semibold">Data source:</span> Risk assessments are calculated using data from NOAA weather services, USDA historical records, and our proprietary AI models that analyze 10+ years of crop performance metrics. Updated daily.
+                <span className="font-semibold">Data source:</span> Risk assessments are calculated using data from NOAA weather services, USDA historical records, and our proprietary AI models that analyze 100+ years of crop performance metrics. Updated daily.
               </p>
               <p className="text-sm mt-2">
                 <span className="font-semibold">Methodology:</span> Our machine learning algorithms calculate risk by combining current weather conditions, climate forecasts, historical patterns, and crop-specific vulnerability factors.

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useServiceMap } from '../../context/ServiceMapContext';
+import BackButton from '../../components/BackButton';
 import { datePalmPests } from '../../data/regions/menaPestData';
 
 const MenaPestDashboard = () => {
@@ -10,6 +12,14 @@ const MenaPestDashboard = () => {
     precipitation: 0, // Default precipitation in mm
     forecastDays: 5 // Default forecast days
   });
+  
+  const { selectService } = useServiceMap();
+  const navigate = useNavigate();
+  
+  // Set service when component mounts
+  useEffect(() => {
+    selectService('mena-pest');
+  }, [selectService]);
   
   useEffect(() => {
     if (datePalmPests.length > 0) {
@@ -60,6 +70,11 @@ const MenaPestDashboard = () => {
     }));
   };
 
+  // Function to go to dashboard with current service selected
+  const goToDashboard = () => {
+    navigate('/dashboard');
+  };
+
   // Helper function to render strategy list
   const renderStrategyList = (strategies, title) => {
     if (!strategies || strategies.length === 0) return null;
@@ -78,24 +93,27 @@ const MenaPestDashboard = () => {
   return (
     <div className="bg-gradient-to-b from-amber-50 to-amber-100 min-h-screen py-6">
       <div className="container mx-auto px-4">
+        <BackButton />
+        
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
           <div className="bg-gradient-to-r from-amber-700 to-amber-600 p-4 md:p-6">
-            <h1 className="text-xl md:text-3xl font-bold text-white">MENA Date Palm Pest Database</h1>
-            <p className="text-amber-100 mt-2 text-sm md:text-base">
-              Monitor and manage date palm pest risks in the Middle East and North Africa region
-            </p>
+            <div className="flex justify-between items-center">
+              <div>
+                <h1 className="text-xl md:text-3xl font-bold text-white">MENA Date Palm Pest Database</h1>
+                <p className="text-amber-100 mt-2 text-sm md:text-base">
+                  Monitor and manage date palm pest risks in the Middle East and North Africa region
+                </p>
+              </div>
+              <button 
+                onClick={goToDashboard}
+                className="px-4 py-2 bg-white text-amber-700 rounded hover:bg-amber-50"
+              >
+                View on Dashboard
+              </button>
+            </div>
           </div>
           
           <div className="p-4 md:p-6">
-            <div className="flex mb-4">
-              <Link to="/services/pest-management" className="text-blue-600 hover:text-blue-800 flex items-center text-sm">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-                Back to Global Pest Management
-              </Link>
-            </div>
-            
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
               {/* Left Column */}
               <div className="lg:col-span-1">

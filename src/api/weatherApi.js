@@ -273,9 +273,64 @@ export const getHistoricalWeather = async (lat, lon, startDate, endDate) => {
   }
 };
 
-// Get weather maps tile URL
+// Get map tile URL based on layer type
+export const getMapTileUrl = (layerId) => {
+  const weatherLayerIds = ['temp_new', 'precipitation_new', 'wind_new', 'clouds_new', 'pressure_new'];
+  
+  // For standard weather layers, use OpenWeatherMap
+  if (weatherLayerIds.includes(layerId)) {
+    return `https://tile.openweathermap.org/map/${layerId}/{z}/{x}/{y}.png?appid=${OPENWEATHERMAP_API_KEY}`;
+  }
+  
+  // For pest layers, we're using mock data in the front-end
+  // But in a real app, this could point to custom tile servers or GeoJSON endpoints
+  const pestLayers = [
+    'almond_pests', 'grape_pests', 'tomato_pests', 'lettuce_pests', 'strawberry_pests',
+    'date_palm_pests', 'red_palm_weevil', 'dubas_bug', 'date_palm_scale', 'spider_mites'
+  ];
+  
+  if (pestLayers.includes(layerId)) {
+    // In a real app, this would be a real endpoint
+    return `https://agriweatherpro.example.com/api/pest-tiles/${layerId}/{z}/{x}/{y}.png`;
+  }
+  
+  // For irrigation layers
+  const irrigationLayers = [
+    'soil_moisture', 'irrigation_needs', 'precipitation_forecast', 'evapotranspiration'
+  ];
+  
+  if (irrigationLayers.includes(layerId)) {
+    // In a real app, this would be a real endpoint
+    return `https://agriweatherpro.example.com/api/irrigation-tiles/${layerId}/{z}/{x}/{y}.png`;
+  }
+  
+  // For climate analysis layers
+  const climateLayers = [
+    'temperature_trends', 'precipitation_trends', 'drought_index', 'climate_zones'
+  ];
+  
+  if (climateLayers.includes(layerId)) {
+    // In a real app, this would be a real endpoint
+    return `https://agriweatherpro.example.com/api/climate-tiles/${layerId}/{z}/{x}/{y}.png`;
+  }
+  
+  // For crop yield prediction layers
+  const cropYieldLayers = [
+    'yield_potential', 'crop_health', 'growth_stage', 'historical_yield'
+  ];
+  
+  if (cropYieldLayers.includes(layerId)) {
+    // In a real app, this would be a real endpoint
+    return `https://agriweatherpro.example.com/api/crop-tiles/${layerId}/{z}/{x}/{y}.png`;
+  }
+  
+  // Default to OpenStreetMap if layer not recognized
+  return 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+};
+
+// Get weather maps tile URL (legacy version - kept for backward compatibility)
 export const getWeatherMapUrl = (layer) => {
-  return `https://tile.openweathermap.org/map/${layer}/{z}/{x}/{y}.png?appid=${OPENWEATHERMAP_API_KEY}`;
+  return getMapTileUrl(layer);
 };
 
 // Function to get weather data for a fixed location
@@ -305,4 +360,62 @@ export const getLocationWeather = async (lat = 51.5074, lon = -0.1278) => {
       pressure: 1013
     };
   }
+};
+
+// Get pest risk data for a location and crop type
+export const getPestRiskData = async (lat, lon, cropType) => {
+  try {
+    // In a real app, this would use a real API endpoint
+    // For now, we're returning synthetic data
+    return generateMockPestData(lat, lon, cropType);
+  } catch (error) {
+    console.error('Error fetching pest risk data, using fallback data:', error);
+    return generateMockPestData(lat, lon, cropType);
+  }
+};
+
+// Generate mock pest data based on location and crop type
+const generateMockPestData = (lat, lon, cropType) => {
+  // Define pest data by crop type
+  const pestsByType = {
+    'almond': [
+      { name: 'Navel Orangeworm', scientificName: 'Amyelois transitella', riskLevel: 'High' },
+      { name: 'Peach Twig Borer', scientificName: 'Anarsia lineatella', riskLevel: 'Medium' },
+      { name: 'San Jose Scale', scientificName: 'Quadraspidiotus perniciosus', riskLevel: 'Low' }
+    ],
+    'grape': [
+      { name: 'Vine Mealybug', scientificName: 'Planococcus ficus', riskLevel: 'Medium' },
+      { name: 'Grapevine Moth', scientificName: 'Lobesia botrana', riskLevel: 'High' },
+      { name: 'Powdery Mildew', scientificName: 'Erysiphe necator', riskLevel: 'High' }
+    ],
+    'date_palm': [
+      { name: 'Red Palm Weevil', scientificName: 'Rhynchophorus ferrugineus', riskLevel: 'High' },
+      { name: 'Dubas Bug', scientificName: 'Ommatissus lybicus', riskLevel: 'Medium' },
+      { name: 'Date Palm Scale', scientificName: 'Parlatoria blanchardi', riskLevel: 'Low' }
+    ],
+    'default': [
+      { name: 'Aphids', scientificName: 'Aphidoidea family', riskLevel: 'Medium' },
+      { name: 'Spider Mites', scientificName: 'Tetranychidae family', riskLevel: 'Low' },
+      { name: 'Fungal Pathogens', scientificName: 'Various species', riskLevel: 'Medium' }
+    ]
+  };
+  
+  // Get the appropriate pest list based on crop type
+  const pests = pestsByType[cropType] || pestsByType.default;
+  
+  // Add location data to each pest (with slight randomization for the map)
+  return pests.map(pest => ({
+    ...pest,
+    location: {
+      lat: lat + (Math.random() * 0.1 - 0.05),
+      lng: lon + (Math.random() * 0.1 - 0.05)
+    },
+    riskFactors: [
+      'Current weather conditions',
+      'Historical pest presence',
+      'Crop growth stage',
+      'Nearby vegetation'
+    ],
+    management: 'Monitoring, cultural practices, biological controls, selective pesticides if needed'
+  }));
 };

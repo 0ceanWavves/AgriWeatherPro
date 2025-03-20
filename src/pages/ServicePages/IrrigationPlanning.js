@@ -1,6 +1,12 @@
-import React, { useState } from 'react';
-import WeatherMap from '../../components/DashboardWidgets/WeatherMap';
-import { FaWater, FaTint, FaChartLine, FaCalendarAlt, FaSeedling } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useServiceMap } from '../../context/ServiceMapContext';
+import BackButton from '../../components/BackButton';
+import ServiceAwareMap from '../../components/DashboardWidgets/ServiceAwareMap';
+import { FaWater, FaTint, FaChartLine, FaCalendarAlt, FaSeedling, FaInfoCircle } from 'react-icons/fa';
+import ScheduleTab from '../../components/IrrigationPlanning/ScheduleTab';
+import AnalyticsTab from '../../components/IrrigationPlanning/AnalyticsTab';
+import CropSettingsTab from '../../components/IrrigationPlanning/CropSettingsTab';
 
 const IrrigationPlanning = () => {
   const [selectedLocation, setSelectedLocation] = useState({ 
@@ -9,24 +15,78 @@ const IrrigationPlanning = () => {
     name: 'London' 
   });
   const [activeTab, setActiveTab] = useState('map');
+  const { selectService } = useServiceMap();
+  const navigate = useNavigate();
+  
+  // Set irrigation service when component mounts
+  useEffect(() => {
+    selectService('irrigation-planning');
+  }, [selectService]);
+  
+  // Function to go to dashboard with current service selected
+  const goToDashboard = () => {
+    navigate('/dashboard');
+  };
 
   return (
-    <div className="irrigation-planning-page p-4">
+    <div className="irrigation-planning-page">
+      <BackButton />
+      
       <div className="page-header mb-6">
-        <h1 className="text-2xl font-bold text-gray-800 dark:text-white">Irrigation Planning</h1>
-        <p className="text-gray-600 dark:text-gray-300">
+        <div className="flex justify-between items-center">
+          <h1 className="text-2xl font-bold text-green-800">Irrigation Planning</h1>
+          <button 
+            onClick={goToDashboard}
+            className="px-4 py-2 bg-green-700 text-white rounded hover:bg-green-800"
+          >
+            View on Dashboard
+          </button>
+        </div>
+        <p className="text-gray-600">
           Plan efficient irrigation based on weather forecasts, soil conditions, and crop needs
         </p>
       </div>
 
-      <div className="page-tabs mb-4 border-b border-gray-200 dark:border-gray-700">
+      {/* Information Card - Only show if not on map tab to save space */}
+      {activeTab !== 'map' && (
+        <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
+          <div className="flex items-start">
+            <FaInfoCircle className="text-blue-500 text-xl mt-1 mr-4" />
+            <div>
+              <h2 className="text-xl font-bold mb-3 text-gray-800">How Irrigation Planning Works</h2>
+              <p className="text-gray-700 mb-4">
+                Our system calculates irrigation needs by combining weather data, crop-specific water requirements, 
+                soil conditions, and irrigation system efficiency to provide precise recommendations.
+              </p>
+              
+              <h3 className="text-lg font-semibold mb-2 text-gray-800">Key Components</h3>
+              <ul className="list-disc pl-5 mb-4 text-gray-700">
+                <li className="mb-1"><strong>Weather data:</strong> Temperature, humidity, wind speed, rainfall, and solar radiation</li>
+                <li className="mb-1"><strong>Crop water needs:</strong> Different crops need different amounts of water during growth stages</li>
+                <li className="mb-1"><strong>Soil conditions:</strong> Soil type affects how water is retained for plants</li>
+                <li className="mb-1"><strong>System efficiency:</strong> Different irrigation systems deliver water with varying efficiency</li>
+              </ul>
+              
+              <h3 className="text-lg font-semibold mb-2 text-gray-800">Benefits</h3>
+              <ul className="list-disc pl-5 text-gray-700">
+                <li className="mb-1">Reduce water waste by applying only what crops need</li>
+                <li className="mb-1">Improve crop health by preventing both under and over-watering</li>
+                <li className="mb-1">Save on water and energy costs</li>
+                <li className="mb-1">Make data-driven decisions based on scientific calculations</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className="page-tabs mb-4 border-b border-gray-200">
         <nav className="flex flex-wrap -mb-px">
           <button
             onClick={() => setActiveTab('map')}
             className={`inline-flex items-center py-2 px-4 mr-4 
               ${activeTab === 'map' 
-                ? 'text-orange-1 border-b-2 border-orange-1 font-medium' 
-                : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white'}`}
+                ? 'text-green-800 border-b-2 border-green-700 font-medium' 
+                : 'text-gray-500 hover:text-gray-700'}`}
             type="button"
           >
             <FaWater className="mr-2" />
@@ -37,8 +97,8 @@ const IrrigationPlanning = () => {
             onClick={() => setActiveTab('schedule')}
             className={`inline-flex items-center py-2 px-4 mr-4 
               ${activeTab === 'schedule' 
-                ? 'text-orange-1 border-b-2 border-orange-1 font-medium' 
-                : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white'}`}
+                ? 'text-green-800 border-b-2 border-green-700 font-medium' 
+                : 'text-gray-500 hover:text-gray-700'}`}
             type="button"
           >
             <FaCalendarAlt className="mr-2" />
@@ -49,8 +109,8 @@ const IrrigationPlanning = () => {
             onClick={() => setActiveTab('analytics')}
             className={`inline-flex items-center py-2 px-4 mr-4 
               ${activeTab === 'analytics' 
-                ? 'text-orange-1 border-b-2 border-orange-1 font-medium' 
-                : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white'}`}
+                ? 'text-green-800 border-b-2 border-green-700 font-medium' 
+                : 'text-gray-500 hover:text-gray-700'}`}
             type="button"
           >
             <FaChartLine className="mr-2" />
@@ -61,8 +121,8 @@ const IrrigationPlanning = () => {
             onClick={() => setActiveTab('crops')}
             className={`inline-flex items-center py-2 px-4 
               ${activeTab === 'crops' 
-                ? 'text-orange-1 border-b-2 border-orange-1 font-medium' 
-                : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white'}`}
+                ? 'text-green-800 border-b-2 border-green-700 font-medium' 
+                : 'text-gray-500 hover:text-gray-700'}`}
             type="button"
           >
             <FaSeedling className="mr-2" />
@@ -74,58 +134,22 @@ const IrrigationPlanning = () => {
       <div className="tab-content">
         {activeTab === 'map' && (
           <div className="map-tab">
-            <WeatherMap location={selectedLocation} mode="irrigation" />
+            <div className="mb-4 p-4 bg-blue-50 rounded-lg">
+              <h3 className="text-lg font-semibold mb-2">Irrigation Map</h3>
+              <p className="text-gray-700">
+                This map visualizes soil moisture levels and irrigation needs across your fields.
+                Select different layers to view patterns that affect irrigation requirements.
+              </p>
+            </div>
+            <div className="map-container" style={{ height: '600px' }}>
+              <ServiceAwareMap />
+            </div>
           </div>
         )}
         
-        {activeTab === 'schedule' && (
-          <div className="schedule-tab p-8 rounded bg-gray-50 dark:bg-gray-800 text-center">
-            <FaCalendarAlt className="text-5xl mx-auto mb-4 text-gray-400" />
-            <h2 className="text-xl font-semibold mb-2">Irrigation Schedule</h2>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">
-              This premium feature allows you to create automated irrigation schedules based on weather forecasts
-              and soil conditions.
-            </p>
-            <button 
-              type="button"
-              className="px-4 py-2 bg-orange-1 text-black-1 rounded hover:bg-orange-2"
-            >
-              Upgrade to Premium
-            </button>
-          </div>
-        )}
-        
-        {activeTab === 'analytics' && (
-          <div className="analytics-tab p-8 rounded bg-gray-50 dark:bg-gray-800 text-center">
-            <FaChartLine className="text-5xl mx-auto mb-4 text-gray-400" />
-            <h2 className="text-xl font-semibold mb-2">Water Usage Analytics</h2>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">
-              Track water usage, efficiency metrics, and cost savings with our premium analytics tools.
-            </p>
-            <button 
-              type="button"
-              className="px-4 py-2 bg-orange-1 text-black-1 rounded hover:bg-orange-2"
-            >
-              Upgrade to Premium
-            </button>
-          </div>
-        )}
-        
-        {activeTab === 'crops' && (
-          <div className="crops-tab p-8 rounded bg-gray-50 dark:bg-gray-800 text-center">
-            <FaSeedling className="text-5xl mx-auto mb-4 text-gray-400" />
-            <h2 className="text-xl font-semibold mb-2">Crop Water Requirements</h2>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">
-              Configure crop types, growth stages, and water requirements for optimal irrigation planning.
-            </p>
-            <button 
-              type="button"
-              className="px-4 py-2 bg-orange-1 text-black-1 rounded hover:bg-orange-2"
-            >
-              Upgrade to Premium
-            </button>
-          </div>
-        )}
+        {activeTab === 'schedule' && <ScheduleTab />}
+        {activeTab === 'analytics' && <AnalyticsTab />}
+        {activeTab === 'crops' && <CropSettingsTab />}
       </div>
     </div>
   );

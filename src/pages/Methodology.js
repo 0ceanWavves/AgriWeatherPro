@@ -293,7 +293,7 @@ const Methodology = () => {
               <ul className="space-y-2 text-sm">
                 <li className="flex items-start">
                   <span className="inline-block w-2 h-2 bg-primary rounded-full mt-1.5 mr-2"></span>
-                  <span>Backtesting against 10+ years of historical data</span>
+                  <span>Backtesting against 100+ years of historical data</span>
                 </li>
                 <li className="flex items-start">
                   <span className="inline-block w-2 h-2 bg-primary rounded-full mt-1.5 mr-2"></span>

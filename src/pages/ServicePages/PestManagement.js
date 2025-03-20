@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import GlobalLocationSelector from '../../components/GlobalLocationSelector';
 import PestMap from '../../components/pest/PestMap';
@@ -238,6 +239,40 @@ const PestManagement = () => {
           </div>
           
           <div className="p-3 md:p-6">
+            {/* NEW: Regional Database Quick Access */}
+            <div className="mb-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Link 
+                to="/services/california-pests"
+                className="p-4 bg-blue-50 border border-blue-200 rounded-lg flex items-center shadow-sm hover:shadow-md transition-shadow"
+              >
+                <div className="w-12 h-12 mr-4 bg-blue-100 rounded-full flex items-center justify-center text-blue-700">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-blue-800">California Pest Database</h3>
+                  <p className="text-sm text-gray-600">Specialized information for almond, grape, tomato, lettuce, and strawberry pests</p>
+                </div>
+              </Link>
+              
+              <Link 
+                to="/services/mena-pests"
+                className="p-4 bg-amber-50 border border-amber-200 rounded-lg flex items-center shadow-sm hover:shadow-md transition-shadow"
+              >
+                <div className="w-12 h-12 mr-4 bg-amber-100 rounded-full flex items-center justify-center text-amber-700">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-amber-800">MENA Date Palm Pest Database</h3>
+                  <p className="text-sm text-gray-600">Focused information for date palm pests in Middle East & North Africa</p>
+                </div>
+              </Link>
+            </div>
+            
             {/* Mobile Toggle for Filters */}
             {isMobile && (
               <button 

@@ -102,7 +102,7 @@ const Home = () => {
               Advanced analytics and predictive insights for diverse species, fauna, and climates.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/dashboard" className="btn-accent px-8 py-3 text-lg">
+              <Link to="/maps" className="btn-accent px-8 py-3 text-lg">
                 Explore Data Solutions
               </Link>
               <Link to="/dashboard" className="bg-white text-primary hover:bg-gray-100 px-8 py-3 rounded-md text-lg transition-colors">
