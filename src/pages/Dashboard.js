@@ -20,10 +20,8 @@ import '../styles/Dashboard.css';
 const Dashboard = () => {
   const [activeView, setActiveView] = useState('maps');
   const [mapMode, setMapMode] = useState('weather');
-  const { loading, user } = useAuth ? useAuth() : { loading: false, user: null };
+  const { loading, user } = useAuth();
   const [userLocation, setUserLocation] = useState({ lat: 51.505, lng: -0.09, name: 'London' });
-  const [data, setData] = useState(null);
-  const [error, setError] = useState(null);
   
   // Expose setActiveView to window for cross-component access
   useEffect(() => {
@@ -160,31 +158,8 @@ const Dashboard = () => {
     return () => clearTimeout(timer);
   }, [user]);
   
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        // Replace with your actual data fetching logic
-        const response = await fetch('/api/your-data-endpoint'); // Example
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const jsonData = await response.json();
-        setData(jsonData);
-      } catch (err) {
-        console.error("Error fetching data:", err);
-        setError(err); // Set the error state
-      }
-    }
-
-    fetchData();
-  }, []);
-
   if (loading) {
     return <LoadingScreen />;
-  }
-  
-  if (error) {
-    return <div>Error: {error.message}</div>;
   }
   
   // Render the appropriate content based on the active view

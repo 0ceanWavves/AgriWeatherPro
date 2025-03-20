@@ -1,127 +1,204 @@
-/**
- * Trade.gov API Utilities
- * Provides functions for fetching and processing trade event data
- */
-
-// API key should ideally be stored in environment variables
-const API_KEY = 'd870e253241b4df98dd3fe3356554376';
-const BASE_URL = 'https://api.trade.gov/v1';
+// Trade API utils for AgriWeather Pro
 
 /**
- * Fetch trade events from the API
- * @param {Object} params - Query parameters for the API
- * @returns {Promise<Object>} - Trade events data
+ * Fetch trade events based on filter criteria
+ * @param {Object} filters - Filter options
+ * @returns {Promise<Object>} Trade events data
  */
-export const fetchTradeEvents = async (params = {}) => {
-  try {
-    const queryParams = new URLSearchParams({
-      api_key: API_KEY,
-      ...params
-    });
-    
-    const response = await fetch(`${BASE_URL}/trade_events/search?${queryParams}`);
-    
-    if (!response.ok) {
-      throw new Error(`Trade API error: ${response.status}`);
+export const fetchTradeEvents = async (filters = {}) => {
+  // In a real implementation, this would call an actual API
+  // For now, return simulated data
+  
+  // Simulate API delay
+  await new Promise(resolve => setTimeout(resolve, 800));
+  
+  // Sample trade events data
+  const events = [
+    {
+      id: 'event1',
+      name: 'International Agriculture Expo',
+      startDate: '2025-05-15',
+      endDate: '2025-05-18',
+      city: 'Chicago',
+      country: 'United States',
+      coordinates: [41.8781, -87.6298],
+      industry: 'Agriculture',
+      website: 'https://example.com/ag-expo',
+      registrationLink: 'https://example.com/ag-expo/register'
+    },
+    {
+      id: 'event2',
+      name: 'European Farming Technology Conference',
+      startDate: '2025-06-10',
+      endDate: '2025-06-12',
+      city: 'Berlin',
+      country: 'Germany',
+      coordinates: [52.5200, 13.4050],
+      industry: 'Agricultural Technology',
+      website: 'https://example.com/farming-tech',
+      registrationLink: 'https://example.com/farming-tech/register'
+    },
+    {
+      id: 'event3',
+      name: 'Asia Pacific Agricultural Trade Summit',
+      startDate: '2025-09-20',
+      endDate: '2025-09-23',
+      city: 'Singapore',
+      country: 'Singapore',
+      coordinates: [1.3521, 103.8198],
+      industry: 'Agricultural Trade',
+      website: 'https://example.com/ap-ag-trade',
+      registrationLink: 'https://example.com/ap-ag-trade/register'
+    },
+    {
+      id: 'event4',
+      name: 'Sustainable Farming Expo',
+      startDate: '2025-07-05',
+      endDate: '2025-07-08',
+      city: 'Amsterdam',
+      country: 'Netherlands',
+      coordinates: [52.3676, 4.9041],
+      industry: 'Sustainable Agriculture',
+      website: 'https://example.com/sustainable-farming',
+      registrationLink: 'https://example.com/sustainable-farming/register'
+    },
+    {
+      id: 'event5',
+      name: 'Global Agribusiness Forum',
+      startDate: '2025-08-12',
+      endDate: '2025-08-15',
+      city: 'São Paulo',
+      country: 'Brazil',
+      coordinates: [-23.5505, -46.6333],
+      industry: 'Agribusiness',
+      website: 'https://example.com/agribusiness-forum',
+      registrationLink: 'https://example.com/agribusiness-forum/register'
     }
-    
-    return await response.json();
-  } catch (error) {
-    console.error('Failed to fetch trade events:', error);
-    throw error;
+  ];
+  
+  // Filter events if needed (simplified implementation)
+  let filteredEvents = [...events];
+  
+  // Apply industry filter if provided
+  if (filters.industries) {
+    const industriesArray = filters.industries.split(',');
+    filteredEvents = filteredEvents.filter(event => 
+      industriesArray.some(industry => 
+        event.industry.toLowerCase().includes(industry.toLowerCase())
+      )
+    );
   }
+  
+  return {
+    success: true,
+    results: filteredEvents,
+    count: filteredEvents.length
+  };
 };
 
 /**
- * Fetch trade events count by country
- * @returns {Promise<Object>} - Trade events count data
+ * Get count of trade events
+ * @returns {Promise<Object>} Count of trade events
  */
 export const fetchTradeEventsCount = async () => {
-  try {
-    const queryParams = new URLSearchParams({
-      api_key: API_KEY
-    });
-    
-    const response = await fetch(`${BASE_URL}/trade_events/count?${queryParams}`);
-    
-    if (!response.ok) {
-      throw new Error(`Trade API error: ${response.status}`);
-    }
-    
-    return await response.json();
-  } catch (error) {
-    console.error('Failed to fetch trade events count:', error);
-    throw error;
-  }
-};
-
-/**
- * Fetch tariff rates for specific countries and agricultural products
- * @param {string} countryCode - ISO country code
- * @param {string} productCode - Harmonized System (HS) code for the product
- * @returns {Promise<Object>} - Tariff data
- */
-export const fetchTariffRates = async (countryCode, productCode) => {
-  try {
-    const queryParams = new URLSearchParams({
-      api_key: API_KEY,
-      country: countryCode,
-      hs_code: productCode
-    });
-    
-    const response = await fetch(`${BASE_URL}/tariff_rates/search?${queryParams}`);
-    
-    if (!response.ok) {
-      throw new Error(`Tariff API error: ${response.status}`);
-    }
-    
-    return await response.json();
-  } catch (error) {
-    console.error('Failed to fetch tariff rates:', error);
-    throw error;
-  }
-};
-
-/**
- * Converts trade events data to GeoJSON format for mapping
- * @param {Array} events - Trade events data
- * @returns {Object} - GeoJSON feature collection
- */
-export const convertTradeEventsToGeoJSON = (events) => {
-  if (!events || !events.results) return null;
+  // Simulate API delay
+  await new Promise(resolve => setTimeout(resolve, 200));
   
-  const features = events.results
-    .filter(event => event.venues && event.venues[0] && event.venues[0].latitude && event.venues[0].longitude)
-    .map(event => {
-      const venue = event.venues[0];
-      
-      return {
-        type: 'Feature',
-        geometry: {
-          type: 'Point',
-          coordinates: [parseFloat(venue.longitude), parseFloat(venue.latitude)]
-        },
-        properties: {
-          id: event.id,
-          name: event.name,
-          description: event.description || '',
-          startDate: event.start_date,
-          endDate: event.end_date,
-          cost: event.cost,
-          registrationLink: event.registration_link,
-          website: event.website_link,
-          industry: event.industries ? event.industries.map(i => i.name).join(', ') : '',
-          venue: venue.name,
-          city: venue.city,
-          country: venue.country,
-          state: venue.state,
-          eventType: event.event_type
-        }
-      };
-    });
-    
+  return {
+    success: true,
+    count: 5
+  };
+};
+
+/**
+ * Fetch tariff rates for a specific country and product
+ * @param {string} countryCode - ISO country code
+ * @param {string} hsCode - Harmonized System code for product
+ * @returns {Promise<Object>} Tariff data
+ */
+export const fetchTariffRates = async (countryCode, hsCode) => {
+  // Simulate API delay
+  await new Promise(resolve => setTimeout(resolve, 600));
+  
+  // Sample tariff data
+  const tariffRates = {
+    'BR': {
+      '1001': { rate: 10.0 }, // Wheat
+      '1005': { rate: 8.0 },  // Corn/Maize
+      '1006': { rate: 12.0 }, // Rice
+      '1201': { rate: 6.0 },  // Soybeans
+      '0805': { rate: 15.0 }  // Citrus fruits
+    },
+    'US': {
+      '1001': { rate: 2.5 },
+      '1005': { rate: 0.0 },
+      '1006': { rate: 5.0 },
+      '1201': { rate: 0.0 },
+      '0805': { rate: 4.5 }
+    },
+    'EU': {
+      '1001': { rate: 12.0 },
+      '1005': { rate: 5.0 },
+      '1006': { rate: 7.5 },
+      '1201': { rate: 4.0 },
+      '0805': { rate: 16.0 }
+    }
+  };
+  
+  // Get rates for the specified country or default to empty
+  const countryRates = tariffRates[countryCode] || {};
+  
+  // Get rate for the specified HS code
+  const rate = countryRates[hsCode] ? countryRates[hsCode].rate : null;
+  
+  return {
+    success: true,
+    results: rate ? [
+      {
+        country_code: countryCode,
+        hs_code: hsCode,
+        tariff_rate: rate,
+        currency: 'USD',
+        last_updated: '2025-01-15'
+      }
+    ] : []
+  };
+};
+
+/**
+ * Convert trade events to GeoJSON format for map display
+ * @param {Object} eventsData - Trade events data
+ * @returns {Object} GeoJSON object
+ */
+export const convertTradeEventsToGeoJSON = (eventsData) => {
+  if (!eventsData || !eventsData.results || !Array.isArray(eventsData.results)) {
+    return {
+      type: 'FeatureCollection',
+      features: []
+    };
+  }
+  
+  const features = eventsData.results.map(event => ({
+    type: 'Feature',
+    geometry: {
+      type: 'Point',
+      coordinates: [event.coordinates[1], event.coordinates[0]] // GeoJSON uses [lng, lat]
+    },
+    properties: {
+      id: event.id,
+      name: event.name,
+      startDate: event.startDate,
+      endDate: event.endDate,
+      city: event.city,
+      country: event.country,
+      industry: event.industry,
+      website: event.website,
+      registrationLink: event.registrationLink
+    }
+  }));
+  
   return {
     type: 'FeatureCollection',
     features
   };
-}; 
+};
