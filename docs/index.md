@@ -18,6 +18,7 @@ Welcome to the official documentation for AgriWeather Pro, an advanced weather a
 - [**API Reference**](./api-reference.md) - API endpoints and usage
 - [**Development Guide**](./development-guide.md) - Guide for developers
 - [**Deployment Guide**](./deployment-guide.md) - How to deploy the application
+- [**Crop Pests by Region**](./crop-pests-by-region.md) - Comprehensive guide to major crop pests worldwide
 
 ## Key Features
 
@@ -30,6 +31,7 @@ Welcome to the official documentation for AgriWeather Pro, an advanced weather a
 - **Customizable Alerts**: Personalized notifications for weather conditions affecting your crops
 - **Integration Capabilities**: Connect with farm management systems and IoT devices
 - **Premium Subscription Options**: Unlock advanced features for more sophisticated farm management
+- **Pest Risk Monitoring**: Track potential pest outbreaks based on weather conditions
 
 ## Quick Links
 
@@ -42,7 +44,7 @@ Welcome to the official documentation for AgriWeather Pro, an advanced weather a
 
 For additional support or information:
 
-- **Email**: support@agriweatherpro.com
+- **Email**: Sales@synthed.xyz
 - **Community Forum**: forum.agriweatherpro.com
 - **Office Hours**: Monday-Friday, 9 AM - 5 PM EST
 
