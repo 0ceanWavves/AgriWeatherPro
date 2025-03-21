@@ -4,11 +4,12 @@ import 'leaflet/dist/leaflet.css';
 import { useServiceMap } from '../../context/ServiceMapContext';
 import { getWeatherMapUrl } from '../../api/weatherApi';
 
-const ServiceAwareMap = ({ selectedLayer }) => {
+const ServiceAwareMap = ({ selectedLayer, location }) => {
   const mapRef = useRef(null);
   const mapContainerRef = useRef(null);
   const layersRef = useRef({});
   const legendRef = useRef(null);
+  const locationMarkerRef = useRef(null);
   
   const [mapCenter, setMapCenter] = useState([37.7749, -122.4194]); // Default to California
   const [zoom, setZoom] = useState(6);
@@ -25,6 +26,18 @@ const ServiceAwareMap = ({ selectedLayer }) => {
     activeLayers, 
     selectLayer 
   } = useServiceMap();
+  
+  // Update map center when location changes
+  useEffect(() => {
+    if (location && location.lat && location.lng) {
+      setMapCenter([location.lat, location.lng]);
+      setLocationInfo({
+        ...locationInfo,
+        city: location.name,
+        region: location.region || ''
+      });
+    }
+  }, [location]);
   
   // Convert from UI layer name to API layer ID
   const getLayerId = (layerName) => {
@@ -91,15 +104,19 @@ const ServiceAwareMap = ({ selectedLayer }) => {
           position => {
             const { latitude, longitude } = position.coords;
             setUserLocation([latitude, longitude]);
-            setMapCenter([latitude, longitude]);
-            mapRef.current.setView([latitude, longitude], 7);
             
-            // Reverse geocode the location (simulated)
-            setLocationInfo({
-              ...locationInfo,
-              city: "Current Location",
-              region: "Based on GPS"
-            });
+            // Don't auto-center on user location if a specific location was provided
+            if (!location || !location.lat) {
+              setMapCenter([latitude, longitude]);
+              mapRef.current.setView([latitude, longitude], 7);
+              
+              // Reverse geocode the location (simulated)
+              setLocationInfo({
+                ...locationInfo,
+                city: "Current Location",
+                region: "Based on GPS"
+              });
+            }
           },
           error => {
             console.error("Error getting user location:", error);
@@ -141,6 +158,14 @@ const ServiceAwareMap = ({ selectedLayer }) => {
   useEffect(() => {
     if (mapRef.current) {
       mapRef.current.setView(mapCenter, zoom);
+      
+      // Update or add location marker
+      if (locationMarkerRef.current && mapRef.current.hasLayer(locationMarkerRef.current)) {
+        mapRef.current.removeLayer(locationMarkerRef.current);
+      }
+      
+      locationMarkerRef.current = L.marker(mapCenter).addTo(mapRef.current);
+      locationMarkerRef.current.bindPopup(`<b>${location?.name || 'Selected Location'}</b>`);
     }
   }, [mapCenter, zoom]);
 
@@ -148,7 +173,7 @@ const ServiceAwareMap = ({ selectedLayer }) => {
   useEffect(() => {
     if (!mapRef.current) return;
     
-    // Remove all current layers
+    // Remove all current layers except the location marker
     Object.values(layersRef.current).forEach(layer => {
       if (layer && mapRef.current.hasLayer(layer)) {
         mapRef.current.removeLayer(layer);

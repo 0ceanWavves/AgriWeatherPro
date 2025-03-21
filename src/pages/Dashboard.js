@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import ServiceAwareMap from '../components/DashboardWidgets/ServiceAwareMap';
-import { FaCalendarAlt, FaWater, FaSeedling, FaBug, FaSearch, FaCloudSun } from 'react-icons/fa';
+import LocationSearch from '../components/LocationSearch';
+import { FaCalendarAlt, FaWater, FaSeedling, FaBug, FaCloudSun } from 'react-icons/fa';
 import { getLocationWeather } from '../api/weatherApi';
 
 const Dashboard = () => {
   const [currentWeather, setCurrentWeather] = useState({
     temp: 26.5,
     feelsLike: 24.5,
-    windSpeed: 7.57,
+    windSpeed: 9.75,
     windDirection: 180,
-    humidity: 62,
+    humidity: 44,
     precipitation: 0,
     pressure: 1015,
-    clouds: 21
+    clouds: 40
   });
   
   const [location, setLocation] = useState({
@@ -23,12 +24,22 @@ const Dashboard = () => {
   
   const [activeMapLayer, setActiveMapLayer] = useState('Temperature');
   
-  // Fetch weather data on component mount
+  // Fetch weather data when location changes
   useEffect(() => {
     const fetchWeatherData = async () => {
       try {
         const data = await getLocationWeather(location.lat, location.lng);
-        setCurrentWeather(data);
+        setCurrentWeather({
+          ...data,
+          // If API returns no data, keep current values
+          temp: data.temp || currentWeather.temp,
+          feelsLike: data.feelsLike || currentWeather.feelsLike,
+          windSpeed: data.windSpeed || currentWeather.windSpeed,
+          humidity: data.humidity || currentWeather.humidity,
+          precipitation: data.precipitation || currentWeather.precipitation,
+          pressure: data.pressure || currentWeather.pressure,
+          clouds: data.clouds || currentWeather.clouds
+        });
       } catch (error) {
         console.error('Error fetching weather data:', error);
       }
@@ -78,6 +89,11 @@ const Dashboard = () => {
     setActiveMapLayer(layer);
   };
   
+  // Handle location selection from search
+  const handleLocationSelect = (newLocation) => {
+    setLocation(newLocation);
+  };
+  
   return (
     <div className="bg-gray-100 p-4">
       <div className="flex justify-between items-center mb-4">
@@ -87,18 +103,8 @@ const Dashboard = () => {
             Monitor weather conditions, pest alerts, and optimize farming operations
           </p>
         </div>
-        <div className="flex space-x-2">
-          <div className="relative">
-            <input 
-              type="text" 
-              placeholder="Search for a location..."
-              className="pl-8 pr-4 py-1 rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500 text-xs"
-            />
-            <FaSearch className="absolute left-2.5 top-1.5 text-gray-400 h-3 w-3" />
-          </div>
-          <button className="bg-green-600 text-white rounded-md px-3 py-1 text-xs flex items-center">
-            <FaCloudSun className="mr-1 h-3 w-3" /> Latest Data
-          </button>
+        <div>
+          <LocationSearch onLocationSelect={handleLocationSelect} />
         </div>
       </div>
       
@@ -142,7 +148,7 @@ const Dashboard = () => {
         <div className="col-span-3">
           <div className="bg-white rounded-md shadow-sm overflow-hidden">
             <div className="flex justify-between items-center bg-gray-50 px-3 py-1.5 border-b">
-              <h2 className="font-semibold text-gray-700 text-sm">Weather Map</h2>
+              <h2 className="font-semibold text-gray-700 text-sm">Weather Map • {location.name}</h2>
               <div className="flex space-x-1">
                 <button 
                   className={`px-2 py-0.5 text-xs rounded ${activeMapLayer === 'Temperature' ? 'bg-green-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
@@ -177,7 +183,7 @@ const Dashboard = () => {
               </div>
             </div>
             <div className="h-[600px]">
-              <ServiceAwareMap selectedLayer={activeMapLayer} />
+              <ServiceAwareMap selectedLayer={activeMapLayer} location={location} />
             </div>
             <div className="flex justify-between px-3 py-1 bg-gray-50 border-t text-xs text-gray-500">
               <div>Current weather conditions and forecasts.</div>
