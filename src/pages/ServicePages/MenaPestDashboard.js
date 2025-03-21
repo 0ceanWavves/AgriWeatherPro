@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useServiceMap } from '../../context/ServiceMapContext';
 import BackButton from '../../components/BackButton';
-import { datePalmPests } from '../../data/regions/menaPestData';
+import { fetchMENAPests } from '../../api/pestApi';
 
 const MenaPestDashboard = () => {
+  const [pests, setPests] = useState([]);
   const [selectedPest, setSelectedPest] = useState(null);
   const [weatherData, setWeatherData] = useState({
     temperature: 32, // Default temperature in C for MENA region
@@ -12,20 +13,32 @@ const MenaPestDashboard = () => {
     precipitation: 0, // Default precipitation in mm
     forecastDays: 5 // Default forecast days
   });
+  const [loading, setLoading] = useState(true);
   
   const { selectService } = useServiceMap();
   const navigate = useNavigate();
   
-  // Set service when component mounts
+  // Set service when component mounts and fetch pests
   useEffect(() => {
     selectService('mena-pest');
+    
+    const loadPests = async () => {
+      setLoading(true);
+      try {
+        const data = await fetchMENAPests();
+        setPests(data);
+        if (data.length > 0) {
+          setSelectedPest(data[0]);
+        }
+      } catch (error) {
+        console.error('Error loading MENA pests:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    loadPests();
   }, [selectService]);
-  
-  useEffect(() => {
-    if (datePalmPests.length > 0) {
-      setSelectedPest(datePalmPests[0]);
-    }
-  }, []);
 
   const calculateRiskLevel = (pest) => {
     if (!pest || !pest.weatherThresholds) return 'Unknown';
@@ -90,6 +103,17 @@ const MenaPestDashboard = () => {
     );
   };
 
+  if (loading) {
+    return (
+      <div className="p-4">
+        <BackButton />
+        <div className="flex justify-center items-center h-96">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-700"></div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="bg-gradient-to-b from-amber-50 to-amber-100 min-h-screen py-6">
       <div className="container mx-auto px-4">
@@ -120,7 +144,7 @@ const MenaPestDashboard = () => {
                 <div className="bg-amber-50 rounded-lg p-4 border border-amber-200 mb-4">
                   <h2 className="text-lg font-semibold text-amber-800 mb-3">Date Palm Pests</h2>
                   <div className="space-y-2 max-h-96 overflow-y-auto pr-1">
-                    {datePalmPests.map((pest, index) => (
+                    {pests.map((pest, index) => (
                       <div 
                         key={index} 
                         className={`p-3 rounded-md cursor-pointer ${
@@ -228,92 +252,98 @@ const MenaPestDashboard = () => {
                     </div>
                     
                     <div className="p-4">
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                        {/* Risk Factors */}
-                        <div className="col-span-2">
-                          <h3 className="font-semibold text-amber-800 text-base mb-2">Risk Factors</h3>
-                          <ul className="list-disc list-inside text-sm text-gray-700">
-                            {selectedPest.riskFactors.map((factor, index) => (
-                              <li key={index}>{factor}</li>
-                            ))}
-                          </ul>
-                        </div>
-                        
-                        {/* Image */}
-                        <div className="flex justify-center items-start">
-                          {selectedPest.image && (
-                            <img 
-                              src={selectedPest.image} 
-                              alt={selectedPest.commonName} 
-                              className="h-32 w-auto object-cover rounded-lg border border-gray-200"
-                            />
-                          )}
-                        </div>
+                      {/* Description */}
+                      <div className="mb-6">
+                        <h3 className="font-semibold text-amber-800 text-base mb-2">Description</h3>
+                        <p className="text-sm text-gray-700">{selectedPest.description}</p>
                       </div>
                       
                       {/* Damage Description */}
-                      <div className="mb-6">
-                        <h3 className="font-semibold text-amber-800 text-base mb-2">Damage ({selectedPest.damageType.severity} Severity)</h3>
-                        <p className="text-sm text-gray-700">{selectedPest.damageType.description}</p>
-                      </div>
-                      
-                      {/* Weather Thresholds */}
-                      <div className="mb-6">
-                        <h3 className="font-semibold text-amber-800 text-base mb-2">Optimal Conditions</h3>
-                        <div className="grid grid-cols-3 gap-3">
-                          <div className="bg-gray-50 p-2 rounded text-center">
-                            <div className="text-xs text-gray-500">Temperature</div>
-                            <div className="font-medium">{selectedPest.weatherThresholds.temperatureOptimal}°C</div>
-                          </div>
-                          <div className="bg-gray-50 p-2 rounded text-center">
-                            <div className="text-xs text-gray-500">Humidity</div>
-                            <div className="font-medium">{selectedPest.weatherThresholds.humidityOptimal}%</div>
-                          </div>
-                          <div className="bg-gray-50 p-2 rounded text-center">
-                            <div className="text-xs text-gray-500">Rain Sensitivity</div>
-                            <div className="font-medium capitalize">{selectedPest.weatherThresholds.precipitationRisk}</div>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      {/* Climate Change Impacts */}
-                      <div className="mb-6">
-                        <h3 className="font-semibold text-amber-800 text-base mb-2">Climate Change Impacts</h3>
-                        <ul className="list-disc list-inside text-sm text-gray-700">
-                          {selectedPest.climateChangeImpacts.map((impact, index) => (
-                            <li key={index}>{impact}</li>
-                          ))}
-                        </ul>
-                      </div>
-                      
-                      {/* IPM Strategies */}
-                      <div className="mb-4">
-                        <h3 className="font-semibold text-amber-800 text-base mb-2">IPM Strategies</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <div className="bg-gray-50 p-3 rounded">
-                            {renderStrategyList(selectedPest.ipmStrategies.cultural, "Cultural Controls")}
-                            {renderStrategyList(selectedPest.ipmStrategies.biological, "Biological Controls")}
-                          </div>
-                          <div className="bg-gray-50 p-3 rounded">
-                            {renderStrategyList(selectedPest.ipmStrategies.chemical, "Chemical Controls")}
-                            {renderStrategyList(selectedPest.ipmStrategies.monitoring, "Monitoring")}
-                          </div>
-                        </div>
-                      </div>
-                      
-                      {/* Footer with Source Link */}
-                      {selectedPest.link && (
-                        <div className="mt-4 pt-3 border-t border-gray-200 text-right">
-                          <a 
-                            href={selectedPest.link} 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="text-blue-600 hover:text-blue-800 text-sm font-medium"
-                          >
-                            More information
-                          </a>
+                      {selectedPest.damageType && (
+                        <div className="mb-6">
+                          <h3 className="font-semibold text-amber-800 text-base mb-2">
+                            Damage ({selectedPest.damageType.severity} Severity)
+                          </h3>
+                          <p className="text-sm text-gray-700">{selectedPest.damageType.description}</p>
                         </div>
                       )}
+                      
+                      {/* Weather Thresholds */}
+                      {selectedPest.weatherThresholds && (
+                        <div className="mb-6">
+                          <h3 className="font-semibold text-amber-800 text-base mb-2">Optimal Conditions</h3>
+                          <div className="grid grid-cols-3 gap-3">
+                            <div className="bg-gray-50 p-2 rounded text-center">
+                              <div className="text-xs text-gray-500">Temperature</div>
+                              <div className="font-medium">{selectedPest.weatherThresholds.temperatureOptimal}°C</div>
+                            </div>
+                            <div className="bg-gray-50 p-2 rounded text-center">
+                              <div className="text-xs text-gray-500">Humidity</div>
+                              <div className="font-medium">{selectedPest.weatherThresholds.humidityOptimal}%</div>
+                            </div>
+                            <div className="bg-gray-50 p-2 rounded text-center">
+                              <div className="text-xs text-gray-500">Rain Sensitivity</div>
+                              <div className="font-medium capitalize">{selectedPest.weatherThresholds.precipitationRisk}</div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                      
+                      {/* Risk Assessment */}
+                      <div className="mb-6">
+                        <h3 className="font-semibold text-amber-800 text-base mb-2">Risk Assessment</h3>
+                        <div className="bg-gray-50 p-4 rounded-lg">
+                          <p className="text-sm mb-2">
+                            Based on current weather conditions ({weatherData.temperature}°C, {weatherData.humidity}% humidity, 
+                            {weatherData.precipitation}mm precipitation), this pest presents a {calculateRiskLevel(selectedPest).toLowerCase()} risk
+                            to date palm orchards.
+                          </p>
+                          
+                          <div className="mt-2">
+                            <h4 className="font-medium text-sm mb-1">Recommended Actions:</h4>
+                            <ul className="list-disc list-inside text-sm">
+                              {calculateRiskLevel(selectedPest) === 'High' ? (
+                                <>
+                                  <li>Immediate monitoring recommended</li>
+                                  <li>Implement preventative controls</li>
+                                  <li>Prepare intervention strategies</li>
+                                </>
+                              ) : calculateRiskLevel(selectedPest) === 'Medium' ? (
+                                <>
+                                  <li>Regular monitoring advised</li>
+                                  <li>Review control options</li>
+                                  <li>Prepare for changing conditions</li>
+                                </>
+                              ) : (
+                                <>
+                                  <li>Routine monitoring sufficient</li>
+                                  <li>No immediate action needed</li>
+                                  <li>Continue preventative practices</li>
+                                </>
+                              )}
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* Management Strategies */}
+                      {selectedPest.ipmStrategies && (
+                        <div className="mb-4">
+                          <h3 className="font-semibold text-amber-800 text-base mb-2">Management Strategies</h3>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {Object.entries(selectedPest.ipmStrategies).map(([key, strategies]) => (
+                              <div key={key} className="bg-gray-50 p-3 rounded">
+                                {renderStrategyList(strategies, key.charAt(0).toUpperCase() + key.slice(1) + " Controls")}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      
+                      {/* Footer with references */}
+                      <div className="mt-4 pt-3 border-t border-gray-200 text-xs text-gray-500">
+                        Source: FAO Date Palm Protection Guidelines
+                      </div>
                     </div>
                   </div>
                 ) : (

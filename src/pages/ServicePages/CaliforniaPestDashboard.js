@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useServiceMap } from '../../context/ServiceMapContext';
 import BackButton from '../../components/BackButton';
-import californiaPestDatabase from '../../data/californiaPestSummary';
-import { supabase } from '../../lib/supabase';
+import { fetchCaliforniaPests } from '../../api/pestApi';
 
 const CaliforniaPestDashboard = () => {
   const [selectedCrop, setSelectedCrop] = useState('almonds');
+  const [pests, setPests] = useState([]);
   const [selectedPest, setSelectedPest] = useState(null);
   const [weatherData, setWeatherData] = useState({
     temperature: 75, // Default temperature in F
@@ -14,16 +14,10 @@ const CaliforniaPestDashboard = () => {
     precipitation: 0, // Default precipitation in inches
     forecastDays: 5 // Default forecast days
   });
-  const [loading, setLoading] = useState(false);
-  const [dbPestData, setDbPestData] = useState(null);
+  const [loading, setLoading] = useState(true);
   
   const { selectService } = useServiceMap();
   const navigate = useNavigate();
-  
-  // Set service when component mounts
-  useEffect(() => {
-    selectService('california-pest');
-  }, [selectService]);
   
   // Available California crops from Phase 1
   const californiaCrops = [
@@ -34,48 +28,32 @@ const CaliforniaPestDashboard = () => {
     { value: 'strawberries', label: 'Strawberries' }
   ];
   
-  // Get pests for selected crop
-  const pests = useMemo(() => {
-    return californiaPestDatabase[selectedCrop] || [];
-  }, [selectedCrop]);
+  // Set service when component mounts
+  useEffect(() => {
+    selectService('california-pest');
+  }, [selectService]);
   
-  // Select first pest by default when crop changes
+  // Load pests when crop changes
   useEffect(() => {
-    if (pests.length > 0) {
-      setSelectedPest(pests[0]);
-    } else {
-      setSelectedPest(null);
-    }
-  }, [pests]);
-
-  // Fetch additional pest data from Supabase when a pest is selected
-  useEffect(() => {
-    const fetchPestData = async () => {
-      if (!selectedPest) return;
-      
+    const loadPests = async () => {
       setLoading(true);
       try {
-        const { data, error } = await supabase
-          .from('california_pests')
-          .select('*')
-          .eq('scientific_name', selectedPest.scientificName)
-          .single();
-          
-        if (error) {
-          console.error('Error fetching pest data:', error);
-          setDbPestData(null);
-        } else if (data) {
-          setDbPestData(data);
+        const data = await fetchCaliforniaPests(selectedCrop);
+        setPests(data);
+        if (data.length > 0) {
+          setSelectedPest(data[0]);
+        } else {
+          setSelectedPest(null);
         }
       } catch (error) {
-        console.error('Error fetching pest data:', error);
+        console.error('Error loading California pests:', error);
       } finally {
         setLoading(false);
       }
     };
     
-    fetchPestData();
-  }, [selectedPest]);
+    loadPests();
+  }, [selectedCrop]);
 
   // Calculate risk level based on current weather conditions
   const calculateRiskLevel = (pest) => {
@@ -126,6 +104,17 @@ const CaliforniaPestDashboard = () => {
   const goToDashboard = () => {
     navigate('/dashboard');
   };
+
+  if (loading) {
+    return (
+      <div className="p-4">
+        <BackButton />
+        <div className="flex justify-center items-center h-96">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-700"></div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-gradient-to-b from-green-50 to-green-100 min-h-screen py-6">
@@ -263,7 +252,7 @@ const CaliforniaPestDashboard = () => {
                 </div>
               </div>
               
-              {/* Middle & Right Columns - Pest Details */}
+              {/* Right Column - Pest Details */}
               <div className="lg:col-span-2">
                 {selectedPest ? (
                   <div className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
@@ -284,42 +273,50 @@ const CaliforniaPestDashboard = () => {
                     </div>
                     
                     <div className="p-6">
-                      {/* Key Information Section */}
+                      {/* Description */}
                       <div className="mb-6">
-                        <h3 className="text-lg font-semibold text-green-800 mb-2">Key Information</h3>
-                        <ul className="list-disc list-inside space-y-1 text-gray-700">
-                          {selectedPest.keyPoints.map((point, index) => (
-                            <li key={index}>{point}</li>
-                          ))}
-                        </ul>
+                        <h3 className="text-lg font-semibold text-green-800 mb-2">Description</h3>
+                        <p className="text-gray-700">{selectedPest.description}</p>
                       </div>
                       
-                      {/* Weather Thresholds Section */}
-                      <div className="mb-6">
-                        <h3 className="text-lg font-semibold text-green-800 mb-2">Weather Thresholds</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                          <div className="bg-gray-50 p-3 rounded-lg">
-                            <div className="text-sm text-gray-500">Optimal Temperature</div>
-                            <div className="text-xl font-medium text-gray-800">
-                              {selectedPest.weatherThresholds.temperatureOptimal}°F
+                      {/* Damage Description */}
+                      {selectedPest.damageType && (
+                        <div className="mb-6">
+                          <h3 className="text-lg font-semibold text-green-800 mb-2">
+                            Damage ({selectedPest.damageType.severity} Severity)
+                          </h3>
+                          <p className="text-gray-700">{selectedPest.damageType.description}</p>
+                        </div>
+                      )}
+                      
+                      {/* Weather Thresholds */}
+                      {selectedPest.weatherThresholds && (
+                        <div className="mb-6">
+                          <h3 className="text-lg font-semibold text-green-800 mb-2">Weather Thresholds</h3>
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div className="bg-gray-50 p-3 rounded-lg">
+                              <div className="text-sm text-gray-500">Optimal Temperature</div>
+                              <div className="text-xl font-medium text-gray-800">
+                                {selectedPest.weatherThresholds.temperatureOptimal}°F
+                              </div>
                             </div>
-                          </div>
-                          <div className="bg-gray-50 p-3 rounded-lg">
-                            <div className="text-sm text-gray-500">Optimal Humidity</div>
-                            <div className="text-xl font-medium text-gray-800">
-                              {selectedPest.weatherThresholds.humidityOptimal}%
+                            <div className="bg-gray-50 p-3 rounded-lg">
+                              <div className="text-sm text-gray-500">Optimal Humidity</div>
+                              <div className="text-xl font-medium text-gray-800">
+                                {selectedPest.weatherThresholds.humidityOptimal}%
+                              </div>
                             </div>
-                          </div>
-                          <div className="bg-gray-50 p-3 rounded-lg">
-                            <div className="text-sm text-gray-500">Precipitation Risk</div>
-                            <div className="text-xl font-medium text-gray-800 capitalize">
-                              {selectedPest.weatherThresholds.precipitationRisk}
+                            <div className="bg-gray-50 p-3 rounded-lg">
+                              <div className="text-sm text-gray-500">Precipitation Risk</div>
+                              <div className="text-xl font-medium text-gray-800 capitalize">
+                                {selectedPest.weatherThresholds.precipitationRisk}
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
+                      )}
                       
-                      {/* Current Risk Analysis Section */}
+                      {/* Risk Analysis */}
                       <div className="mb-6">
                         <h3 className="text-lg font-semibold text-green-800 mb-2">Current Risk Analysis</h3>
                         <div className="bg-gray-50 p-4 rounded-lg">
@@ -383,87 +380,7 @@ const CaliforniaPestDashboard = () => {
                         </div>
                       </div>
                       
-                      {/* Additional Data from Supabase (if available) */}
-                      {loading && (
-                        <div className="text-center py-4">
-                          <div className="inline-block animate-spin w-6 h-6 border-2 border-green-600 border-t-transparent rounded-full"></div>
-                          <p className="mt-2 text-sm text-gray-600">Loading additional pest data...</p>
-                        </div>
-                      )}
-                      
-                      {dbPestData && (
-                        <div className="mb-6">
-                          <h3 className="text-lg font-semibold text-green-800 mb-2">
-                            Detailed Management Strategies
-                          </h3>
-                          <div className="bg-gray-50 p-4 rounded-lg">
-                            {dbPestData.ipm_strategies && (
-                              <>
-                                <h4 className="font-medium text-gray-800 mb-2">IPM Approaches</h4>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                                  {dbPestData.ipm_strategies.cultural && (
-                                    <div>
-                                      <h5 className="text-sm font-semibold text-green-700 mb-1">Cultural Controls</h5>
-                                      <ul className="list-disc list-inside text-sm text-gray-700">
-                                        {dbPestData.ipm_strategies.cultural.map((strategy, index) => (
-                                          <li key={index}>{strategy}</li>
-                                        ))}
-                                      </ul>
-                                    </div>
-                                  )}
-                                  
-                                  {dbPestData.ipm_strategies.biological && (
-                                    <div>
-                                      <h5 className="text-sm font-semibold text-green-700 mb-1">Biological Controls</h5>
-                                      <ul className="list-disc list-inside text-sm text-gray-700">
-                                        {dbPestData.ipm_strategies.biological.map((strategy, index) => (
-                                          <li key={index}>{strategy}</li>
-                                        ))}
-                                      </ul>
-                                    </div>
-                                  )}
-                                </div>
-                                
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                  {dbPestData.ipm_strategies.chemical && (
-                                    <div>
-                                      <h5 className="text-sm font-semibold text-green-700 mb-1">Chemical Controls</h5>
-                                      <ul className="list-disc list-inside text-sm text-gray-700">
-                                        {dbPestData.ipm_strategies.chemical.map((strategy, index) => (
-                                          <li key={index}>{strategy}</li>
-                                        ))}
-                                      </ul>
-                                    </div>
-                                  )}
-                                  
-                                  {dbPestData.ipm_strategies.resistant_varieties && (
-                                    <div>
-                                      <h5 className="text-sm font-semibold text-green-700 mb-1">Resistant Varieties</h5>
-                                      <ul className="list-disc list-inside text-sm text-gray-700">
-                                        {dbPestData.ipm_strategies.resistant_varieties.map((variety, index) => (
-                                          <li key={index}>{variety}</li>
-                                        ))}
-                                      </ul>
-                                    </div>
-                                  )}
-                                </div>
-                              </>
-                            )}
-                            
-                            {dbPestData.climate_change_impacts && (
-                              <div className="mt-4">
-                                <h4 className="font-medium text-gray-800 mb-2">Climate Change Impacts</h4>
-                                <ul className="list-disc list-inside text-sm text-gray-700">
-                                  {dbPestData.climate_change_impacts.map((impact, index) => (
-                                    <li key={index}>{impact}</li>
-                                  ))}
-                                </ul>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      )}
-                      
+                      {/* Footer with source links */}
                       <div className="flex justify-between items-center mt-8">
                         <div className="text-sm text-gray-500">
                           Data Source: University of California IPM Program

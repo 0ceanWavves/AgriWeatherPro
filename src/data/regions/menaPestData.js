@@ -1,406 +1,277 @@
-/**
- * Middle East North Africa (MENA) Date Palm Pest Database - Phase 2
- * 
- * This file contains structured data for the MENA Date Palm Pest Database,
- * focusing on the priority pests affecting date palm cultivation in the region.
- */
-
-// Priority date palm pests in MENA region
-const datePalmPests = [
+// Mock data for date palm pests in the MENA region
+export const datePalmPests = [
   {
     commonName: "Red Palm Weevil",
     scientificName: "Rhynchophorus ferrugineus",
-    crops: ["date palm", "coconut palm", "canary palm", "sago palm"],
-    primaryCrop: "date palm",
+    riskLevel: "High",
+    description: "Major threat to date palm production throughout the Middle East and North Africa.",
     damageType: {
-      description: "Larvae tunnel through the trunk creating extensive damage to internal tissues, often killing the tree",
-      severity: "Very High"
+      severity: "High",
+      description: "Larvae tunnel through the trunk and growing point, often causing palm death. Signs include yellowing and wilting of fronds, tunnels in trunk, and fermented odor."
     },
+    weatherThresholds: {
+      temperatureOptimal: 28,
+      humidityOptimal: 60,
+      precipitationRisk: "low"
+    },
+    image: "https://www.cabi.org/media-library/optimized/pimages/red-palm-weevil-(rhynchophorus-ferrugineus)_590e1a1a2cb42.jpg",
     riskFactors: [
-      "Temperatures between 25-35°C accelerate development", 
-      "Humidity above 60%", 
-      "Wounded palms (pruning, offshooting)",
-      "Proximity to infested palms",
-      "Transportation of infested offshoots"
+      "Warm temperatures (25-35°C)",
+      "Presence of wounds in palm tissue",
+      "Transport of infested offshoots",
+      "Proximity to infested palms"
     ],
     ipmStrategies: {
       cultural: [
-        "Proper sanitation of pruning tools",
-        "Removal and destruction of heavily infested palms",
-        "Avoiding wounds on trunks",
-        "Quarantine of palms being transported",
-        "Covering cut surfaces with protective substances"
+        "Avoid mechanical injuries to palms",
+        "Remove and destroy severely infested palms",
+        "Apply white latex paint to wounds"
       ],
       biological: [
         "Entomopathogenic nematodes (Steinernema carpocapsae)",
-        "Entomopathogenic fungi (Beauveria bassiana, Metarhizium anisopliae)",
-        "Viral and bacterial pathogens"
+        "Entomopathogenic fungi (Beauveria bassiana)"
       ],
       chemical: [
-        "Trunk injection with systemic insecticides",
-        "Preventive treatment of wounds and cut surfaces",
-        "Soil application of systemic insecticides",
-        "Fumigation of severely infested palms"
+        "Trunk injection of imidacloprid",
+        "Application of chlorpyrifos to trunk"
       ],
       monitoring: [
         "Pheromone traps with food bait",
-        "Regular visual inspection (focusing on crown and trunk base)",
-        "Acoustic detection devices",
-        "Thermal imaging in large plantations",
-        "Trained sniffer dogs for early detection"
+        "Regular visual inspection of palms",
+        "Early detection using acoustic devices"
       ]
     },
     climateChangeImpacts: [
-      "Expansion of suitable habitat into previously cooler regions",
-      "Accelerated development rates with higher temperatures",
-      "Potential for more generations per year",
-      "Altered synchrony with natural enemies",
-      "Increased stress on host palms making them more susceptible"
+      "Expanding geographical range due to warming temperatures",
+      "Potential for faster development cycles with higher temperatures",
+      "Increased stress on palms may increase susceptibility"
     ],
-    weatherThresholds: {
-      temperatureOptimal: 30, // °C
-      temperatureUnit: "C",
-      humidityOptimal: 70, // %
-      precipitationRisk: "low" // prefers moderate to high humidity, but not dependent on rainfall
-    },
-    image: "https://www.plantwise.org/KnowledgeBank/800x640/PMDG_98764.jpg",
-    link: "http://www.fao.org/food-chain-crisis/how-we-work/plant-protection/red-palm-weevil/en/"
+    link: "https://www.fao.org/3/ca1590en/CA1590EN.pdf"
   },
   {
     commonName: "Dubas Bug",
     scientificName: "Ommatissus lybicus",
-    crops: ["date palm"],
-    primaryCrop: "date palm",
+    riskLevel: "Medium",
+    description: "Major pest of date palms in the Middle East, causing significant economic losses.",
     damageType: {
-      description: "Sap-sucking pest causing yellowing of leaves, honeydew secretion leading to sooty mold, and reduced fruit quality and yield",
-      severity: "High"
+      severity: "Medium",
+      description: "Sap-sucking pest that causes yellowing of fronds, reduces yield, and produces honeydew that leads to sooty mold development."
     },
+    weatherThresholds: {
+      temperatureOptimal: 30,
+      humidityOptimal: 55,
+      precipitationRisk: "medium"
+    },
+    image: "https://www.cabi.org/media-library/optimized/pimages/dubas-bug-feeding-white_63cc5cb8b79c5.jpg",
     riskFactors: [
-      "Temperatures between 30-35°C optimal for development", 
-      "Dry conditions with moderate humidity (40-60%)", 
-      "Dense planting of palms",
-      "Poor ventilation in date gardens",
-      "Two generations per year (spring and fall) in most MENA countries"
+      "Hot, dry conditions",
+      "High planting density",
+      "Inadequate farm management",
+      "Two generations per year (spring and fall)"
     ],
     ipmStrategies: {
       cultural: [
-        "Proper spacing between palms for better ventilation",
-        "Balanced irrigation and fertilization",
-        "Removal of dense undergrowth",
-        "Pruning of excess fronds to improve air circulation"
+        "Proper pruning to improve aeration",
+        "Appropriate spacing between palms",
+        "Removal of alternative host plants"
       ],
       biological: [
-        "Conservation of natural enemies (Chrysoperla carnea, Aprostocetus sp.)",
-        "Introduction of parasitoids such as Pseudoligosita babylonica",
-        "Application of entomopathogenic fungi"
+        "Parasitic wasps (Pseudoligosita babylonica)",
+        "Predatory insects like lacewings and ladybird beetles"
       ],
       chemical: [
-        "Foliar sprays timed to nymphal stages",
-        "Systemic insecticides during severe infestations",
-        "Use of insect growth regulators",
-        "Area-wide management approaches"
+        "Insecticide application during nymph stage",
+        "Aerial spraying of diflubenzuron or deltamethrin in severe cases"
       ],
       monitoring: [
-        "Regular inspection of lower frond surfaces for nymphs",
-        "Yellow sticky traps for adults",
-        "Monitoring for honeydew and sooty mold",
-        "Population forecasting based on previous generation density"
+        "Yellow sticky traps",
+        "Regular inspection of frond undersides",
+        "Monitoring timing of nymph emergence"
       ]
     },
     climateChangeImpacts: [
       "Potential for additional generations per year with warming",
-      "Expansion into new geographic areas",
-      "Changes in population dynamics and outbreak frequency",
-      "Altered effectiveness of biological control agents"
+      "Changes in synchrony with natural enemies",
+      "Expanded geographic range into new areas"
     ],
-    weatherThresholds: {
-      temperatureOptimal: 33, // °C
-      temperatureUnit: "C",
-      humidityOptimal: 50, // %
-      precipitationRisk: "low" // prefers dry conditions
-    },
-    image: "https://www.ecoport.org/fileadmin/ecoport/0/37500.jpg",
-    link: "http://www.fao.org/3/CA1541EN/ca1541en.pdf"
+    link: "https://www.cabi.org/isc/datasheet/37852"
   },
   {
     commonName: "Date Palm Scale",
     scientificName: "Parlatoria blanchardi",
-    crops: ["date palm"],
-    primaryCrop: "date palm",
+    riskLevel: "Medium",
+    description: "Scale insect that can cause significant damage to date palms across North Africa and Middle East.",
     damageType: {
-      description: "Sap-sucking armored scale that infests fronds, fruits, and offshoots, causing yellowing, reduced photosynthesis, and affecting fruit quality",
-      severity: "Medium to High"
+      severity: "Medium",
+      description: "Feeding causes yellowing and weakening of fronds, reduced fruit production, and general decline in palm vigor."
     },
-    riskFactors: [
-      "Temperatures between 25-30°C", 
-      "Moderate to low humidity conditions", 
-      "Poor orchard sanitation",
-      "Crowded plantations with poor ventilation",
-      "Transportation of infested plant material"
-    ],
-    ipmStrategies: {
-      cultural: [
-        "Regular pruning of heavily infested fronds",
-        "Adequate spacing between palms",
-        "Proper irrigation and fertilization",
-        "Cleaning and sanitizing harvesting tools",
-        "Quarantine of new plant material"
-      ],
-      biological: [
-        "Conservation of natural predators (Chilocorus bipustulatus, Pharoscymnus spp.)",
-        "Introduction of specialist predatory beetles",
-        "Application of entomopathogenic fungi"
-      ],
-      chemical: [
-        "Mineral oils during crawler emergence periods",
-        "Systemic insecticides for severe infestations",
-        "Rotation of insecticide chemistries to prevent resistance"
-      ],
-      monitoring: [
-        "Regular inspection of fronds for scale presence",
-        "Monitoring for crawler emergence periods",
-        "Frond sampling to assess population levels",
-        "Use of phenological models for timing control measures"
-      ]
-    },
-    climateChangeImpacts: [
-      "Accelerated development under higher temperatures",
-      "Potential for more generations per year",
-      "Changes in crawler emergence timing",
-      "Reduced effectiveness of certain control measures under altered climate conditions"
-    ],
     weatherThresholds: {
-      temperatureOptimal: 28, // °C
-      temperatureUnit: "C",
-      humidityOptimal: 40, // %
-      precipitationRisk: "very low" // thrives in dry conditions
+      temperatureOptimal: 32,
+      humidityOptimal: 50,
+      precipitationRisk: "low"
     },
-    image: "https://www.plantwise.org/KnowledgeBank/ResizedImages/800/PMDG_138271.jpg",
-    link: "https://www.cabi.org/isc/datasheet/38874"
-  },
-  {
-    commonName: "Spider Mites",
-    scientificName: "Tetranychus spp.",
-    crops: ["date palm", "various crops"],
-    primaryCrop: "date palm",
-    damageType: {
-      description: "Fine webbing on fronds, stippling, yellowing to bronzing of tissue, reduced photosynthesis and palm vigor",
-      severity: "Medium"
-    },
+    image: "https://www.cabi.org/media-library/optimized/pimages/parlatoria-blanchardi-white-date-palm-scale_5fcd4de8ae0bd.jpg",
     riskFactors: [
-      "Hot, dry conditions (30-35°C)", 
-      "Low humidity (<40%)", 
-      "Dust accumulation on fronds",
-      "Water-stressed palms",
-      "Use of broad-spectrum insecticides that kill natural enemies"
+      "Hot, dry conditions",
+      "Dense plantings with poor air circulation",
+      "Transport of infested plant material",
+      "Multiple overlapping generations"
     ],
     ipmStrategies: {
       cultural: [
-        "Maintaining adequate irrigation to avoid water stress",
-        "Dust control measures in and around date gardens",
-        "Avoiding excessive nitrogen fertilization",
-        "Cover crops to increase humidity and harbor predators"
+        "Avoid planting susceptible varieties",
+        "Proper spacing and pruning to improve ventilation",
+        "Certified pest-free planting material"
       ],
       biological: [
-        "Conservation of predatory mites (Phytoseiidae)",
-        "Introduction of predatory mites in high-value plantations",
-        "Maintaining populations of predatory insects like Stethorus beetles"
+        "Predatory beetles (Chilocorus bipustulatus)",
+        "Parasitic wasps (Aphytis mytilaspidis)"
       ],
       chemical: [
-        "Acaricides applied at early infestation stages",
-        "Selective miticides that preserve natural enemies",
-        "Horticultural oils and soaps for moderate infestations",
-        "Rotation of chemicals to prevent resistance"
+        "Mineral oil sprays during dormancy",
+        "Insecticide application targeting crawler stage"
       ],
       monitoring: [
         "Regular inspection of fronds with hand lens",
-        "Monitoring temperature and humidity to predict outbreaks",
-        "Establishing treatment thresholds based on mite densities",
-        "Checking for natural enemy presence before treatment decisions"
+        "Monitoring for presence of crawlers",
+        "White tape traps for detecting crawler movement"
       ]
     },
     climateChangeImpacts: [
-      "Increased frequency of outbreaks with hotter, drier conditions",
-      "Shorter generation times leading to more rapid population growth",
-      "Expanded seasonal activity period",
-      "Greater economic impact due to additional control measures needed"
+      "Faster development with higher temperatures",
+      "Potential reduction in efficacy of natural enemies",
+      "Increased stress on host plants may increase susceptibility"
     ],
-    weatherThresholds: {
-      temperatureOptimal: 33, // °C
-      temperatureUnit: "C",
-      humidityOptimal: 30, // %
-      precipitationRisk: "very low" // thrives in hot, dry conditions
-    },
-    image: "https://www.infonet-biovision.org/sites/default/files/plant_health/pests/103.jpeg",
-    link: "https://www.cabi.org/isc/datasheet/53366"
-  },
-  {
-    commonName: "Fruit Stalk Borer",
-    scientificName: "Oryctes elegans",
-    crops: ["date palm"],
-    primaryCrop: "date palm",
-    damageType: {
-      description: "Adults bore into the base of fruit stalks and young fronds, causing breakage of fruit bunches and damage to crown",
-      severity: "Medium to High"
-    },
-    riskFactors: [
-      "Presence of decaying organic matter in plantations", 
-      "Temperatures between 25-30°C", 
-      "Poor sanitation practices",
-      "Rainy season (for adult emergence)",
-      "Proximity to breeding sites in decomposing palm material"
-    ],
-    ipmStrategies: {
-      cultural: [
-        "Removal and proper disposal of dead palms and organic debris",
-        "Clean cultivation practices",
-        "Removal of potential breeding sites",
-        "Proper pruning and maintenance of palms",
-        "Sanitation of plantation floor"
-      ],
-      biological: [
-        "Application of entomopathogenic fungi (Metarhizium anisopliae)",
-        "Application of Oryctes virus",
-        "Introduction of predatory ground beetles",
-        "Nematode applications to larval habitats"
-      ],
-      chemical: [
-        "Targeted application to crown and fruit stalks",
-        "Limited effectiveness of chemical control on adults",
-        "Preventative treatments during peak adult activity",
-        "Soil treatments for larval stages in breeding sites"
-      ],
-      monitoring: [
-        "Light traps for monitoring adult populations",
-        "Pheromone traps for population surveillance",
-        "Regular inspection of fruit stalks during fruiting season",
-        "Monitoring of potential breeding sites"
-      ]
-    },
-    climateChangeImpacts: [
-      "Changes in adult emergence patterns with shifting rainfall patterns",
-      "Potential for expanded geographic range",
-      "Altered breeding site availability with changing moisture conditions",
-      "Changes in effectiveness of biological control agents"
-    ],
-    weatherThresholds: {
-      temperatureOptimal: 28, // °C
-      temperatureUnit: "C",
-      humidityOptimal: 60, // %
-      precipitationRisk: "moderate" // adult emergence often coincides with rainy periods
-    },
-    image: "https://www.researchgate.net/profile/Mohammed-Ellaithy/publication/281150393/figure/fig3/AS:614124233687043@1523431190773/Fruit-stalk-borer-Oryctes-elegans.png",
-    link: "https://www.cabi.org/isc/datasheet/38059"
+    link: "https://www.cabi.org/isc/datasheet/38964"
   },
   {
     commonName: "Lesser Date Moth",
     scientificName: "Batrachedra amydraula",
-    crops: ["date palm"],
-    primaryCrop: "date palm",
+    riskLevel: "Medium",
+    description: "Important pest of date fruits in most date-growing regions of the Middle East.",
     damageType: {
-      description: "Larvae feed on flowers and developing fruits, causing fruit drop and quality reduction",
-      severity: "Medium to High"
+      severity: "Medium",
+      description: "Larvae feed on developing fruits causing premature fruit drop and quality reduction. Can cause 30-80% fruit loss if uncontrolled."
     },
+    weatherThresholds: {
+      temperatureOptimal: 29,
+      humidityOptimal: 45,
+      precipitationRisk: "medium"
+    },
+    image: "https://www.biolib.cz/IMG/GAL/BIG/205537.jpg",
     riskFactors: [
-      "Temperatures between 25-35°C", 
-      "Moderate humidity (40-60%)", 
-      "Improper bunch sanitation from previous season",
-      "Early season variety susceptibility",
-      "Poor orchard hygiene"
+      "High temperatures (28-35°C)",
+      "Low rainfall periods",
+      "Presence of unharvested fruits",
+      "Poorly managed orchards"
     ],
     ipmStrategies: {
       cultural: [
-        "Removing and destroying fallen fruits",
-        "Bunch cleaning and pruning",
-        "Proper spacing of fruit bunches",
-        "Early harvesting of susceptible varieties",
-        "Removal of fruit remains from previous season"
+        "Complete harvest with no fruits left on palms",
+        "Orchard sanitation to remove fallen fruits",
+        "Fruit bunch bagging"
       ],
       biological: [
-        "Conservation of natural parasitoids",
-        "Application of Bacillus thuringiensis preparations",
-        "Introduction of Trichogramma parasitoids",
-        "Maintaining biodiversity in date gardens"
+        "Trichogramma egg parasitoids",
+        "Bacillus thuringiensis applications"
       ],
       chemical: [
-        "Timing applications to fruit set period",
-        "Use of selective insecticides",
-        "Bunch spraying or dusting",
-        "Pheromone-based mating disruption"
+        "Pheromone-based mating disruption",
+        "Chemical control during peak flight periods"
       ],
       monitoring: [
-        "Pheromone traps for adult monitoring",
-        "Regular inspection of developing fruit clusters",
-        "Monitoring temperature accumulation for timing interventions",
-        "Establishing treatment thresholds based on trap catches"
+        "Pheromone traps for adult moths",
+        "Regular fruit inspection in spring",
+        "Monitoring of fruit drop"
       ]
     },
     climateChangeImpacts: [
-      "Earlier seasonal activity with warming temperatures",
-      "Potential for additional generations in extended growing seasons",
-      "Changes in synchrony with fruit development",
-      "Altered effectiveness of biocontrol agents"
+      "Potential for earlier seasonal emergence",
+      "Possible additional generations per year",
+      "Changes in synchrony with host plant phenology"
     ],
-    weatherThresholds: {
-      temperatureOptimal: 30, // °C
-      temperatureUnit: "C",
-      humidityOptimal: 50, // %
-      precipitationRisk: "low" // thrives in typical arid to semi-arid date growing regions
+    link: "https://www.fao.org/3/i8372en/I8372EN.pdf"
+  },
+  {
+    commonName: "Rhinoceros Beetle",
+    scientificName: "Oryctes agamemnon",
+    riskLevel: "High",
+    description: "Serious pest of date palms across the Arabian Peninsula and North Africa.",
+    damageType: {
+      severity: "High",
+      description: "Adults tunnel into the crown and base of fronds, damaging growing tissues. Severe infestations can kill young palms and weaken mature trees."
     },
-    image: "https://www.researchgate.net/profile/Mohammed-Elshafie/publication/319199238/figure/fig2/AS:668473051373576@1536386607662/Fruits-damaged-by-the-lesser-date-moth-Batrachedra-amydraula-photo-by-M-Z-Elshafie.jpg",
-    link: "https://www.cabi.org/isc/datasheet/8143"
+    weatherThresholds: {
+      temperatureOptimal: 27,
+      humidityOptimal: 60,
+      precipitationRisk: "low"
+    },
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Oryctes_rhinoceros.jpg/800px-Oryctes_rhinoceros.jpg",
+    riskFactors: [
+      "Presence of decaying organic matter",
+      "Wounded or stressed palms",
+      "Older plantations with dead standing palms",
+      "Organic farming systems with mulch"
+    ],
+    ipmStrategies: {
+      cultural: [
+        "Remove and destroy dead palms and stumps",
+        "Proper disposal of farm organic waste",
+        "Avoid fresh manure application near palms"
+      ],
+      biological: [
+        "Metarhizium anisopliae fungus",
+        "Oryctes rhinoceros nudivirus (OrNV)",
+        "Pheromone traps for mass trapping"
+      ],
+      chemical: [
+        "Soil application of chlorpyrifos around palm base",
+        "Treatment of breeding sites with insecticides"
+      ],
+      monitoring: [
+        "Aggregation pheromone traps",
+        "Regular inspection of crown and frond bases",
+        "Monitoring of adult flight periods"
+      ]
+    },
+    climateChangeImpacts: [
+      "Faster development rates with higher temperatures",
+      "Potential changes in voltinism",
+      "Expanded geographic range"
+    ],
+    link: "https://www.fao.org/3/ca7148en/ca7148en.pdf"
   }
 ];
 
-// Regional data and country-specific information
-const menaRegions = {
-  // Saudi Arabia
-  "SA": {
-    "Riyadh": datePalmPests,
-    "AlQassim": datePalmPests,
-    "AlAhsa": datePalmPests,
-    "Madinah": datePalmPests
+// Mock locations for MENA region date palm cultivation
+export const datePalmLocations = [
+  { name: "Medina", country: "Saudi Arabia", lat: 24.5247, lng: 39.5692 },
+  { name: "Riyadh", country: "Saudi Arabia", lat: 24.7136, lng: 46.6753 },
+  { name: "Al Ain", country: "UAE", lat: 24.1302, lng: 55.8023 },
+  { name: "Siwa Oasis", country: "Egypt", lat: 29.2033, lng: 25.5199 },
+  { name: "Tozeur", country: "Tunisia", lat: 33.9197, lng: 8.1335 },
+  { name: "Biskra", country: "Algeria", lat: 34.8515, lng: 5.7282 },
+  { name: "Najran", country: "Saudi Arabia", lat: 17.4923, lng: 44.1277 },
+  { name: "Al Qatif", country: "Saudi Arabia", lat: 26.5196, lng: 50.0115 },
+  { name: "Basrah", country: "Iraq", lat: 30.5085, lng: 47.7804 },
+  { name: "Oman", country: "Nizwa", lat: 22.9333, lng: 57.5333 }
+];
+
+// Mock data for pest risk levels at different locations
+export const pestRiskByLocation = {
+  "Medina": {
+    "Red Palm Weevil": "High",
+    "Dubas Bug": "Medium",
+    "Date Palm Scale": "Low"
   },
-  // United Arab Emirates
-  "AE": {
-    "Abu Dhabi": datePalmPests,
-    "Al Ain": datePalmPests,
-    "Dubai": datePalmPests,
-    "Sharjah": datePalmPests
+  "Al Ain": {
+    "Red Palm Weevil": "High",
+    "Rhinoceros Beetle": "Medium",
+    "Lesser Date Moth": "Medium"
   },
-  // Oman
-  "OM": {
-    "Muscat": datePalmPests,
-    "Nizwa": datePalmPests,
-    "Salalah": datePalmPests
-  },
-  // Egypt
-  "EG": {
-    "Aswan": datePalmPests,
-    "New Valley": datePalmPests,
-    "Siwa": datePalmPests
-  },
-  // Iraq
-  "IQ": {
-    "Basra": datePalmPests,
-    "Baghdad": datePalmPests
-  },
-  // Morocco
-  "MA": {
-    "Marrakech": datePalmPests,
-    "Errachidia": datePalmPests
-  },
-  // Tunisia
-  "TN": {
-    "Tozeur": datePalmPests,
-    "Kebili": datePalmPests
-  },
-  // Algeria
-  "DZ": {
-    "Biskra": datePalmPests,
-    "Adrar": datePalmPests
+  "Siwa Oasis": {
+    "Date Palm Scale": "High",
+    "Lesser Date Moth": "Medium",
+    "Dubas Bug": "Low"
   }
 };
-
-export { datePalmPests, menaRegions };
-export default { datePalmPests, menaRegions };
