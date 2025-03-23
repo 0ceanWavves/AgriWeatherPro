@@ -1,16 +1,107 @@
 .sidebar {
   display: flex;
   flex-direction: column;
-  width: 250px;
   height: 100vh;
-  background-color: #222;
-  color: white;
-  transition: width 0.3s;
+  width: 250px;
   position: fixed;
   left: 0;
   top: 0;
   bottom: 0;
+  transition: transform 0.3s ease;
+  overflow-y: auto;
   z-index: 100;
+  border-radius: 0;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Scrollbar styling */
+.sidebar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+}
+
+/* Hover effects */
+.sidebar button:hover {
+  transform: translateY(-1px);
+  transition: all 0.2s ease;
+}
+
+/* Toggle button for mobile */
+.sidebar-toggle {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 200;
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: var(--sidebar-background);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 767px) {
+  .sidebar {
+    transform: translateX(-100%);
+    width: 280px;
+  }
+  
+  .sidebar.open {
+    transform: translateX(0);
+  }
+  
+  /* Add overlay when sidebar is open on mobile */
+  .sidebar.open::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+  }
+}
+
+/* Adjust main content padding when sidebar is open */
+.main-content {
+  transition: padding-left 0.3s ease;
+  padding-left: 265px;
+}
+
+@media (max-width: 767px) {
+  .main-content {
+    padding-left: 15px;
+  }
+}
+
+/* Dark mode utilities */
+body.dark-mode {
+  --primary-color: #FF8C00;
+  --secondary-color: #FFA500;
+  --text-color: #FFFFFF;
+  --background-color: #1A1A1A;
+  --sidebar-background: #121212;
+}
+
+/* User avatar styles */
+.user-avatar {
+  background-color: var(--primary-color);
+  color: var(--sidebar-background);
 }
 
 .weather-data-panel {

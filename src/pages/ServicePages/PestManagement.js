@@ -6,7 +6,9 @@ import PestMap from '../../components/pest/PestMap';
 import PestFilter from '../../components/pest/PestFilter';
 import PestTable from '../../components/pest/PestTable';
 import RegionalPestAlert from '../../components/pest/RegionalPestAlert';
+import PredictivePestAnalysis from '../../components/pest/PredictivePestAnalysis';
 import pestData from '../../data/pestData';
+import { getMockWeatherData } from '../../services/mockWeatherService';
 import 'leaflet/dist/leaflet.css';
 
 const PestManagement = () => {
@@ -17,6 +19,7 @@ const PestManagement = () => {
   const [selectedCrop, setSelectedCrop] = useState('corn');
   const [loading, setLoading] = useState(true);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [isUsingMockData, setIsUsingMockData] = useState(false);
   
   // Region-specific pests
   const [regionSpecificPests, setRegionSpecificPests] = useState([]);
@@ -47,7 +50,7 @@ const PestManagement = () => {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           try {
-            const apiKey = 'deeaa95f4b7b2543dc8c3d9cb96396c6';
+            const apiKey = 'deeaa95f4b7b2543dc8c3d9cb96396c6'; // To be replaced later
             const geoResponse = await axios.get(
               `https://api.openweathermap.org/geo/1.0/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}&limit=1&appid=${apiKey}`
             );
@@ -93,11 +96,12 @@ const PestManagement = () => {
     const fetchWeatherData = async () => {
       setLoading(true);
       try {
-        const apiKey = 'deeaa95f4b7b2543dc8c3d9cb96396c6';
+        const apiKey = 'deeaa95f4b7b2543dc8c3d9cb96396c6'; // To be replaced later
         const response = await axios.get(
           `https://api.openweathermap.org/data/2.5/onecall?lat=${location.lat}&lon=${location.lng}&exclude=minutely,alerts&units=imperial&appid=${apiKey}`
         );
         setWeatherData(response.data);
+        setIsUsingMockData(false);
         
         // Calculate pest risks based on weather conditions
         calculatePestRisks(response.data, selectedCrop);
@@ -106,6 +110,17 @@ const PestManagement = () => {
         checkRegionalPests();
       } catch (error) {
         console.error("Error fetching weather data:", error);
+        
+        // Use mock weather data when the API fails
+        const mockData = getMockWeatherData(location.lat, location.lng, 'imperial');
+        setWeatherData(mockData);
+        setIsUsingMockData(true);
+        
+        // Calculate pest risks using mock data
+        calculatePestRisks(mockData, selectedCrop);
+        
+        // Check region-specific pests
+        checkRegionalPests();
       } finally {
         setLoading(false);
       }
@@ -239,10 +254,10 @@ const PestManagement = () => {
           </div>
           
           <div className="p-3 md:p-6">
-            {/* NEW: Regional Database Quick Access */}
-            <div className="mb-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Regional Database Quick Access */}
+            <div className="mb-6 grid grid-cols-1 md:grid-cols-3 gap-4">
               <Link 
-                to="/services/california-pests"
+                to="/services/california-pest"
                 className="p-4 bg-blue-50 border border-blue-200 rounded-lg flex items-center shadow-sm hover:shadow-md transition-shadow"
               >
                 <div className="w-12 h-12 mr-4 bg-blue-100 rounded-full flex items-center justify-center text-blue-700">
@@ -252,12 +267,12 @@ const PestManagement = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-blue-800">California Pest Database</h3>
-                  <p className="text-sm text-gray-600">Specialized information for almond, grape, tomato, lettuce, and strawberry pests</p>
+                  <p className="text-sm text-gray-600">Specialized pest information for California crops</p>
                 </div>
               </Link>
               
               <Link 
-                to="/services/mena-pests"
+                to="/services/mena-pest"
                 className="p-4 bg-amber-50 border border-amber-200 rounded-lg flex items-center shadow-sm hover:shadow-md transition-shadow"
               >
                 <div className="w-12 h-12 mr-4 bg-amber-100 rounded-full flex items-center justify-center text-amber-700">
@@ -268,10 +283,40 @@ const PestManagement = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-amber-800">MENA Date Palm Pest Database</h3>
-                  <p className="text-sm text-gray-600">Focused information for date palm pests in Middle East & North Africa</p>
+                  <p className="text-sm text-gray-600">Specialized pest information for date palms</p>
                 </div>
               </Link>
+              
+              <Link 
+                to="/services/asia-rice-pest"
+                className="p-4 bg-green-50 border border-green-200 rounded-lg flex items-center shadow-sm hover:shadow-md transition-shadow relative"
+              >
+                <div className="w-12 h-12 mr-4 bg-green-100 rounded-full flex items-center justify-center text-green-700">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-green-800">Southeast Asia Rice Pest Database</h3>
+                  <p className="text-sm text-gray-600">Comprehensive rice pest management for tropical climates</p>
+                </div>
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">
+                  NEW
+                </span>
+              </Link>
             </div>
+            
+            {/* Mock Data Indicator */}
+            {isUsingMockData && (
+              <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-lg text-amber-800 text-sm">
+                <div className="flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                  </svg>
+                  <span>Using simulated weather data. Weather API connection will be restored soon.</span>
+                </div>
+              </div>
+            )}
             
             {/* Mobile Toggle for Filters */}
             {isMobile && (
@@ -329,7 +374,10 @@ const PestManagement = () => {
                 
                 {weatherData && (
                   <div className="bg-white rounded-lg p-3 md:p-4 border border-green-200">
-                    <h3 className="font-semibold text-green-800 mb-2">Current Weather in {location.name}</h3>
+                    <h3 className="font-semibold text-green-800 mb-2">
+                      Current Weather in {location.name}
+                      {isUsingMockData && <span className="text-xs text-amber-600 ml-2">(Simulated)</span>}
+                    </h3>
                     <div className="text-xs md:text-sm space-y-2">
                       <div className="flex justify-between items-center">
                         <span>Temperature:</span>
@@ -386,6 +434,31 @@ const PestManagement = () => {
                 </div>
               </div>
             )}
+
+            {/* Predictive Pest Analysis Component */}
+            <div className="mt-8">
+              <div className="bg-blue-50 rounded-lg border border-blue-200 p-4 md:p-6">
+                <div className="flex items-center mb-4">
+                  <div className="w-10 h-10 mr-3 bg-blue-100 rounded-full flex items-center justify-center text-blue-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                    </svg>
+                  </div>
+                  <h2 className="text-xl font-semibold text-blue-800">
+                    Predictive Pest Analysis
+                    <span className="ml-2 text-xs bg-blue-600 text-white px-2 py-0.5 rounded-full">BETA</span>
+                  </h2>
+                </div>
+                <p className="text-blue-700 mb-4 text-sm">
+                  Advanced predictive analytics combining weather data and pest lifecycle models to forecast pest emergence before they impact your crops.
+                </p>
+                <PredictivePestAnalysis 
+                  location={location}
+                  weatherData={weatherData}
+                  selectedCrop={selectedCrop}
+                />
+              </div>
+            </div>
 
             {/* Sustainable Practices Section */}
             <div className="mt-8 bg-green-50 rounded-lg border border-green-200 p-4 md:p-6">

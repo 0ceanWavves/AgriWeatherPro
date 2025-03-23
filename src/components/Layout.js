@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { FaHome, FaChartBar, FaLeaf, FaCloudSun, FaBug, FaTint, FaInfoCircle } from 'react-icons/fa';
+import { FaHome, FaChartBar, FaLeaf, FaCloudSun, FaBug, FaTint, FaInfoCircle, FaDollarSign } from 'react-icons/fa';
 import { useServiceMap } from '../context/ServiceMapContext';
 import ServicesMenu from './ServicesMenu/ServicesMenu';
 
@@ -11,6 +11,9 @@ const Layout = ({ children }) => {
   const { selectService } = useServiceMap();
 
   const isActive = (path) => {
+    if (path === '/services') {
+      return location.pathname === '/services' || location.pathname.startsWith('/services/');
+    }
     return location.pathname === path;
   };
 
@@ -35,6 +38,7 @@ const Layout = ({ children }) => {
     }
   }, [location.pathname, selectService]);
 
+  // Main navigation items - removed the Services item as requested
   const navigationItems = [
     { path: '/', label: 'Home', icon: <FaHome className="w-5 h-5" /> },
     { path: '/dashboard', label: 'Dashboard', icon: <FaChartBar className="w-5 h-5" /> },
@@ -85,14 +89,29 @@ const Layout = ({ children }) => {
                       ? 'bg-primary text-white'
                       : 'text-gray-300 hover:bg-gray-700 hover:text-white'
                   }`}
+                  onClick={() => setSidebarOpen(false)}
                 >
                   <span className="mr-3">{item.icon}</span>
                   <span>{item.label}</span>
                 </Link>
               ))}
+              
+              {/* Tariff Link */}
+              <Link
+                to="/tariff"
+                className={`flex items-center py-2 px-3 rounded-md ${
+                  isActive('/tariff')
+                    ? 'bg-primary text-white'
+                    : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                }`}
+                onClick={() => setSidebarOpen(false)}
+              >
+                <span className="mr-3"><FaDollarSign className="w-5 h-5" /></span>
+                <span>Tariff</span>
+              </Link>
             </div>
             
-            {/* Services section */}
+            {/* Services section - Keep service-specific items */}
             <div className="mt-6">
               <div className="text-gray-400 uppercase text-xs font-semibold py-2 px-3">
                 SERVICES
@@ -105,6 +124,7 @@ const Layout = ({ children }) => {
                     ? 'bg-primary text-white'
                     : 'text-gray-300 hover:bg-gray-700 hover:text-white'
                 }`}
+                onClick={() => setSidebarOpen(false)}
               >
                 <span className="mr-3"><FaBug className="w-5 h-5" /></span>
                 <span>Pest Management</span>
@@ -118,7 +138,10 @@ const Layout = ({ children }) => {
                       ? 'bg-primary text-white'
                       : 'text-gray-300 hover:bg-gray-700 hover:text-white'
                   }`}
-                  onClick={() => selectService('california-pest')}
+                  onClick={() => {
+                    selectService('california-pest');
+                    setSidebarOpen(false);
+                  }}
                 >
                   <span>California Pests</span>
                 </Link>
@@ -130,7 +153,10 @@ const Layout = ({ children }) => {
                       ? 'bg-primary text-white'
                       : 'text-gray-300 hover:bg-gray-700 hover:text-white'
                   }`}
-                  onClick={() => selectService('mena-pest')}
+                  onClick={() => {
+                    selectService('mena-pest');
+                    setSidebarOpen(false);
+                  }}
                 >
                   <span>MENA Date Palm Pests</span>
                 </Link>
@@ -143,7 +169,10 @@ const Layout = ({ children }) => {
                     ? 'bg-primary text-white'
                     : 'text-gray-300 hover:bg-gray-700 hover:text-white'
                 }`}
-                onClick={() => selectService('irrigation-planning')}
+                onClick={() => {
+                  selectService('irrigation-planning');
+                  setSidebarOpen(false);
+                }}
               >
                 <span className="mr-3"><FaTint className="w-5 h-5" /></span>
                 <span>Irrigation Planning</span>
@@ -157,6 +186,7 @@ const Layout = ({ children }) => {
                   ? 'bg-primary text-white'
                   : 'text-gray-300 hover:bg-gray-700 hover:text-white'
               }`}
+              onClick={() => setSidebarOpen(false)}
             >
               <span className="mr-3"><FaInfoCircle className="w-5 h-5" /></span>
               <span>About</span>

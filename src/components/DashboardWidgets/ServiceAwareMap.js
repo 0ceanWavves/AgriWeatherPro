@@ -10,6 +10,7 @@ const ServiceAwareMap = ({ selectedLayer, location }) => {
   const layersRef = useRef({});
   const legendRef = useRef(null);
   const locationMarkerRef = useRef(null);
+  const [mapInitialized, setMapInitialized] = useState(false);
   
   const [mapCenter, setMapCenter] = useState([37.7749, -122.4194]); // Default to California
   const [zoom, setZoom] = useState(6);
@@ -53,88 +54,95 @@ const ServiceAwareMap = ({ selectedLayer, location }) => {
 
   // Initialize map when component mounts
   useEffect(() => {
+    // Only initialize the map if the container is rendered and map is not already initialized
     if (!mapRef.current && mapContainerRef.current) {
-      // Create map instance with compact attribution
-      mapRef.current = L.map(mapContainerRef.current, {
-        center: mapCenter,
-        zoom: zoom,
-        zoomControl: true,
-        attributionControl: false
-      });
-      
-      // Add custom attribution in a more compact form
-      L.control.attribution({
-        prefix: false,
-        position: 'bottomright'
-      }).addAttribution('© <a href="https://www.openstreetmap.org/copyright">OSM</a> | AgriWeather Pro').addTo(mapRef.current);
-      
-      // Add base tile layer (OpenStreetMap)
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: false
-      }).addTo(mapRef.current);
-      
-      // Add zoom control in top-left instead of default top-right
-      L.control.zoom({
-        position: 'topleft'
-      }).addTo(mapRef.current);
-      
-      // Add location info box
-      const LocationInfoControl = L.Control.extend({
-        options: {
-          position: 'bottomleft'
-        },
-        
-        onAdd: function() {
-          const div = L.DomUtil.create('div', 'location-info');
-          div.innerHTML = `
-            <div class="bg-white px-3 py-2 rounded shadow-md border border-gray-200 text-xs">
-              <div class="font-semibold">${locationInfo.city}, ${locationInfo.region}</div>
-              <div class="mt-1">${locationInfo.temperature} - ${locationInfo.conditions}</div>
-            </div>
-          `;
-          return div;
-        }
-      });
-      
-      new LocationInfoControl().addTo(mapRef.current);
-      
-      // Try to get user location
-      if ("geolocation" in navigator) {
-        navigator.geolocation.getCurrentPosition(
-          position => {
-            const { latitude, longitude } = position.coords;
-            setUserLocation([latitude, longitude]);
-            
-            // Don't auto-center on user location if a specific location was provided
-            if (!location || !location.lat) {
-              setMapCenter([latitude, longitude]);
-              mapRef.current.setView([latitude, longitude], 7);
-              
-              // Reverse geocode the location (simulated)
-              setLocationInfo({
-                ...locationInfo,
-                city: "Current Location",
-                region: "Based on GPS"
-              });
-            }
-          },
-          error => {
-            console.error("Error getting user location:", error);
-          }
-        );
-      }
-      
-      // Add click event to show location info
-      mapRef.current.on('click', function(e) {
-        const { lat, lng } = e.latlng;
-        // In a real app, you would reverse geocode here
-        setLocationInfo({
-          city: `Lat: ${lat.toFixed(2)}`,
-          region: `Lng: ${lng.toFixed(2)}`,
-          temperature: '72°F',
-          conditions: 'Sunny'
+      try {
+        // Create map instance with compact attribution
+        mapRef.current = L.map(mapContainerRef.current, {
+          center: mapCenter,
+          zoom: zoom,
+          zoomControl: true,
+          attributionControl: false
         });
-      });
+        
+        // Add custom attribution in a more compact form
+        L.control.attribution({
+          prefix: false,
+          position: 'bottomright'
+        }).addAttribution('© <a href="https://www.openstreetmap.org/copyright">OSM</a> | AgriWeather Pro').addTo(mapRef.current);
+        
+        // Add base tile layer (OpenStreetMap)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: false
+        }).addTo(mapRef.current);
+        
+        // Add zoom control in top-left instead of default top-right
+        L.control.zoom({
+          position: 'topleft'
+        }).addTo(mapRef.current);
+        
+        // Add location info box
+        const LocationInfoControl = L.Control.extend({
+          options: {
+            position: 'bottomleft'
+          },
+          
+          onAdd: function() {
+            const div = L.DomUtil.create('div', 'location-info');
+            div.innerHTML = `
+              <div class="bg-white px-3 py-2 rounded shadow-md border border-gray-200 text-xs">
+                <div class="font-semibold">${locationInfo.city}, ${locationInfo.region}</div>
+                <div class="mt-1">${locationInfo.temperature} - ${locationInfo.conditions}</div>
+              </div>
+            `;
+            return div;
+          }
+        });
+        
+        new LocationInfoControl().addTo(mapRef.current);
+        
+        // Try to get user location
+        if ("geolocation" in navigator) {
+          navigator.geolocation.getCurrentPosition(
+            position => {
+              const { latitude, longitude } = position.coords;
+              setUserLocation([latitude, longitude]);
+              
+              // Don't auto-center on user location if a specific location was provided
+              if (!location || !location.lat) {
+                setMapCenter([latitude, longitude]);
+                mapRef.current.setView([latitude, longitude], 7);
+                
+                // Reverse geocode the location (simulated)
+                setLocationInfo({
+                  ...locationInfo,
+                  city: "Current Location",
+                  region: "Based on GPS"
+                });
+              }
+            },
+            error => {
+              console.error("Error getting user location:", error);
+            }
+          );
+        }
+        
+        // Add click event to show location info
+        mapRef.current.on('click', function(e) {
+          const { lat, lng } = e.latlng;
+          // In a real app, you would reverse geocode here
+          setLocationInfo({
+            city: `Lat: ${lat.toFixed(2)}`,
+            region: `Lng: ${lng.toFixed(2)}`,
+            temperature: '72°F',
+            conditions: 'Sunny'
+          });
+        });
+        
+        setMapInitialized(true);
+      } catch (error) {
+        console.error("Error initializing map:", error);
+      }
     }
     
     // Cleanup when component unmounts
@@ -150,13 +158,14 @@ const ServiceAwareMap = ({ selectedLayer, location }) => {
         // Remove the map
         mapRef.current.remove();
         mapRef.current = null;
+        setMapInitialized(false);
       }
     };
   }, []);
 
   // Update map center when it changes
   useEffect(() => {
-    if (mapRef.current) {
+    if (mapRef.current && mapInitialized) {
       mapRef.current.setView(mapCenter, zoom);
       
       // Update or add location marker
@@ -167,11 +176,11 @@ const ServiceAwareMap = ({ selectedLayer, location }) => {
       locationMarkerRef.current = L.marker(mapCenter).addTo(mapRef.current);
       locationMarkerRef.current.bindPopup(`<b>${location?.name || 'Selected Location'}</b>`);
     }
-  }, [mapCenter, zoom]);
+  }, [mapCenter, zoom, mapInitialized]);
 
   // Update map layers when selectedService or selectedLayer changes
   useEffect(() => {
-    if (!mapRef.current) return;
+    if (!mapRef.current || !mapInitialized) return;
     
     // Remove all current layers except the location marker
     Object.values(layersRef.current).forEach(layer => {
@@ -278,10 +287,13 @@ const ServiceAwareMap = ({ selectedLayer, location }) => {
     if (selectedLayer) {
       selectLayer(layerId);
     }
-  }, [selectedService, selectedLayer]);
+  }, [selectedService, selectedLayer, mapInitialized]);
 
   // Add a legend to the map
   const addLegend = (legendType) => {
+    // Check if map is initialized
+    if (!mapRef.current || !mapInitialized) return;
+    
     // Remove existing legend if any
     if (legendRef.current && mapRef.current.hasLayer(legendRef.current)) {
       mapRef.current.removeControl(legendRef.current);

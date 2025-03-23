@@ -27,11 +27,16 @@ const WeatherForecast = ({ initialLocation }) => {
       // Get forecast data using coordinates
       const forecast = await getWeatherForecast(locationData.lat, locationData.lon);
       
-      setForecastData({
+      // Ensure forecast has all the required properties, add empty arrays if missing
+      const processedForecast = {
         ...forecast,
+        hourly: forecast.hourly || [],
+        daily: forecast.daily || [],
         locationName: locationData.name,
         country: locationData.country
-      });
+      };
+      
+      setForecastData(processedForecast);
     } catch (err) {
       console.error('Error fetching forecast:', err);
       setError('Failed to fetch weather data. Please try again.');
@@ -201,84 +206,92 @@ const WeatherForecast = ({ initialLocation }) => {
               <div className="current-weather mx-4 mb-6">
                 <div className="current-location">
                   <h2>{forecastData.locationName}, {forecastData.country}</h2>
-                  <p>{formatDate(forecastData.current.dt)}</p>
+                  <p>{forecastData.current ? formatDate(forecastData.current.dt) : 'Today'}</p>
                 </div>
                 
-                <div className="current-temp">
-                  <div className="mr-4">
-                    {getWeatherIcon(forecastData.current.weather[0].icon)}
-                  </div>
-                  <div>
-                    <div className="temp-value">{Math.round(forecastData.current.temp)}°C</div>
-                    <p className="temp-condition capitalize">{forecastData.current.weather[0].description}</p>
-                  </div>
-                </div>
-                
-                <div className="current-details">
-                  <div className="detail-item">
-                    <FaTemperatureHigh className="text-yellow-200" />
-                    <span>Feels like: {Math.round(forecastData.current.feels_like)}°C</span>
-                  </div>
-                  <div className="detail-item">
-                    <FaWind className="text-blue-200" />
-                    <span>Wind: {Math.round(forecastData.current.wind_speed)} m/s</span>
-                  </div>
-                  <div className="detail-item">
-                    <FaCloudRain className="text-blue-200" />
-                    <span>Humidity: {forecastData.current.humidity}%</span>
-                  </div>
-                  <div className="detail-item">
-                    <FaTint className="text-blue-200" />
-                    <span>Precipitation: {Math.round(forecastData.current.pop * 100 || 0)}%</span>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Hourly forecast */}
-              <div className="hourly-forecast-container mx-4 mb-6">
-                <h3 className="text-xl font-semibold">Hourly Forecast</h3>
-                <div className="hourly-forecast">
-                  {forecastData.hourly.slice(0, 24).map((hour, index) => (
-                    <div key={index} className="hour-card">
-                      <div className="hour-time">{formatTime(hour.dt)}</div>
-                      <div className="hour-icon">
-                        {getWeatherIcon(hour.weather[0].icon)}
+                {forecastData.current && (
+                  <>
+                    <div className="current-temp">
+                      <div className="mr-4">
+                        {getWeatherIcon(forecastData.current.weather[0].icon)}
                       </div>
-                      <div className="hour-temp">{Math.round(hour.temp)}°C</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              
-              {/* Daily forecast */}
-              <div className="daily-forecast-container mx-4">
-                <h3 className="text-xl font-semibold">7-Day Forecast</h3>
-                <div className="daily-forecast">
-                  {forecastData.daily.slice(0, 7).map((day, index) => (
-                    <div key={index} className="day-row">
-                      <div className="day-date">
-                        {index === 0 ? 'Today' : formatDate(day.dt)}
-                      </div>
-                      <div className="day-condition">
-                        <div className="day-icon">
-                          {getWeatherIcon(day.weather[0].icon)}
-                        </div>
-                        <div className="day-condition-text capitalize">
-                          {day.weather[0].description}
-                        </div>
-                      </div>
-                      <div className="day-temps">
-                        <div className="min-temp">
-                          Min: {Math.round(day.temp.min)}°C
-                        </div>
-                        <div className="max-temp">
-                          Max: {Math.round(day.temp.max)}°C
-                        </div>
+                      <div>
+                        <div className="temp-value">{Math.round(forecastData.current.temp)}°C</div>
+                        <p className="temp-condition capitalize">{forecastData.current.weather[0].description}</p>
                       </div>
                     </div>
-                  ))}
-                </div>
+                    
+                    <div className="current-details">
+                      <div className="detail-item">
+                        <FaTemperatureHigh className="text-yellow-200" />
+                        <span>Feels like: {Math.round(forecastData.current.feels_like)}°C</span>
+                      </div>
+                      <div className="detail-item">
+                        <FaWind className="text-blue-200" />
+                        <span>Wind: {Math.round(forecastData.current.wind_speed)} m/s</span>
+                      </div>
+                      <div className="detail-item">
+                        <FaCloudRain className="text-blue-200" />
+                        <span>Humidity: {forecastData.current.humidity}%</span>
+                      </div>
+                      <div className="detail-item">
+                        <FaTint className="text-blue-200" />
+                        <span>Precipitation: {Math.round(forecastData.current.pop * 100 || 0)}%</span>
+                      </div>
+                    </div>
+                  </>
+                )}
               </div>
+              
+              {/* Hourly forecast - only show if hourly data exists */}
+              {forecastData.hourly && forecastData.hourly.length > 0 && (
+                <div className="hourly-forecast-container mx-4 mb-6">
+                  <h3 className="text-xl font-semibold">Hourly Forecast</h3>
+                  <div className="hourly-forecast">
+                    {forecastData.hourly.slice(0, 24).map((hour, index) => (
+                      <div key={index} className="hour-card">
+                        <div className="hour-time">{formatTime(hour.dt)}</div>
+                        <div className="hour-icon">
+                          {getWeatherIcon(hour.weather[0].icon)}
+                        </div>
+                        <div className="hour-temp">{Math.round(hour.temp)}°C</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+              
+              {/* Daily forecast - only show if daily data exists */}
+              {forecastData.daily && forecastData.daily.length > 0 && (
+                <div className="daily-forecast-container mx-4">
+                  <h3 className="text-xl font-semibold">7-Day Forecast</h3>
+                  <div className="daily-forecast">
+                    {forecastData.daily.slice(0, 7).map((day, index) => (
+                      <div key={index} className="day-row">
+                        <div className="day-date">
+                          {index === 0 ? 'Today' : formatDate(day.dt)}
+                        </div>
+                        <div className="day-condition">
+                          <div className="day-icon">
+                            {getWeatherIcon(day.weather[0].icon)}
+                          </div>
+                          <div className="day-condition-text capitalize">
+                            {day.weather[0].description}
+                          </div>
+                        </div>
+                        <div className="day-temps">
+                          <div className="min-temp">
+                            Min: {Math.round(day.temp.min)}°C
+                          </div>
+                          <div className="max-temp">
+                            Max: {Math.round(day.temp.max)}°C
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
               
               {/* Enhanced Agricultural tip with stats and redirect */}
               {forecastData.daily && forecastData.daily.length > 0 && (

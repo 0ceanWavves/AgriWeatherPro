@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   FaHome, 
@@ -9,7 +9,10 @@ import {
   FaInfoCircle, 
   FaCog, 
   FaSignOutAlt,
-  FaMoon
+  FaMoon,
+  FaBars,
+  FaTimes,
+  FaBug
 } from 'react-icons/fa';
 import './Sidebar.css';
 
@@ -28,9 +31,24 @@ const dummyAuthData = {
 
 const Sidebar = ({ activeView, setActiveView }) => {
   const [darkMode, setDarkMode] = useState(true);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [isOpen, setIsOpen] = useState(!isMobile);
+  
   // Use dummy auth data directly
   const { user, userProfile, loading, signOut } = dummyAuthData;
   const navigate = useNavigate();
+  
+  // Handle window resize
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      if (!mobile && !isOpen) setIsOpen(true);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [isOpen]);
   
   const handleLogout = async () => {
     try {
@@ -44,6 +62,10 @@ const Sidebar = ({ activeView, setActiveView }) => {
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
     document.body.classList.toggle('dark-mode');
+  };
+  
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
   };
   
   // Get user display name
@@ -64,137 +86,163 @@ const Sidebar = ({ activeView, setActiveView }) => {
   };
   
   return (
-    <div className="flex-1 bg-black-2 text-white rounded-xl flex flex-col justify-between gap-4">
-      <div className="border-b-black-3 border-b px-5 py-6 flex items-center justify-between gap-2">
-        <span className="shrink-0 w-8 h-8 flex items-center justify-center rounded-full">
-          {loading ? (
-            <div className="w-8 h-8 rounded-full bg-gray-600 animate-pulse"></div>
-          ) : (
-            getUserAvatar()
-          )}
-        </span>
-        <span className="overflow-hidden">
-          {loading ? (
-            <div className="w-24 h-4 bg-gray-600 rounded animate-pulse"></div>
-          ) : (
-            getUserDisplayName()
-          )}
-        </span>
-        <span className="flex-1"></span>
+    <>
+      {isMobile && (
         <button 
-          type="button" 
-          title="Sign out" 
-          onClick={handleLogout}
+          className="sidebar-toggle" 
+          onClick={toggleSidebar}
+          aria-label="Toggle Sidebar"
         >
-          <FaSignOutAlt className="w-5 h-5 hover:text-orange-2" />
+          {isOpen ? <FaTimes /> : <FaBars />}
         </button>
-      </div>
+      )}
       
-      <ul className="flex flex-col justify-start space-y-1 px-1 mt-4">
-        <li className="relative">
+      <div className={`sidebar ${isOpen ? 'open' : ''} flex-1 bg-black-2 text-white rounded-xl flex flex-col justify-between gap-4`}>
+        <div className="border-b-black-3 border-b px-5 py-6 flex items-center justify-between gap-2">
+          <span className="shrink-0 w-8 h-8 flex items-center justify-center rounded-full">
+            {loading ? (
+              <div className="w-8 h-8 rounded-full bg-gray-600 animate-pulse"></div>
+            ) : (
+              getUserAvatar()
+            )}
+          </span>
+          <span className="overflow-hidden">
+            {loading ? (
+              <div className="w-24 h-4 bg-gray-600 rounded animate-pulse"></div>
+            ) : (
+              getUserDisplayName()
+            )}
+          </span>
+          <span className="flex-1"></span>
           <button 
-            type="button"
-            className={`relative flex items-center hover:text-orange-1 hover:bg-orange-1/30 rounded-full px-4 py-1 ${activeView === 'home' ? 'text-orange-1 bg-orange-1/30' : 'text-white'}`}
-            onClick={() => setActiveView('home')}
+            type="button" 
+            title="Sign out" 
+            onClick={handleLogout}
           >
-            <FaHome className="w-6 h-6" />
-            <span className="relative pl-3">Home</span>
+            <FaSignOutAlt className="w-5 h-5 hover:text-orange-2" />
           </button>
-        </li>
-        <li className="relative">
+        </div>
+        
+        <ul className="flex flex-col justify-start space-y-1 px-1 mt-4">
+          <li className="relative">
+            <button 
+              type="button"
+              className={`relative flex items-center hover:text-orange-1 hover:bg-orange-1/30 rounded-full px-4 py-1 ${activeView === 'home' ? 'text-orange-1 bg-orange-1/30' : 'text-white'}`}
+              onClick={() => setActiveView('home')}
+            >
+              <FaHome className="w-6 h-6" />
+              <span className="relative pl-3">Home</span>
+            </button>
+          </li>
+          <li className="relative">
+            <button 
+              type="button"
+              className={`relative flex items-center hover:text-orange-1 hover:bg-orange-1/30 rounded-full px-4 py-1 ${activeView === 'reports' ? 'text-orange-1 bg-orange-1/30' : 'text-white'}`}
+              onClick={() => {
+                console.log("Sidebar: Setting view to reports");
+                setActiveView('reports');
+              }}
+            >
+              <FaChartLine className="w-6 h-6" />
+              <span className="relative pl-3">Reports</span>
+            </button>
+          </li>
+          <li className="relative">
+            <button 
+              type="button"
+              className={`relative flex items-center hover:text-orange-1 hover:bg-orange-1/30 rounded-full px-4 py-1 ${activeView === 'triggers' ? 'text-orange-1 bg-orange-1/30' : 'text-white'}`}
+              onClick={() => setActiveView('triggers')}
+            >
+              <FaExchangeAlt className="w-6 h-6" />
+              <span className="relative pl-3">Triggers</span>
+            </button>
+          </li>
+          <li className="relative">
+            <button 
+              type="button"
+              className={`relative flex items-center hover:text-orange-1 hover:bg-orange-1/30 rounded-full px-4 py-1 ${activeView === 'tariff' ? 'text-orange-1 bg-orange-1/30' : 'text-white'}`}
+              onClick={() => setActiveView('tariff')}
+            >
+              <FaDollarSign className="w-6 h-6" />
+              <span className="relative pl-3">Tariff</span>
+            </button>
+          </li>
+          <li className="relative">
+            <button 
+              type="button"
+              className={`relative flex items-center hover:text-orange-1 hover:bg-orange-1/30 rounded-full px-4 py-1 ${activeView === 'pest-management' ? 'text-orange-1 bg-orange-1/30' : 'text-white'}`}
+              onClick={() => {
+                setActiveView('pest-management');
+                navigate('/pest-management');
+              }}
+            >
+              <FaBug className="w-6 h-6" />
+              <span className="relative pl-3">Pest Management</span>
+              <span className="absolute right-2 -top-2 text-xs px-1.5 py-0.5 bg-green-500 text-white rounded-full">New</span>
+            </button>
+          </li>
+          <li className="relative">
+            <button 
+              type="button"
+              className={`relative flex items-center hover:text-orange-1 hover:bg-orange-1/30 rounded-full px-4 py-1 ${activeView === 'support' ? 'text-orange-1 bg-orange-1/30' : 'text-white'}`}
+              onClick={() => setActiveView('support')}
+            >
+              <FaCommentDots className="w-6 h-6" />
+              <span className="relative pl-3">Support Center</span>
+            </button>
+          </li>
+          <li className="relative">
+            <button 
+              type="button"
+              className={`relative flex items-center hover:text-orange-1 hover:bg-orange-1/30 rounded-full px-4 py-1 ${activeView === 'about' ? 'text-orange-1 bg-orange-1/30' : 'text-white'}`}
+              onClick={() => setActiveView('about')}
+            >
+              <FaInfoCircle className="w-6 h-6" />
+              <span className="relative pl-3">About us</span>
+            </button>
+          </li>
+          <li className="relative">
+            <button 
+              type="button"
+              className={`relative flex items-center hover:text-orange-1 hover:bg-orange-1/30 rounded-full px-4 py-1 ${activeView === 'settings' ? 'text-orange-1 bg-orange-1/30' : 'text-white'}`}
+              onClick={() => setActiveView('settings')}
+            >
+              <FaCog className="w-6 h-6" />
+              <span className="relative pl-3">Settings</span>
+            </button>
+          </li>
+        </ul>
+
+        <div className="border-t border-black-3"></div>
+
+        <div className="px-1">
           <button 
             type="button"
-            className={`relative flex items-center hover:text-orange-1 hover:bg-orange-1/30 rounded-full px-4 py-1 ${activeView === 'reports' ? 'text-orange-1 bg-orange-1/30' : 'text-white'}`}
-            onClick={() => {
-              console.log("Sidebar: Setting view to reports");
-              setActiveView('reports');
-            }}
-          >
-            <FaChartLine className="w-6 h-6" />
-            <span className="relative pl-3">Reports</span>
-          </button>
-        </li>
-        <li className="relative">
-          <button 
-            type="button"
-            className={`relative flex items-center hover:text-orange-1 hover:bg-orange-1/30 rounded-full px-4 py-1 ${activeView === 'triggers' ? 'text-orange-1 bg-orange-1/30' : 'text-white'}`}
-            onClick={() => setActiveView('triggers')}
-          >
-            <FaExchangeAlt className="w-6 h-6" />
-            <span className="relative pl-3">Triggers</span>
-          </button>
-        </li>
-        <li className="relative">
-          <button 
-            type="button"
-            className={`relative flex items-center hover:text-orange-1 hover:bg-orange-1/30 rounded-full px-4 py-1 ${activeView === 'tariff' ? 'text-orange-1 bg-orange-1/30' : 'text-white'}`}
-            onClick={() => setActiveView('tariff')}
-          >
-            <FaDollarSign className="w-6 h-6" />
-            <span className="relative pl-3">Tariff</span>
-          </button>
-        </li>
-        <li className="relative">
-          <button 
-            type="button"
-            className={`relative flex items-center hover:text-orange-1 hover:bg-orange-1/30 rounded-full px-4 py-1 ${activeView === 'support' ? 'text-orange-1 bg-orange-1/30' : 'text-white'}`}
-            onClick={() => setActiveView('support')}
+            className="flex gap-2 rounded-full justify-center whitespace-nowrap items-center py-3 px-6 bg-orange-1 text-black-1 hover:enabled:bg-black-2 hover:enabled:text-white w-full"
           >
             <FaCommentDots className="w-6 h-6" />
-            <span className="relative pl-3">Support centre</span>
+            <span className="pl-3">Ask a question</span>
           </button>
-        </li>
-        <li className="relative">
-          <button 
-            type="button"
-            className={`relative flex items-center hover:text-orange-1 hover:bg-orange-1/30 rounded-full px-4 py-1 ${activeView === 'about' ? 'text-orange-1 bg-orange-1/30' : 'text-white'}`}
-            onClick={() => setActiveView('about')}
-          >
-            <FaInfoCircle className="w-6 h-6" />
-            <span className="relative pl-3">About us</span>
-          </button>
-        </li>
-        <li className="relative">
-          <button 
-            type="button"
-            className={`relative flex items-center hover:text-orange-1 hover:bg-orange-1/30 rounded-full px-4 py-1 ${activeView === 'settings' ? 'text-orange-1 bg-orange-1/30' : 'text-white'}`}
-            onClick={() => setActiveView('settings')}
-          >
-            <FaCog className="w-6 h-6" />
-            <span className="relative pl-3">Settings</span>
-          </button>
-        </li>
-      </ul>
+        </div>
 
-      <div className="border-t border-black-3"></div>
+        <div className="flex-1"></div>
 
-      <div className="px-1">
-        <button 
-          type="button"
-          className="flex gap-2 rounded-full justify-center whitespace-nowrap items-center py-3 px-6 bg-orange-1 text-black-1 hover:enabled:bg-black-2 hover:enabled:text-white w-full"
-        >
-          <FaCommentDots className="w-6 h-6" />
-          <span className="pl-3">Ask a question</span>
-        </button>
+        <div className="px-5 py-6 text-white border-t border-black-3">
+          <label className="flex items-center justify-between cursor-pointer">
+            <FaMoon className="w-6 h-6" />
+            <span>Dark mode</span>
+            <div className="relative w-11 h-6 bg-gray-200 rounded-full peer dark:bg-orange-2 peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-orange-1">
+              <input 
+                className="sr-only peer" 
+                type="checkbox" 
+                checked={darkMode}
+                onChange={toggleDarkMode}
+              />
+            </div>
+          </label>
+        </div>
       </div>
-
-      <div className="flex-1"></div>
-
-      <div className="px-5 py-6 text-white border-t border-black-3">
-        <label className="flex items-center justify-between cursor-pointer">
-          <FaMoon className="w-6 h-6" />
-          <span>Dark mode</span>
-          <div className="relative w-11 h-6 bg-gray-200 rounded-full peer dark:bg-orange-2 peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-orange-1">
-            <input 
-              className="sr-only peer" 
-              type="checkbox" 
-              checked={darkMode}
-              onChange={toggleDarkMode}
-            />
-          </div>
-        </label>
-      </div>
-    </div>
+    </>
   );
 };
 

@@ -1,0 +1,693 @@
+.irrigation-dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.irrigation-header {
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.irrigation-header h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  color: #4a5568;
+  margin-bottom: 1rem;
+  max-width: 800px;
+  line-height: 1.5;
+}
+
+.premium-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+}
+
+.premium-label {
+  background-color: #4299e1;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+}
+
+.info-tooltip {
+  position: relative;
+  margin-left: 0.5rem;
+  cursor: pointer;
+  color: #4a5568;
+}
+
+.info-tooltip:hover .tooltip-text {
+  display: block;
+}
+
+.tooltip-text {
+  display: none;
+  position: absolute;
+  right: 0;
+  bottom: 100%;
+  width: 200px;
+  background-color: #1a202c;
+  color: white;
+  text-align: center;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  margin-bottom: 0.5rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+
+.tab-navigation {
+  display: flex;
+  gap: 0.25rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #e2e8f0;
+  overflow-x: auto;
+}
+
+.tab-button {
+  padding: 0.75rem 1.25rem;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  font-weight: 500;
+  color: #4a5568;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.tab-button:hover {
+  color: #2d3748;
+  background-color: #f7fafc;
+}
+
+.tab-button.active {
+  color: #4299e1;
+  border-bottom-color: #4299e1;
+  background-color: #ebf8ff;
+}
+
+.tab-button svg {
+  font-size: 1rem;
+}
+
+.tab-content {
+  margin-bottom: 2rem;
+}
+
+/* Overview Tab Styles */
+.field-status {
+  margin-bottom: 1rem;
+}
+
+.status-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.status-item:last-child {
+  border-bottom: none;
+}
+
+.status-label {
+  color: #4a5568;
+  font-weight: 500;
+}
+
+.status-value {
+  color: #2d3748;
+  font-weight: 600;
+}
+
+.status-info {
+  margin-left: 0.5rem;
+  font-weight: normal;
+  color: #718096;
+  font-size: 0.875rem;
+}
+
+.irrigation-recommendation {
+  text-align: center;
+  padding: 1.5rem 0;
+}
+
+.recommendation-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #4299e1;
+  margin-bottom: 0.25rem;
+}
+
+.recommendation-label {
+  color: #4a5568;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.recommendation-info {
+  color: #718096;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.recommendation-timing {
+  color: #4a5568;
+  font-weight: 500;
+}
+
+.timing-value {
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.schedule-header {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1.5fr 1fr 1fr 1fr;
+  background-color: #f7fafc;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.schedule-row {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1.5fr 1fr 1fr 1fr;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.schedule-row.scheduled {
+  background-color: #ebf8ff;
+}
+
+.schedule-row.rain {
+  background-color: #e6fffa;
+}
+
+.schedule-cell {
+  padding: 0.75rem;
+  display: flex;
+  align-items: center;
+}
+
+.status-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.status-badge.scheduled {
+  background-color: #bee3f8;
+  color: #2c5282;
+}
+
+.status-badge.skip {
+  background-color: #e2e8f0;
+  color: #4a5568;
+}
+
+.status-badge.rain {
+  background-color: #b2f5ea;
+  color: #285e61;
+}
+
+/* Water Usage and Crop Yield Sections */
+.water-usage, .yield-impact {
+  padding: 1rem 0;
+}
+
+.usage-comparison, .impact-comparison {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.usage-item, .impact-item {
+  text-align: center;
+  flex-grow: 1;
+}
+
+.usage-arrow, .impact-arrow {
+  font-size: 1.5rem;
+  color: #718096;
+  margin: 0 1rem;
+}
+
+.usage-label, .impact-label {
+  color: #4a5568;
+  font-size: 0.875rem;
+  margin-bottom: 0.25rem;
+}
+
+.usage-value, .impact-value {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.usage-item.optimized .usage-value, 
+.impact-item.optimized .impact-value {
+  color: #38a169;
+}
+
+.usage-savings {
+  text-align: center;
+  padding: 1rem;
+  background-color: #f0fff4;
+  border-radius: 0.5rem;
+  border-left: 4px solid #38a169;
+}
+
+.savings-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #38a169;
+  margin-bottom: 0.25rem;
+}
+
+.savings-label {
+  color: #2f855a;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.savings-details {
+  color: #4a5568;
+  font-size: 0.875rem;
+}
+
+.impact-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.detail-item {
+  background-color: #f7fafc;
+  padding: 0.75rem;
+  border-radius: 0.25rem;
+}
+
+.detail-label {
+  color: #4a5568;
+  font-size: 0.875rem;
+  margin-bottom: 0.25rem;
+}
+
+.detail-value {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+/* Soil Tab Styles */
+.soil-selector {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0;
+}
+
+.soil-select, .crop-select, .stage-select, .efficiency-select {
+  padding: 0.5rem 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.25rem;
+  background-color: white;
+  color: #2d3748;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.interpretation {
+  padding: 0.5rem 0;
+}
+
+.interpretation h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 0.75rem;
+}
+
+.interpretation p {
+  color: #4a5568;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.interpretation-list {
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.interpretation-list li {
+  margin-bottom: 0.5rem;
+  color: #4a5568;
+  line-height: 1.5;
+}
+
+.methodology-note {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem;
+  background-color: #ebf8ff;
+  border-radius: 0.25rem;
+  color: #4a5568;
+  font-size: 0.875rem;
+}
+
+.info-icon {
+  color: #4299e1;
+  margin-right: 0.5rem;
+  flex-shrink: 0;
+}
+
+/* ET Tab Styles */
+.crop-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.5rem 0;
+}
+
+.selector-group {
+  display: flex;
+  align-items: center;
+}
+
+.et-explanation {
+  padding: 0.5rem 0;
+}
+
+.et-explanation h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 0.75rem;
+}
+
+.et-explanation p {
+  color: #4a5568;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.et-factors {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.factor-item {
+  background-color: #f7fafc;
+  padding: 1rem;
+  border-radius: 0.25rem;
+}
+
+.factor-item h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 0.5rem;
+}
+
+.factor-item p {
+  color: #4a5568;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin-bottom: 0;
+}
+
+/* Schedule Tab Styles */
+.schedule-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.efficiency-section {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.schedule-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.action-button {
+  padding: 0.5rem 1rem;
+  background-color: #4299e1;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.action-button:hover {
+  background-color: #3182ce;
+}
+
+.action-button.secondary {
+  background-color: #e2e8f0;
+  color: #4a5568;
+}
+
+.action-button.secondary:hover {
+  background-color: #cbd5e0;
+}
+
+.detailed-schedule .schedule-header {
+  grid-template-columns: 0.8fr 1fr 1fr 0.8fr 0.8fr 0.8fr 0.8fr 0.8fr;
+}
+
+.detailed-schedule .schedule-row {
+  grid-template-columns: 0.8fr 1fr 1fr 0.8fr 0.8fr 0.8fr 0.8fr 0.8fr;
+}
+
+.schedule-notes {
+  margin-top: 1rem;
+}
+
+.schedule-notes h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 0.5rem;
+}
+
+.notes-list {
+  margin-left: 1.5rem;
+  color: #4a5568;
+  font-size: 0.875rem;
+}
+
+.notes-list li {
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+/* Map Tab Styles */
+.map-card {
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+}
+
+.map-container {
+  flex-grow: 1;
+  position: relative;
+  margin-bottom: 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.25rem;
+  overflow: hidden;
+}
+
+.map-placeholder {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f7fafc;
+}
+
+.placeholder-content {
+  text-align: center;
+  padding: 2rem;
+  max-width: 400px;
+}
+
+.placeholder-icon {
+  font-size: 3rem;
+  color: #cbd5e0;
+  margin-bottom: 1rem;
+}
+
+.placeholder-content p {
+  color: #4a5568;
+  margin-bottom: 0.5rem;
+}
+
+.placeholder-note {
+  font-size: 0.875rem;
+  color: #718096;
+}
+
+.map-controls {
+  padding: 1rem 0;
+}
+
+.layer-selector, .time-selector {
+  margin-bottom: 1rem;
+}
+
+.control-label {
+  display: inline-block;
+  width: 100px;
+  font-weight: 500;
+  color: #4a5568;
+}
+
+.layer-buttons {
+  display: inline-flex;
+  gap: 0.5rem;
+  margin-left: 0.5rem;
+}
+
+.layer-button {
+  padding: 0.375rem 0.75rem;
+  background-color: #e2e8f0;
+  border: none;
+  border-radius: 0.25rem;
+  color: #4a5568;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.layer-button:hover {
+  background-color: #cbd5e0;
+}
+
+.layer-button.active {
+  background-color: #4299e1;
+  color: white;
+}
+
+.time-slider {
+  display: inline-block;
+  width: calc(100% - 120px);
+  margin-left: 0.5rem;
+}
+
+.slider {
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.slider-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: #718096;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .premium-badge {
+    position: static;
+    margin-top: 1rem;
+    justify-content: flex-start;
+  }
+  
+  .tab-navigation {
+    gap: 0;
+  }
+  
+  .tab-button {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+  }
+  
+  .tab-button svg {
+    font-size: 0.875rem;
+  }
+  
+  .usage-comparison, .impact-comparison {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .usage-arrow, .impact-arrow {
+    transform: rotate(90deg);
+  }
+  
+  .schedule-header, .schedule-row,
+  .detailed-schedule .schedule-header,
+  .detailed-schedule .schedule-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .schedule-cell:nth-child(odd) {
+    font-weight: 600;
+    background-color: #f7fafc;
+  }
+  
+  .crop-selector {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .selector-group {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .schedule-controls {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .efficiency-section {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .schedule-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+}

@@ -12,19 +12,22 @@ const RegionalPestAlert = ({ pest }) => {
         bg: "bg-blue-50",
         border: "border-blue-200",
         heading: "text-blue-800",
-        button: "bg-blue-600 hover:bg-blue-700"
+        button: "bg-blue-600 hover:bg-blue-700",
+        text: "text-blue-900"
       },
       mena: {
         bg: "bg-amber-50",
         border: "border-amber-200",
         heading: "text-amber-800",
-        button: "bg-amber-600 hover:bg-amber-700"
+        button: "bg-amber-600 hover:bg-amber-700",
+        text: "text-amber-900"
       },
       custom: {
         bg: "bg-green-50",
         border: "border-green-200",
         heading: "text-green-800",
-        button: "bg-green-600 hover:bg-green-700"
+        button: "bg-green-600 hover:bg-green-700",
+        text: "text-green-900"
       }
     };
     
@@ -39,8 +42,8 @@ const RegionalPestAlert = ({ pest }) => {
             <div className="flex justify-between items-start">
               <h3 className={`text-lg font-bold ${color.heading}`}>{pest.name}</h3>
             </div>
-            <p className="text-sm italic text-gray-600 mt-1">{pest.scientificName}</p>
-            <p className="mt-3 text-sm text-gray-700">{pest.description}</p>
+            <p className="text-sm italic text-gray-700 mt-1">{pest.scientificName}</p>
+            <p className={`mt-3 text-sm ${color.text}`}>{pest.description}</p>
             <div className="mt-4">
               <Link 
                 to={linkPath}
@@ -84,20 +87,20 @@ const RegionalPestAlert = ({ pest }) => {
             )}
           </div>
           
-          <p className="text-sm italic text-gray-600 mt-1">{pest.scientificName}</p>
+          <p className="text-sm italic text-gray-700 mt-1">{pest.scientificName}</p>
           
-          {pest.description && <p className="mt-3 text-sm text-gray-700">{pest.description}</p>}
+          {pest.description && <p className="mt-3 text-sm text-gray-800">{pest.description}</p>}
           
           <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3">
             {pest.symptoms && (
               <div>
                 <h4 className="font-semibold text-yellow-700 text-sm">Key Symptoms</h4>
-                <p className="mt-1 text-sm text-gray-600">{pest.symptoms}</p>
+                <p className="mt-1 text-sm text-gray-800">{pest.symptoms}</p>
               </div>
             )}
             <div>
               <h4 className="font-semibold text-green-700 text-sm">Management</h4>
-              <p className="mt-1 text-sm text-gray-600">{pest.management}</p>
+              <p className="mt-1 text-sm text-gray-800">{pest.management}</p>
             </div>
           </div>
         </div>

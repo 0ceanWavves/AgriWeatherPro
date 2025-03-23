@@ -1,0 +1,291 @@
+.premium-features-container {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+  padding: 25px;
+}
+
+/* Subscription header styles */
+.subscription-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+@media (max-width: 768px) {
+  .subscription-header {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+.subscription-info h2 {
+  color: #2a5d84;
+  margin-bottom: 15px;
+}
+
+.current-plan {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.plan-label {
+  font-weight: 600;
+  color: #5a6a77;
+}
+
+.plan-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: capitalize;
+}
+
+.plan-badge.free {
+  background-color: #e9ecef;
+  color: #495057;
+}
+
+.plan-badge.basic {
+  background-color: #d1ecf1;
+  color: #0c5460;
+}
+
+.plan-badge.professional {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.plan-badge.enterprise {
+  background-color: #cce5ff;
+  color: #004085;
+}
+
+.renewal-info {
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+.subscription-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 600;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.upgrade-btn {
+  background-color: #3d8b40;
+  color: white;
+}
+
+.upgrade-btn:hover {
+  background-color: #2d682f;
+}
+
+.change-plan-btn {
+  background-color: #4b7bec;
+  color: white;
+}
+
+.change-plan-btn:hover {
+  background-color: #3867d6;
+}
+
+.manage-btn {
+  background-color: #f0f0f0;
+  color: #505050;
+}
+
+.manage-btn:hover {
+  background-color: #e0e0e0;
+}
+
+.downgrade-btn {
+  background-color: #f5f5f5;
+  color: #6c757d;
+  border: 1px solid #dee2e6;
+}
+
+.downgrade-btn:hover {
+  background-color: #e9ecef;
+}
+
+/* Features section styles */
+.features-section {
+  margin-bottom: 40px;
+}
+
+.features-section h3 {
+  color: #2a5d84;
+  margin-bottom: 20px;
+}
+
+.no-premium-features {
+  background-color: #f8f9fa;
+  border: 1px dashed #dee2e6;
+  border-radius: 8px;
+  padding: 30px;
+  text-align: center;
+}
+
+.no-premium-features p {
+  margin-bottom: 10px;
+  color: #6c757d;
+}
+
+.no-premium-features .btn {
+  margin-top: 15px;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.feature-category {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.feature-category h4 {
+  color: #2a5d84;
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+}
+
+.feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.feature-item:last-child {
+  border-bottom: none;
+}
+
+.feature-icon {
+  margin-right: 10px;
+  font-size: 1.2rem;
+}
+
+.feature-name {
+  color: #495057;
+}
+
+/* Plans section styles */
+.all-plans-section h3 {
+  color: #2a5d84;
+  margin-bottom: 20px;
+}
+
+.plans-overview {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.plan-card {
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+}
+
+.plan-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.plan-card.current-plan {
+  border: 2px solid #3d8b40;
+}
+
+.plan-card.current-plan::before {
+  content: "Current";
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #3d8b40;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 10px;
+  z-index: 1;
+}
+
+.plan-header {
+  background-color: #f8f9fa;
+  padding: 20px;
+  text-align: center;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.plan-header h4 {
+  color: #2a5d84;
+  margin-bottom: 10px;
+}
+
+.plan-price {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #212529;
+}
+
+.plan-price span {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #6c757d;
+}
+
+.plan-features {
+  list-style: none;
+  padding: 20px;
+  margin: 0;
+}
+
+.plan-features li {
+  padding: 8px 0;
+  color: #495057;
+  position: relative;
+  padding-left: 25px;
+}
+
+.plan-features li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #3d8b40;
+  font-weight: bold;
+}
+
+.plan-card .btn {
+  display: block;
+  margin: 0 20px 20px;
+} 

@@ -83,9 +83,10 @@ const MenaPestDashboard = () => {
     }));
   };
 
-  // Function to go to dashboard with current service selected
+  // Function to go to dashboard with MENA region selected
   const goToDashboard = () => {
-    navigate('/dashboard');
+    // Navigate to the dashboard with MENA region parameter
+    navigate('/dashboard?region=MENA');
   };
 
   // Helper function to render strategy list

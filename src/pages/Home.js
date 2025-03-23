@@ -102,7 +102,7 @@ const Home = () => {
               Advanced analytics and predictive insights for diverse species, fauna, and climates.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/maps" className="btn-accent px-8 py-3 text-lg">
+              <Link to="/services" className="btn-accent px-8 py-3 text-lg">
                 Explore Data Solutions
               </Link>
               <Link to="/dashboard" className="bg-white text-primary hover:bg-gray-100 px-8 py-3 rounded-md text-lg transition-colors">
@@ -230,7 +230,7 @@ const Home = () => {
             </div>
             
             <div className="text-center">
-              <Link to="/maps" className="inline-block bg-primary text-white hover:bg-primary/90 px-6 py-2 rounded-md transition-colors">
+              <Link to="/services" className="inline-block bg-primary text-white hover:bg-primary/90 px-6 py-2 rounded-md transition-colors">
                 Explore Data Visualization Platform
               </Link>
             </div>
@@ -282,31 +282,9 @@ const Home = () => {
             </div>
             
             <div className="text-center">
-              <Link to="/crop-yields" className="inline-block bg-primary text-white hover:bg-primary/90 px-6 py-2 rounded-md transition-colors">
+              <Link to="/services" className="inline-block bg-primary text-white hover:bg-primary/90 px-6 py-2 rounded-md transition-colors">
                 Explore Analytics Capabilities
               </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-      
-      {/* Testimonial Section - Research Focus */}
-      <section className="py-16 bg-background">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-heading font-bold text-center mb-8">What Our Partners Say</h2>
-          
-          <div className="max-w-3xl mx-auto">
-            <div className="card text-center">
-              <p className="italic mb-6 text-lg">
-                "This platform has revolutionized our research capabilities. The comprehensive data integration and advanced analytics have accelerated our findings, allowing us to identify previously undetectable patterns across diverse species and environmental conditions."
-              </p>
-              <div className="flex items-center justify-center">
-                <div className="w-12 h-12 bg-primary/20 rounded-full mr-4"></div>
-                <div>
-                  <h4 className="font-semibold">Dr. Elena Rodriguez</h4>
-                  <p className="text-sm text-gray-600">Senior Research Scientist, Agricultural Innovation Institute</p>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -323,7 +301,7 @@ const Home = () => {
             <Link to="/dashboard" className="bg-white text-accent hover:bg-gray-100 px-8 py-3 rounded-md text-lg transition-colors font-semibold">
               Explore Our Analytics Platform
             </Link>
-            <Link to="/about" className="border-2 border-white hover:bg-white/10 px-8 py-3 rounded-md text-lg transition-colors">
+            <Link to="/services" className="border-2 border-white hover:bg-white/10 px-8 py-3 rounded-md text-lg transition-colors">
               Learn About Our Technology
             </Link>
           </div>

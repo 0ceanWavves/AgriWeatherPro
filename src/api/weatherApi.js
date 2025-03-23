@@ -1,7 +1,8 @@
+
 import axios from 'axios';
 import { OPENWEATHERMAP_API_KEY as ENV_API_KEY } from '../utils/config';
 
-// Try to use environment variable, but have a backup strategy for local development
+// Use the specified API key - either from environment or the dummy key
 const OPENWEATHERMAP_API_KEY = ENV_API_KEY || 'deeaa95f4b7b2543dc8c3d9cb96396c6';
 
 // Function to generate mock weather data (completely synthetic)
@@ -202,15 +203,153 @@ export const getCurrentWeather = async (lat, lon) => {
   }
 };
 
-// One Call API for forecast data
+// Weather forecast using 5-day forecast API (free tier) instead of OneCall API (paid tier)
 export const getWeatherForecast = async (lat, lon) => {
   try {
-    // Try to use real API first
-    const response = await axios.get(
-      `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&exclude=minutely&appid=${OPENWEATHERMAP_API_KEY}`
+    // Try to use the 5-day/3-hour forecast API (free tier)
+    const forecastResponse = await axios.get(
+      `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&appid=${OPENWEATHERMAP_API_KEY}`
     );
     
-    return response.data;
+    // Also get current weather data
+    const currentResponse = await axios.get(
+      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${OPENWEATHERMAP_API_KEY}`
+    );
+    
+    // Format current weather to match the old OneCall API format as closely as possible
+    const currentData = currentResponse.data;
+    const current = {
+      dt: currentData.dt,
+      sunrise: currentData.sys.sunrise,
+      sunset: currentData.sys.sunset,
+      temp: currentData.main.temp,
+      feels_like: currentData.main.feels_like,
+      pressure: currentData.main.pressure,
+      humidity: currentData.main.humidity,
+      dew_point: 0, // Not available in basic API
+      uvi: 0, // Not available in basic API
+      clouds: currentData.clouds.all,
+      visibility: currentData.visibility,
+      wind_speed: currentData.wind.speed,
+      wind_deg: currentData.wind.deg,
+      weather: currentData.weather
+    };
+    
+    // Process forecast data to group by day
+    const forecastData = forecastResponse.data;
+    const dailyData = {};
+    
+    forecastData.list.forEach(item => {
+      const date = new Date(item.dt * 1000).toISOString().split('T')[0];
+      
+      if (!dailyData[date]) {
+        dailyData[date] = {
+          dt: item.dt,
+          temp: {
+            day: [],
+            min: Number.MAX_SAFE_INTEGER,
+            max: Number.MIN_SAFE_INTEGER,
+            night: [],
+            eve: [],
+            morn: []
+          },
+          pressure: [],
+          humidity: [],
+          weather: [],
+          clouds: [],
+          wind_speed: [],
+          wind_deg: [],
+          pop: []
+        };
+      }
+      
+      const hour = new Date(item.dt * 1000).getHours();
+      
+      // Collect data by time of day
+      if (hour >= 6 && hour < 12) {
+        dailyData[date].temp.morn.push(item.main.temp);
+      } else if (hour >= 12 && hour < 18) {
+        dailyData[date].temp.day.push(item.main.temp);
+      } else if (hour >= 18 && hour < 24) {
+        dailyData[date].temp.eve.push(item.main.temp);
+      } else {
+        dailyData[date].temp.night.push(item.main.temp);
+      }
+      
+      // Update min/max temperatures
+      if (item.main.temp_min < dailyData[date].temp.min) {
+        dailyData[date].temp.min = item.main.temp_min;
+      }
+      if (item.main.temp_max > dailyData[date].temp.max) {
+        dailyData[date].temp.max = item.main.temp_max;
+      }
+      
+      // Collect other data
+      dailyData[date].pressure.push(item.main.pressure);
+      dailyData[date].humidity.push(item.main.humidity);
+      dailyData[date].weather.push(item.weather[0]);
+      dailyData[date].clouds.push(item.clouds.all);
+      dailyData[date].wind_speed.push(item.wind.speed);
+      dailyData[date].wind_deg.push(item.wind.deg);
+      dailyData[date].pop.push(item.pop || 0);
+    });
+    
+    // Convert the daily data to an array and calculate averages
+    const daily = Object.entries(dailyData).map(([date, data]) => {
+      // Determine the most frequent weather condition
+      const weatherCounts = {};
+      data.weather.forEach(w => {
+        weatherCounts[w.id] = (weatherCounts[w.id] || 0) + 1;
+      });
+      
+      let mostFrequentWeatherId = 0;
+      let maxCount = 0;
+      
+      Object.entries(weatherCounts).forEach(([id, count]) => {
+        if (count > maxCount) {
+          mostFrequentWeatherId = Number(id);
+          maxCount = count;
+        }
+      });
+      
+      const weatherInfo = data.weather.find(w => w.id === mostFrequentWeatherId) || data.weather[0];
+      
+      return {
+        dt: data.dt,
+        sunrise: current.sunrise, // Use current day data as approximation
+        sunset: current.sunset,   // Use current day data as approximation
+        temp: {
+          day: calculateAverage(data.temp.day) || calculateAverage(data.temp.morn.concat(data.temp.day).concat(data.temp.eve)),
+          min: data.temp.min,
+          max: data.temp.max,
+          night: calculateAverage(data.temp.night) || data.temp.min,
+          eve: calculateAverage(data.temp.eve) || calculateAverage(data.temp.day.concat(data.temp.night)),
+          morn: calculateAverage(data.temp.morn) || data.temp.min
+        },
+        feels_like: {
+          day: calculateAverage(data.temp.day) - 2, // Approximation
+          night: calculateAverage(data.temp.night) - 3,
+          eve: calculateAverage(data.temp.eve) - 1,
+          morn: calculateAverage(data.temp.morn) - 2
+        },
+        pressure: calculateAverage(data.pressure),
+        humidity: calculateAverage(data.humidity),
+        weather: [weatherInfo],
+        clouds: calculateAverage(data.clouds),
+        wind_speed: calculateAverage(data.wind_speed),
+        wind_deg: calculateAverage(data.wind_deg),
+        pop: Math.max(...data.pop)
+      };
+    });
+    
+    return {
+      lat,
+      lon,
+      timezone: "UTC", // Approximation
+      timezone_offset: 0,
+      current,
+      daily: daily.slice(0, 7) // Limit to 7 days
+    };
   } catch (error) {
     console.warn('Error fetching weather forecast, using mock data:', error);
     
@@ -218,6 +357,12 @@ export const getWeatherForecast = async (lat, lon) => {
     return generateMockWeatherData(lat, lon);
   }
 };
+
+// Helper function to calculate average of an array
+function calculateAverage(arr) {
+  if (!arr || arr.length === 0) return null;
+  return arr.reduce((sum, val) => sum + val, 0) / arr.length;
+}
 
 // For historical data (using Open-Meteo as it's free and doesn't require API key)
 export const getHistoricalWeather = async (lat, lon, startDate, endDate) => {
@@ -286,7 +431,9 @@ export const getMapTileUrl = (layerId) => {
   // But in a real app, this could point to custom tile servers or GeoJSON endpoints
   const pestLayers = [
     'almond_pests', 'grape_pests', 'tomato_pests', 'lettuce_pests', 'strawberry_pests',
-    'date_palm_pests', 'red_palm_weevil', 'dubas_bug', 'date_palm_scale', 'spider_mites'
+    'date_palm_pests', 'red_palm_weevil', 'dubas_bug', 'date_palm_scale', 'spider_mites',
+    'rice_pests', 'rice_stem_borer', 'brown_planthopper', 'rice_blast', 'rice_water_weevil',
+    'bacterial_leaf_blight', 'fall_armyworm', 'sheath_blight'
   ];
   
   if (pestLayers.includes(layerId)) {
@@ -392,6 +539,12 @@ const generateMockPestData = (lat, lon, cropType) => {
       { name: 'Red Palm Weevil', scientificName: 'Rhynchophorus ferrugineus', riskLevel: 'High' },
       { name: 'Dubas Bug', scientificName: 'Ommatissus lybicus', riskLevel: 'Medium' },
       { name: 'Date Palm Scale', scientificName: 'Parlatoria blanchardi', riskLevel: 'Low' }
+    ],
+    'rice': [
+      { name: 'Rice Stem Borer', scientificName: 'Scirpophaga incertulas', riskLevel: 'High' },
+      { name: 'Brown Planthopper', scientificName: 'Nilaparvata lugens', riskLevel: 'High' },
+      { name: 'Rice Blast', scientificName: 'Magnaporthe oryzae', riskLevel: 'Medium' },
+      { name: 'Bacterial Leaf Blight', scientificName: 'Xanthomonas oryzae', riskLevel: 'Medium' }
     ],
     'default': [
       { name: 'Aphids', scientificName: 'Aphidoidea family', riskLevel: 'Medium' },

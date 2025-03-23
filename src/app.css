@@ -3,23 +3,253 @@
 @tailwind utilities;
 
 :root {
-  --primary-col: #2c7d7b;
-  --secondary-col: #155e30;
-  --sidebar-bg: #1e293b;
-  --background-col: #f3f4f6;
+  --primary-color: #FF8C00;
+  --primary-light: #FFA500;
+  --secondary-color: #4786C6;
+  --accent-color: #44C1C3;
+  --sidebar-background: #121212;
+  --background-color: #f5f5f5;
+  --text-color: #333;
+  
+  color-scheme: light dark;
+  
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Dark mode style adjustment */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: #1A1A1A;
+    --text-color: #FFFFFF;
+  }
 }
 
 body {
-  background-color: var(--background-col);
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  min-height: 100vh;
 }
 
 /* Make the app take full height */
 html, body, #root {
   height: 100%;
+}
+
+/* Main app layout */
+.app {
+  display: flex;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Main content area */
+.main-content {
+  flex: 1;
+  padding-left: 265px; /* Account for sidebar width + padding */
+  padding-top: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+  transition: padding-left 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 767px) {
+  .main-content {
+    padding-left: 20px;
+  }
+}
+
+/* Links */
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Form elements */
+button, input, select, textarea {
+  font-family: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* Utility classes */
+.text-primary {
+  color: var(--primary-color);
+}
+
+.bg-primary {
+  background-color: var(--primary-color);
+}
+
+.text-secondary {
+  color: var(--secondary-color);
+}
+
+.bg-secondary {
+  background-color: var(--secondary-color);
+}
+
+/* Card styles */
+.card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+/* For dark mode */
+@media (prefers-color-scheme: dark) {
+  .card {
+    background-color: #222;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* Responsive spacing */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* Button variants */
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-light);
+}
+
+.btn-secondary {
+  background-color: var(--secondary-color);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.btn-outline:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+/* Special layout adjustments for authenticated vs non-authenticated */
+body:not(.authenticated) .main-content {
+  padding-left: 20px; /* No sidebar padding for non-authenticated users */
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Weather map styles */
+.map-legend h4 {
+  font-size: 12px;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+}
+
+.leaflet-control-zoom {
+  margin-top: 40px !important;
+}
+
+.leaflet-control-zoom a {
+  width: 28px !important;
+  height: 28px !important;
+  line-height: 28px !important;
+}
+
+/* Override leaflet attribution to make it less prominent */
+.leaflet-control-attribution {
+  font-size: 9px !important;
+  padding: 2px 4px !important;
+  background-color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Fix leaflet map container */
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+}
+
+/* Mobile responsive layout */
+@media (max-width: 768px) {
+  .main-content {
+    padding-left: 0;
+  }
+  
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+  
+  .sidebar.open {
+    transform: translateX(0);
+  }
+  
+  /* Add hamburger menu for mobile */
+  .sidebar-toggle {
+    display: block;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
+    background: var(--primary-col);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px;
+    cursor: pointer;
+  }
 }
 
 .primary-color {
@@ -28,6 +258,10 @@ html, body, #root {
 
 .secondary-color {
   color: var(--secondary-col);
+}
+
+.accent-color {
+  color: var(--accent-col);
 }
 
 /* Override tailwind primary color */
@@ -47,6 +281,36 @@ html, body, #root {
   color: var(--primary-col) !important;
 }
 
+/* Accent color for services */
+.bg-accent {
+  background-color: var(--accent-col) !important;
+}
+
+.text-accent {
+  color: var(--accent-col) !important;
+}
+
+.hover\:bg-accent:hover {
+  background-color: var(--accent-col) !important;
+}
+
+.hover\:text-accent:hover {
+  color: var(--accent-col) !important;
+}
+
+.border-accent {
+  border-color: var(--accent-col) !important;
+}
+
+/* Darker accent for hover states */
+.bg-accent-dark {
+  background-color: #d97706 !important;
+}
+
+.hover\:bg-accent-dark:hover {
+  background-color: #d97706 !important;
+}
+
 /* Sidebar styling */
 aside {
   background-color: var(--sidebar-bg) !important;
@@ -63,12 +327,6 @@ aside {
 
 .hover\:bg-green-700:hover {
   background-color: #155e30 !important;
-}
-
-/* Fix leaflet map container */
-.leaflet-container {
-  height: 100%;
-  width: 100%;
 }
 
 /* Make map markers more visible */
@@ -138,93 +396,7 @@ aside {
   font-size: 0.75rem;
 }
 
-/* Scrollbar styling */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #c1c1c1;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #a8a8a8;
-}
-
 /* Weather map styles */
-.map-legend h4 {
-  font-size: 12px;
-  font-weight: 600;
-  margin: 0 0 4px 0;
-}
-
-.leaflet-control-zoom {
-  margin-top: 40px !important;
-}
-
-.leaflet-control-zoom a {
-  width: 28px !important;
-  height: 28px !important;
-  line-height: 28px !important;
-}
-
-/* Override leaflet attribution to make it less prominent */
-.leaflet-control-attribution {
-  font-size: 9px !important;
-  padding: 2px 4px !important;
-  background-color: rgba(255, 255, 255, 0.7) !important;
-}
-
-/* Compact layer selector */
-.layer-selector {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2px;
-}
-
-.layer-selector button {
-  font-size: 10px;
-  padding: 2px 6px;
-  border-radius: 2px;
-  border: 1px solid #e2e8f0;
-}
-
-/* Weather data info cards */
-.weather-data-card {
-  display: flex;
-  flex-direction: column;
-  padding: 6px;
-  border-radius: 4px;
-  background-color: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-}
-
-.weather-data-title {
-  font-size: 10px;
-  color: #6b7280;
-  margin-bottom: 2px;
-}
-
-.weather-data-value {
-  font-size: 14px;
-  font-weight: 600;
-}
-
-/* Compact weather metrics display */
-.weather-metrics {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-  gap: 8px;
-  margin-bottom: 8px;
-}
-
-/* Make the map interface more like Image 2 */
 .sleek-map-container {
   position: relative;
   border-radius: 4px;
@@ -259,6 +431,28 @@ aside {
   opacity: 0.8;
 }
 
+/* Services overlay styling */
+.services-overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.service-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.service-relevance-tag {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 9999px;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .weather-metrics {
@@ -272,5 +466,9 @@ aside {
   
   .temperature-display {
     font-size: 20px;
+  }
+  
+  .services-grid {
+    grid-template-columns: 1fr;
   }
 }

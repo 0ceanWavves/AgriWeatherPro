@@ -275,3 +275,41 @@ export const pestRiskByLocation = {
     "Dubas Bug": "Low"
   }
 };
+
+// Add the missing menaRegions export that's being imported in pestData.js
+export const menaRegions = {
+  "SA": { // Saudi Arabia
+    "Riyadh": true,
+    "Medina": true,
+    "Jeddah": true,
+    "Najran": true,
+    "Al Qatif": true
+  },
+  "AE": { // UAE
+    "Dubai": true,
+    "Abu Dhabi": true,
+    "Al Ain": true,
+    "Sharjah": true
+  },
+  "EG": { // Egypt
+    "Cairo": true,
+    "Siwa Oasis": true,
+    "Alexandria": true
+  },
+  "TN": { // Tunisia
+    "Tozeur": true,
+    "Tunis": true
+  },
+  "IQ": { // Iraq
+    "Basrah": true,
+    "Baghdad": true
+  },
+  "OM": { // Oman
+    "Nizwa": true,
+    "Muscat": true
+  },
+  "DZ": { // Algeria
+    "Biskra": true,
+    "Algiers": true
+  }
+};

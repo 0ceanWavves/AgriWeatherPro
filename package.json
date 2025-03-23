@@ -60,6 +60,7 @@
     "rollup-plugin-visualizer": "^5.14.0",
     "supabase": "^2.19.7",
     "vite": "^5.0.0",
-    "vitest": "^1.0.4"
+    "vitest": "^1.0.4",
+    "cursor-tools": "latest"
   }
 }

@@ -1,0 +1,328 @@
+.subscription-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.subscription-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.subscription-header h1 {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 1.8rem;
+}
+
+.back-button {
+  padding: 0.5rem 1rem;
+  background-color: #f5f5f5;
+  color: #333;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.back-button:hover {
+  background-color: #e0e0e0;
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.error-message {
+  background-color: #ffebee;
+  color: #c62828;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+}
+
+.success-message {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+}
+
+.current-subscription-info {
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border-left: 4px solid #2196f3;
+}
+
+.current-subscription-info h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: #2c3e50;
+  font-size: 1.2rem;
+}
+
+.subscription-detail {
+  display: flex;
+  margin-bottom: 0.8rem;
+}
+
+.cancel-subscription-button {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.cancel-subscription-button:hover {
+  background-color: #d32f2f;
+}
+
+.cancel-subscription-button:disabled {
+  background-color: #ffcdd2;
+  cursor: not-allowed;
+}
+
+.billing-cycle-selector {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  padding: 0.5rem;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cycle-option {
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+  position: relative;
+}
+
+.cycle-option.active {
+  background-color: #2196f3;
+  color: white;
+}
+
+.save-badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: #ff9800;
+  color: white;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.plans-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.plan-card {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.plan-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.plan-card.selected {
+  border: 2px solid #2196f3;
+  background-color: #e3f2fd;
+}
+
+.plan-header {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+  text-align: center;
+}
+
+.plan-name {
+  margin: 0 0 0.5rem;
+  color: #2c3e50;
+  font-size: 1.5rem;
+}
+
+.plan-price {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #2196f3;
+  margin: 0.5rem 0;
+}
+
+.plan-description {
+  margin-bottom: 1.5rem;
+  color: #555;
+  flex-grow: 1;
+}
+
+.plan-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem;
+}
+
+.feature-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.feature-icon {
+  color: #4caf50;
+  margin-right: 0.5rem;
+  font-weight: bold;
+}
+
+.feature-text {
+  flex: 1;
+}
+
+.select-plan-button {
+  width: 100%;
+  padding: 0.8rem;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+  margin-top: auto;
+}
+
+.select-plan-button:hover {
+  background-color: #1976d2;
+}
+
+.select-plan-button:disabled {
+  background-color: #bbdefb;
+  cursor: not-allowed;
+}
+
+.subscription-actions {
+  text-align: center;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #eee;
+}
+
+.subscribe-button {
+  padding: 1rem 2rem;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  min-width: 250px;
+}
+
+.subscribe-button:hover {
+  background-color: #43a047;
+}
+
+.subscribe-button:disabled {
+  background-color: #c8e6c9;
+  cursor: not-allowed;
+}
+
+.subscription-note {
+  margin-top: 1rem;
+  color: #757575;
+  font-size: 0.9rem;
+}
+
+.subscription-note a {
+  color: #2196f3;
+  text-decoration: none;
+}
+
+.subscription-note a:hover {
+  text-decoration: underline;
+}
+
+.status-active {
+  color: #43a047;
+  font-weight: 600;
+}
+
+.status-trialing {
+  color: #1e88e5;
+  font-weight: 600;
+}
+
+.status-canceled, .status-incomplete {
+  color: #e53935;
+  font-weight: 600;
+}
+
+.status-incomplete_expired, .status-past_due {
+  color: #ff9800;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .plans-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .billing-cycle-selector {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .cycle-option {
+    margin-bottom: 0.5rem;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .save-badge {
+    position: static;
+    display: inline-block;
+    margin-left: 0.5rem;
+  }
+} 

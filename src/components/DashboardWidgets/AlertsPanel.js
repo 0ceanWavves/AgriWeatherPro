@@ -97,23 +97,27 @@ const AlertsPanel = () => {
                 alert.severity === 'warning' ? 'bg-orange-500' : 
                 'bg-blue-500'
               }`}></span>
-              <span className="text-sm font-medium">{alert.time}</span>
+              <span className="text-sm font-medium text-gray-800">{alert.time}</span>
             </div>
             
             <div className="alert-content flex-grow">
               <div className="alert-header">
                 {alert.type === 'trigger' && (
-                  <span className="alert-type text-xs text-orange-500 uppercase">Trigger Event</span>
+                  <span className="alert-type text-xs text-orange-600 uppercase font-semibold">Trigger Event</span>
                 )}
                 {alert.type === 'alert' && (
-                  <span className="alert-type text-xs text-blue-500 uppercase">Alert</span>
+                  <span className="alert-type text-xs text-blue-600 uppercase font-semibold">Alert</span>
                 )}
                 {alert.type === 'report' && (
-                  <span className="alert-type text-xs text-green-500 uppercase">Report</span>
+                  <span className="alert-type text-xs text-green-600 uppercase font-semibold">Report</span>
                 )}
-                <h3 className="text-base font-medium mt-1">{alert.title}</h3>
+                <h3 className={`text-base font-medium mt-1 ${
+                  alert.severity === 'critical' ? 'text-red-700' : 
+                  alert.severity === 'warning' ? 'text-orange-700' : 
+                  'text-blue-700'
+                }`}>{alert.title}</h3>
               </div>
-              <p className="alert-date text-xs text-gray-500 mt-1">{alert.date}</p>
+              <p className="alert-date text-xs text-gray-600 mt-1">{alert.date}</p>
             </div>
           </div>
         ))}

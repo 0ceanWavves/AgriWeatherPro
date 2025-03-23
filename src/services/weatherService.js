@@ -68,14 +68,14 @@ export const fetchRealWeatherData = async (lat, lng) => {
  * Fetch weather forecast for the next several days
  * @param {number} lat - Latitude
  * @param {number} lng - Longitude
- * @param {number} days - Number of days to forecast (max 7)
+ * @param {number} days - Number of days to forecast (max 5)
  * @returns {Promise<Object>} Forecast data
  */
 export const fetchForecastData = async (lat, lng, days = 5) => {
   try {
     const apiKey = 'deeaa95f4b7b2543dc8c3d9cb96396c6';
-    // Use the One Call API for better forecast data
-    const url = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lng}&exclude=minutely,hourly&units=metric&appid=${apiKey}`;
+    // Use the 5-day forecast API (free tier) instead of OneCall API (paid tier)
+    const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lng}&units=metric&appid=${apiKey}`;
     
     const response = await fetch(url);
     
@@ -85,36 +85,91 @@ export const fetchForecastData = async (lat, lng, days = 5) => {
     
     const data = await response.json();
     
-    // Process and return forecast data
-    const processedData = {
-      current: {
-        temp: data.current.temp,
-        feelsLike: data.current.feels_like,
-        humidity: data.current.humidity,
-        pressure: data.current.pressure,
-        windSpeed: data.current.wind_speed,
-        windDirection: data.current.wind_deg,
-        clouds: data.current.clouds,
-        weatherDesc: data.current.weather[0].description,
-        weatherIcon: data.current.weather[0].icon,
-        timestamp: data.current.dt
-      },
-      daily: data.daily.slice(0, days).map(day => ({
-        date: new Date(day.dt * 1000).toISOString().split('T')[0],
-        tempMax: day.temp.max,
-        tempMin: day.temp.min,
-        humidity: day.humidity,
-        pressure: day.pressure,
-        windSpeed: day.wind_speed,
-        windDirection: day.wind_deg,
-        precipitation: day.rain || 0,
-        weatherDesc: day.weather[0].description,
-        weatherIcon: day.weather[0].icon,
-        timestamp: day.dt
-      }))
+    // First, get current weather separately
+    const currentResponse = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&units=metric&appid=${apiKey}`);
+    
+    if (!currentResponse.ok) {
+      throw new Error(`Current weather API error: ${currentResponse.status}`);
+    }
+    
+    const currentData = await currentResponse.json();
+    
+    // Process current weather
+    const current = {
+      temp: currentData.main.temp,
+      feelsLike: currentData.main.feels_like,
+      humidity: currentData.main.humidity,
+      pressure: currentData.main.pressure,
+      windSpeed: currentData.wind.speed,
+      windDirection: currentData.wind.deg,
+      clouds: currentData.clouds.all,
+      weatherDesc: currentData.weather[0].description,
+      weatherIcon: currentData.weather[0].icon,
+      timestamp: currentData.dt
     };
     
-    return processedData;
+    // Group forecast by day (the 5-day forecast API returns data in 3-hour intervals)
+    const forecastByDay = {};
+    
+    data.list.forEach(item => {
+      const date = new Date(item.dt * 1000).toISOString().split('T')[0];
+      
+      if (!forecastByDay[date]) {
+        forecastByDay[date] = {
+          date,
+          temps: [],
+          humidity: [],
+          pressure: [],
+          windSpeed: [],
+          windDirection: [],
+          precipitation: [],
+          weatherDesc: [],
+          weatherIcon: [],
+          timestamp: item.dt
+        };
+      }
+      
+      forecastByDay[date].temps.push(item.main.temp);
+      forecastByDay[date].humidity.push(item.main.humidity);
+      forecastByDay[date].pressure.push(item.main.pressure);
+      forecastByDay[date].windSpeed.push(item.wind.speed);
+      forecastByDay[date].windDirection.push(item.wind.deg);
+      forecastByDay[date].precipitation.push(item.rain ? item.rain['3h'] || 0 : 0);
+      forecastByDay[date].weatherDesc.push(item.weather[0].description);
+      forecastByDay[date].weatherIcon.push(item.weather[0].icon);
+    });
+    
+    // Convert to array and calculate daily values
+    const daily = Object.values(forecastByDay).map(day => {
+      // Get most common weather description and icon
+      const mostCommonDesc = day.weatherDesc.sort((a, b) => 
+        day.weatherDesc.filter(v => v === a).length - day.weatherDesc.filter(v => v === b).length
+      ).pop();
+      
+      const mostCommonIcon = day.weatherIcon.sort((a, b) => 
+        day.weatherIcon.filter(v => v === a).length - day.weatherIcon.filter(v => v === b).length
+      ).pop();
+      
+      return {
+        date: day.date,
+        tempMax: Math.max(...day.temps),
+        tempMin: Math.min(...day.temps),
+        humidity: Math.round(day.humidity.reduce((sum, val) => sum + val, 0) / day.humidity.length),
+        pressure: Math.round(day.pressure.reduce((sum, val) => sum + val, 0) / day.pressure.length),
+        windSpeed: Math.round((day.windSpeed.reduce((sum, val) => sum + val, 0) / day.windSpeed.length) * 10) / 10,
+        windDirection: Math.round(day.windDirection.reduce((sum, val) => sum + val, 0) / day.windDirection.length),
+        precipitation: Math.round((day.precipitation.reduce((sum, val) => sum + val, 0)) * 10) / 10,
+        weatherDesc: mostCommonDesc,
+        weatherIcon: mostCommonIcon,
+        timestamp: day.timestamp
+      };
+    });
+    
+    // Limit to requested number of days
+    return {
+      current,
+      daily: daily.slice(0, days)
+    };
   } catch (error) {
     console.error('Error fetching forecast data:', error);
     

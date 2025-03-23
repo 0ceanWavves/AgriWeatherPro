@@ -100,9 +100,10 @@ const CaliforniaPestDashboard = () => {
     }));
   };
   
-  // Function to go to dashboard with current service selected
+  // Function to go to dashboard with California region selected
   const goToDashboard = () => {
-    navigate('/dashboard');
+    // Navigate to dashboard with California region parameter
+    navigate('/dashboard?region=california');
   };
 
   if (loading) {
