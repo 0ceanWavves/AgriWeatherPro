@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -35,7 +36,11 @@ export default defineConfig({
     chunkSizeWarningLimit: 700
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.ts', '.tsx']
+    extensions: ['.js', '.jsx', '.ts', '.tsx', '.css'],
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+      './App.css': path.resolve(__dirname, 'src/App.css')
+    }
   },
   esbuild: {
     loader: 'jsx',
@@ -48,5 +53,6 @@ export default defineConfig({
         '.js': 'jsx',
       },
     },
+    include: ['./src/App.css']
   },
 }); 
