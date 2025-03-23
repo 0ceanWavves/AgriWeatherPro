@@ -11,6 +11,9 @@ export default defineConfig({
     port: 4200,
     open: true
   },
+  css: {
+    modules: false
+  },
   build: {
     outDir: 'dist',
     sourcemap: true,
